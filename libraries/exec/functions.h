@@ -12,7 +12,7 @@
 extern return_t exec_lookup (exec_service_t *exec);
 
 /* Register an exec service provider. */
-extern return_t exec_register (char *vendor, char *model, char *id,
-                               service_info_t service_info);
+extern return_t exec_register (service_register_t *service_register_info,
+                               service_method_t *service_method);
 
 #endif /* !__EXEC_FUNCTIONS_H__ */

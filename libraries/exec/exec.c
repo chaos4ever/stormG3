@@ -28,8 +28,12 @@ return_t exec_lookup (exec_service_t *exec)
 }
 
 /* Register an exec service provider. */
-return_t exec_register (char *vendor, char *model, char *id,
-                        service_info_t service_info)
+return_t exec_register (service_register_t *service_register_info,
+                        service_method_t *service_method)
 {    
-    return service_register ("exec", vendor, model, id, EXEC_SERVICE_MAJOR_VERSION, EXEC_SERVICE_MINOR_VERSION, service_info);
+    service_register_info->service_name = "exec";
+    service_register_info->major_version = EXEC_SERVICE_MAJOR_VERSION;
+    service_register_info->minor_version = EXEC_SERVICE_MINOR_VERSION;
+
+    return service_register (service_register_info, service_method);
 }
