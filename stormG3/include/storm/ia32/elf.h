@@ -1,4 +1,4 @@
-/* $chaos: elf.h,v 1.8 2002/06/20 20:40:19 per Exp $ */
+/* $chaos: elf.h,v 1.9 2002/10/04 19:01:20 per Exp $ */
 /* Abstract: ELF file format. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -150,6 +150,7 @@ enum
     ELF_SECTION_TYPE_DYNAMIC_SYMBOL_TABLE,
 };
 
+/* Program types. */
 enum
 {
     /* A NULL program header means that this segment is unused. */
