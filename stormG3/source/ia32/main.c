@@ -1,4 +1,4 @@
-/* $chaos: main.c,v 1.11 2002/06/12 20:40:46 per Exp $ */
+/* $chaos: main.c,v 1.12 2002/06/13 20:07:52 per Exp $ */
 /* Abstract: This is the startup point of storm. It is executed right
    after the assembly language init code has set up the GDT, kernel
    stack, etc. Here, we initialise everything in the storm, like
@@ -24,6 +24,11 @@
 #include <storm/ia32/memory_physical.h>
 #include <storm/ia32/memory_virtual.h>
 #include <storm/ia32/multiboot.h>
+
+/* FIXME: Move to a separate file, gdb.h perhaps? */
+#define BREAKPOINT() asm("   int $3");
+extern void serial_init (unsigned short port, unsigned int speed);
+extern void set_debug_traps (void);
 
 /* Do the bootup procedure. */
 void main_bootup (int argument_count UNUSED, char *arguments[] UNUSED)
@@ -54,6 +59,12 @@ void main_bootup (int argument_count UNUSED, char *arguments[] UNUSED)
     exception_init ();
 
     debug_print ("CPU vendor name: %s\n", cpu_info.name);
+
+#ifdef GDB_INCLUDE
+    serial_init (GDB_PORT, GDB_SPEED);
+    set_debug_traps ();
+    BREAKPOINT ();
+#endif
 
     *(int *)(NULL) = 0;
 
