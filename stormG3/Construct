@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.4 2002/06/23 11:59:27 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.5 2002/06/23 13:08:49 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for stormG3
 # Author: Per Lundberg <per@chaosdev.org>
@@ -35,6 +35,11 @@ elsif ($ARG{color} eq 'netbsd')
   $defs .= "-DNETBSD_COLORS ";
 }
 
+if ($ARG{gdb}) 
+{
+  (my $port, my $speed) = split(/,/, $ARG{gdb});
+  $defs .= "-DGDB -DGDB_PORT=$port -DGDB_SPEED=$speed ";
+}
 
 $cons = new cons (
 		  CC => ($ENV{'CC'} || 'gcc'),
@@ -60,4 +65,6 @@ color=freebsd			Use FreeBSD colors for debug text.
 color=openbsd			Use OpenBSD colors for debug text (default).
 root=/somewhere			The installation root you are using (defaults
                                 to /tftpboot).
+gdb=[0-3],[115200|57600|38400|19200|9600|4800|2400|1200|600|300
+                                Enable remote GDB debugging on port x with speed y.
        );
