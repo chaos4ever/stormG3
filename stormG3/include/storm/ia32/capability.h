@@ -1,4 +1,4 @@
-/* $chaos: dotfile.emacs,v 1.37 2002/10/14 16:03:33 per Exp $ */
+/* $chaos: capability.h,v 1.1 2002/10/17 21:28:37 per Exp $ */
 /* Abstract: Capabilities support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -6,8 +6,8 @@
 /* Use freely under the terms listed in the file LICENSE. */
 
 /**
- * @file             capability.h
- * @brief            Capabilities support.
+ * @file                capability.h
+ * @brief               Capabilities support.
  */
 
 #ifndef __STORM_IA32_CAPABILITY_H__
@@ -16,18 +16,46 @@
 /**
  * @brief               The length of a capability ID.
  */
-#define CAPABILITY_ID_LENGTH \
-                        32
+#define CAPABILITY_CLASS_LENGTH \
+                        (16)
+
+/**
+ * @brief               The length of a capability name.
+ */
+#define CAPABILITY_NAME_LENGTH \
+                        (32)
+
+/**
+ * @brief               The name of the kernel capability class.
+ */
+#define CAPABILITY_CLASS_KERNEL \
+                        "kernel"
+
+/**
+ * @brief               The name of the super user capability.
+ */
+#define CAPABILITY_SUPER_USER \
+                        "super_user"
 
 /**
  * @brief               A capability.
+ *
+ * We could eventually move this to a more advanced data structure
+ * where the capability_list is rather a list of the capability
+ * classes, and the capability classes hold a list of all the
+ * capabilities in this class.
  */
 typedef struct
 {
     /**
      * @brief           The capability ID.
      */
-    char                id[CAPABILITY_ID_LENGTH];
+    char                class[CAPABILITY_CLASS_LENGTH];
+
+    /**
+     * @brief           The capability name (must be unique).
+     */
+    char                name[CAPABILITY_CLASS_LENGTH];
 
     /**
      * @brief           Pointer to the previous capability.
