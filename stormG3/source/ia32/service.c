@@ -1,4 +1,4 @@
-/* $chaos: service.c,v 1.8 2002/08/08 23:14:19 hal Exp $ */
+/* $chaos: service.c,v 1.9 2002/10/04 19:01:21 per Exp $ */
 /* Abstract: Service support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -34,10 +34,10 @@ return_t service_register (char *name, char *vendor, char *model, char *id,
     }
 
     /* Make sure these fit. */
-    if (string_length (name) + 1 > SERVICE_MAX_NAME_LENGTH ||
-        string_length (vendor) + 1 > SERVICE_MAX_VENDOR_LENGTH ||
-        string_length (model) + 1 > SERVICE_MAX_MODEL_LENGTH ||
-        string_length (id) + 1 > SERVICE_MAX_ID_LENGTH)
+    if (string_length (name) + 1 > SERVICE_NAME_LENGTH ||
+        string_length (vendor) + 1 > SERVICE_VENDOR_LENGTH ||
+        string_length (model) + 1 > SERVICE_MODEL_LENGTH ||
+        string_length (id) + 1 > SERVICE_ID_LENGTH)
     {
         debug_print ("%s: One of the fields were too long.\n", __FUNCTION__);
         return STORM_RETURN_INVALID_ARGUMENT; 
