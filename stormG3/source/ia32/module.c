@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.22 2002/08/11 18:39:58 per Exp $ */
+/* $chaos: module.c,v 1.23 2002/10/04 19:01:21 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -25,17 +25,33 @@
 static module_function_t function[] = 
 {
     { "debug_print", (function_t) &debug_print },
+
     { "dma_register", (function_t) &dma_register },
+//  { "dma_unregister", (function_t) &dma_unregister },
+
     { "halt", (function_t) &halt },
+
     { "irq_register", (function_t) &irq_register },
+//  { "irq_unregister", (function_t) &irq_unregister }
+
     { "memory_global_allocate", (function_t) &memory_global_allocate },
+//  { "memory_global_deallocate", (function_t) &memory_global_deallocate },
+
     { "module_register", (function_t) &module_register },
+//  { "module_unregister", (function_t) &module_unregister },
+
     { "port_range_register", (function_t) &port_range_register },
-    { "port_range_unregister", (function_t) &port_range_unregister },
+//  { "port_range_unregister", (function_t) &port_range_unregister },
+
+//  { "process_precreate", (function_t) &process_precreate },
+//  { "process_create", (function_t) &process_create },
+
     { "service_register", (function_t) &service_register },
+//  { "service_unregister", (function_t) &service_unregister },
     { "service_lookup", (function_t) &service_lookup },
+
     { "timer_sleep_milli", (function_t) &timer_sleep_milli },
-    { NULL, (function_t) NULL }
+    { NULL, (function_t) NULL } /* End of list. */
 };
 
 /* Link the given shared module into the kernel. */
