@@ -1,0 +1,45 @@
+README ($Id$)
+======
+
+This is chaos, a free (GPL:ed, some parts LGPL:ed) operating
+system. It implements advanced features such as virtual memory,
+interrupt/exception management, memory protection, I/O protection,
+preemptive multitasking, ELF support, and much, much more. It is a
+work in progress, and thus some parts might be unfinished. If you are
+a programmer and would like to help us, please contact us and we can
+see what you can help us with. Our contact information can be found on
+the web page -- http://www.chaosdev.org/
+
+The following programs are required to compile:
+
+* gcc (2.95 is *required*)
+* GNU make. BSD make will *not* work.
+* GNU binutils (fairly new. 2.9.5 tested)
+* Perl. If you change the autochaos scripts, you will need to have some
+  additional modules. They can all be found on CPAN.
+
+Please consult README.Linux or README.FreeBSD for some (possibly
+outdated) help about building the system under your specific
+system. If you're running anything else, you're totally on yourself.
+
+chaos is known to run correctly on the following computers (at some
+time):
+
+* AMD 386 SX-16, 8 meg RAM.
+* 486 DX-2/66, 8 meg RAM.
+* 486 DX/4-100, 16 meg RAM.
+* P133, 20 meg RAM.
+* P133, 64 meg ram.
+* P233 w/ MMX, 64 meg RAM.
+* K6-2/300, 128 meg RAM.
+* K6-2/450, 128 meg RAM.
+* Compaq Presario 5670 (P2, 450 MHz, 128 meg RAM)
+* Toshiba 550 (P266MMX, 90 meg RAM)
+* Compaq ProSignia 3080 (486DX, 33 MHz, 8 meg RAM)
+* IBM Aptiva 330 (P75, 40 meg RAM)
+
+If you successfully compile/run it on another platform, with or
+without patches, please tell us! Any experiences are welcome. Check
+out http://www.chaosdev.org/
+
+-- Per Lundberg <plundis@chaosdev.org>  Tue,  4 Jul 2000 15:12:56 +0200

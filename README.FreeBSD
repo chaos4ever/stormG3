@@ -1,0 +1,34 @@
+README.FreeBSD ($Id$)
+==============
+
+(This document was originally written by Thatcher Hubbard, and has
+been modified some by me, Plundis.  Thank you, Thatcher!)
+
+Though it's not nearly as easy to do as it would be on a Linux system,
+chaos can be both built and installed onto a floppy from FreeBSD.
+Note that the author used a FreeBSD 3.2-RELEASE system to do this.  If
+you don't have a 3.2-RELEASE or newer system, all I can say is learn
+to use cvsup.
+
+You'll have to install some tools through the port collection.  You do
+know what the ports collection is don't you?  If not, visit
+http://www.freebsd.org/ and find out, it may be one of the most
+compelling reasons to use FreeBSD.
+
+In any case, you may already have some of these installed, especially
+the GNU C Compiler and GNU make.  The GNU binutils seem to come as a
+standard part of the system.  In addition to these, you will need 
+gmake and NASM, the netwide assembler.  These can be found under
+/usr/ports/devel/.  Also, to install the GRUB image, you'll need
+bzip2.
+
+In order to get the files you need on the floppy, your FreeBSD
+kernel will need the ability to mount ext2 filesystems.  This is as
+simple as adding the line options "EXT2FS" to your kernel
+configuration file, recompiling, installing, and rebooting your
+machine.
+
+When all of these have been installed, you can get started with
+chaos. Check the INSTALL file for information about how to proceed.
+
+-- Per Lundberg <plundis@chaosdev.org>  Fri, 30 Jun 2000 17:43:25 +0200

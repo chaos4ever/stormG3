@@ -1,0 +1,16 @@
+README.Linux ($Id$)
+============
+
+chaos has been successfully compiled on the following distributions:
+
+* Debian GNU/Linux 2.2 (potato).
+* Debian GNU/Linux 2.x (woody).
+* Red Hat 6.2 (Cartman) (with updated binutils).
+* Slackware 7.0 (with updated binutils).
+
+It will NOT work on Debian GNU/Linux 2.1 for the same reason Red Hat
+and slackware needs to be patched: binutils need to be fairly
+recent. Of course, upgrading a Debian system is much easier than
+almost anything else, so this should not be much of a problem.
+
+-- Per Lundberg <plundis@chaosdev.org>  Fri, 30 Jun 2000 17:40:13 +0200

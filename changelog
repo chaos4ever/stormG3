@@ -1,0 +1,10 @@
+2000-07-25  Per Lundberg  <plundis@chaosdev.org>
+
+	* makefile (clean): Changed some things to make it work with
+	non-GNU findutils.
+
+2000-07-22  Per Lundberg  <plundis@chaosdev.org>
+
+	* INSTALL: Updated this file slightly.
+
+	* Started writing a change log for this directory.
