@@ -1,4 +1,4 @@
-/* $chaos: elf.c,v 1.10 2002/10/04 19:01:21 per Exp $ */
+/* $chaos: elf.c,v 1.11 2002/10/15 10:04:12 per Exp $ */
 /* Abstract: ELF functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -260,7 +260,7 @@ return_t elf_load (elf_parsed_t *elf_parsed)
         }
     }
   
-    return_value = memory_physical_allocate (&image, highest_address / PAGE_SIZE + 1);
+    return_value = memory_physical_allocate (&image, highest_address / PAGE_SIZE + 1, PROCESS_ID_KERNEL);
     if (return_value != STORM_RETURN_SUCCESS)
     {
         return return_value;
