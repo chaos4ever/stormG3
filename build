@@ -1,11 +1,14 @@
 #!/bin/sh
+# $chaos$
 
-# Ok, this is maybe not the nicest way of doing it, but how the h*ll am I supposed to do it right?
+# If no install path has been set previously, fall back to the default.
+if [ -z "$CHAOS_INSTALL_PATH" ]; then
+	CHAOS_INSTALL_PATH=$(pwd)/root
+fi
 
 if [ ! -f config.install-path ]; then
-	echo "export CHAOS_INSTALL_PATH=$(pwd)/root" > config.install-path
+	echo "CHAOS_INSTALL_PATH=$CHAOS_INSTALL_PATH" > config.install-path
 fi
 
 . config.install-path
 make build
-unset CHAOS_INSTALL_PATH
