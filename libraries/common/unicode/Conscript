@@ -1,4 +1,4 @@
-# $chaos: Conscript,v 1.4 2002/10/04 20:19:22 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.1 2002/12/14 07:25:03 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the Unicode library.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -7,7 +7,7 @@
 # Use freely under the terms listed in the file LICENSE.
 
 $library_binary = 'libunicode.a';
-$library_directory = 'unicode';
+$library_directory = 'common/unicode';
 
 Import qw( cons library_static_directory install );
 Library $cons $library_binary, 'unicode.c';
