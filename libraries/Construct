@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.8 2002/10/04 19:00:49 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.9 2002/10/04 20:53:57 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the libraries.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -30,6 +30,7 @@ $install = <<EOF;
 return qq(
 mkdir -p \$library_static_directory
 install \$library_directory/\$library_binary \$library_static_directory
+touch %0:a
 	 );
 EOF
 
