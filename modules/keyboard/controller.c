@@ -1,4 +1,4 @@
-/* $chaos: controller.c,v 1.3 2002/06/18 22:18:17 per Exp $ */
+/* $chaos: controller.c,v 1.4 2002/06/21 08:00:28 per Exp $ */
 /* Abstract: Common code for the keyboard server. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -11,9 +11,8 @@
 
 #include <storm/storm.h>
 
-/* This reads the controller status port, and does the appropriate
+/* This reads the controller status port, and performs the appropriate
    action. */
-
 uint8_t handle_event (void)
 {
     uint8_t status = controller_read_status ();
@@ -29,7 +28,6 @@ uint8_t handle_event (void)
  
 #if FALSE
         /* Ignore error bytes. */
-
         if ((status & (CONTROLLER_STATUS_GENERAL_TIMEOUT |
                        CONTROLLER_STATUS_PARITY_ERROR)) == 0)
 #endif
@@ -60,17 +58,18 @@ uint8_t handle_event (void)
  
 Quote from PS/2 System Reference Manual:
    
-"Address hex 0060 and address hex 0064 should be written only
-when the input-buffer-full bit and output-buffer-full bit in the
-Controller Status register are set 0."  */
+"Address hex 0060 and address hex 0064 should be written only when the
+input-buffer-full bit and output-buffer-full bit in the Controller
+Status register are set 0."  */
+
 void controller_wait (void)
 {
     unsigned long timeout;
   
     for (timeout = 0; timeout < CONTROLLER_TIMEOUT; timeout++)
     {
-        /* handle_event () will handle any incoming events while we wait
-           -- keypresses or mouse movement. */
+        /* handle_event () will handle any incoming events while we
+           wait -- keypresses or mouse movement. */
         unsigned char status = handle_event ();
                 
         if ((status & CONTROLLER_STATUS_INPUT_BUFFER_FULL) == 0)

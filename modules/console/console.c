@@ -1,4 +1,4 @@
-/* $chaos: console.c,v 1.1 2002/06/22 22:54:35 per Exp $ */
+/* $chaos: console.c,v 1.2 2002/06/23 12:09:05 per Exp $ */
 /* Abstract: Console module. Will eventually be 100% ANSI escape
              sequence compatible. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
@@ -6,6 +6,8 @@
 
 /* Copyright 1999-2002 chaos development. */
 /* Use freely under the terms listed in the file COPYING. */
+
+#include <console/console.h>
 
 #include "console.h"
 #include "console_output.h"
@@ -119,10 +121,107 @@ void console_flip (console_t *console)
     current_console = console;
 } 
 
+/* Handle keyboard events. */
+static return_t console_handle_key_event (keyboard_packet_t *keyboard_packet)
+{
+    /* Console switching? For now, ALT + TAB is used. This should be
+       customisable. */
+    if (current_console != NULL)
+    {
+        if (keyboard_packet->key_pressed &&
+            keyboard_packet->has_special_key &&
+            keyboard_packet->special_key == KEYBOARD_SPECIAL_KEY_TAB &&
+            (keyboard_packet->left_alt_down ||
+             keyboard_packet->right_alt_down))
+        {
+            /* Next console. */
+            console_t *new_console = (console_t *) current_console->next;
+            if (new_console == NULL)
+            {
+                new_console = console_list;
+            }
+            
+            if (new_console != current_console)
+            {
+                /* FIXME: This is not purely correct, but what the
+                   heck... finish library_semaphore sometime, will
+                   you? */
+                while (new_console->lock == TRUE)
+                {
+                    //                    system_call_dispatch_next ();
+                }
+                
+                new_console->lock = TRUE;
+                console_flip (new_console);
+                new_console->lock = FALSE;
+            }
+        }
+        
+        /* Bind a console to a function key. */
+        if (keyboard_packet->key_pressed &&
+            keyboard_packet->has_special_key &&
+            keyboard_packet->special_key >= KEYBOARD_SPECIAL_KEY_F1 &&
+            keyboard_packet->special_key <= KEYBOARD_SPECIAL_KEY_F10 &&
+            (keyboard_packet->left_alt_down ||
+             keyboard_packet->right_alt_down) &&
+            (keyboard_packet->left_control_down ||
+             keyboard_packet->right_control_down))
+        {
+            console_shortcut[keyboard_packet->special_key -
+                             KEYBOARD_SPECIAL_KEY_F1] = current_console;
+        }
+              
+        /* Switch to a previously bound console. */
+        if (keyboard_packet->key_pressed &&
+            keyboard_packet->has_special_key &&
+            keyboard_packet->special_key >= KEYBOARD_SPECIAL_KEY_F1 &&
+            keyboard_packet->special_key <= KEYBOARD_SPECIAL_KEY_F10 &&
+            (keyboard_packet->left_alt_down ||
+             keyboard_packet->right_alt_down))
+        {
+            /* New console. */
+            console_t *new_console = (console_t *) console_shortcut[keyboard_packet->special_key - KEYBOARD_SPECIAL_KEY_F1];
+            if (new_console != NULL)
+            {
+                /* FIXME: This is not purely correct, but what the
+                   heck... finish library_semaphore sometime, will you? */
+                while (new_console->lock == TRUE)
+                {
+                    //                    system_call_dispatch_next ();
+                }
+                
+                new_console->lock = TRUE;
+                console_flip (new_console);
+                new_console->lock = FALSE;
+            }
+        }
+        
+        /* Send on... If we are allowed to. */
+        if (current_console->active_application != NULL)
+        {
+            if (current_console->active_application->wants_keyboard)
+            {
+                // FIXME: Put it in her stdin.
+            }
+        }
+        else if (current_console->active_application == NULL)
+        {
+            debug_print ("No active application.");
+            // system_call_debug_print_simple ("console: Something is broken. A mutex will fix this!\n");
+        }
+    }        
+
+    debug_print ("%s: We got an event. ", __FILE__);
+    
+    return STORM_RETURN_SUCCESS;
+}
+
 /* Return some information about the console service (function pointers to
    our functionality). */
-static return_t service_info (void)
+static return_t service_info (console_service_t *console)
 {
+    console->magic_cookie = CONSOLE_COOKIE;
+    console->key_event = &console_handle_key_event;
     return STORM_RETURN_SUCCESS;
 }
 

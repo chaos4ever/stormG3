@@ -1,4 +1,4 @@
-/* $chaos: console.h,v 1.1 2002/06/22 22:54:35 per Exp $ */
+/* $chaos: console.h,v 1.2 2002/06/23 12:09:05 per Exp $ */
 /* Abstract: Console module header file. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
             Per Lundberg <per@chaosdev.org> */
@@ -29,12 +29,6 @@ enum
 {
     CONSOLE_TYPE_TEXT,
     CONSOLE_TYPE_GRAPHIC
-};
-
-enum
-{
-    CONSOLE_KEYBOARD_NORMAL,
-    CONSOLE_KEYBOARD_EXTENDED
 };
 
 typedef struct

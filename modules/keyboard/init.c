@@ -1,4 +1,4 @@
-/* $chaos: init.c,v 1.5 2002/06/20 22:42:25 per Exp $ */
+/* $chaos: init.c,v 1.6 2002/06/21 08:00:28 per Exp $ */
 /* Abstract: Keyboard initialization code. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -10,25 +10,20 @@
 #include "keyboard.h"
 #include "mouse.h"
 
+#include <console/console.h>
 #include <log/log.h>
 #include <storm/storm.h>
 
 /* The log service provider that we are using. */
 log_service_t log;
 
+/* The console service provider that we are using. */
+console_service_t console;
+
 /* Initialise the server. */
 bool init (void)
 {
     const char *message;
-    log_init_t handler;
-
-    /* Find the log service. */
-    if (service_resolve ("log", 1, (function_t *) &handler) != STORM_RETURN_SUCCESS)
-    {
-        debug_print ("Failed to resolved log service provider.\n");
-        return FALSE;
-    }
-    handler (&log);
 
     /* Try to allocate the keyboard controller's ports. */
     if (port_range_register (CONTROLLER_PORT_BASE,
@@ -56,14 +51,22 @@ bool init (void)
     return TRUE;
 }
 
+/* This function is called when the module is started. */
 return_t module_start (void)
 {
+    return_t return_value;
+
+    if (log_init (&log) != LOG_RETURN_SUCCESS)
+    {
+        return -1; // FIXME
+    }
+
     /* Detect whether a keyboard and/or mouse is present, and if so, put
        them into a usable state. */
     if (!init ())
     {
         log.print (LOG_URGENCY_EMERGENCY,
-                   "Failed initialisation.");
+                   "Failed initialization.");
         return STORM_RETURN_NOT_FOUND; // FIXME: Use another return value.;
     }
 
@@ -78,7 +81,7 @@ return_t module_start (void)
     if (irq_register (KEYBOARD_IRQ, "Keyboard", &keyboard_irq_handler) != STORM_RETURN_SUCCESS)
     {
         log.print (LOG_URGENCY_EMERGENCY, "Failed to register keyboard IRQ.");
-        return -1;
+        return -1; // FIXME
     }
         
     if (has_mouse)
@@ -89,6 +92,20 @@ return_t module_start (void)
             return -1;
         }
     }
+
+    /* Everything else worked out alright. Register us with the
+       console server. */
+    return_value = console_init (&console);
+    if (return_value != STORM_RETURN_SUCCESS)
+    {
+        return return_value;
+    }
+
+    key_event = console.key_event;
+    if (has_mouse)
+    {
+        //        mouse_handler = console->handle_mouse_event;
+    }
     
-    return 0;
+    return STORM_RETURN_SUCCESS;
 }

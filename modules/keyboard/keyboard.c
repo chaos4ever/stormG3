@@ -1,4 +1,4 @@
-/* $chaos: keyboard.c,v 1.7 2002/06/18 22:18:17 per Exp $ */
+/* $chaos: keyboard.c,v 1.8 2002/06/21 08:00:28 per Exp $ */
 /* Abstract: Keyboard module for chaos. */
 /* Authors: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
@@ -9,6 +9,8 @@
 /* Parts of this file was inspired by the Linux keyboard support. */
 
 #include <storm/storm.h>
+#include <keyboard/keyboard.h>
+#include <string/string.h>
 
 /* FIXME: Set this to a dummy map, and let the boot-server set the
    right key map. Or something. */
@@ -22,6 +24,9 @@
 #include "keyboard.h"
 #include "mouse.h"
 #include "scan_code.h"
+
+/* The keyboard event handler that we are using. */
+console_key_event_t key_event = NULL;
 
 /* The keyboard maps convert keys to standard UTF-8 sequences. */
 static const char **keyboard_map = swedish_keyboard_map;
@@ -50,58 +55,56 @@ static volatile int resend = 0;
 
 /* Conversion table from keyboard scan codes to the standardised
    'special key' codes, which are generic between all platforms. */
-/*
 static uint8_t special_key_conversion[] =
 {
-    [SCAN_CODE_ESCAPE] = IPC_KEYBOARD_SPECIAL_KEY_ESCAPE,
-    [SCAN_CODE_BACK_SPACE] = IPC_KEYBOARD_SPECIAL_KEY_BACK_SPACE,
-    [SCAN_CODE_TAB] = IPC_KEYBOARD_SPECIAL_KEY_TAB,
-    [SCAN_CODE_ENTER] = IPC_KEYBOARD_SPECIAL_KEY_ENTER,
-    [SCAN_CODE_CONTROL] = IPC_KEYBOARD_SPECIAL_KEY_CONTROL,
-    [SCAN_CODE_LEFT_SHIFT] = IPC_KEYBOARD_SPECIAL_KEY_LEFT_SHIFT,
-    [SCAN_CODE_RIGHT_SHIFT] = IPC_KEYBOARD_SPECIAL_KEY_RIGHT_SHIFT,
-    [SCAN_CODE_PRINT_SCREEN] = IPC_KEYBOARD_SPECIAL_KEY_PRINT_SCREEN,
-    [SCAN_CODE_ALT] = IPC_KEYBOARD_SPECIAL_KEY_ALT,
-    [SCAN_CODE_SPACE_BAR] = IPC_KEYBOARD_SPECIAL_KEY_SPACE_BAR,
-    [SCAN_CODE_CAPS_LOCK] = IPC_KEYBOARD_SPECIAL_KEY_CAPS_LOCK,
-    [SCAN_CODE_F1] = IPC_KEYBOARD_SPECIAL_KEY_F1,
-    [SCAN_CODE_F2] = IPC_KEYBOARD_SPECIAL_KEY_F2,
-    [SCAN_CODE_F3] = IPC_KEYBOARD_SPECIAL_KEY_F3,
-    [SCAN_CODE_F4] = IPC_KEYBOARD_SPECIAL_KEY_F4,
-    [SCAN_CODE_F5] = IPC_KEYBOARD_SPECIAL_KEY_F5,
-    [SCAN_CODE_F6] = IPC_KEYBOARD_SPECIAL_KEY_F6,
-    [SCAN_CODE_F7] = IPC_KEYBOARD_SPECIAL_KEY_F7,
-    [SCAN_CODE_F8] = IPC_KEYBOARD_SPECIAL_KEY_F8,
-    [SCAN_CODE_F9] = IPC_KEYBOARD_SPECIAL_KEY_F9,
-    [SCAN_CODE_F10] = IPC_KEYBOARD_SPECIAL_KEY_F10,
-    [SCAN_CODE_NUM_LOCK] = IPC_KEYBOARD_SPECIAL_KEY_NUM_LOCK,
-    [SCAN_CODE_SCROLL_LOCK] = IPC_KEYBOARD_SPECIAL_KEY_SCROLL_LOCK,
-    [SCAN_CODE_NUMERIC_7] = IPC_KEYBOARD_SPECIAL_KEY_NUMERIC_7,
-    [SCAN_CODE_NUMERIC_8] = IPC_KEYBOARD_SPECIAL_KEY_NUMERIC_8,
-    [SCAN_CODE_NUMERIC_9] = IPC_KEYBOARD_SPECIAL_KEY_NUMERIC_9,
-    [SCAN_CODE_NUMERIC_MINUS] = IPC_KEYBOARD_SPECIAL_KEY_NUMERIC_MINUS,
-    [SCAN_CODE_NUMERIC_4] = IPC_KEYBOARD_SPECIAL_KEY_NUMERIC_4,
-    [SCAN_CODE_NUMERIC_5] = IPC_KEYBOARD_SPECIAL_KEY_NUMERIC_5,
-    [SCAN_CODE_NUMERIC_6] = IPC_KEYBOARD_SPECIAL_KEY_NUMERIC_6,
-    [SCAN_CODE_NUMERIC_PLUS] = IPC_KEYBOARD_SPECIAL_KEY_NUMERIC_PLUS,
-    [SCAN_CODE_NUMERIC_1] = IPC_KEYBOARD_SPECIAL_KEY_NUMERIC_1,
-    [SCAN_CODE_NUMERIC_2] = IPC_KEYBOARD_SPECIAL_KEY_NUMERIC_2,
-    [SCAN_CODE_NUMERIC_3] = IPC_KEYBOARD_SPECIAL_KEY_NUMERIC_3,
-    [SCAN_CODE_NUMERIC_0] = IPC_KEYBOARD_SPECIAL_KEY_NUMERIC_0,
-    [SCAN_CODE_NUMERIC_DELETE] = IPC_KEYBOARD_SPECIAL_KEY_NUMERIC_DELETE,
-    [SCAN_CODE_F11] = IPC_KEYBOARD_SPECIAL_KEY_F11,
-    [SCAN_CODE_F12] = IPC_KEYBOARD_SPECIAL_KEY_F12,
-    [SCAN_CODE_LEFT_WINDOWS] = IPC_KEYBOARD_SPECIAL_KEY_LEFT_WINDOWS,
-    [SCAN_CODE_RIGHT_WINDOWS] = IPC_KEYBOARD_SPECIAL_KEY_RIGHT_WINDOWS,
-    [SCAN_CODE_MENU] = IPC_KEYBOARD_SPECIAL_KEY_MENU,
+    [SCAN_CODE_ESCAPE] = KEYBOARD_SPECIAL_KEY_ESCAPE,
+    [SCAN_CODE_BACK_SPACE] = KEYBOARD_SPECIAL_KEY_BACK_SPACE,
+    [SCAN_CODE_TAB] = KEYBOARD_SPECIAL_KEY_TAB,
+    [SCAN_CODE_ENTER] = KEYBOARD_SPECIAL_KEY_ENTER,
+    [SCAN_CODE_CONTROL] = KEYBOARD_SPECIAL_KEY_CONTROL,
+    [SCAN_CODE_LEFT_SHIFT] = KEYBOARD_SPECIAL_KEY_LEFT_SHIFT,
+    [SCAN_CODE_RIGHT_SHIFT] = KEYBOARD_SPECIAL_KEY_RIGHT_SHIFT,
+    [SCAN_CODE_PRINT_SCREEN] = KEYBOARD_SPECIAL_KEY_PRINT_SCREEN,
+    [SCAN_CODE_ALT] = KEYBOARD_SPECIAL_KEY_ALT,
+    [SCAN_CODE_SPACE_BAR] = KEYBOARD_SPECIAL_KEY_SPACE_BAR,
+    [SCAN_CODE_CAPS_LOCK] = KEYBOARD_SPECIAL_KEY_CAPS_LOCK,
+    [SCAN_CODE_F1] = KEYBOARD_SPECIAL_KEY_F1,
+    [SCAN_CODE_F2] = KEYBOARD_SPECIAL_KEY_F2,
+    [SCAN_CODE_F3] = KEYBOARD_SPECIAL_KEY_F3,
+    [SCAN_CODE_F4] = KEYBOARD_SPECIAL_KEY_F4,
+    [SCAN_CODE_F5] = KEYBOARD_SPECIAL_KEY_F5,
+    [SCAN_CODE_F6] = KEYBOARD_SPECIAL_KEY_F6,
+    [SCAN_CODE_F7] = KEYBOARD_SPECIAL_KEY_F7,
+    [SCAN_CODE_F8] = KEYBOARD_SPECIAL_KEY_F8,
+    [SCAN_CODE_F9] = KEYBOARD_SPECIAL_KEY_F9,
+    [SCAN_CODE_F10] = KEYBOARD_SPECIAL_KEY_F10,
+    [SCAN_CODE_NUM_LOCK] = KEYBOARD_SPECIAL_KEY_NUM_LOCK,
+    [SCAN_CODE_SCROLL_LOCK] = KEYBOARD_SPECIAL_KEY_SCROLL_LOCK,
+    [SCAN_CODE_NUMERIC_7] = KEYBOARD_SPECIAL_KEY_NUMERIC_7,
+    [SCAN_CODE_NUMERIC_8] = KEYBOARD_SPECIAL_KEY_NUMERIC_8,
+    [SCAN_CODE_NUMERIC_9] = KEYBOARD_SPECIAL_KEY_NUMERIC_9,
+    [SCAN_CODE_NUMERIC_MINUS] = KEYBOARD_SPECIAL_KEY_NUMERIC_MINUS,
+    [SCAN_CODE_NUMERIC_4] = KEYBOARD_SPECIAL_KEY_NUMERIC_4,
+    [SCAN_CODE_NUMERIC_5] = KEYBOARD_SPECIAL_KEY_NUMERIC_5,
+    [SCAN_CODE_NUMERIC_6] = KEYBOARD_SPECIAL_KEY_NUMERIC_6,
+    [SCAN_CODE_NUMERIC_PLUS] = KEYBOARD_SPECIAL_KEY_NUMERIC_PLUS,
+    [SCAN_CODE_NUMERIC_1] = KEYBOARD_SPECIAL_KEY_NUMERIC_1,
+    [SCAN_CODE_NUMERIC_2] = KEYBOARD_SPECIAL_KEY_NUMERIC_2,
+    [SCAN_CODE_NUMERIC_3] = KEYBOARD_SPECIAL_KEY_NUMERIC_3,
+    [SCAN_CODE_NUMERIC_0] = KEYBOARD_SPECIAL_KEY_NUMERIC_0,
+    [SCAN_CODE_NUMERIC_DELETE] = KEYBOARD_SPECIAL_KEY_NUMERIC_DELETE,
+    [SCAN_CODE_F11] = KEYBOARD_SPECIAL_KEY_F11,
+    [SCAN_CODE_F12] = KEYBOARD_SPECIAL_KEY_F12,
+    [SCAN_CODE_LEFT_WINDOWS] = KEYBOARD_SPECIAL_KEY_LEFT_WINDOWS,
+    [SCAN_CODE_RIGHT_WINDOWS] = KEYBOARD_SPECIAL_KEY_RIGHT_WINDOWS,
+    [SCAN_CODE_MENU] = KEYBOARD_SPECIAL_KEY_MENU,
     
 #if FALSE
-    [SCAN_CODE_INSERT] = IPC_KEYBOARD_SPECIAL_KEY_INSERT,
-    [SCAN_CODE_HOME] = IPC_KEYBOARD_SPECIAL_KEY_HOME,
-    [SCAN_CODE_END] = IPC_KEYBOARD_SPECIAL_KEY_END,
+    [SCAN_CODE_INSERT] = KEYBOARD_SPECIAL_KEY_INSERT,
+    [SCAN_CODE_HOME] = KEYBOARD_SPECIAL_KEY_HOME,
+    [SCAN_CODE_END] = KEYBOARD_SPECIAL_KEY_END,
 #endif
 };
-*/
 
 /* Acknowledge the keyboard controller. */
 static int do_acknowledge (unsigned char scancode)
@@ -283,6 +286,7 @@ static const char *translate_key (uint8_t scancode)
    handler. */
 void keyboard_handle_event (uint8_t scancode)
 {
+    keyboard_packet_t keyboard_packet;
     keyboard_exists = TRUE;
     
     if (do_acknowledge (scancode))
@@ -366,10 +370,13 @@ void keyboard_handle_event (uint8_t scancode)
                 
                             if (translated_key == NULL)
                             {
+                                keyboard_packet.has_special_key = 1;
+                                keyboard_packet.special_key = special_key_conversion[scancode];
                             }
                             else
                             {
-                                debug_print ("%s", translated_key);
+                                keyboard_packet.has_character_code = 1;
+                                string_copy (keyboard_packet.character_code, translated_key);
                             }
                             break;
                         }
@@ -421,12 +428,21 @@ void keyboard_handle_event (uint8_t scancode)
                        in our own way. */
                     if (translated_key == NULL)
                     {
+                        keyboard_packet.has_special_key = 1;
+                        keyboard_packet.special_key = special_key_conversion[scancode];
                     }
                     else
                     {
+                        keyboard_packet.has_character_code = 1;
+                        string_copy (keyboard_packet.character_code, translated_key);
                     }
                 }
             }
+        }
+
+        if (key_event != NULL)
+        {
+            key_event (&keyboard_packet);
         }
     }
 }	
