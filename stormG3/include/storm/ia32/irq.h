@@ -1,4 +1,4 @@
-/* $chaos: irq.h,v 1.8 2002/10/08 20:16:14 per Exp $ */
+/* $chaos: irq.h,v 1.9 2002/10/10 20:36:25 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -94,18 +94,70 @@ extern void irq0_handler (void);
  * @brief               Low-level IRQ 1 handler. 
  */
 extern void irq1_handler (void);
+
+/**
+ * @brief               Low-level IRQ 3 handler. 
+ */
 extern void irq3_handler (void);
+
+/**
+ * @brief               Low-level IRQ 4 handler. 
+ */
 extern void irq4_handler (void);
+
+/**
+ * @brief               Low-level IRQ 5 handler. 
+ */
 extern void irq5_handler (void);
+
+/**
+ * @brief               Low-level IRQ 6 handler. 
+ */
 extern void irq6_handler (void);
+
+/**
+ * @brief               Low-level IRQ 7 handler. 
+ */
 extern void irq7_handler (void);
+
+/**
+ * @brief               Low-level IRQ 8 handler. 
+ */
 extern void irq8_handler (void);
+
+/**
+ * @brief               Low-level IRQ 9 handler. 
+ */
 extern void irq9_handler (void);
+
+/**
+ * @brief               Low-level IRQ 10 handler. 
+ */
 extern void irq10_handler (void);
+
+/**
+ * @brief               Low-level IRQ 11 handler. 
+ */
 extern void irq11_handler (void);
+
+/**
+ * @brief               Low-level IRQ 12 handler. 
+ */
 extern void irq12_handler (void);
+
+/**
+ * @brief               Low-level IRQ 13 handler. 
+ */
 extern void irq13_handler (void);
+
+/**
+ * @brief               Low-level IRQ 14 handler. 
+ */
 extern void irq14_handler (void);
+
+/**
+ * @brief               Low-level IRQ 15 handler. 
+ */
 extern void irq15_handler (void);
 
 /**
