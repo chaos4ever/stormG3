@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.h,v 1.3 2002/06/08 14:59:51 per Exp $ */
+/* $chaos: memory_physical.h,v 1.4 2002/06/11 20:57:32 per Exp $ */
 /* Abstract: Physical memory allocation prototypes. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -15,6 +15,9 @@ typedef struct
 {
     struct memory_physical_slab_t *next;
 } memory_physical_slab_t;
+
+/* The number of physical pages in the system. */
+extern page_number_t physical_pages;
 
 /* Initialize physical memory allocation. */
 extern void memory_physical_init (void);
