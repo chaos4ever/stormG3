@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.18 2002/11/28 20:40:14 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.19 2002/11/30 16:30:35 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for stormG3
 # Author: Per Lundberg <per@chaosdev.org>
@@ -43,10 +43,22 @@ elsif ($ARG{color} eq 'netbsd')
   $defs .= "-DNETBSD_COLORS ";
 }
 
-if ($ARG{gdb}) 
+if ($ARG{gdb})
 {
   (my $port, my $speed) = split(/,/, $ARG{gdb});
   $defs .= "-DGDB -DGDB_PORT=$port -DGDB_SPEED=$speed ";
+}
+
+$compile = $ARG{compile};
+if (! $compile) {
+  $compile = "debug";
+}
+
+if ($compile eq 'debug') {
+  $cflags = '-ggdb ';
+}
+elsif ($compile eq 'release') {
+  $cflags = '-O3 -fomit-frame-pointer ';
 }
 
 $LDFLAGS = '-nostdlib ';
@@ -61,11 +73,10 @@ $cons = new cons (
 		  CC => ($ENV{'CC'} || 'gcc'),
 		  CPPPATH => $include,
 		  CFLAGS => $warnings .
-		  '-ggdb -pipe -fno-builtin -funsigned-char ' .
+		  '-pipe -fno-builtin -funsigned-char ' .
 		  '-ffreestanding -fno-leading-underscore ' .
-                  '-std=gnu99 ' . # -O3 -fomit-frame-pointer should be added if
-                                  # compiling a release.
-		  $defs,
+                  '-std=gnu99 ' .
+                  $cflags . $defs,
 		  LDFLAGS => $LDFLAGS,
                   SUFEXE => ''
 		);	
@@ -95,4 +106,6 @@ gdb=[0-3],[115200|57600|38400|19200|9600|4800|2400|1200|600|300
                                 Enable remote GDB debugging. The first
                                 parameter specifies the port and the second
                                 the speed.
+compile=release                 Compile for release.
+compile=debug                   Compile for debugging (default).
        );
