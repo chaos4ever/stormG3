@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.14 2002/10/09 08:31:49 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.15 2002/10/15 18:57:38 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the modules.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -25,7 +25,8 @@ chop($hostname);
 $warnings = '-Wall -W -Wshadow -Wpointer-arith -Waggregate-return ' .
   '-Wstrict-prototypes -Wredundant-decls -Winline -Wmissing-prototypes ' .
   '-Werror -Wcast-align -Wbad-function-cast -Wsign-compare ' .
-  '-Wmissing-declarations -Wnested-externs ';
+  '-Wmissing-declarations -Wnested-externs '; # -Wwrite-strings
+$defs = '-D__STORM_KERNEL_MODULE__ ';
 $install = <<EOF;
 return qq(
 mkdir -p \$module_directory
@@ -41,6 +42,7 @@ $cons = new cons (
 		  CC => ($ENV{'CC'} || 'gcc'),
 		  CPPPATH => $include,
 		  CFLAGS => $warnings .
+                  $defs .
 		  '-O3 -ggdb -pipe -fno-builtin -funsigned-char ' .
 		  '-fomit-frame-pointer -ffreestanding -std=gnu99 ',
 		  LDFLAGS => "-nostdlib --shared -L$library_directory"
