@@ -1,4 +1,4 @@
-/* $chaos: memory_global.h,v 1.2 2002/06/12 06:53:46 per Exp $ */
+/* $chaos: memory_global.h,v 1.3 2002/07/11 21:13:24 per Exp $ */
 /* Abstract: Global memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -15,6 +15,8 @@
 /* The global slab system. Awfully simple, isn't it? */
 typedef struct 
 {
+    /* Unique cookie, to make sure the data structure is of the right
+       type. */
     uint32_t magic_cookie;
 
     /* Pointer to the next free slab. */
