@@ -33,10 +33,27 @@ int main (int argc UNUSED, char **argv UNUSED)
         };
     service_connection_id_t connection_id;
 
-    system_call_service_lookup (&service_lookup, &services, &service_list);
-    system_call_service_connect (service_list.id, &connection_id);
-    system_call_service_invoke (connection_id, KERNEL_FUNCTION_DEBUG_PRINT,
-                                test);
-    system_call_service_close (connection_id);
+    if (system_call_service_lookup (&service_lookup, &services, &service_list) != STORM_RETURN_SUCCESS)
+    {
+        return -1;
+    }
+
+    if (system_call_service_connect (service_list.id, &connection_id) != STORM_RETURN_SUCCESS)
+    {
+        return -1;
+    }
+    
+    if (system_call_service_invoke (connection_id, KERNEL_FUNCTION_LOG,
+                                    test) != STORM_RETURN_SUCCESS)
+    {
+        return -1;
+    }
+
+    if (system_call_service_close (connection_id))
+    {
+        return -1;
+    }
+
+    /* All hail king Jesus. */
     return 0;
 }
