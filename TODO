@@ -7,15 +7,19 @@ the kernel stuff, etc.
 chaos 0.0.5
 -----------
 
-  * storm 0.5.0
+  * Check out that everything works (more or less).
 
 Further away (chaos 0.1.0, ...)
 -------------------------------
 
+  * Create an installation program.
+  * ISO9660 support.
+  * ATAPI.
   * Change all americanised spellings to pure, British ones.
+  * Implement support for writing files in the FAT and VFS servers.
   * Extend autochaos and merge with cAPS, so package building can be
     done.
-  * Write a POSIX library, for easy start-up porting of GNU
+  * Finish the ISO/POSIX libraries, for easy start-up porting of GNU
     applications.
   * Port Perl to chaos, so autochaos can be run natively.  
   * Create tornado.
