@@ -9,7 +9,7 @@
 #define __KERNEL_TYPES_H__
 
 /* Log the given string to the kernel log. */
-typedef return_t (*kernel_log_t)(const char *string);
+typedef return_t (*kernel_log_t)(service_id_t service_id, const char *string);
 
 typedef struct
 {
