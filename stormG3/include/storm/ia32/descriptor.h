@@ -1,4 +1,4 @@
-/* $chaos: descriptor.h,v 1.3 2002/10/04 19:01:20 per Exp $ */
+/* $chaos: descriptor.h,v 1.4 2002/10/08 20:16:14 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -10,18 +10,39 @@
 #ifndef __STORM_IA32_DESCRIPTOR_H__
 #define __STORM_IA32_DESCRIPTOR_H__
 
+#include <storm/defines.h>
 #include <storm/types.h>
 
-enum
+enum descriptor_type
 {
+    /**
+     * @brief           A 32-bit task gate.
+     */
     DESCRIPTOR_TYPE_TASK_GATE_32 = 5,
+
+    /**
+     * @brief           A TSS gate.
+     */
     DESCRIPTOR_TYPE_TSS = 9,
+
+    /**
+     * @brief           A call gate.
+     */
     DESCRIPTOR_TYPE_CALL_GATE = 12,
+
+    /**
+     * @brief           A 32-bit interrupt gate.
+     */
     DESCRIPTOR_TYPE_INTERRUPT_GATE_32 = 14,
+
+    /**
+     * @brief           A 32-bit trap gate. */
     DESCRIPTOR_TYPE_TRAP_GATE_32 = 15,
 };
 
-/** @brief A descriptor. */
+/** 
+ * @brief               A descriptor. 
+ */
 typedef struct
 {
     uint16_t limit_lo;                  /* Low 16 bits of segment limit. */
@@ -38,9 +59,11 @@ typedef struct
     uint8_t granularity : 1;            /* If 1, segment limit is multiplied
                                           by 4096. */
     uint8_t base_hi2;                   /* Bits 24-31 of base address. */
-} descriptor_t __attribute__ ((packed));
+} descriptor_t PACKED;
 
-/** @brief A gate descriptor. */
+/**
+ * @brief               A gate descriptor. 
+ */
 typedef struct
 {
     uint16_t offset_lo;                 /* Low 16 bits of offset. */
@@ -52,6 +75,6 @@ typedef struct
     uint8_t present : 1;                /* If zero, this descriptor isn't
                                              used. */
     uint16_t offset_hi;                 /* High 16 bits of offset. */
-} gate_descriptor_t __attribute__ ((packed));
+} gate_descriptor_t PACKED;
 
 #endif /* !__STORM_IA32_DESCRIPTOR_H__ */
