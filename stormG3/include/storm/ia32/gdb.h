@@ -28,15 +28,6 @@
 #define __STORM_IA32_GDB_H__
 
 /**
- * @brief               A breakpoint.
- *
- * You can add a breakpoint in the code just by running this
- * macro. When you then load the kernel with serial debugging enabled,
- * the debugger will break on this point.
- */
-#define BREAKPOINT() asm("int $3");
-
-/**
  * @brief               Initialize serial GDB debugging.
  * @param port          The number of the serial port to use.
  * @param speed         The speed to use.

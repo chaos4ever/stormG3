@@ -69,12 +69,37 @@ typedef struct
 extern void debug_init (void);
 
 /* Macros. */
+/**
+ * @brief               Halt the system completely.
+ * @param message       A message to print.
+ * @return              Does not return.
+ */
 #define DEBUG_HALT(message) \
   debug_print (message); \
   debug_print (" (%s:%u)\n", __FILE__, __LINE__); \
   while (TRUE);
 
+/* 
+ * @brief               Print debugging information.
+ *
+ * Add this macro somewhere and the kernel will print very handy
+ * information whenever that line is being reached. 
+ */
 #define DEBUG_INFO() \
   debug_print ("Passed %s:%u (%s)\n", __FILE__, __LINE__, __FUNCTION__);
+
+/**
+ * @brief               A breakpoint.
+ *
+ * You can add a breakpoint in the code just by running this
+ * macro. When you then load the kernel with serial debugging enabled,
+ * the debugger will break on this point. If serial debugging is not
+ * enabled, the built-in kernel breakpoint handler will be called
+ * which will basically just print a message (so that you know that
+ * you have a breakpoint in the code that should be removed when
+ * compiling a release).
+ */
+#define DEBUG_BREAKPOINT() \
+                        asm("int $3");
 
 #endif /* !__STORM_IA32_DEBUG_H__ */
