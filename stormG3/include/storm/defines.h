@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.8 2002/10/10 21:44:09 per Exp $ */
+/* $chaos: defines.h,v 1.9 2002/10/15 10:03:51 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -21,49 +21,59 @@
  * specifying an "empty pointer", pointing to nothing -- a very common
  * programming practice.
  */
-#define NULL                            ((void *) 0)
+#define NULL            ((void *) 0)
 
 /**
  * @brief               A true boolean value.
  */
-#define TRUE                            (1 == 1)
+#define TRUE            (1 == 1)
 
 /**
  * @brief               A false boolean value.
  */
-#define FALSE                           (!TRUE)
+#define FALSE           (!TRUE)
+
+/**
+ * @brief               The minimum of the two values.
+ */
+#define MIN(a,b)        ((a) < (b) ? (a) : (b))
+
+/**
+ * @brief               The maximum of the two values.
+ */
+#define MAX(a,b)        ((a) > (b) ? (a) : (b))
 
 /**
  * @brief               A kibibyte.
  */
-#define KIB                             (1024)
+#define KIB             (1024)
 
 /**
  * @brief               A mibibyte.
  */
-#define MIB                             (1024 * KIB)
+#define MIB             (1024 * KIB)
 
 /**
  * @brief               A gibibyte.
  */
-#define GIB                             (1024 * MIB)
+#define GIB             (1024 * MIB)
 
 /**
  * @brief               Use this define to attribute that the function
  *                      will not ever return. 
  */
-#define NORETURN                        __attribute__ ((noreturn))
+#define NORETURN        __attribute__ ((noreturn))
 
 /**
  * @brief               Use this define to tell the compiler that an
  *                      argument or variable is not used. 
  */
-#define UNUSED                          __attribute__ ((unused))
+#define UNUSED          __attribute__ ((unused))
 
 /**
  * @brief               Use this define to mark a function as deprecated.
  */
-#define DEPRECATED                      __attribute__ ((deprecated))
+#define DEPRECATED      __attribute__ ((deprecated))
 
 /**
  * @brief               Use this define to tell the compiler that a
@@ -76,15 +86,17 @@
  * need to mark such structures as PACKED for the code to work
  * properly..
  */
-#define PACKED                          __attribute__ ((packed))
+#define PACKED          __attribute__ ((packed))
 
 /**
  * @brief               The maximum number of servers to start at boot time. 
  */
-#define MAX_STARTUP_SERVERS             32
+#define MAX_STARTUP_SERVERS \
+                        (32)
 
-/* Stupid, but just to get the AVL code compiling. FIXME: Remove this ASAP. */
-#define malloc(n) (NULL)
+/* Stupid, but just to get the AVL code compiling. FIXME: Remove this
+   ASAP. */
+#define malloc(n)       (NULL)
 #define free(n)
 
 #endif /* !__STORM_DEFINES_H__ */
