@@ -1,4 +1,4 @@
-/* $chaos: exception.c,v 1.14 2002/10/04 19:01:21 per Exp $ */
+/* $chaos: exception.c,v 1.15 2002/10/14 08:31:18 per Exp $ */
 /* Abstract: Exception handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -154,9 +154,24 @@ void exception_general_protection_fault (cpu_register_t registers)
 
 void exception_page_fault (cpu_register_t registers)
 {
-    debug_print ("Page fault at %x, error code: %x.\n", cpu_get_cr2(), 
+    uint32_t cr2 = cpu_get_cr2 ();
+    uint32_t cr3 = cpu_get_cr3 ();
+    debug_print ("Page fault at %x, error code: %x.\n", cr2, 
                  registers.error_code);
     dump_registers (&registers);
+    debug_print ("CR3: %x\n", cr3);
+    page_directory_t *page_directory = (page_directory_t *) cr3;
+    int page_directory_index = (cr2 / PAGE_SIZE) / 1024;
+    debug_print ("Page directory index: %u\n", page_directory_index);
+    page_table_t *page_table = (page_table_t *) (page_directory[page_directory_index].page_table_base * PAGE_SIZE);
+    debug_print ("Page table: %x\n", page_table);
+    int which = (cr2 >> 12) % 1024;
+    debug_print ("%u %u %u %u\n", page_table[which].present,
+                 page_table[which].flags, page_table[which].accessed,
+                 page_table[which].dirty);
+    debug_print ("%u %u %u %x\n", page_table[which].zero,
+                 page_table[which].global, page_table[which].available,
+                 page_table[which].page_base);
     while (TRUE);
 }  
 
