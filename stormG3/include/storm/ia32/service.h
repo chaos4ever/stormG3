@@ -1,4 +1,4 @@
-/* $chaos: service.h,v 1.14 2002/10/29 22:37:45 per Exp $ */
+/* $chaos: service.h,v 1.15 2002/10/30 22:38:09 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -20,8 +20,8 @@
  * @param connection_id Pointer to where the connection ID will be stored.
  * @return              STORM_RETURN_SUCCESS if successful.
  */
-extern return_t service_connect (service_id_t service_id,
-                                 service_connection_id_t *connection_id);
+extern return_t         service_connect (service_id_t service_id,
+                                         service_connection_id_t *connection_id);
 
 /**
  * @brief               Close a connection that has been made to a service
@@ -29,7 +29,21 @@ extern return_t service_connect (service_id_t service_id,
  * @param connection_id The ID of the connection.
  * @return              STORM_RETURN_SUCCESS if successful.
  */
-extern return_t service_close (service_connection_id_t connection_id);
+extern return_t         service_close (service_connection_id_t connection_id);
+
+/**
+ * @brief               Invoke a function with a service provider.
+ * @param connection_id The connection ID of the connection we have with the
+ *                      service provider.
+ * @param function_number
+ *                      The number of the function to run with this service
+ *                      provider.
+ * @param data          The data to the function.
+ * @return              STORM_RETURN_SUCCESS if successful.
+ */
+extern return_t         service_invoke (service_connection_id_t connection_id,
+                                        unsigned int function_number,
+                                        void *data);
 
 /**
  * @brief               Information about a service provider. 
