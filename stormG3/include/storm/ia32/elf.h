@@ -1,4 +1,4 @@
-/* $chaos: elf.h,v 1.1 2002/06/15 16:20:27 per Exp $ */
+/* $chaos: elf.h,v 1.2 2002/06/15 16:21:58 per Exp $ */
 /* Abstract: ELF file format. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -55,6 +55,12 @@ enum
     ELF_MACHINE_NONE,
 
     /* AT&T WE 32100 */
+    ELF_MACHINE_M32,
+
+    /* Sun Sparc. */
+    ELF_MACHINE_SPARC,
+
+    /* Intel IA32. */
     ELF_MACHINE_386,
 
     /* Motorola 68000. */
@@ -137,6 +143,34 @@ enum
        semantics. Programs that contain a section of this type does not
        conform to the ABI. */
     ELF_SECTION_TYPE_SHARED_LIBRARY,
+    
+    /* This section holds a symbol table used for dynamic linking. */
+    ELF_SECTION_TYPE_DYNAMIC_SYMBOL_TABLE,
+};
+
+enum
+{
+    /* A NULL program header means that this segment is unused. */
+    ELF_PROGRAM_TYPE_NULL,
+
+    /* A loadable segment. */
+    ELF_PROGRAM_TYPE_LOAD,
+
+    /* A segment containing dynamic linking information. */
+    ELF_PROGRAM_TYPE_DYNAMIC,
+
+    /* A segment containing a NULL-terminated path to the interpreter
+       needed to run this segment. */
+    ELF_PROGRAM_TYPE_INTERPRETER,
+
+    /* A segment containig auxiliary information. */
+    ELF_PROGRAM_TYPE_NOTE,
+
+    /* A segment with "unspecified semantics". */
+    ELF_PROGRAM_TYPE_SHARED_LIBRARY,
+
+    /* A segment containing the program header. */
+    ELF_PROGRAM_TYPE_PROGRAM_HEADER,
 };
 
 /* Section flags. */
@@ -151,6 +185,39 @@ enum
 
     /* This section contains code that should be executable. */
     ELF_SECTION_FLAG_EXECUTE = BIT_VALUE (2),
+};
+
+/* Symbol bindings. */
+enum
+{
+    /* A local symbol. */
+    ELF_SYMBOL_BINDING_LOCAL,
+
+    /* A global symbol. */
+    ELF_SYMBOL_BINDING_GLOBAL,
+    
+    /* A "weak" symbol. Similar to a global symbol but with less
+       precedence. */
+    ELF_SYMBOL__BINDING_WEAK
+};
+
+/* Symbol types. */
+enum
+{
+    /* Unspecified symbol type. */
+    ELF_SYMBOL_TYPE_NONE,
+
+    /* A data object. (variable, array, etc). */
+    ELF_SYMBOL_TYPE_OBJECT,
+
+    /* A function or other executable code. */
+    ELF_SYMBOL_FUNC,
+
+    /* A section symbol (used for relocation). */
+    ELF_SYMBOL_SECTION,
+
+    /* A file symbol. */
+    ELF_SYMBOL_FILE
 };
 
 /* Type definitions. */
@@ -237,5 +304,58 @@ typedef struct
     /* The size of each section entry. */
     uint32_t entry_size;
 } elf_section_header_t;
+
+/* A program header entry. */
+typedef struct
+{    
+    /* The type of this program header, ELF_PROGRAM_TYPE_*. */
+    uint32_t type;
+    
+    /* The offset of this segment, starting from the beginning of the
+       ELF image. */
+    uint32_t offset;
+
+    /* The virtual and physical address of this segment in memory. */
+    uint32_t virtual_address;
+    uint32_t physical_address;
+
+    /* Size of this segment in the file. */
+    uint32_t file_size;
+
+    /* Size of this segment in memory. */
+    uint32_t memory_size;
+
+    /* Flags for this segment, ELF_PROGRAM_FLAG_*. */
+    uint32_t flags;
+
+    /* The number of bytes to which this segment is aligned in memory
+       and in file. Values of 0 and 1 means no specific alignment. */
+    uint32_t align;
+} elf_program_header_t;
+
+/* A symbol table entry. */
+typedef struct
+{
+    /* An index into the symbol string table, containing the name of
+       this symbol. */
+    uint32_t name;
+
+    /* The value of this symbol. */
+    uint32_t value;
+
+    /* The size of this symbol. 0 if no size or size unknown. */
+    uint32_t size;
+
+    /* The symbol's type and binding attributes. */
+    uint8_t bind : 4;
+    uint8_t type : 4;
+
+    /* This field is not used. Only for alignment. */
+    uint8_t other;
+
+    /* The index of the section header that this symbol is defined in
+       relation to. */
+    uint16_t section_header;
+} __attribute__ ((packed)) elf_symbol_t;
 
 #endif /* !__STORM_IA32_ELF_H__ */
