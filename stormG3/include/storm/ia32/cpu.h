@@ -1,4 +1,4 @@
-/* $chaos: cpu.h,v 1.16 2002/10/13 13:55:36 per Exp $ */
+/* $chaos: cpu.h,v 1.17 2002/10/14 21:29:31 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -17,6 +17,11 @@
 #include <storm/ia32/defines.h>
 
 /* Inline functions. */
+/**
+ * @brief               Read the TSC (Time Stamp Count) register.
+ * @param low           The resulting low 32 bits of the TSC.
+ * @param high          The resulting high 32 bits of the TSC.
+ */
 static inline void cpu_rdtsc (uint32_t *low, uint32_t *high)
 {
   asm volatile 
@@ -34,6 +39,10 @@ static inline void cpu_set_tr (uint16_t new_tr)
 		: "r" (new_tr));
 }
 
+/**
+ * @brief               Set the CR0 (Control Register 0).
+ * @param new_cr0       The new value of the CR0.
+ */
 static inline void cpu_set_cr0 (uint32_t new_cr0)
 {
     asm volatile ("movl %0, %%cr0"
@@ -67,6 +76,10 @@ static inline uint32_t cpu_get_cr3 (void)
     return return_value;
 }
 
+/**
+ * @brief               Set the value of the CR3 register.
+ * @param new_cr3       The new value of the CR3 register.
+ */
 static inline void cpu_set_cr3 (uint32_t new_cr3)
 {
     asm volatile ("movl %0, %%cr3"
@@ -74,6 +87,10 @@ static inline void cpu_set_cr3 (uint32_t new_cr3)
                   : "r" (new_cr3));
 }
 
+/**
+ * @brief               Get the value of the current stack pointer (ESP).
+ * @return              The value of the stack pointer.
+ */
 static inline uint32_t cpu_get_esp (void)
 {
   uint32_t return_value;
@@ -85,23 +102,32 @@ static inline uint32_t cpu_get_esp (void)
   return return_value;
 }
 
+/**
+ * @brief               Disable CPU interrupts.
+ *
+ * Exceptions will still be enabled.
+ */
 static inline void cpu_interrupts_disable (void)
 {
   asm ("cli");
 }
 
+/**
+ * @brief               Enable CPU interrupts.
+ */
 static inline void cpu_interrupts_enable (void)
 {
   asm ("sti");
 }
 
-/* Function prototypes. */
 /**
- * @brief               Query information about the installed CPU. 
+ * @brief               Initialize CPU detection code.
+ *
+ * This function must be run before any MMX, 3DNow! or similar
+ * instructions are used, so that the computer will not crash.
  */
 extern void cpu_init (void);
 
-/* Type definitions. */
 /**
  * @brief               Flags that we get out of CPUID. 
  */
@@ -134,7 +160,7 @@ typedef struct
     uint32_t sse:       1;
     uint32_t ff_res2:   5;
     uint32_t amd_3dnow: 1;
-} cpuid_flags_t __attribute__ ((packed));
+} cpuid_flags_t PACKED;
 
 /**
  * @brief               Information about a CPU. 
@@ -142,12 +168,16 @@ typedef struct
 typedef struct
 {
     uint32_t cpuid;
-    
+
+    /**
+     * @brief           The name of the CPU.
+     */
     const char *name;
     
     /* Phony variable. Since C is so stupid it won't let me have union
        elements accessed the same way as the rest of the structure, we
-       have to hack it a little.. */
+       have to hack it a little.. FIXME: I think that works in the
+       latest version of gcc. */
     uint32_t signature[0];
     
     /* CPU signature. */
@@ -157,66 +187,104 @@ typedef struct
     uint32_t type:     2;
     uint32_t s_res0:   18;
     
-    /** @brief Easy access to the flags both as an uint32 and as the
-        broken-down cpuid_flags_t */
+    /** 
+     * @brief           Easy access to the flags both as an uint32 and
+     *                  as the broken-down cpuid_flags_t 
+     */
     union
     {
         uint32_t real_flags;
         cpuid_flags_t flags;
     } flags;
  
-    /** CPU configuration. */
+    /**
+     * @brief           CPU configuration. 
+     */
   uint32_t configuration;
-} cpu_info_t __attribute__ ((packed));
+} cpu_info_t PACKED;
 
-/** @brief The IA32 registers. In convenient order. */
+/**
+ * @brief               The IA32 registers. In convenient order. 
+ */
 typedef struct
 {
-    /* @brief These ones are pushed manually. */
-    uint32_t gs, fs, es, ds;
+    /**
+     * @brief           These ones are pushed manually. 
+     */
+    uint32_t            gs, fs, es, ds;
 
-    /* @brief These are gently stored by a pusha. */
+    /**
+     * @brief           These are gently stored by a pusha. 
+     */
     uint32_t edi, esi, ebp, esp;
     uint32_t ebx, edx, ecx, eax;
 
-    /* @brief An error code (dummy for some exceptions). */
+    /**
+     * @brief           An error code (dummy for some exceptions). 
+     */
     unsigned int error_code;
 
-    /* @brief The current (or next) instruction. */
+    /**
+     * @brief           The current (or next) instruction. 
+     */
     unsigned int eip;
+
+    /**
+     * @brief           The code segment selector.
+     */
     unsigned int cs;
 
-    /* @brief EFLAGS get pushed first. */
+    /* @brief           EFLAGS get pushed first. 
+     */
     uint32_t eflags;
 } cpu_register_t;
 
-/* External variables. */
-/** @brief Information about the CPU in the system. */
+/**
+ * @brief               Information about the CPU in the system. 
+ */
 extern cpu_info_t cpu_info;
 
-/* CPUID functions. */
-enum
+/**
+ * @briefC              PUID functions. */
+enum cpuid_function_t
 {
+    /**
+     * @brief           Get the vendor name of the CPU.
+     */
     CPUID_GET_CPU_VENDOR,
+
+    /**
+     * @brief           Get information (capabilities) of this CPU.
+     */
     CPUID_GET_CPU_INFO,
 };
 
-/* CR0 bits. */
-/** Paging enabled. */
-#define CPU_CR0_PG (BIT_VALUE (31))
+/**
+ * @brief               Paging enabled. 
+ */
+#define CPU_CR0_PG                      (BIT_VALUE (31))
 
-/** Protected mode flag. */
-#define CPU_CR0_PE (BIT_VALUE (0))
+/**
+ * @brief               Protected mode enabled. 
+ */
+#define CPU_CR0_PE                      (BIT_VALUE (0))
 
-/** Extension type. */
+/**
+ * @brief               Extension type. 
+ */
 #define CPU_CR0_ET (BIT_VALUE (4))
 
-/** Write protect (486+). */
+/**
+ * @brief               Write protect (486+). 
+ */
 #define CPU_CR0_WP (BIT_VALUE (16))
 
-/** Flags in the EFLAGS register. See the Intel documentation for more
-    information about what those does. */
-enum
+/**
+ * @brief               Flags in the EFLAGS register. See the Intel
+ *                      documentation for more information about what
+ *                      those does. 
+ */
+enum cpu_flag_t
 {
     CPU_FLAG_CARRY = (BIT_VALUE (0)),
     CPU_FLAG_SET = (BIT_VALUE (1)),
