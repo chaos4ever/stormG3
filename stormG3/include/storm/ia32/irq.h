@@ -1,12 +1,17 @@
-/* $chaos: irq.h,v 1.9 2002/10/10 20:36:25 per Exp $ */
+/* $chaos: irq.h,v 1.10 2002/10/11 07:42:56 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
 
 /**
- * @file irq.h
- * @brief IRQ handling.
+ * @file                irq.h
+ * @brief               IRQ handling.
+ *
+ * The low-level IRQ handlers (written in assembly and defined in
+ * irq_handlers.S) are the interrupt handlers defined in the IDT. They
+ * pass on control to the highlevel handler irq_handler, which in turn
+ * passes on to interrupt handlers registered by kernel modules.
  */
 
 #ifndef __STORM_IA32_IRQ_H__
