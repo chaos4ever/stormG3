@@ -1,4 +1,4 @@
-/* $chaos: keyboard.c,v 1.9 2002/06/23 20:37:56 per Exp $ */
+/* $chaos: keyboard.c,v 1.10 2002/08/03 11:47:37 per Exp $ */
 /* Abstract: Keyboard module for chaos. */
 /* Authors: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
@@ -304,13 +304,24 @@ void keyboard_handle_event (uint8_t scancode)
             keyboard_update_leds ();
             keyboard_set_repeat_rate ();
         }
-        
+
+        if (scancode == 224)
+        {
+            // FIXME: Support this. The following key is an extended
+            // key (Right Alt, Right Ctrl, Insert, Delete, Home, End,
+            // Page Up, Page Down etc). We need to give them scan
+            // codes that are unique so we can distinguish between
+            // things like Left Alt and Right Alt.
+        }
+
         if ((scancode & 0x80) == 0) 
         {
+
             /* A key was pressed. */
             keyboard_pressed_keys[scancode / 8] |= (1 << (scancode % 8));
             
-            /* Check if the pressed key is a lock key. */
+            /* Check if the pressed key is a lock key, or something
+               else special. */
             switch (scancode)
             {
                 case SCAN_CODE_CAPS_LOCK:
@@ -331,6 +342,20 @@ void keyboard_handle_event (uint8_t scancode)
                 {
                     keyboard_state_scroll = ~keyboard_state_scroll;
                     keyboard_update_leds ();
+                    break;
+                }
+
+                case SCAN_CODE_NUMERIC_DELETE:
+                {
+                    if ((shift_state & 
+                        (KEYBOARD_RIGHT_ALT + KEYBOARD_RIGHT_CONTROL)) ==
+                        (KEYBOARD_RIGHT_ALT + KEYBOARD_RIGHT_CONTROL))
+                    {
+                        /* Control-Alt-Delete has been pressed. Reboot
+                           the machine. FIXME: Make this
+                           configurable. */
+                        halt (HALT_REBOOT);
+                    }
                     break;
                 }
 
