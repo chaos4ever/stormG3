@@ -1,4 +1,4 @@
-/* $chaos: irq.c,v 1.7 2002/10/04 19:01:21 per Exp $ */
+/* $chaos: irq.c,v 1.8 2002/10/15 18:14:50 per Exp $ */
 /* Abstract: IRQ handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -175,7 +175,6 @@ void irq_handler (unsigned int irq_number)
     if (irq[irq_number].in_handler)
     {
         ack_interrupt (irq_number);
-        debug_print ("In handler");
         return;
     }
 
