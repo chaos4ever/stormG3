@@ -1,4 +1,4 @@
-/* $chaos: console.c,v 1.1 2002/08/13 18:50:53 per Exp $ */
+/* $chaos: console.c,v 1.2 2002/10/04 19:01:12 per Exp $ */
 /* Abstract: Console module. Will eventually be 100% ANSI escape
              sequence compatible. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
@@ -222,6 +222,7 @@ static return_t console_handle_key_event (keyboard_packet_t *keyboard_packet)
     }        
 
 #ifdef DEBUG
+    /*
     debug_print ("%s: We got an event: %u %u %u %u %u %u %s.\n", __FILE__,
                  keyboard_packet->has_character_code,
                  keyboard_packet->has_special_key,
@@ -229,7 +230,19 @@ static return_t console_handle_key_event (keyboard_packet_t *keyboard_packet)
                  keyboard_packet->right_alt_down,
                  keyboard_packet->key_pressed,
                  keyboard_packet->special_key,
-                 keyboard_packet->character_code);
+                 keyboard_packet->character_code); */
+    /* Mini-editor. :) */
+    if (keyboard_packet->key_pressed)
+    {
+        if (keyboard_packet->special_key == KEYBOARD_SPECIAL_KEY_ENTER) 
+        {
+            debug_print ("\n");
+        }
+        else
+        {
+            debug_print ("%s", keyboard_packet->character_code);
+        }
+    }
 #endif    
 
     return STORM_RETURN_SUCCESS;
