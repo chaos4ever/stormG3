@@ -1,4 +1,4 @@
-/* $chaos: service.h,v 1.11 2002/10/22 20:56:26 per Exp $ */
+/* $chaos: service.h,v 1.12 2002/10/28 07:44:33 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -20,6 +20,11 @@
 typedef struct
 {
     /**
+     * @brief           A unique service provider ID.
+     */
+    service_id_t        id;
+
+    /**
      * @brief           The service name. 
      */
     char                name[SERVICE_NAME_LENGTH];
@@ -40,7 +45,7 @@ typedef struct
      * Can be something like a MAC address, serial number, etc. Used
      * to distinguish between different devices with the same model.
      */
-    char                id[SERVICE_ID_LENGTH];
+    char                device_id[SERVICE_ID_LENGTH];
 
     /**
      * @brief           The major version of the service provided. 
