@@ -1,4 +1,4 @@
-/* $chaos: memory_global.c,v 1.2 2002/06/11 21:25:48 per Exp $ */
+/* $chaos: memory_global.c,v 1.3 2002/06/12 06:52:40 per Exp $ */
 /* Abstract: Global memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -86,7 +86,9 @@ return_t memory_global_allocate (void **pointer, unsigned int size)
     else 
     {
         /* We don't support allocating bigger blocks than a page,
-           since that it not O(1) in the physical memory allocator. */
+           since that it not O(1) in the physical memory
+           allocator. FIXME: Enable this when we have the new
+           big-block physical allocation.. */
         *pointer = NULL;
         return STORM_RETURN_NOT_IMPLEMENTED;
     }
