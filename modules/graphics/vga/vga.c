@@ -1,4 +1,4 @@
-/* $chaos: vga.c,v 1.2 2002/06/23 20:42:00 per Exp $ */
+/* $chaos: vga.c,v 1.3 2002/07/11 21:46:04 per Exp $ */
 /* Abstract: VGA server for chaos. */
 /* Authors: Per Lundberg <per@chaosdev.org>
             Henrik Hallin <hal@chaosdev.org> */

@@ -1,4 +1,4 @@
-/* $chaos: vgamode.c,v 1.2 2002/07/11 08:14:22 per Exp $ */
+/* $chaos: vgamode.c,v 1.3 2002/07/11 08:15:21 per Exp $ */
 /* Abstract: Mode setting code. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 

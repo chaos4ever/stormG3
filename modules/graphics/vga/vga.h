@@ -1,4 +1,4 @@
-/* $chaos: vga.h,v 1.1 2002/06/23 12:09:07 per Exp $ */
+/* $chaos: vga.h,v 1.2 2002/07/11 21:45:50 per Exp $ */
 /* Abstract: VGA header file. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
