@@ -1,4 +1,4 @@
-/* $chaos: boot.c,v 1.7 2002/11/21 21:42:50 per Exp $ */
+/* $chaos: boot.c,v 1.8 2002/12/02 20:38:50 per Exp $ */
 /* Abstract: Boot program (somewhat like init in Unix systems). */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -27,8 +27,8 @@ int main (int argc UNUSED, char **argv UNUSED)
     service_t service_list;
     service_lookup_t service_lookup = 
         {
-            "kernel", NULL, NULL, NULL, KERNEL_SERVICE_MAJOR_VERSION,
-            KERNEL_SERVICE_MINOR_VERSION
+            "kernel", NULL, NULL, NULL, KERNEL_PROTOCOL_MAJOR_VERSION,
+            KERNEL_PROTOCOL_MINOR_VERSION
         };
     service_connection_id_t connection_id;
 
