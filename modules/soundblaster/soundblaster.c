@@ -1,4 +1,4 @@
-/* $chaos: soundblaster.c,v 1.1 2002/06/18 22:30:14 per Exp $ */
+/* $chaos: soundblaster.c,v 1.2 2002/06/19 07:57:40 per Exp $ */
 /* Abstract: Sound Blaster server */
 
 /* Authors: Per Lundberg <per@chaosdev.org> 
@@ -11,9 +11,13 @@
    found in sblaster.doc, which can be found in the same directory as
    this source code. */
 
+#include <log/log.h>
 #include <storm/storm.h>
 
 #include "soundblaster.h"
+
+/* The log service provider that we are using. */
+log_service_t log;
 
 /* The default base port of the sound card. Can be overridden by a
    command parameter to the server (well, in the future...) */
@@ -37,8 +41,6 @@ SoundBlaster 16            4.0x  (4.04, 4.05)
 SoundBlaster 16 SCSI-2     4.11  (4.11)
 SoundBlaster AWE32         4.12+ (4.12) */
 uint8_t major_version, minor_version;
-
-//log_structure_t log_structure;
 
 /* FIXME: They should not be global variables, perhaps not even
    separate ones. */
@@ -76,7 +78,7 @@ static bool detect_sb (void)
     /* Register the I/O ports so that we can probe for the card. */
     if (port_range_register (base_port, 16, "Sound Blaster"))
     {
-        // log_print ("Failed to register ports.\n");
+        log.print (LOG_URGENCY_EMERGENCY, "Failed to register ports.\n");
         return FALSE;
     }
 
@@ -106,23 +108,18 @@ static bool detect_sb (void)
 }
 
 /* Main function. */
-int module_start (void)
+return_t module_start (void)
 {
-#if FALSE
-    ipc_structure_t ipc_structure;
-
-    /* Set our name. */
-    system_call_process_name_set (PACKAGE_NAME);
-    system_call_thread_name_set ("Initialising");
-  
-    log_init (&log_structure, PACKAGE_NAME, &empty_tag);
-#endif
+    if (log_init (&log) != LOG_RETURN_SUCCESS)
+    {
+        return -1;
+    }
 
     /* Check for the presence of a Sound Blaster compatible card. */
     if (!detect_sb ())
     {
-        //    log_print (&log_structure, LOG_URGENCY_EMERGENCY,
-        //               "No Sound Blaster compatible card detected.");
+        log.print (LOG_URGENCY_EMERGENCY,
+                   "No Sound Blaster compatible card detected.");
         return -1;
     }
     else
@@ -131,20 +128,20 @@ int module_start (void)
         {
             case 1:
             {
-                //        log_print (&log_structure, LOG_URGENCY_INFORMATIVE,
-                //                   "Sound Blaster 1.0/1.5 detected.");
+                log.print (LOG_URGENCY_INFORMATIVE,
+                           "Sound Blaster 1.0/1.5 detected.");
                 break;
             }
             case 2:
             {
-                //        log_print (&log_structure, LOG_URGENCY_INFORMATIVE,
-                //                   "Sound Blaster 2.0 detected.");
+                log.print (LOG_URGENCY_INFORMATIVE,
+                           "Sound Blaster 2.0 detected.");
                 break;
             }
             case 3:
             {
-                //        log_print (&log_structure, LOG_URGENCY_INFORMATIVE,
-                //                   "Sound Blaster Pro detected.");
+                log.print (LOG_URGENCY_INFORMATIVE,
+                           "Sound Blaster Pro detected.");
                 break;
             }
             case 4:
@@ -154,8 +151,8 @@ int module_start (void)
                     case 1 ... 11:
                     case 13:
                     {
-                        //            log_print (&log_structure, LOG_URGENCY_INFORMATIVE,
-                        //                       "Sound Blaster 16 detected.");
+                        log.print (LOG_URGENCY_INFORMATIVE,
+                                   "Sound Blaster 16 detected.");
 
                         /* Set IRQ 5 and DMA 1. FIXME: Do this in a
                            cleaner way. */
@@ -168,14 +165,14 @@ int module_start (void)
                     }
                     case 12:
                     {
-                        //                        log_print (&log_structure, LOG_URGENCY_INFORMATIVE,
-                        //                                   "Sound Blaster AWE32 detected.");
+                        log.print (LOG_URGENCY_INFORMATIVE,
+                                   "Sound Blaster AWE32 detected.");
                         break;
                     }
                     default:
                     {
-                        //                        log_print (&log_structure, LOG_URGENCY_INFORMATIVE,
-                        //                                   "Some kind of 16-bit Sound Blaster (compatible) detected.");
+                        log.print (LOG_URGENCY_INFORMATIVE,
+                                   "Some kind of 16-bit Sound Blaster (compatible) detected.");
                         break;
                     }
                 }
@@ -198,8 +195,9 @@ int module_start (void)
     if (dma_register (soundblaster_device.dma_channel,
                       (void **) &dma_buffer) != STORM_RETURN_SUCCESS)
     {
-        //        log_print (&log_structure, LOG_URGENCY_INFORMATIVE,
-        //                   "!storm_return-sucess.afsd");
+        log.print_formatted (LOG_URGENCY_INFORMATIVE,
+                             "Failed to register DMA channel %u.",
+                             soundblaster_device.dma_channel);
         return -1;
     }
 
@@ -208,8 +206,9 @@ int module_start (void)
     if (irq_register (soundblaster_device.irq, "Soundblaster",
                       (irq_handler_t *) &irq_handler) != STORM_RETURN_SUCCESS)
     {
-        //        log_print_formatted (&log_structure, LOG_URGENCY_EMERGENCY,
-        //                             "Could not allocate IRQ %u.", irq_number);
+        log.print_formatted (LOG_URGENCY_EMERGENCY,
+                             "Could not allocate IRQ %u.", 
+                             soundblaster_device.irq);
         return -1;
     }
 
