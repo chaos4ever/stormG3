@@ -1,4 +1,4 @@
-/* $chaos: exception.c,v 1.7 2002/06/14 22:47:27 per Exp $ */
+/* $chaos: exception.c,v 1.8 2002/06/14 22:52:02 per Exp $ */
 /* Abstract: Exception handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -190,8 +190,8 @@ void exception_machine_check_abort (cpu_register_t registers)
 /* Add an exception handler to the IDT. */
 static void setup_handler (int number, void *handler)
 {
-    idt_setup_trap_gate (number, KERNEL_CODE_SELECTOR,
-                         handler, 0);
+    idt_setup_interrupt_gate (number, KERNEL_CODE_SELECTOR,
+                              handler, 0);
 }
 
 /* Initialize exceptions. */
