@@ -1,4 +1,4 @@
-/* $chaos: dma.c,v 1.4 2002/10/04 19:01:21 per Exp $ */
+/* $chaos: dma.c,v 1.5 2002/10/15 18:14:04 per Exp $ */
 /* Abstract: DMA routines. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -26,5 +26,5 @@ return_t dma_register (unsigned int dma_channel, void **dma_buffer)
     /* Allocate some pages. 128 KiB means that 64 KiB will be usable
        -- one full 16-bit segment. We deallocate the rest, of
        course. */
-    return memory_physical_allocate (dma_buffer, 32);
+    return memory_physical_allocate (dma_buffer, 32, PROCESS_ID_KERNEL);
 }

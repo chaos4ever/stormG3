@@ -1,4 +1,4 @@
-/* $chaos: memory_global.c,v 1.7 2002/10/04 19:01:21 per Exp $ */
+/* $chaos: memory_global.c,v 1.8 2002/10/15 18:02:32 per Exp $ */
 /* Abstract: Global memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -77,8 +77,15 @@ return_t memory_global_allocate (void **pointer, unsigned int size)
     }
     else 
     {
-        /* Just return a number of physical pages instead */
-        return memory_physical_allocate (pointer, (size % PAGE_SIZE) == 0 ? (size / PAGE_SIZE) : (size / PAGE_SIZE) + 1);
+        /* Just return a number of physical pages instead. */
+        // FIXME: We would like to say PROCESS_ID_KERNEL here, but
+        // that *could* create huge problems sometime, because
+        // memory_physical_allocate calls memory_global_allocate. :-)
+        // Circular dependencies are bad. So, how do we make it work?
+        return memory_physical_allocate (pointer,
+                                         (size % PAGE_SIZE) == 0 ?
+                                         (size / PAGE_SIZE) :
+                                         (size / PAGE_SIZE) + 1, PROCESS_ID_NONE);
     }
 
     /* The slab structure we are accessing is now in
@@ -90,7 +97,9 @@ return_t memory_global_allocate (void **pointer, unsigned int size)
         unsigned int counter;
         memory_global_page_t *page;
 
-        return_t return_value = memory_physical_allocate (&new_page, 1);
+        // FIXME: We would like to put PROCESS_ID_KERNEL here.
+        return_t return_value = memory_physical_allocate (&new_page, 1, 
+                                                          PROCESS_ID_NONE);
         if (return_value != STORM_RETURN_SUCCESS) 
         {
             return return_value;
