@@ -1,4 +1,4 @@
-MILESTONES ($chaos$)
+MILESTONES ($chaos: MILESTONES,v 1.1 2002/06/05 17:02:30 per Exp $)
 ==========
 
 This is something like a road map for chaos as I see it:
@@ -11,14 +11,19 @@ services).
 
 M2
 --
+Play a .MOD file in chaos, running stormG3.
+
+M3
+--
 Porting all existing chaos code to the new stormG3 system, doing the
 neccessary adaptions.
 
-M3
+M4
 --
 Have the POSIX/ISO library support all that is needed to run common
 daily Unix programs, like bash, Apache, MySQL, gcc. This will provide
 a good base for writing the "real" chaos applications like tornado,
 cAPS and so on.
 
--- Per Lundberg <per@chaosdev.org>  Wed,  5 Jun 2002 17:59:38 +0200
+-- Per Lundberg <per@chaosdev.org>  Tue, 11 Jun 2002 16:01:51 +0200
+
