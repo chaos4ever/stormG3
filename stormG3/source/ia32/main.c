@@ -1,4 +1,4 @@
-/* $chaos: main.c,v 1.24 2002/10/04 19:01:21 per Exp $ */
+/* $chaos: main.c,v 1.25 2002/10/08 20:16:53 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -21,6 +21,7 @@
 #include <storm/ia32/port.h>
 #include <storm/ia32/timer.h>
 
+/* The main function. */
 void main_bootup (int argument_count UNUSED, char *arguments[] UNUSED)
 {
     /* Set up the CPU. Detect family, model etc. */
