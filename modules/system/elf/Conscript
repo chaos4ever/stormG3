@@ -1,0 +1,17 @@
+# $chaos: Conscript,v 1.1 2002/08/15 20:59:40 per Exp $ -*- Perl -*-
+
+# Abstract: CONS script for the ELF module.
+# Author: Per Lundberg <per@chaosdev.org>
+
+# Copyright 2002 chaos development.
+# Use freely under the terms listed in the file COPYING.
+
+$module_binary = 'elf.so';
+$module_path = 'system/elf';
+
+Import qw( cons module_directory library_directory install );
+$cons = $cons->clone(LIBS => '-llog');
+Depends $cons $module_binary, "$library_directory/liblog.a";
+Program $cons $module_binary, 'elf.c';
+$install_cmd = eval $install;
+Command $cons 'install', $module_binary, $install_cmd;
