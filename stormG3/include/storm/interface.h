@@ -1,4 +1,4 @@
-/* $chaos: dotfile.emacs,v 1.37 2002/10/14 16:03:33 per Exp $ */
+/* $chaos: interface.h,v 1.1 2002/10/22 20:59:24 per Exp $ */
 /* Abstract: stormG3 kernel interface. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -156,6 +156,16 @@ extern return_t service_unregister (char *service, function_t handler);
 extern return_t timer_sleep_milli (unsigned int time);
 
 #endif /* (defined __STORM_KERNEL_MODULE__) || (defined __STORM_KERNEL__) */
+
+/* Code that's only accessible from within kernel modules. */
+#if (defined __STORM_KERNEL_MODULE__)
+
+/** 
+ * @brief               The module entry point. 
+ */
+extern return_t module_start (void);
+
+#endif /* (defined __STORM_KERNEL__MODULE__) */
 
 /* Code that should only be accessible from outside the kernel
    (i.e. system calls). */
