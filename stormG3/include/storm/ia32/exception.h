@@ -1,4 +1,4 @@
-/* $chaos: exception.h,v 1.1 2002/06/11 21:05:57 per Exp $ */
+/* $chaos: exception.h,v 1.2 2002/06/13 07:02:30 per Exp $ */
 /* Abstract: Exception handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -41,6 +41,8 @@ extern void exception_alignment_check_fault_lowlevel (void);
 extern void exception_machine_check_abort_lowlevel (void);
 
 /* ...and the C functions. */
-extern void exception_page_fault (cpu_register_t *registers);
+extern void exception_page_fault (cpu_register_t registers, 
+                                  unsigned int error_code, unsigned int eip,
+                                  unsigned int cs, unsigned int eflags);
 
 #endif /* !__STORM_IA32_EXCEPTION_H__ */
