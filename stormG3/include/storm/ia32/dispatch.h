@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: dispatch.h,v 1.1 2002/06/15 13:48:56 per Exp $ */
 /* Abstract: Dispatcher. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -10,5 +10,8 @@
 
 /* The task switcher -- IRQ0 handler. */
 extern void dispatch_task_switcher (void);
+
+/* The number of ticks. */
+extern volatile unsigned int ticks;
 
 #endif /* !__STORM_IA32_DISPATCH_H__ */
