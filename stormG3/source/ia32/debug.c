@@ -1,4 +1,4 @@
-/* $chaos: debug.c,v 1.1 2002/05/25 20:09:40 per Exp $ */
+/* $chaos: debug.c,v 1.2 2002/06/05 18:17:26 per Exp $ */
 /* Abstract: Code used for debugging the kernel. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -122,6 +122,24 @@ static void hex_string (char *string, unsigned int number)
         string[index] = hex_character[(number >> (4 * (7 - index))) % 16];
     }
     string[8] = 0;
+}
+
+/* Dump some contents of memory. */
+void debug_memory_dump (uint32_t *memory, unsigned int length)
+{
+  unsigned int index;
+
+  for (index = 0; index < length; index++)
+  {
+    if ((index % 8) == 0)
+    {
+      debug_print ("\n");
+    }
+
+    debug_print ("%x ", memory[index]);
+  }
+
+  debug_print ("\n");
 }
 
 /* Print a formatted string to screen. Only used for debugging. This

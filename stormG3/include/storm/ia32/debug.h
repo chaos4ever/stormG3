@@ -1,4 +1,4 @@
-/* $chaos: debug.h,v 1.2 2002/06/05 18:17:42 per Exp $ */
+/* $chaos: debug.h,v 1.3 2002/06/09 15:04:52 per Exp $ */
 /* Abstract: Debug declarations. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -32,6 +32,9 @@ extern void debug_init (void);
 
 /* Print a debug message. */
 extern void debug_print (const char *format_string, ...);
+
+/* Dump memory. */
+extern void debug_memory_dump (uint32_t *memory, unsigned int length);
 
 /* Macros. */
 #define DEBUG_HALT(message...) \
