@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.h,v 1.11 2002/10/10 20:36:08 per Exp $ */
+/* $chaos: memory_physical.h,v 1.12 2002/10/20 19:32:43 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -95,30 +95,6 @@ void memory_physical_init (void);
  * @brief               Free pages that was used during startup. 
  */
 void memory_physical_done (void);
-
-/**
- * @brief               Allocate a number of pages. 
- * @param pointer       A double pointer to where the function will put
- *                      a pointer to the allocated memory.
- * @param pages         The number of pages to allocate. (1 is O(1),
- *                      more is much, much slower)
- * @param process_id    The process ID for which to allocate the memory. Specify
- *                      PROCESS_ID_NONE if you do not wish this to be stored in
- *                      the list (it will leak the page if the process get
- *                      killed in a weird way).
- * @return              STORM_RETURN_SUCCESS if successful.
- */
-return_t memory_physical_allocate (void **pointer, unsigned int pages,
-                                   process_id_t process_id);
-
-/**
- * @brief               Allocate a page for a process. 
- * @param pointer       A double pointer to where the function will put
- *                      a pointer to the allocated memory.
- * @param process_id    The process ID to allocate the memory for.
- * @return              STORM_RETURN_SUCCESS if successful.
- */
-return_t memory_physical_allocate_for_process (void **pointer) DEPRECATED;
 
 /**
  * @brief               Deallocate a page.
