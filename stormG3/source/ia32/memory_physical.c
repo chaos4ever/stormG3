@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.11 2002/06/17 21:23:22 per Exp $ */
+/* $chaos: memory_physical.c,v 1.12 2002/06/19 07:37:36 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -44,11 +44,8 @@ static void check_and_add_page (unsigned int page)
     {
         return;
     }
-    /* The memory space between DMA_BASE and up to the 640 KiB point
-       is used by DMA buffers. These can easily be freed later on, but
-       they are a pain to allocate when memory fragmentation has
-       started. */
-    else if (page * PAGE_SIZE >= DMA_BASE && 
+    /* The memory space between 640 KiB and 1 MiB is used for ISA hardware. */
+    else if (page * PAGE_SIZE >= 640 * KIB && 
              page * PAGE_SIZE < 1 * MIB)
     {
         return;

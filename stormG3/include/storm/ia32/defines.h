@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.13 2002/06/15 15:32:15 per Exp $ */
+/* $chaos: defines.h,v 1.14 2002/06/17 20:57:30 per Exp $ */
 /* Abstract: Generic storm defines. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -20,10 +20,6 @@
 
 /* Size of some regions. */
 #define KERNEL_STACK_SIZE               (4 * KIB)
-
-/* We reserve 3 8-bit DMA buffers (64 KiB each) and 3 16-bit DMA
-   buffers (128 KiB each). */
-#define DMA_BASE                        (64 * KIB)
 
 /* The kernel starts at 1 MiB. */
 #define KERNEL_BASE                     (1 * MIB)
