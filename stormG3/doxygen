@@ -1,4 +1,4 @@
-# $chaos: doxygen,v 1.1 2002/10/06 09:53:17 per Exp $
+# $chaos: doxygen,v 1.2 2002/10/09 08:09:11 per Exp $
 # Doxyfile 1.2.18
 
 # This file describes the settings to be used by the documentation system
@@ -794,7 +794,7 @@ INCLUDE_FILE_PATTERNS  =
 # or name=definition (no spaces). If the definition and the = are 
 # omitted =1 is assumed.
 
-PREDEFINED             = 
+PREDEFINED             = STORM
 
 # If the MACRO_EXPANSION and EXPAND_PREDEF_ONLY tags are set to YES then 
 # this tag can be used to specify a list of macro names that should be expanded. 
