@@ -1,4 +1,4 @@
-/* $chaos: dotfile.emacs,v 1.35 2002/10/04 18:41:41 per Exp $ */
+/* $chaos: process.c,v 1.1 2002/10/10 21:39:15 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 /* Abstract: Process support. */
 
@@ -9,6 +9,7 @@
 #include <storm/ia32/gdt.h>
 #include <storm/ia32/memory.h>
 #include <storm/ia32/memory_global.h>
+#include <storm/ia32/memory_physical.h>
 #include <storm/ia32/process.h>
 #include <storm/ia32/spinlock.h>
 #include <storm/ia32/string.h>
@@ -26,18 +27,21 @@ static spinlock_t process_list_lock = SPIN_UNLOCKED;
 /* Find the process with the given ID. */
 static process_t *process_find (process_id_t process_id)
 {
+    spin_lock (&process_list_lock);
     process_t *process = process_list;
 
     while (process != NULL)
     {
         if (process->id == process_id)
         {
+            spin_unlock (&process_list_lock);
             return process;
         }
 
         process = (process_t *) process_list->next;
     }
 
+    spin_unlock (&process_list_lock);
     return NULL;
 }
 
@@ -82,6 +86,11 @@ return_t process_precreate (process_id_t *process_id,
     /* Clear the page directory. */
     memory_clear_page (*page_directory);
 
+    /* Map the physical memory. We skip the first page to trap NULL
+       references. */
+    memory_virtual_map (*page_directory, 1, 1, 
+                        physical_pages - 1, PAGE_KERNEL);
+
     /* Get a process ID. */
     *process_id = process_find_free_id ();
 
@@ -96,7 +105,11 @@ return_t process_precreate (process_id_t *process_id,
     /* Lock and update the structure. */
     spin_lock (&process_list_lock);
     process->previous = (struct process_t *) process_list;
-    if (process_list != NULL)
+    if (process_list == NULL)
+    {
+        process_list = process;
+    }
+    else
     {
         process_list->next = (struct process_t *) process;
     }
