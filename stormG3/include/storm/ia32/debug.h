@@ -1,4 +1,4 @@
-/* $chaos: debug.h,v 1.13 2002/10/10 12:12:52 per Exp $ */
+/* $chaos: debug.h,v 1.14 2002/10/15 16:11:00 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -65,15 +65,6 @@ typedef struct
  * @brief Initialize debugging code. 
  */
 extern void debug_init (void);
-
-/**
- * @brief               Dump the contents of a memory region.
- * @param memory        The address of the memory to dump.
- * @param length        The number of uint32s to dump.
- *
- * The memory is dumped in hexadecimal format.
- */
-extern void debug_memory_dump (uint32_t *memory, unsigned int length);
 
 /* Macros. */
 #define DEBUG_HALT(message) \
