@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.2 2002/06/05 18:17:42 per Exp $ */
+/* $chaos: defines.h,v 1.3 2002/06/05 19:57:00 per Exp $ */
 /* Abstract: Generic storm defines. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -18,6 +18,9 @@
    variable. (Endian-specific) */
 #define LOW_U16(x)                      ((x) & 0xFFFF)
 #define HIGH_U16(x)                     ((x) >> 16)
+
+/* Get the value of a bit. (Endian-specific) */
+#define BIT_VALUE(x)                    (1 << x)
 
 /* Size of some reserved regions. */
 #define GDT_SIZE                        (2 * KIB)
