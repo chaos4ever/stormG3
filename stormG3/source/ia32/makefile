@@ -1,4 +1,4 @@
-# $chaos: makefile,v 1.3 2002/06/05 17:49:07 per Exp $
+# $chaos: makefile,v 1.4 2002/06/05 18:27:46 per Exp $
 
 # Abstract: storm G3 makefile
 # Authors: Henrik Hallin <hal@chaosdev.org>
@@ -8,6 +8,7 @@
 
 OBJECTS = debug.o init.o main.o memory_physical.o multiboot.o
 BINARY = stormG3
+.PHONY: main.o
 
 all: $(BINARY)
 
@@ -16,6 +17,10 @@ clean::
 
 install: all
 	$(INSTALL) $(BINARY) $(INSTALL_PATH)/system/kernel
+	gzip -9f $(INSTALL_PATH)/system/kernel/$(BINARY)
+
+main.o:
+	$(CC) -o $(@) -c $< $(CFLAGS)
 
 $(BINARY): $(OBJECTS)
 	$(CC) -o $(@) $(OBJECTS) -L.. -lgeneric $(LDFLAGS)
