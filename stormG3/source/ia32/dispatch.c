@@ -1,4 +1,4 @@
-/* $chaos: dispatch.c,v 1.4 2002/10/04 19:01:21 per Exp $ */
+/* $chaos: dispatch.c,v 1.5 2002/10/15 18:13:49 per Exp $ */
 /* Abstract: Dispatcher. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -12,6 +12,7 @@
 #include <storm/ia32/descriptor.h>
 #include <storm/ia32/dispatch.h>
 #include <storm/ia32/gdt.h>
+#include <storm/ia32/irq.h>
 #include <storm/ia32/memory_global.h>
 #include <storm/ia32/spinlock.h>
 
@@ -101,12 +102,16 @@ void dispatch_idle (void)
 /* Initialize the dispatcher. */
 void dispatch_init (void)
 {
+    /* Set up a kernel TSS. */
     return_t return_value = memory_global_allocate ((void **) &kernel_tss,
                                                     sizeof (tss_t));
     if (return_value != STORM_RETURN_SUCCESS)
     {
         DEBUG_HALT ("Failed to allocate memory for kernel TSS.");
     }
+
+    /* Fill in some important fields in this TSS. */
+    kernel_tss->cr3 = cpu_get_cr3 ();
 
     /* Set up the TSS descriptor, so the CPU will know where to store
        the registers etc. */
@@ -160,13 +165,16 @@ void dispatch_task_switcher (void)
         /* Toggle it. */
         task_flag ^= 1;
 
-        debug_print ("Current tss: %x\n", dispatch_current->tss);
+        /* Set it. */
+        current_tss = dispatch_current->tss;
+
+        //        debug_print ("Current tss: %x\n", dispatch_current->tss);
 
         switch (task_flag)
         {
             case 0:
             {
-                debug_print ("Switch to TSS1");
+                //                debug_print ("Switch to TSS1");
                 gdt_setup_tss_descriptor (GDT_ENTRY (TSS1_SELECTOR),
                                           dispatch_current->tss, 3,
                                           sizeof (tss_t));
@@ -175,7 +183,7 @@ void dispatch_task_switcher (void)
             }
             case 1:
             {
-                debug_print ("Switch to TSS2");
+                //                debug_print ("Switch to TSS2");
                 gdt_setup_tss_descriptor (GDT_ENTRY (TSS2_SELECTOR),
                                           dispatch_current->tss, 3,
                                           sizeof (tss_t) - 1);
@@ -184,7 +192,9 @@ void dispatch_task_switcher (void)
             }
         }
 
-        /* Do the task switch. */
+        /* Do the task switch. But first ACK the interrupt so we can
+           get more interrupts on this interrupt controller. */
+        port_uint8_out (INTERRUPT_CONTROLLER_MASTER, 0x20);
         asm volatile ("ljmp *jump_data");
 
         return;
