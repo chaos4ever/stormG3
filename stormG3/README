@@ -1,6 +1,17 @@
-README ($chaos$)
+README ($chaos: README,v 1.1 2002/11/13 20:17:08 per Exp $)
 ======
 
-This is stormG3, the chaos kernel.
+This is stormG3, the chaos kernel. It is licensed under the BSD
+license (without advertising clause).
 
--- Per Lundberg <per@chaosdev.org>  Wed, 13 Nov 2002 21:21:46 +0100
+Some information about the subdirectories here:
+* design: This directory contains the stormG3 design document (a bit
+  outdated, please update it to conform to the current source situation 
+  and send a patch).
+* include: Header files used by the kernel.
+* source: The kernel source.
+
+Happy hacking!
+
+-- Per Lundberg <per@chaosdev.org>  Tue, 26 Nov 2002 22:14:36 +0100
+
