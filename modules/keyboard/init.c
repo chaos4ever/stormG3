@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: init.c,v 1.1 2002/06/17 22:53:47 per Exp $ */
 /* Abstract: Keyboard initialization code. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -15,7 +15,7 @@
 /* Initialise the server. */
 bool init (void)
 {
-    //    const char *message;
+    const char *message;
 
     /* Try to allocate the keyboard controller's ports. */
     /*  if (system_call_port_range_register (CONTROLLER_PORT_BASE,
@@ -32,15 +32,15 @@ bool init (void)
     /* Flush any pending input. */
     keyboard_clear_input ();
     
-    //    message = keyboard_init ();
-    //    if (message != NULL)
+    message = keyboard_init ();
+    if (message != NULL)
     {
-        //  debug_print ("%s\n", message);
+        debug_print ("%s\n", message);
         //log_print (&log_structure, LOG_URGENCY_ERROR, message);
     }
     
     /* Initialise a PS/2 mouse port, if found. */
-    //    mouse_init ();
+    mouse_init ();
 
     return TRUE;
 }
@@ -55,8 +55,6 @@ return_t module_start (void)
         //               "Failed initialisation.");
         return 0;
     }
-
-    return 0;
 
     //  log_print (&log_structure, LOG_URGENCY_INFORMATIVE,
     //             "Keyboard found at I/O 0x60-0x6F, IRQ 1.");
