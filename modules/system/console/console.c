@@ -1,4 +1,4 @@
-/* $chaos: console.c,v 1.4 2002/10/23 07:30:09 per Exp $ */
+/* $chaos: console.c,v 1.6 2002/11/21 21:47:19 per Exp $ */
 /* Abstract: Console module. Will eventually be 100% ANSI escape
              sequence compatible. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
@@ -387,7 +387,7 @@ return_t module_start (void)
 
     /* Create the service. */
     service_register_t service_register_info;
-    service_register_info.vendor = "chaos development";
+    service_register_info.service_vendor = "chaos development";
     service_register_info.model = "Console module";
     service_register_info.device_id = "1";
     service_register_info.info_handler = &service_info;

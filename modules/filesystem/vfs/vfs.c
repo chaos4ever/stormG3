@@ -1,4 +1,4 @@
-/* $chaos: vfs.c,v 1.4 2002/10/04 19:01:05 per Exp $ */
+/* $chaos: vfs.c,v 1.6 2002/11/21 21:48:09 per Exp $ */
 /* Abstract: Virtual file system provider. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -41,7 +41,7 @@ static return_t service_info (void *vfs_void)
 int module_start (void)
 {
     service_register_t service_register_info;
-    service_register_info.vendor = "chaos development";
+    service_register_info.service_vendor = "chaos development";
     service_register_info.model = "VFS module";
     service_register_info.device_id = "1";
     service_register_info.info_handler = &service_info;

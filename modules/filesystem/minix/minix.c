@@ -1,4 +1,4 @@
-/* $chaos: minix.c,v 1.11 2002/10/23 07:29:25 per Exp $ */
+/* $chaos: minix.c,v 1.13 2002/11/21 21:48:30 per Exp $ */
 /* Abstract: Implementation of the Minix file system. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -422,7 +422,7 @@ int module_start (void)
 
     /* Create the service. */    
     service_register_t service_register_info;
-    service_register_info.vendor = "chaos development";
+    service_register_info.service_vendor = "chaos development";
     service_register_info.model = "Minix module";
     service_register_info.device_id = "1";
     service_register_info.info_handler = &service_info;

@@ -1,4 +1,4 @@
-/* $chaos: vga.c,v 1.3 2002/10/23 07:29:47 per Exp $ */
+/* $chaos: vga.c,v 1.5 2002/11/21 21:47:55 per Exp $ */
 /* Abstract: VGA server for chaos. */
 /* Authors: Per Lundberg <per@chaosdev.org>
             Henrik Hallin <hal@chaosdev.org> */
@@ -183,7 +183,7 @@ return_t module_start (void)
 
     /* Create the service. */
     service_register_t service_register_info;
-    service_register_info.vendor = "chaos development";
+    service_register_info.service_vendor = "chaos development";
     service_register_info.model = "VGA";
     service_register_info.device_id = "1";
     service_register_info.info_handler = &service_info;

@@ -1,4 +1,4 @@
-/* $chaos: kernel.c,v 1.2 2002/11/21 21:46:26 per Exp $ */
+/* $chaos: kernel.c,v 1.3 2002/12/02 20:53:31 per Exp $ */
 /* Abstract: Kernel module. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -32,7 +32,7 @@ static return_t kernel_info (void *kernel_void)
 return_t module_start (void)
 {
     service_register_t service_register_info;
-    service_register_info.vendor = "chaos development";
+    service_register_info.service_vendor = "chaos development";
     service_register_info.model = "Kernel";
     service_register_info.device_id = "1";
     service_register_info.info_handler = &kernel_info;
