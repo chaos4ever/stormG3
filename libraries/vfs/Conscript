@@ -1,4 +1,4 @@
-# $chaos: Conscript,v 1.1 2002/07/21 12:38:40 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.1 2002/07/21 12:55:50 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the virtual file system library.
 # Author: Per Lundberg <per@chaosdev.org>

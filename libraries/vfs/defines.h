@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: defines.h,v 1.1 2002/07/21 12:55:51 per Exp $ */
 /* Abstract: Defines used by the virtual filesystem library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
