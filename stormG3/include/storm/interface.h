@@ -1,4 +1,4 @@
-/* $chaos: interface.h,v 1.6 2002/10/24 21:36:12 per Exp $ */
+/* $chaos: interface.h,v 1.7 2002/10/28 07:52:34 per Exp $ */
 /* Abstract: stormG3 kernel interface. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -237,8 +237,9 @@ extern return_t process_create (process_id_t process_id,
  * Services with the same major version and at least the same minor
  * version will be returned.
  */
-extern return_t service_lookup (char *name, char *vendor, char *model,
-                                char *id, unsigned int major_version, 
+extern return_t service_lookup (const char *name, const char *vendor, 
+                                const char *model, const char *id,
+                                unsigned int major_version, 
                                 unsigned int minor_version,
                                 size_t *services, service_t **service);
 
@@ -291,7 +292,6 @@ extern return_t module_start (void);
    (i.e. system calls). */
 #if (! defined __STORM_KERNEL_MODULE__) && (! defined __STORM_KERNEL__)
 
-// system_call (arg1, arg2, arg3, ...)
 
 #endif /* (! defined __STORM_KERNEL_MODULE__) && (! defined __STORM_KERNEL__) */
 

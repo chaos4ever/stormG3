@@ -1,4 +1,4 @@
-/* $chaos: service.c,v 1.11 2002/10/10 20:33:13 per Exp $ */
+/* $chaos: service.c,v 1.12 2002/10/28 07:52:18 per Exp $ */
 /* Abstract: Service support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -60,15 +60,16 @@ return_t service_register (char *name, char *vendor, char *model, char *id,
 }
 
 /* Unregister a service provider. */
-return_t service_unregister (char *service __attribute__ ((unused)),
-                             function_t handler __attribute__ ((unused)))
+return_t service_unregister (char *service UNUSED,
+                             function_t handler UNUSED)
 {
     // FIXME: Write this.
     return STORM_RETURN_SUCCESS;
 }
 
 /* Lookup a service. */
-return_t service_lookup (char *name, char *vendor, char *model, char *id,
+return_t service_lookup (const char *name, const char *vendor, 
+                         const char *model, const char *id,
                          unsigned int major_version, 
                          unsigned int minor_version, size_t *services,
                          service_t **out_service)
