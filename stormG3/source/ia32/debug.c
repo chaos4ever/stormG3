@@ -1,4 +1,4 @@
-/* $chaos: debug.c,v 1.6 2002/06/23 13:30:38 per Exp $ */
+/* $chaos: debug.c,v 1.7 2002/08/08 23:15:44 hal Exp $ */
 /* Abstract: Code used for debugging the kernel. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -20,8 +20,8 @@ debug_screen_type *screen = (debug_screen_type *) BASE_SCREEN;
 /* Initialize debugging. */
 void debug_init (void)
 {
-  /* Clear the screen. */
-    memory_set_uint16 ((uint16_t *) screen, (background_attribute << 8) | ' ',
+    /* Clear the screen. */
+    memory_set_uint16 ((uint16_t *) screen, (background_attribute * 256) | ' ',
                        DEBUG_SCREEN_WIDTH * DEBUG_SCREEN_HEIGHT *
                        sizeof (debug_screen_type));
 }
@@ -30,10 +30,10 @@ void debug_init (void)
 static inline void put_character (int x, int y, char character,
                                   int character_attribute)
 {
-  int index = (y * DEBUG_SCREEN_WIDTH) + x;
+    int index = (y * DEBUG_SCREEN_WIDTH) + x;
 
-  screen[index].character = character;
-  screen[index].attribute = character_attribute;
+    screen[index].character = character;
+    screen[index].attribute = character_attribute;
 }
 
 /* Basic printing function. */
@@ -67,7 +67,7 @@ static int print_simple (const char *string)
                 memory_copy ((void *) screen, (void *) &screen[DEBUG_SCREEN_WIDTH],
                              (DEBUG_SCREEN_WIDTH * (DEBUG_SCREEN_HEIGHT - 1)) * 2);
                 memory_set_uint16 ((void *) &screen[DEBUG_SCREEN_WIDTH * (DEBUG_SCREEN_HEIGHT - 1)],
-                                   (background_attribute << 8) | ' ', DEBUG_SCREEN_WIDTH);
+                                   (background_attribute * 256) | ' ', DEBUG_SCREEN_WIDTH);
             }
         }
     }
@@ -301,7 +301,7 @@ void debug_print (const char *format_string, ...)
             memory_copy ((void *) screen, (void *) &screen[DEBUG_SCREEN_WIDTH],
                          (DEBUG_SCREEN_WIDTH * (DEBUG_SCREEN_HEIGHT - 1)) * 2);
             memory_set_uint16 ((void *) &screen[DEBUG_SCREEN_WIDTH * (DEBUG_SCREEN_HEIGHT - 1)],
-                               (background_attribute << 8) | ' ', 
+                               (background_attribute * 256) | ' ', 
                                DEBUG_SCREEN_WIDTH);
         }
         
