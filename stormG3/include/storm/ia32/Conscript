@@ -1,4 +1,4 @@
-# $chaos: Conscript,v 1.13 2002/10/11 07:44:51 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.14 2002/10/15 17:51:46 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for stormG3
 # Author: Per Lundberg <per@chaosdev.org>
@@ -12,4 +12,5 @@ $headers = qq( bit.h cpu.h defines.h halt.h memory.h memory_global.h memory_phys
 
 Command $cons 'install', $build_directory . "/source/ia32/stormG3",
   qq(mkdir -p $header_directory/storm/ia32
-     for e in $headers ; do install include/storm/ia32/\$e $header_directory/storm/ia32 || exit ; done)
+     for e in $headers ; do install include/storm/ia32/\$e $header_directory/storm/ia32 || exit ; done
+     touch %0:a)
