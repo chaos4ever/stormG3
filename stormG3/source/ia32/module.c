@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.23 2002/10/04 19:01:21 per Exp $ */
+/* $chaos: module.c,v 1.24 2002/10/09 09:23:33 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -35,7 +35,7 @@ static module_function_t function[] =
 //  { "irq_unregister", (function_t) &irq_unregister }
 
     { "memory_global_allocate", (function_t) &memory_global_allocate },
-//  { "memory_global_deallocate", (function_t) &memory_global_deallocate },
+    { "memory_global_deallocate", (function_t) &memory_global_deallocate },
 
     { "module_register", (function_t) &module_register },
 //  { "module_unregister", (function_t) &module_unregister },
