@@ -1,0 +1,44 @@
+/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* Abstract: Global memory allocation. */
+/* Author: Per Lundberg <per@chaosdev.org> */
+
+/* Copyright 2002 chaos development. */
+/* Use freely under the terms listed in the file COPYING. */
+
+#ifndef __STORM_IA32_MEMORY_GLOBAL_H__
+#define __STORM_IA32_MEMORY_GLOBAL_H__
+
+#include <storm/magic_cookies.h>
+#include <storm/types.h>
+
+/* The global slab system. Awfully simple, isn't it? */
+typedef struct 
+{
+    uint32_t magic_cookie;
+    struct memory_global_slab_t *next;
+} memory_global_slab_t;
+
+typedef struct 
+{
+    uint32_t magic_cookie;
+
+    /* How many used blocks do we have in this page. If this gets down
+       to zero, free the page. */
+    unsigned int used_blocks;
+    
+    /* Here comes the slabs. Don't use this as an indexed array -- it
+       won't work with slabs bigger than 8 bytes. */
+    memory_global_slab_t slab[0];
+} memory_global_page_t;
+
+/* Prototypes. */
+/* Initialize global memory allocation. */
+extern void memory_global_init (void);
+
+/* Allocate global memory. */
+return_t memory_global_allocate (void **pointer, unsigned int size);
+
+/* Deallocate global memory. */
+return_t memory_global_deallocate (void *pointer);
+
+#endif /* !__STORM_IA32_MEMORY_GLOBAL_H__ */

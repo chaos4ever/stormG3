@@ -1,4 +1,4 @@
-/* $chaos: main.c,v 1.6 2002/06/05 19:56:07 per Exp $ */
+/* $chaos: main.c,v 1.7 2002/06/09 15:04:52 per Exp $ */
 /* Abstract: This is the startup point of storm. It is executed right
    after the assembly language init code has set up the GDT, kernel
    stack, etc. Here, we initialise everything in the storm, like
@@ -16,7 +16,9 @@
 #include <storm/config.h>
 #include <storm/defines.h>
 #include <storm/ia32/debug.h>
+#include <storm/ia32/exception.h>
 #include <storm/ia32/main.h>
+#include <storm/ia32/memory_global.h>
 #include <storm/ia32/memory_physical.h>
 #include <storm/ia32/memory_virtual.h>
 #include <storm/ia32/multiboot.h>
@@ -24,7 +26,8 @@
 /* Do the bootup procedure. */
 void main_bootup (int argument_count UNUSED, char *arguments[] UNUSED)
 {
-    void *pointer1 = NULL, *pointer2 = NULL, *pointer3 = NULL;
+    void *pointer = NULL;
+    int counter;
 
     /* Set up debugging. */
     debug_init ();
@@ -36,23 +39,21 @@ void main_bootup (int argument_count UNUSED, char *arguments[] UNUSED)
     /* Set up physical memory allocation. */
     memory_physical_init ();
 
+    /* Set up global memory allocation. */
+    memory_global_init ();
+
     /* Set up virtual memory. */
     memory_virtual_init ();
 
+    /* Set up exception handlers. */
+    exception_init ();
+
     /* Test the allocation. */
-    debug_print ("Return value: %d", memory_physical_allocate(&pointer1, 1));
-    debug_print ("%x\n", pointer1);
-    debug_print ("Return value: %d ", memory_physical_allocate(&pointer2, 1));
-    debug_print ("%x\n", pointer2);
-    debug_print ("Return value: %d ", memory_physical_allocate(&pointer3, 1));
-    debug_print ("%x\n", pointer3);
-    memory_physical_deallocate(pointer1);
-    debug_print ("Return value: %d ", memory_physical_allocate(&pointer1, 1));
-    debug_print ("%x\n", pointer1);
-    debug_print ("Return value: %d ", memory_physical_allocate(&pointer2, 1));
-    debug_print ("%x\n", pointer2);
-    debug_print ("Return value: %d ", memory_physical_allocate(&pointer3, 1));
-    debug_print ("%x\n", pointer3);
+    for (counter = 0; counter < 100; counter++)
+    {
+        return_t return_value = memory_global_allocate (&pointer, 64);
+        debug_print ("[%d, %x] ", return_value, pointer);
+    }
 
     /* We are finished. Pass on to the idle task. */
 }
