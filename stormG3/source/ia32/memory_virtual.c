@@ -89,14 +89,22 @@ return_t memory_virtual_find (void *page_directory_void,
     page_directory_t *page_directory = (page_directory_t *) page_directory_void;
     unsigned int page_directory_index = virtual_page / 1024;
     unsigned int page_table_index = virtual_page % 1024;
+
     if (page_directory[page_directory_index].present == 0)
     {
+#if DEBUG
+        DEBUG_INFO();
+#endif
         return STORM_RETURN_NOT_FOUND;
     }
 
     page_table_t *page_table = (page_table_t *) (page_directory[page_directory_index].page_table_base * PAGE_SIZE);
     if (page_table[page_table_index].present == 0)
     {
+#if DEBUG
+        DEBUG_BREAKPOINT();
+        DEBUG_INFO();
+#endif
         return STORM_RETURN_NOT_FOUND;
     }
 
@@ -122,8 +130,8 @@ return_t memory_virtual_map (void *page_directory_void,
 
     /* Main loop. */
     for (counter = 0; counter < pages; counter++) {
-        uint32_t page_directory_index = (virtual_page + counter) / 1024;
-        uint32_t page_table_index = (virtual_page + counter) % 1024;
+        unsigned int page_directory_index = (virtual_page + counter) / 1024;
+        unsigned int page_table_index = (virtual_page + counter) % 1024;
         page_table_t *page_table;
 
         if (page_directory[page_directory_index].present == 0) 
