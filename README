@@ -1,4 +1,4 @@
-README ($chaos: README,v 1.9 2002/10/27 22:44:06 per Exp $)
+README ($chaos: README,v 1.10 2002/10/27 22:45:43 per Exp $)
 ======
 
 This is chaos, a free (licensed under the BSD license, without
@@ -15,7 +15,7 @@ The following programs are required to compile:
 
 * gcc (http://gcc.gnu.org, 3.0 or better is *required*)
 * GNU CONS. (http://www.gnu.org/software/cons)
-* GNU binutils.
+* GNU binutils. (http://www.gnu.org/software/binutils/)
 
 Please consult README.Linux for some (possibly outdated) help about
 building the system under your specific system. If you're running
