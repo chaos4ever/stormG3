@@ -1,4 +1,4 @@
-/* $chaos: gdt.h,v 1.2 2002/06/05 18:17:43 per Exp $ */
+/* $chaos: gdt.h,v 1.3 2002/06/11 21:11:54 per Exp $ */
 /* Abstract: GDT definitions. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -19,7 +19,7 @@
 #define KERNEL_CODE_SELECTOR            (GDT (1, 0))
 #define KERNEL_DATA_SELECTOR            (GDT (2, 0))
 #define PROCESS_CODE_SELECTOR           (GDT (3, 3))
-#define DATA_SELECTOR                   (GDT (4, 3))
+#define PROCESS_DATA_SELECTOR           (GDT (4, 3))
 #define TSS1_SELECTOR                   (GDT (5, 3))
 #define TSS2_SELECTOR                   (GDT (6, 3))
 
