@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.1 2002/10/06 09:43:21 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.3 2002/12/02 20:38:14 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the programs.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -16,7 +16,8 @@ $build_directory = getcwd();
 $root = ($ARG{'root'} || '/tftpboot');
 $header_directory = "$root/data/programming/c/headers";
 $program_install_directory = "$root/system/programs";
-$library_include_directory = "$build_directory/../libraries"; # FIXME: Replace with the path under $root
+# FIXME: Replace with the path under $root
+$library_include_directory = "$build_directory/../libraries/program";
 $library_directory = "$root/data/programming/libraries/static";
 
 $include = "$build_directory/..:$header_directory:$library_include_directory";
@@ -48,6 +49,7 @@ $cons = new cons (
 Default qw(.);
 Export qw( cons header_directory module_directory build_directory
 	   library_directory include install program_install_directory );
-Build qw( boot/Conscript );
+Build qw( boot/Conscript
+          modplay/Conscript );
 
 
