@@ -1,4 +1,4 @@
-/* $chaos: elf.c,v 1.5 2002/10/11 07:45:52 per Exp $ */
+/* $chaos: elf.c,v 1.6 2002/10/16 20:34:02 per Exp $ */
 /* Abstract: ELF module, implementing the exec service. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -70,7 +70,7 @@ static return_t elf_load (elf_header_t *elf_header,
 
                 /* Allocate memory for this section and map it at the
                    right place. */
-                return_value = memory_physical_allocate_for_process (&buffer, process_id);
+                return_value = memory_physical_allocate (&buffer, 1, process_id);
                 if (return_value != STORM_RETURN_SUCCESS)
                 {
                     debug_print ("Failed to allocate memory");
@@ -113,7 +113,7 @@ static return_t elf_load (elf_header_t *elf_header,
             {
                 /* Allocate memory for this section and map it at the
                    right place. */
-                    return_value = memory_physical_allocate_for_process (&buffer, process_id);
+                    return_value = memory_physical_allocate (&buffer, 1, process_id);
                 if (return_value != STORM_RETURN_SUCCESS)
                 {
                     debug_print ("Failed to allocate memory");
