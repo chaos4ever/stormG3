@@ -1,4 +1,4 @@
-# $chaos: makefile,v 1.2 2002/05/27 09:44:28 per Exp $
+# $chaos: makefile,v 1.3 2002/05/27 10:19:56 per Exp $
 
 # Abstract: storm G3 design makefile
 # Author: Per Lundberg <per@chaosdev.org>
@@ -7,7 +7,8 @@
 
 DOC=stormG3
 MAIN=$(DOC).xml
-SECTS=memory_management.xml module.xml process.xml license.xml stdint.xml
+SECTS=license.xml  memory_management.xml module.xml goals.xml process.xml \
+stdint.xml
 SRC=$(MAIN) $(SECTS)
 PNGS=memory_map.png
 
