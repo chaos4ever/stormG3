@@ -1,4 +1,4 @@
-/* $chaos: spinlock.h,v 1.6 2002/10/23 20:45:04 per Exp $ */
+/* $chaos: spinlock.h,v 1.7 2002/10/23 21:02:47 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -12,10 +12,8 @@
 #ifndef __STORM_IA32_SPINLOCK_H__
 #define __STORM_IA32_SPINLOCK_H__
 
-/**
- * @brief               A spin lock.
- */
-typedef unsigned int spinlock_t;
+/* Things not available to userspace. */
+#if (defined __STORM_KERNEL__) || (defined __STORM_KERNEL_MODULE__)
 
 /**
  * @brief               The setting of a lock.
@@ -86,5 +84,7 @@ static inline void spin_unlock (spinlock_t *lock)
 {
     *lock = SPIN_UNLOCKED;
 }
+
+#endif /* (defined __STORM_KERNEL__) || (defined __STORM_KERNEL_MODULE__) */
 
 #endif /* !__STORM_IA32_SPINLOCK_H__ */
