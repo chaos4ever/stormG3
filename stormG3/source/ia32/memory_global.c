@@ -1,4 +1,4 @@
-/* $chaos: memory_global.c,v 1.3 2002/06/12 06:52:40 per Exp $ */
+/* $chaos: memory_global.c,v 1.4 2002/08/08 19:58:39 per Exp $ */
 /* Abstract: Global memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -20,7 +20,6 @@ static memory_global_slab_t *global_128byte = NULL;
 static memory_global_slab_t *global_256byte = NULL;
 static memory_global_slab_t *global_512byte = NULL;
 static memory_global_slab_t *global_1024byte = NULL;
-static memory_global_slab_t *global_2048byte = NULL;
 
 /* Initialize global memory allocation. */
 void memory_global_init ()
@@ -74,23 +73,10 @@ return_t memory_global_allocate (void **pointer, unsigned int size)
         global_slab = &global_1024byte;
         size = 1024;
     }
-    else if (size <= 2048)
-    {
-        global_slab = &global_2048byte;
-        size = 2048;
-    }
-    else if (size <= 4096)
-    {
-        return memory_physical_allocate (pointer, 1);
-    }
     else 
     {
-        /* We don't support allocating bigger blocks than a page,
-           since that it not O(1) in the physical memory
-           allocator. FIXME: Enable this when we have the new
-           big-block physical allocation.. */
-        *pointer = NULL;
-        return STORM_RETURN_NOT_IMPLEMENTED;
+        /* Just return a number of physical pages instead */
+        return memory_physical_allocate (pointer, (size % 4096) == 0 ? (size / 4096) : (size / 4096) + 1);
     }
 
     /* The slab structure we are accessing is now in
