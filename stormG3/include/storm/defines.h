@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.2 2002/05/27 19:07:26 per Exp $ */
+/* $chaos: defines.h,v 1.3 2002/06/05 18:17:42 per Exp $ */
 /* Abstract: Generic storm defines. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -30,7 +30,7 @@
 /* The maximum number of servers to start at boot time. */
 #define MAX_STARTUP_SERVERS             32
 
-/* Stupid, but just to get the AVL code compiling. */
+/* Stupid, but just to get the AVL code compiling. FIXME: Remove this ASAP. */
 #define malloc(n) (NULL)
 #define free(n)
 
