@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.7 2002/10/10 12:17:42 per Exp $ */
+/* $chaos: defines.h,v 1.8 2002/10/10 21:44:09 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -59,6 +59,11 @@
  *                      argument or variable is not used. 
  */
 #define UNUSED                          __attribute__ ((unused))
+
+/**
+ * @brief               Use this define to mark a function as deprecated.
+ */
+#define DEPRECATED                      __attribute__ ((deprecated))
 
 /**
  * @brief               Use this define to tell the compiler that a
