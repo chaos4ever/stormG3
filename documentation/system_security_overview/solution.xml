@@ -1,0 +1,15 @@
+<?xml version='1.0' ?> <!-- -*- xml -*- -->
+<!-- $chaos: license.xml,v 1.2 2002/05/27 09:48:51 per Exp $ -->
+
+  <chapter id="solution">
+  <?dbhtml filename="solution.html"?>
+  <title>The Solution</title>
+  <section>
+    <title>The Solution</title>
+    <para>
+      The solution is called
+      <emphasis>Capabilities</emphasis>. Instead of mapping user ID 0
+      to the super user, and letting that user do all the fun stuff,
+      the idea is to map this into capabilities
+    </para>
+</chapter>
