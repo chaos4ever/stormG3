@@ -1,4 +1,4 @@
-/* $chaos: init.c,v 1.2 2002/06/05 18:17:26 per Exp $ */
+/* $chaos: init.c,v 1.3 2002/06/05 19:56:26 per Exp $ */
 /* Abstract: storm initialization. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -53,8 +53,8 @@ static uint16_t idtr[] UNUSED =
     0x7FF,
 
     /* IDT base. */
-    LOW_U16 (IDT_BASE),
-    HIGH_U16 (IDT_BASE)
+    LOW_16 (IDT_BASE),
+    HIGH_16 (IDT_BASE)
 };
 
 static uint16_t gdtr[] UNUSED =
@@ -63,8 +63,8 @@ static uint16_t gdtr[] UNUSED =
     0x7FF,
 
     /* GDT base. */
-    LOW_U16 (GDT_BASE),
-    HIGH_U16 (GDT_BASE)
+    LOW_16 (GDT_BASE),
+    HIGH_16 (GDT_BASE)
 };
 
 /* This is the first code of the kernel that gets executed. (well,
