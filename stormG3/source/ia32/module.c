@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.14 2002/06/25 20:06:05 per Exp $ */
+/* $chaos: module.c,v 1.15 2002/06/25 20:07:39 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -25,6 +25,7 @@ static module_function_t function[] =
     { "debug_print", (function_t) &debug_print },
     { "dma_register", (function_t) &dma_register },
     { "irq_register", (function_t) &irq_register },
+    { "memory_global_allocate", (function_t) &memory_global_allocate },
     { "module_register", (function_t) &module_register },
     { "port_range_register", (function_t) &port_range_register },
     { "port_range_unregister", (function_t) &port_range_unregister },

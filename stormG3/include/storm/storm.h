@@ -1,4 +1,4 @@
-/* $chaos: storm.h,v 1.8 2002/06/24 08:32:22 per Exp $ */
+/* $chaos: storm.h,v 1.9 2002/06/24 21:10:21 per Exp $ */
 /* Abstract: storm kernel API. This header file can be included by a
    kernel module that wants to have access to kernel functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
@@ -14,6 +14,7 @@
 #include <storm/return_value.h>
 #include <storm/types.h>
 #include <storm/ia32/memory.h>
+#include <storm/ia32/memory_global.h>
 #include <storm/ia32/port.h>
 #include <storm/ia32/service.h>
 
