@@ -1,4 +1,4 @@
-/* $chaos: types.h,v 1.5 2002/06/15 10:19:52 per Exp $ */
+/* $chaos: types.h,v 1.6 2002/06/16 16:37:11 per Exp $ */
 /* Abstract: storm types. */
 /* Author: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
@@ -12,6 +12,7 @@
 #include <stdint.h>
 
 /* Type definitions. */
+typedef int size_t;
 typedef int return_t;
 typedef void (*function_t)(void);       /* Can be used even if the
                                            function uses arguments. */
