@@ -1,4 +1,4 @@
-/* $chaos: types.h,v 1.19 2002/11/15 19:52:25 per Exp $ */
+/* $chaos: types.h,v 1.20 2002/11/20 20:14:46 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -92,14 +92,19 @@ typedef struct
     service_id_t        id;
     
     /**
-     * @brief           The service name. 
+     * @brief           The protocol name. 
      */
-    char                name[SERVICE_NAME_LENGTH];
+    char                protocol_name[SERVICE_PROTOCOL_NAME_LENGTH];
 
     /**
-     * @brief           The vendor name. 
+     * @brief           The device vendor name. 
      */
-    char                vendor[SERVICE_VENDOR_LENGTH];
+    char                device_vendor[SERVICE_DEVICE_VENDOR_LENGTH];
+
+    /**
+     * @brief           The service vendor name. 
+     */
+    char                service_vendor[SERVICE_VENDOR_LENGTH];
 
     /**
      * @brief           The model name. 
@@ -136,15 +141,19 @@ typedef struct
 typedef struct
 {
     /**
-     * @brief           The name of the service.
+     * @brief           The name of the protocol implemented.
      */
-    const char          *name;
+    const char          *protocol_name;
 
     /**
-     * @brief           The vendor of the service provider OR device. 
-     *                  FIXME: We need to take care of this ambiguity.
+     * @brief           The vendor of the service provider. 
      */
-    const char          *vendor;
+    const char          *service_vendor;
+
+    /**
+     * @brief           The vendor of the device this service handles. 
+     */
+    const char          *device_vendor;
 
     /**
      * @brief           The model of the device.
@@ -157,12 +166,12 @@ typedef struct
     const char          *device_id;
 
     /**
-     * @brief           The major version of the service provided.
+     * @brief           The major version of the protocol implemented.
      */
     unsigned int        major_version;
 
     /**
-     * @brief           The minor version of the service provided.
+     * @brief           The minor version of the protocol implemented.
      */
     unsigned int        minor_version;
 } service_lookup_t;
@@ -173,15 +182,19 @@ typedef struct
 typedef struct
 {
     /**
-     * @brief           The name of the service provided.
+     * @brief           The name of the protocol implemented.
      */
-    const char          *service_name;
+    const char          *protocol_name;
 
     /**
-     * @brief           The vendor of the service provider OR device. 
-     *                  FIXME: We need to take care of this ambiguity.
+     * @brief           The vendor of the device.
      */
-    const char          *vendor;
+    const char          *device_vendor;
+
+    /**
+     * @brief           The vendor of the service provider.
+     */
+    const char          *service_vendor;
 
     /**
      * @brief           The model of the device.
@@ -212,7 +225,7 @@ typedef struct
 
 /**
  * @brief               This structure is used for registering the methods
- *                      in a service provider.
+ *                      in a service.
  */
 typedef struct
 {
