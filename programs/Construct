@@ -1,0 +1,52 @@
+# $chaos: Construct,v 1.13 2002/10/04 19:00:59 per Exp $ -*- Perl -*-
+
+# Abstract: CONS script for the programs.
+# Author: Per Lundberg <per@chaosdev.org>
+
+# Copyright 2002 chaos development.
+# Use freely under the terms listed in the file LICENSE.
+
+use POSIX; # for getcwd.
+
+Conscript_chdir 0;
+
+$build_directory = getcwd();
+
+# Change this to wherever your chaos installation root may be.
+$root = ($ARG{'root'} || '/tftpboot');
+$header_directory = "$root/data/programming/c/headers";
+$program_install_directory = "$root/system/programs";
+$library_include_directory = "$build_directory/../libraries"; # FIXME: Replace with the path under $root
+$library_directory = "$root/data/programming/libraries/static";
+
+$include = "$header_directory:$library_include_directory";
+$hostname = `hostname`;
+chop($hostname);
+$warnings = '-Wall -W -Wshadow -Wpointer-arith -Waggregate-return ' .
+  '-Wstrict-prototypes -Wredundant-decls -Winline -Wmissing-prototypes ' .
+  '-Werror -Wcast-align -Wbad-function-cast -Wsign-compare ' .
+  '-Wmissing-declarations -Wnested-externs ';
+
+$install = <<EOF;
+return qq(
+mkdir -p \$program_install_directory
+install \$program_directory/\$program_binary \$program_install_directory
+strip \$program_install_directory/\$program_binary
+	 );
+EOF
+
+$cons = new cons (
+		  CC => ($ENV{'CC'} || 'gcc'),
+		  CPPPATH => $include,
+		  CFLAGS => $warnings .
+		  '-O3 -ggdb -pipe -fno-builtin -funsigned-char ' .
+		  '-fomit-frame-pointer -ffreestanding -std=gnu99 ',
+		  LDFLAGS => "-nostdlib -L$library_directory"
+		);	
+
+Default qw(.);
+Export qw( cons header_directory module_directory build_directory
+	   library_directory include install program_install_directory );
+Build qw( boot/Conscript );
+
+
