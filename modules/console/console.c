@@ -1,4 +1,4 @@
-/* $chaos: console.c,v 1.5 2002/07/10 21:55:20 per Exp $ */
+/* $chaos: console.c,v 1.6 2002/07/11 21:47:14 per Exp $ */
 /* Abstract: Console module. Will eventually be 100% ANSI escape
              sequence compatible. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
@@ -11,9 +11,9 @@
 #include <video/video.h>
 
 #include "console.h"
-#include "console_output.h"
 
 volatile unsigned int number_of_consoles = 0;
+volatile unsigned int highest_console_id = -1;
 // FIXME: If the user has a monochrome adapter, this won't work... The
 // video memory will be at another place.
 character_t *screen = (character_t *) CONSOLE_VIDEO_MEMORY;
@@ -23,7 +23,7 @@ volatile bool has_video = FALSE;
 
 /* The video service provider we are using. */
 video_service_t video;
-volatile console_t *console_shortcut[12] =
+volatile console_t *console_shortcut[CONSOLE_MAX_NUMBER] =
 {
     NULL,
     NULL,
@@ -39,8 +39,15 @@ volatile console_t *console_shortcut[12] =
     NULL
 };
 
+/* Return a free console ID. */
+static console_id_t console_get_id (void)
+{
+    highest_console_id++;
+    return highest_console_id;
+}
+
 /* Link in this console into our linked list of consoles. */
-void console_link (console_t *console)
+static void console_link (console_t *console)
 {
     if (console_list == NULL)
     {
@@ -56,13 +63,31 @@ void console_link (console_t *console)
     console_shortcut[number_of_consoles] = console;
 }
 
+/* Find the console with the given console ID. If no such console is
+   found, we return NULL. */
+console_t *console_find (console_id_t console_id)
+{
+    console_t *finder = console_list;
+
+    while (finder != NULL)
+    {
+        if (finder->id == console_id)
+        {
+            return finder;
+        }
+    }
+
+    /* We reached the end of the list, without finding our console. */
+    return NULL;
+}
+
 /* Function:    console_flip ()
    Purpose:     Save the console state to current_console->buffer and
                 copy the contents of console->buffer to the screen.
    Returns:     Nothing.
    Parameters:  Pointer to console-struct for console to flip to.
    TODO:        Support switching of video mode. */
-void console_flip (console_t *console)
+static void console_flip (console_t *console)
 {
     //    video_cursor_type video_cursor;
     //    message_parameter_type message_parameter;
@@ -201,10 +226,10 @@ static return_t console_handle_key_event (keyboard_packet_t *keyboard_packet)
         }
         
         // FIXME: Put it in someone's stdin.
-        debug_print ("stdin data received.\n");
+        // debug_print ("stdin data received.\n");
     }        
 
-    debug_print ("%s: We got an event.\n", __FILE__);
+    // debug_print ("%s: We got an event.\n", __FILE__);
     
     return STORM_RETURN_SUCCESS;
 }
@@ -215,6 +240,14 @@ static return_t console_open (console_id_t *console_id, size_t width,
 {
     console_t *our_console;
     return_t return_value;
+
+    if (number_of_consoles >= CONSOLE_MAX_NUMBER)
+    {
+        // FIXME: We should have a return value called
+        // OUT_OF_RESOURCES instead.
+        return STORM_RETURN_OUT_OF_MEMORY;
+    }
+
     return_value = memory_global_allocate ((void **) &our_console, sizeof (console_t));
     if (return_value != STORM_RETURN_SUCCESS)
     {
@@ -237,6 +270,8 @@ static return_t console_open (console_id_t *console_id, size_t width,
     }
 
     /* Fill in some required stuff. */
+    our_console->id = console_get_id ();
+
     our_console->width = width;
     our_console->height = height;
     our_console->depth = depth;
@@ -260,8 +295,9 @@ static return_t console_open (console_id_t *console_id, size_t width,
     }
     else
     {
-        /* This won't work now, because we can't allocate this
-           much memory... */
+        /* This won't work now, because we can't allocate this much
+           memory... */
+        return STORM_RETURN_NOT_IMPLEMENTED;
 #if FALSE
         memory_allocate ((void **) &((*our_console)->buffer),
                          (*our_console)->width *
@@ -292,11 +328,8 @@ static return_t console_open (console_id_t *console_id, size_t width,
     /* ...and in the upper left. */
     console_cursor_move (our_console, 1, 1);
     console_link (our_console);
-    timer_sleep_milli (3000);
 
-    // FIXME: This will break if someone removes a console that's not
-    // the last console...
-    *console_id = number_of_consoles;
+    *console_id = our_console->id;
     
     /* We have added a new console. */
     number_of_consoles++;
@@ -305,9 +338,12 @@ static return_t console_open (console_id_t *console_id, size_t width,
 }
 
 /* Close a previously opened console. */
-static return_t console_close (console_id_t console_id)
+static return_t console_close (console_id_t console_id __attribute__ ((unused)))
 {
-    console_id = 0;
+    // FIXME: Implement this.
+    //    console_t *console = console_find (console_id);
+    //    number_of_consoles--;
+    // etc...
     return STORM_RETURN_NOT_IMPLEMENTED;
 }
 
@@ -320,6 +356,7 @@ static return_t service_info (void *console_void)
     console->key_event = &console_handle_key_event;
     console->open = &console_open;
     console->close = &console_close;
+    console->output = &console_output;
     return STORM_RETURN_SUCCESS;
 }
 
