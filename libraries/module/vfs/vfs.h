@@ -1,4 +1,4 @@
-/* $chaos: vfs.h,v 1.2 2002/10/04 19:00:57 per Exp $ */
+/* $chaos: vfs.h,v 1.3 2002/12/03 14:38:20 johannes Exp $ */
 /* Abstract: Function prototypes and structure definitions for the
    virtual filesystem library. */
 /* Author: Per Lundberg <per@chaosdev.org> */

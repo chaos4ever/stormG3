@@ -1,4 +1,4 @@
-/* $chaos: vfs.c,v 1.8 2002/11/20 20:05:07 per Exp $ */
+/* $chaos: vfs.c,v 1.9 2002/12/03 14:38:42 johannes Exp $ */
 /* Abstract: Virtual filesystem library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
