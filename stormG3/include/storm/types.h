@@ -1,4 +1,4 @@
-/* $chaos: types.h,v 1.2 2002/06/05 18:17:42 per Exp $ */
+/* $chaos: types.h,v 1.3 2002/06/05 19:57:25 per Exp $ */
 /* Abstract: storm types. */
 /* Author: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
@@ -11,6 +11,6 @@
 
 #include <stdint.h>
 
-typedef int return_type;
+typedef int return_t;
 
 #endif /* !__STORM_TYPES_H__ */
