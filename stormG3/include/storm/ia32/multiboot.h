@@ -1,4 +1,4 @@
-/* $chaos: multiboot.h,v 1.4 2002/06/15 15:39:46 per Exp $ */
+/* $chaos: multiboot.h,v 1.5 2002/06/16 18:32:56 per Exp $ */
 /* Abstract: Multiboot stuff. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -55,7 +55,7 @@ typedef struct
     uint32_t has_boot_loader_name      : 1;
     uint32_t has_APM_info              : 1;
     uint32_t has_video_mode_info       : 1;
-    uint32_t reserved                  : 20;
+    uint32_t                           : 20; /* Reserved. */
 
     uint32_t memory_lower;
     uint32_t memory_upper;
