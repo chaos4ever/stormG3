@@ -385,5 +385,19 @@ return_t module_start (void)
 
     has_video = TRUE;
 
-    return service_register ("console", "chaos development", "Console module", "1", CONSOLE_SERVICE_MAJOR_VERSION, CONSOLE_SERVICE_MINOR_VERSION ,&service_info);
+    /* Create the service. */
+    service_register_t service_register_info;
+    service_register_info.vendor = "chaos development";
+    service_register_info.model = "Console module";
+    service_register_info.device_id = "1";
+    service_register_info.info_handler = &service_info;
+   
+    // FIXME: Fill in this structure to let user-level programs access
+    // this service provider.
+    service_method_t service_method[] =
+        {
+            { -1, NULL }
+        };
+
+    return console_register (&service_register_info, service_method);
 }

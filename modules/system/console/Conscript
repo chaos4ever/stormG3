@@ -10,8 +10,10 @@ $module_binary = 'console.so';
 $module_path = 'system/console';
 
 Import qw( cons module_directory library_directory install );
-$cons = $cons->clone(LIBS => '-lunicode -lvideo');
-Depends $cons $module_binary, "$library_directory/libunicode.a",
+$cons = $cons->clone(LIBS => '-lconsole -lunicode -lvideo');
+Depends $cons $module_binary,
+  "$library_directory/libconsole.a",
+  "$library_directory/libunicode.a",
   "$library_directory/libvideo.a";
 Program $cons $module_binary, 'console.c', 'console_output.c';
 $install_cmd = eval $install;
