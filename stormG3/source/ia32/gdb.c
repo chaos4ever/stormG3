@@ -1,4 +1,4 @@
-/* $chaos: gdb.c,v 1.4 2002/10/04 19:01:21 per Exp $ */
+/* $chaos: gdb.c,v 1.6 2002/11/30 11:20:48 per Exp $ */
 /* Abstract: Stub used for GDB remote debugging. */
 /* Author: Andrey Karpov <nd-chaos@narod.ru>
            Per Lundberg <per@chaosdev.org> */
@@ -175,7 +175,7 @@ static void exceptionHandler (int exception, void *address)
 
 static char initialized;  /* boolean flag. != 0 means we've been initialized */
 
-int     remote_debug = 1;
+int     remote_debug = 0;
 /*  debug >  0 prints ill-formed commands in valid packets & checksum errors */
 
 static const char hexchars[] = "0123456789abcdef";
