@@ -1,4 +1,4 @@
-/* $chaos: boot.c,v 1.4 2002/10/28 22:27:55 per Exp $ */
+/* $chaos: boot.c,v 1.5 2002/10/30 22:40:43 per Exp $ */
 /* Abstract: Boot program (somewhat like init in Unix systems). */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -35,8 +35,8 @@ int main (int argc UNUSED, char **argv UNUSED)
 
     system_call_service_lookup (&service_lookup, &services, &service_list);
     system_call_service_connect (service_list.id, &connection_id);
-    //    system_call_service_invoke (&connection_id, KERNEL_FUNCTION_DEBUG_PRINT,
-    //                                test);
+    system_call_service_invoke (connection_id, KERNEL_FUNCTION_DEBUG_PRINT,
+                                test);
     system_call_service_close (connection_id);
     return 0;
 }
