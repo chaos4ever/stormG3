@@ -1,4 +1,4 @@
-/* $chaos: console.c,v 1.6 2002/10/28 07:58:00 per Exp $ */
+/* $chaos: console.c,v 1.8 2002/11/20 20:03:29 per Exp $ */
 /* Abstract: Console library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -7,7 +7,6 @@
 
 #include <stdarg.h>
 #include <console/console.h>
-#include <string/string.h>
 
 /* Initialize a connection between the application and the console
    service. */
@@ -16,9 +15,15 @@ return_t console_lookup (console_service_t *console)
     // FIXME: Fix this fulkod ASAP.
     size_t services = 1;
     service_t service;
+    service_lookup_t lookup;
 
     /* Find the console service. */
-    if (service_lookup ("console", NULL, NULL, NULL, CONSOLE_SERVICE_MAJOR_VERSION, CONSOLE_SERVICE_MINOR_VERSION, &services, &service) != STORM_RETURN_SUCCESS)
+
+    lookup.protocol_name = "console";
+    lookup.major_version = CONSOLE_PROTOCOL_MAJOR_VERSION;
+    lookup.minor_version = CONSOLE_PROTOCOL_MINOR_VERSION;
+    
+    if (service_lookup (&lookup, &services, &service) != STORM_RETURN_SUCCESS)
     {
         debug_print ("Failed to lookup console service provider.\n");
         return CONSOLE_RETURN_SERVICE_UNAVAILABLE;
@@ -35,9 +40,9 @@ return_t console_lookup (console_service_t *console)
 return_t console_register (service_register_t *service_register_info,
                            service_method_t *service_method)
 {    
-    service_register_info->service_name = "console";
-    service_register_info->major_version = CONSOLE_SERVICE_MAJOR_VERSION;
-    service_register_info->minor_version = CONSOLE_SERVICE_MINOR_VERSION;
+    service_register_info->protocol_name = "console";
+    service_register_info->major_version = CONSOLE_PROTOCOL_MAJOR_VERSION;
+    service_register_info->minor_version = CONSOLE_PROTOCOL_MINOR_VERSION;
 
     return service_register (service_register_info, service_method);
 }
