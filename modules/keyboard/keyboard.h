@@ -1,4 +1,4 @@
-/* $chaos: keyboard.h,v 1.2 2002/06/18 09:22:35 per Exp $ */
+/* $chaos: keyboard.h,v 1.3 2002/06/21 08:00:28 per Exp $ */
 /* Abstract: Header file for the keyboard module. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -8,7 +8,12 @@
 #ifndef __KEYBOARD_H__
 #define __KEYBOARD_H__
 
+#include <console/console.h>
+#include <keyboard/keyboard.h>
 #include <log/log.h>
+
+/* Version of the service. */
+#define KEYBOARD_SERVICE_VERSION                1
 
 /* Timeout in ms for keyboard command acknowledge. */
 #define KEYBOARD_TIMEOUT                        1000
@@ -62,5 +67,8 @@ extern bool keyboard_main (void);
 
 /* The log service we are using. */
 extern log_service_t log;
+
+/* The keyboard event handler that we are using. */
+extern console_key_event_t key_event;
 
 #endif /* !__KEYBOARD_H__ */
