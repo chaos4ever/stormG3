@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.6 2002/05/24 17:34:57 per Exp $ */
+/* $chaos: defines.h,v 1.1 2002/05/25 20:09:37 per Exp $ */
 /* Abstract: Generic storm defines. */
 /* Author: Per Lundberg <per@halleluja.nu> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -29,5 +29,9 @@
 
 /* The maximum number of servers to start at boot time. */
 #define MAX_STARTUP_SERVERS             32
+
+/* Stupid, but just to get the AVL code compiling. */
+#define malloc(n) (NULL)
+#define free(n)
 
 #endif /* !__STORM_DEFINES_H__ */
