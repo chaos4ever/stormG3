@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.21 2002/10/14 21:32:46 per Exp $ */
+/* $chaos: defines.h,v 1.22 2002/10/15 21:56:57 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -15,6 +15,9 @@
 
 #include <storm/defines.h>
 #include <storm/types.h>
+
+/* The defines in this file are not for user-level programs. */
+#if (defined __STORM_KERNEL__) || (defined __STORM_KERNEL_MODULE__)
 
 /**
  * @brief               The size of a physical page. 
@@ -52,5 +55,7 @@
  * @brief               The maximum memory amount that we support. 
  */
 #define MAX_MEMORY      ((uint32_t) 2 * GIB)
+
+#endif /* (defined __STORM_KERNEL__) || (defined __STORM_KERNEL_MODULE__) */
 
 #endif /* !__STORM_IA32_DEFINES_H__ */
