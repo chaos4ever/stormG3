@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: types.h,v 1.1 2002/07/06 07:58:49 per Exp $ */
 /* Abstract: Types used by the block library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -30,8 +30,16 @@ typedef return_t (*block_info_function_t)(block_info_t *block_info);
 
 typedef struct
 {
+    /* The block magic cookie. */
+    unsigned int magic_cookie;
+
+    /* The function block_read. */
     block_read_t read;
+
+    /* The function block_write. */
     block_write_t write;
+
+    /* The function block_info. */
     block_info_function_t info;
 } block_service_t;
 
