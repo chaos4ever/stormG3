@@ -1,4 +1,4 @@
-/* $chaos: types.h,v 1.15 2002/10/28 21:50:04 per Exp $ */
+/* $chaos: types.h,v 1.16 2002/10/28 22:07:49 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -42,9 +42,19 @@ typedef void (irq_handler_t)(unsigned int irq_level);
 typedef unsigned int    process_id_t;
 
 /**
- * @brief               Type definitions. 
+ * @brief               A unique thread ID.
  */
 typedef unsigned int    thread_id_t;
+
+/**
+ * @brief               A unique service provider ID.
+ */
+typedef uint64_t        service_id_t;
+
+/**
+ * @brief               An ID for a connection to a service provider.
+ */
+typedef unsigned int    service_connection_id_t;
 
 /**
  * @brief               A boolean value.
@@ -67,6 +77,11 @@ typedef return_t (*service_info_t)(void *);
 typedef struct
 {
     /**
+     * @brief           The service provider ID.
+     */
+    service_id_t        id;
+    
+    /**
      * @brief           The service name. 
      */
     char                name[SERVICE_NAME_LENGTH];
@@ -86,7 +101,7 @@ typedef struct
      *                  number, etc). Used to distinguish between 
      *                  different devices with the same model. 
      */
-    char                id[SERVICE_ID_LENGTH];
+    char                device_id[SERVICE_ID_LENGTH];
 
     /**
      * @brief           The major version of the service provided. 
@@ -110,12 +125,35 @@ typedef struct
  */
 typedef struct
 {
-    // FIXME: Document this.
+    /**
+     * @brief           The name of the service.
+     */
     const char          *name;
+
+    /**
+     * @brief           The vendor of the service provider OR device. 
+     *                  FIXME: We need to take care of this ambiguity.
+     */
     const char          *vendor;
+
+    /**
+     * @brief           The model of the device.
+     */
     const char          *model;
-    const char          *id;
+
+    /**
+     * @brief           Unique ID for this device. 
+     */
+    const char          *device_id;
+
+    /**
+     * @brief           The major version of the service provided.
+     */
     unsigned int        major_version;
+
+    /**
+     * @brief           The minor version of the service provided.
+     */
     unsigned int        minor_version;
 } service_lookup_t;
 
