@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.5 2002/06/18 07:35:42 per Exp $ */
+/* $chaos: module.c,v 1.6 2002/06/18 07:59:04 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -15,12 +15,17 @@
 #include <storm/return_value.h>
 
 /* A list of functions provided through dynamic linking to kernel
-   modules. */
+   modules. We could export everything, but we don't want to do that
+   to keep the API clean. */
+// TODO: log_print
+// TODO: sleep
 static module_function_t function[] = 
 {
     { "debug_print", (function_t) &debug_print },
     { "irq_register", (function_t) &irq_register },
     { "module_register", (function_t) &module_register },
+    { "port_range_register", (function_t) &port_range_register },
+    { "port_range_unregister", (function_t) &port_range_unregister },
     { NULL, (function_t) NULL }
 };
 
