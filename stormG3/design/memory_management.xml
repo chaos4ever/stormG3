@@ -1,5 +1,5 @@
 <?xml version='1.0' ?> <!-- -*- xml -*- -->
-<!-- $chaos: memory_management.xml,v 1.5 2002/05/27 10:07:21 per Exp $ -->
+<!-- $chaos: memory_management.xml,v 1.6 2002/05/28 07:03:27 per Exp $ -->
 
 <chapter id="memory_management">
   <?dbhtml filename="memory_management.html"?>
@@ -164,10 +164,14 @@ typedef struct
 	    <para>
 	      Perform a O(n)-scan of the free pages, and set up a
 	      bitmap, marking the free pages. Then, perform an O(n)
-	      scan in this bitmap to find all areas that area big
+	      scan in this bitmap to find all areas that are big
 	      enough. Then, perform a third O(n) scan in these areas
 	      and take the smallest one. This is absolutely necessary
-	      to get rid of memory fragmentation.
+	      to get rid of memory fragmentation. Right now, we take
+	      the first block that's big enough and that will need to
+	      be fixed sometime. But we may do it through a
+	      big-block-allocator instead, this needs to be talked
+	      through.
 	    </para>
 	  </listitem>
 	</orderedlist>
