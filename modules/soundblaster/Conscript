@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.1 2002/06/22 19:22:41 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.1 2002/06/22 19:56:08 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the modules.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -8,7 +8,11 @@
 
 $module_binary = 'soundblaster.so';
 
-Import qw(cons module_directory);
+Import qw( cons module_directory library_directory );
+$cons = $cons->clone(LIBS => '-llog');
+Depends $cons $module_binary, "$library_directory/liblog.a";
 Program $cons $module_binary, 'soundblaster.c';
-Command $cons 'install', $module_binary, "mkdir -p $module_directory && " .
-  "install soundblaster/$module_binary $module_directory && gzip -9f $module_directory/$module_binary";
+Command $cons 'install', $module_binary, 
+  qq(mkdir -p $module_directory
+     install soundblaster/$module_binary $module_directory
+     gzip -9f $module_directory/$module_binary);
