@@ -1,4 +1,4 @@
-/* $chaos: process.h,v 1.5 2002/10/09 21:25:44 per Exp $ */
+/* $chaos: process.h,v 1.6 2002/10/10 21:40:47 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -84,6 +84,12 @@ typedef struct
 
 /**
  * @brief               Pre-create a process.
+ * @param process_id    A pointer to the process ID where this function
+ *                      will store the process ID generated.
+ * @param page_directory
+ *                      A pointer to where this function will store
+ *                      a pointer to the new process' page directory.
+ * @return              STORM_RETURN_SUCCESS if successful.
  *
  * Allocate a process ID and page directory for it, so we can start
  * mapping memory and set things up.
@@ -93,6 +99,9 @@ extern return_t process_precreate (process_id_t *process_id,
 
 /**
  * @brief               Create a process that's previously been pre-created.
+ * @param process_id    The process ID.
+ * @param entry_point   The process entry point.
+ * @return              STORM_RETURN_SUCCESS if successful.
  *
  * This function adds the process to the system list of processes and
  * includes it in the list of tasks to run. It is run at the very end
