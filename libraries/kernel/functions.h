@@ -12,7 +12,7 @@
 extern return_t kernel_lookup (kernel_service_t *kernel);
 
 /* Register a kernel service provider. */
-extern return_t kernel_register (char *vendor, char *model, char *id,
-                                 service_info_t service_info);
+extern return_t kernel_register (service_register_t *service_register_info,
+                                 service_method_t *method);
 
 #endif /* !__KERNEL_FUNCTIONS_H__ */

@@ -33,9 +33,13 @@ return_t kernel_lookup (kernel_service_t *kernel)
     return KERNEL_RETURN_SUCCESS;
 }
 
-/* Register an kernel service provider. */
-return_t kernel_register (char *vendor, char *model, char *id,
-                          service_info_t service_info)
+/* Register a kernel service provider. */
+return_t kernel_register (service_register_t *service_register_info,
+                          service_method_t *service_method)
 {    
-    return service_register ("kernel", vendor, model, id, KERNEL_SERVICE_MAJOR_VERSION, KERNEL_SERVICE_MINOR_VERSION, service_info);
+    service_register_info->service_name = "kernel";
+    service_register_info->major_version = KERNEL_SERVICE_MAJOR_VERSION;
+    service_register_info->minor_version = KERNEL_SERVICE_MINOR_VERSION;
+
+    return service_register (service_register_info, service_method);
 }

@@ -19,8 +19,8 @@
 /* Kernel functions. */
 enum kernel_function_t
 {
-    /* Only for testing. */
-    KERNEL_FUNCTION_DEBUG_PRINT,
+    /* Write something to the kernel log. */
+    KERNEL_FUNCTION_LOG,
 };
 
 #endif /* !__KERNEL_DEFINES_H__ */
