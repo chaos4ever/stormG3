@@ -1,4 +1,4 @@
-/* $chaos: functions.h,v 1.2 2002/08/09 05:59:41 per Exp $ */
+/* $chaos: functions.h,v 1.4 2002/11/20 20:04:31 per Exp $ */
 /* Abstract: Log library functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 

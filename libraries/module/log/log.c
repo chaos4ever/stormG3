@@ -1,4 +1,4 @@
-/* $chaos: log.c,v 1.10 2002/12/03 14:32:48 johannes Exp $ */
+/* $chaos: log.c,v 1.11 2002/12/04 21:51:51 per Exp $ */
 /* Abstract: Log library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 

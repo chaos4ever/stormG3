@@ -1,4 +1,4 @@
-/* $chaos: log.h,v 1.3 2002/10/04 19:00:55 per Exp $ */
+/* $chaos: log.h,v 1.4 2002/12/03 14:32:18 johannes Exp $ */
 /* Abstract: Definition of the log protocol. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
