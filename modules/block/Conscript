@@ -1,11 +1,11 @@
-# $chaos: Construct,v 1.5 2002/06/26 06:40:38 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.1 2002/07/06 09:09:33 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the block service providers.
 # Author: Per Lundberg <per@chaosdev.org>
 
-# Copyright 2000 chaos development.
+# Copyright 2002 chaos development.
 # Use freely under the terms listed in the file COPYING.
 
-Import qw( cons module_directory include build_directory library_directory 
-	 );
+Import qw( cons module_directory include build_directory library_directory
+	 install );
 Build qw( initial_ramdisk/Conscript );
