@@ -1,4 +1,4 @@
-/* $chaos: elf.c,v 1.3 2002/06/17 22:57:15 per Exp $ */
+/* $chaos: elf.c,v 1.4 2002/06/18 07:59:15 per Exp $ */
 /* Abstract: ELF functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -161,14 +161,6 @@ return_t elf_relocate (elf_parsed_t *elf_parsed)
         /* Perform this relocation. */
         relocation_address = (address_t *) (((address_t) elf_parsed->image) + relocation[index].offset);
         
-        if (relocation[index].symbol_index == 25) /* keyboard_irq_handler. */
-        {
-            debug_print ("%x %u %u\n",
-                         relocation[index].offset,
-                         relocation[index].symbol_type,
-                         relocation[index].symbol_index);
-        }
-
         // FIXME: Use defines for these types.
         if (relocation[index].symbol_type == 1)
         {
