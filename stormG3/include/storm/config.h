@@ -1,4 +1,4 @@
-/* $chaos: config.h,v 1.1 2002/05/25 20:09:37 per Exp $ */
+/* $chaos: config.h,v 1.2 2002/06/05 18:17:42 per Exp $ */
 /* Abstract: Kernel configuration. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -9,5 +9,13 @@
 #define __STORM_CONFIG_H__
 
 #define STORM_VERSION   "G3 0.0.1"
+
+/* Add a GDB breakpoint for remote debugging. Define if you have it
+   set up proper. */
+#undef GDB_INCLUDE
+
+/* Change these if you like. */
+#define GDB_PORT        0
+#define GDB_SPEED       115200
 
 #endif /* !__STORM_CONFIG_H__ */
