@@ -1,56 +1,48 @@
-/* $chaos: xemacs-script,v 1.6 2002/05/24 17:34:57 per Exp $ */
+/* $chaos: avltree.c,v 1.2 2002/05/27 11:48:15 per Exp $ */
 /* Abstract: AVL tree implementation. */
 /* Author: Per Lundberg <per@chaosdev.org>
-           Georg Kraml <georg@purists.org> */
+   Georg Kraml <georg@purists.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file COPYING. */
 
-#include <stdlib.h>
-#include "avltree.h"
+#include <storm/avltree.h>
+#include <storm/queue.h>
 
 /*
- *  Queue data structure used by avlbreadthfirst 
- */
-#define QDATUM struct avlnode *
-#include "queue.c"
-
-/*
- *  avlrotleft: perform counterclockwise rotation
+ *  avl_rotate_left: perform counterclockwise rotation
  *
  *  Parameters:
  *
  *    n           Address of a pointer to a node
  */
-void
-avlrotleft(struct avlnode **n)
+static void avl_rotate_left(struct avlnode **n)
 {
-	struct avlnode *tmp = *n;
+  struct avlnode *tmp = *n;
 
-	*n = (*n)->right;
-	tmp->right = (*n)->left;
-	(*n)->left = tmp;
+  *n = (*n)->right;
+  tmp->right = (*n)->left;
+  (*n)->left = tmp;
 }
 
 /*
- *  avlrotright: perform clockwise rotation
+ *  avl_rotate_right: perform clockwise rotation
  *
  *  Parameters:
  *
  *    n           Address of a pointer to a node
  */
-void
-avlrotright(struct avlnode **n)
+static void avl_rotate_right(struct avlnode **n)
 {
-	struct avlnode *tmp = *n;
+  struct avlnode *tmp = *n;
 
-	*n = (*n)->left;
-	tmp->left = (*n)->right;
-	(*n)->right = tmp;
+  *n = (*n)->left;
+  tmp->left = (*n)->right;
+  (*n)->right = tmp;
 }
 
 /*
- *  avlleftgrown: helper function for avlinsert
+ *  avl_left_grown: helper function for avl_insert
  *
  *  Parameters:
  *
@@ -63,102 +55,100 @@ avlrotright(struct avlnode **n)
  *  Return values:
  *
  *    OK          The local tree could be rebalanced or was balanced 
- *                from the start. The parent activations of the avlinsert 
+ *                from the start. The parent activations of the avl_insert 
  *                activation that called this function may assume the 
  *                entire tree is valid.
  *
  *    BALANCE     The local tree was balanced, but has grown in height.
  *                Do not assume the entire tree is valid.
  */
-enum AVLRES
-avlleftgrown(struct avlnode **n)
+static enum AVLRES avl_left_grown(struct avlnode **n)
 {
-	switch ((*n)->skew) {
-	case LEFT:
-		if ((*n)->left->skew == LEFT) {
-			(*n)->skew = (*n)->left->skew = NONE;
-			avlrotright(n);
-		}	
-		else {
-			switch ((*n)->left->right->skew) {
-			case LEFT:
-				(*n)->skew = RIGHT;
-				(*n)->left->skew = NONE;
-				break;
+  switch ((*n)->skew) {
+    case LEFT:
+      if ((*n)->left->skew == LEFT) {
+        (*n)->skew = (*n)->left->skew = NONE;
+        avl_rotate_right(n);
+      }	
+      else {
+        switch ((*n)->left->right->skew) {
+          case LEFT:
+            (*n)->skew = RIGHT;
+            (*n)->left->skew = NONE;
+            break;
 
-			case RIGHT:
-				(*n)->skew = NONE;
-				(*n)->left->skew = LEFT;
-				break;
+          case RIGHT:
+            (*n)->skew = NONE;
+            (*n)->left->skew = LEFT;
+            break;
 
-			default:
-				(*n)->skew = NONE;
-				(*n)->left->skew = NONE;
-			}
-			(*n)->left->right->skew = NONE;
-			avlrotleft(& (*n)->left);
-			avlrotright(n);
-		}
-		return OK;
+          default:
+            (*n)->skew = NONE;
+            (*n)->left->skew = NONE;
+        }
+        (*n)->left->right->skew = NONE;
+        avl_rotate_left(& (*n)->left);
+        avl_rotate_right(n);
+      }
+      return OK;
 
-	case RIGHT:
-		(*n)->skew = NONE;
-		return OK;
+    case RIGHT:
+      (*n)->skew = NONE;
+      return OK;
 	
-	default:
-		(*n)->skew = LEFT;
-		return BALANCE;
-	}
+    default:
+      (*n)->skew = LEFT;
+      return BALANCE;
+  }
 }
 
 /*
- *  avlrightgrown: helper function for avlinsert
+ *  avl_right_grown: helper function for avl_insert
  *
- *  See avlleftgrown for details.
+ *  See avl_left_grown for details.
  */
-enum AVLRES
-avlrightgrown(struct avlnode **n)
+static enum AVLRES avl_right_grown(struct avlnode **n)
 {
-	switch ((*n)->skew) {
-	case LEFT:					
-		(*n)->skew = NONE;
-		return OK;
+  switch ((*n)->skew) {
+    case LEFT:					
+      (*n)->skew = NONE;
+      return OK;
 
-	case RIGHT:
-		if ((*n)->right->skew == RIGHT) {	
-			(*n)->skew = (*n)->right->skew = NONE;
-			avlrotleft(n);
-		}
-		else {
-			switch ((*n)->right->left->skew) {
-			case RIGHT:
-				(*n)->skew = LEFT;
-				(*n)->right->skew = NONE;
-				break;
+    case RIGHT:
+      if ((*n)->right->skew == RIGHT) {	
+        (*n)->skew = (*n)->right->skew = NONE;
+        avl_rotate_left(n);
+      }
+      else {
+        switch ((*n)->right->left->skew) {
+          case RIGHT:
+            (*n)->skew = LEFT;
+            (*n)->right->skew = NONE;
+            break;
 
-			case LEFT:
-				(*n)->skew = NONE;
-				(*n)->right->skew = RIGHT;
-				break;
+          case LEFT:
+            (*n)->skew = NONE;
+            (*n)->right->skew = RIGHT;
+            break;
 
-			default:
-				(*n)->skew = NONE;
-				(*n)->right->skew = NONE;
-			}
-			(*n)->right->left->skew = NONE;
-			avlrotright(& (*n)->right);
-			avlrotleft(n);
-		}
-		return OK;
+          default:
+            (*n)->skew = NONE;
+            (*n)->right->skew = NONE;
+        }
+        (*n)->right->left->skew = NONE;
+        avl_rotate_right(& (*n)->right);
+        avl_rotate_left(n);
+      }
+      return OK;
 
-	default:
-		(*n)->skew = RIGHT;
-		return BALANCE;
-	}
+    default:
+      (*n)->skew = RIGHT;
+      return BALANCE;
+  }
 }
 
 /*
- *  avlinsert: insert a node into the AVL tree.
+ *  avl_insert: insert a node into the AVL tree.
  *
  *  Parameters:
  *
@@ -170,7 +160,7 @@ avlrightgrown(struct avlnode **n)
  *
  *    nonzero     The item has been inserted. The excact value of 
  *                nonzero yields is of no concern to user code; when
- *                avlinsert recursively calls itself, the number 
+ *                avl_insert recursively calls itself, the number 
  *                returned tells the parent activation if the AVL tree 
  *                may have become unbalanced; specifically:
  *
@@ -186,38 +176,37 @@ avlrightgrown(struct avlnode **n)
  *                item with which the same AVLKEY is associated), or
  *                due to insufficient memory.
  */   
-enum AVLRES
-avlinsert(struct avlnode **n, AVLDATUM d)
+enum AVLRES avl_insert(struct avlnode **n, AVLDATUM d)
 {
-	enum AVLRES tmp;
+  enum AVLRES tmp;
 
-	if (!(*n)) {
-		if (!((*n) = malloc(sizeof(struct avlnode)))) {
-			return ERROR;
-		}
-		(*n)->left = (*n)->right = NULL;
-		(*n)->d = d;
-		(*n)->skew = NONE;
-		return BALANCE;
-	}
+  if (!(*n)) {
+    if (!((*n) = malloc(sizeof(struct avlnode)))) {
+      return ERROR;
+    }
+    (*n)->left = (*n)->right = NULL;
+    (*n)->d = d;
+    (*n)->skew = NONE;
+    return BALANCE;
+  }
 	
-	if (AVLKEY(d) < AVLKEY((*n)->d)) {
-		if ((tmp = avlinsert(& (*n)->left, d)) == BALANCE) {
-			return avlleftgrown(n);
-		}
-		return tmp;
-	}
-	if (AVLKEY(d) > AVLKEY((*n)->d)) {
-		if ((tmp = avlinsert(& (*n)->right, d)) == BALANCE) {
-			return avlrightgrown(n);
-		}
-		return tmp;
-	}
-	return ERROR;
+  if (AVLKEY(d) < AVLKEY((*n)->d)) {
+    if ((tmp = avl_insert(& (*n)->left, d)) == BALANCE) {
+      return avl_left_grown(n);
+    }
+    return tmp;
+  }
+  if (AVLKEY(d) > AVLKEY((*n)->d)) {
+    if ((tmp = avl_insert(& (*n)->right, d)) == BALANCE) {
+      return avl_right_grown(n);
+    }
+    return tmp;
+  }
+  return ERROR;
 }
 
 /*
- *  avlleftshrunk: helper function for avlremove and avlfindlowest
+ *  avl_left_shrunk: helper function for avl_remove and avl_find_lowest
  *
  *  Parameters:
  *
@@ -229,115 +218,113 @@ avlinsert(struct avlnode **n, AVLDATUM d)
  *
  *   Return values:
  *
- *    OK          The parent activation of the avlremove activation
+ *    OK          The parent activation of the avl_remove activation
  *                that called this function may assume the entire
  *                tree is valid.
  *
  *    BALANCE     Do not assume the entire tree is valid.
  */                
-enum AVLRES
-avlleftshrunk(struct avlnode **n)
+static enum AVLRES avl_left_shrunk(struct avlnode **n)
 {
-	switch ((*n)->skew) {
-	case LEFT:
-		(*n)->skew = NONE;
-		return BALANCE;
+  switch ((*n)->skew) {
+    case LEFT:
+      (*n)->skew = NONE;
+      return BALANCE;
 
-	case RIGHT:
-		if ((*n)->right->skew == RIGHT) {
-			(*n)->skew = (*n)->right->skew = NONE;
-			avlrotleft(n);
-			return BALANCE;
-		}
-		else if ((*n)->right->skew == NONE) {
-			(*n)->skew = RIGHT;
-			(*n)->right->skew = LEFT;
-			avlrotleft(n);
-			return OK;
-		}
-		else {
-			switch ((*n)->right->left->skew) {
-			case LEFT:
-				(*n)->skew = NONE;
-				(*n)->right->skew = RIGHT;
-				break;
+    case RIGHT:
+      if ((*n)->right->skew == RIGHT) {
+        (*n)->skew = (*n)->right->skew = NONE;
+        avl_rotate_left(n);
+        return BALANCE;
+      }
+      else if ((*n)->right->skew == NONE) {
+        (*n)->skew = RIGHT;
+        (*n)->right->skew = LEFT;
+        avl_rotate_left(n);
+        return OK;
+      }
+      else {
+        switch ((*n)->right->left->skew) {
+          case LEFT:
+            (*n)->skew = NONE;
+            (*n)->right->skew = RIGHT;
+            break;
 
-			case RIGHT:
-				(*n)->skew = LEFT;
-				(*n)->right->skew = NONE;
-				break;
+          case RIGHT:
+            (*n)->skew = LEFT;
+            (*n)->right->skew = NONE;
+            break;
 
-			default:
-				(*n)->skew = NONE;
-				(*n)->right->skew = NONE;
-			}
-			(*n)->right->left->skew = NONE;
-			avlrotright(& (*n)->right);
-			avlrotleft(n);
-			return BALANCE;
-		}
+          default:
+            (*n)->skew = NONE;
+            (*n)->right->skew = NONE;
+        }
+        (*n)->right->left->skew = NONE;
+        avl_rotate_right(& (*n)->right);
+        avl_rotate_left(n);
+        return BALANCE;
+      }
 
-	default:
-		(*n)->skew = RIGHT;
-		return OK;
-	}
+    default:
+      (*n)->skew = RIGHT;
+      return OK;
+  }
 }
 
 /*
- *  avlrightshrunk: helper function for avlremove and avlfindhighest
+ *  avl_right_shrunk: helper function for avl_remove and avl_find_highest
  *
- *  See avlleftshrunk for details.
+ *  See avl_left_shrunk for details.
  */
-enum AVLRES
-avlrightshrunk(struct avlnode **n)
+static enum AVLRES avl_right_shrunk(struct avlnode **n)
 {
-	switch ((*n)->skew) {
-	case RIGHT:
-		(*n)->skew = NONE;
-		return BALANCE;
+  switch ((*n)->skew) {
+    case RIGHT:
+      (*n)->skew = NONE;
+      return BALANCE;
 
-	case LEFT:
-		if ((*n)->left->skew == LEFT) {
-			(*n)->skew = (*n)->left->skew = NONE;
-			avlrotright(n);
-			return BALANCE;
-		}
-		else if ((*n)->left->skew == NONE) {
-			(*n)->skew = LEFT;
-			(*n)->left->skew = RIGHT;
-			avlrotright(n);
-			return OK;
-		}
-		else {
-			switch ((*n)->left->right->skew) {
-			case LEFT:
-				(*n)->skew = RIGHT;
-				(*n)->left->skew = NONE;
-				break;
+    case LEFT:
+      if ((*n)->left->skew == LEFT) {
+        (*n)->skew = (*n)->left->skew = NONE;
+        avl_rotate_right(n);
+        return BALANCE;
+      }
+      else if ((*n)->left->skew == NONE) {
+        (*n)->skew = LEFT;
+        (*n)->left->skew = RIGHT;
+        avl_rotate_right(n);
+        return OK;
+      }
+      else {
+        switch ((*n)->left->right->skew) {
+          case LEFT:
+            (*n)->skew = RIGHT;
+            (*n)->left->skew = NONE;
+            break;
 
-			case RIGHT:
-				(*n)->skew = NONE;
-				(*n)->left->skew = LEFT;	
-				break;
+          case RIGHT:
+            (*n)->skew = NONE;
+            (*n)->left->skew = LEFT;	
+            break;
 			
-			default:
-				(*n)->skew = NONE;
-				(*n)->left->skew = NONE;
-			}
-			(*n)->left->right->skew = NONE;
-			avlrotleft(& (*n)->left);
-			avlrotright(n);
-			return BALANCE;
-		}
+          default:
+            (*n)->skew = NONE;
+            (*n)->left->skew = NONE;
+        }
+        (*n)->left->right->skew = NONE;
+        avl_rotate_left(& (*n)->left);
+        avl_rotate_right(n);
+        return BALANCE;
+      }
 
-	default:
-		(*n)->skew = LEFT;
-		return OK;
-	}
+    default:
+      (*n)->skew = LEFT;
+      return OK;
+  }
 }
 
 /*
- *  avlfindhighest: replace a node with a subtree's highest-ranking item.
+ *  avl_find_highest: replace a node with a subtree's highest-ranking item.
  *
  *  Parameters:
  *
@@ -347,7 +334,7 @@ avlrightshrunk(struct avlnode **n)
  *
  *    res         Pointer to variable used to tell the caller whether
  *                further checks are necessary; analog to the return
- *                values of avlleftgrown and avlleftshrunk (see there). 
+ *                values of avl_left_grown and avl_left_shrunk (see there). 
  *
  *  Return values:
  *
@@ -357,63 +344,63 @@ avlrightshrunk(struct avlnode **n)
  *                the subtree provided was empty.
  *
  */
-int
-avlfindhighest(struct avlnode *target, struct avlnode **n, enum AVLRES *res)
+static int avl_find_highest(struct avlnode *target, struct avlnode **n, 
+                            enum AVLRES *res)
 {
-	struct avlnode *tmp;
+  struct avlnode *tmp;
 
-	*res = BALANCE;
-	if (!(*n)) {
-		return 0;
-	}
-	if ((*n)->right) {
-		if (!avlfindhighest(target, &(*n)->right, res)) {
-			return 0;
-		}
-		if (*res == BALANCE) {
-			*res = avlrightshrunk(n);
-		}
-		return 1;
-	}
-	target->d  = (*n)->d;
-	tmp = *n;
-	*n = (*n)->left;
-	free(tmp);
-	return 1;
+  *res = BALANCE;
+  if (!(*n)) {
+    return 0;
+  }
+  if ((*n)->right) {
+    if (!avl_find_highest(target, &(*n)->right, res)) {
+      return 0;
+    }
+    if (*res == BALANCE) {
+      *res = avl_right_shrunk(n);
+    }
+    return 1;
+  }
+  target->d  = (*n)->d;
+  tmp = *n;
+  *n = (*n)->left;
+  free(tmp);
+  return 1;
 }
 
 /*
- *  avlfindlowest: replace node with a subtree's lowest-ranking item.
+ *  avl_find_lowest: replace node with a subtree's lowest-ranking item.
  *
- *  See avlfindhighest for the details.
+ *  See avl_find_highest for the details.
  */
-int
-avlfindlowest(struct avlnode *target, struct avlnode **n, enum AVLRES *res)
+static int avl_find_lowest(struct avlnode *target, struct avlnode **n,
+                    enum AVLRES *res)
 {
-	struct avlnode *tmp;
+  struct avlnode *tmp;
 
-	*res = BALANCE;
-	if (!(*n)) {
-		return 0;
-	}
-	if ((*n)->left) {
-		if (!avlfindlowest(target, &(*n)->left, res)) {
-			return 0;
-		}
-		if (*res == BALANCE) {
-			*res =  avlleftshrunk(n);
-		}
-		return 1;
-	}
-	target->d = (*n)->d;
-	tmp = *n;
-	*n = (*n)->right;
-	free(tmp);
-	return 1;
+  *res = BALANCE;
+  if (!(*n)) {
+    return 0;
+  }
+  if ((*n)->left) {
+    if (!avl_find_lowest(target, &(*n)->left, res)) {
+      return 0;
+    }
+    if (*res == BALANCE) {
+      *res =  avl_left_shrunk(n);
+    }
+    return 1;
+  }
+  target->d = (*n)->d;
+  tmp = *n;
+  *n = (*n)->right;
+  free(tmp);
+  return 1;
 }
 
 /*
- *  avlremove: remove an item from the tree.
+ *  avl_remove: remove an item from the tree.
  *
  *  Parameters:
  *
@@ -425,7 +412,7 @@ avlfindlowest(struct avlnode *target, struct avlnode **n, enum AVLRES *res)
  *
  *    nonzero     The item has been removed. The exact value of 
  *                nonzero yields if of no concern to user code; when
- *                avlremove recursively calls itself, the number
+ *                avl_remove recursively calls itself, the number
  *                returned tells the parent activation if the AVL tree
  *                may have become unbalanced; specifically:
  *
@@ -439,49 +426,48 @@ avlfindlowest(struct avlnode *target, struct avlnode **n, enum AVLRES *res)
  *   zero         The tree does not contain an item yielding the
  *                AVLKEY value provided by the caller.
  */
-enum AVLRES
-avlremove(struct avlnode **n, int key)
+enum AVLRES avl_remove(struct avlnode **n, int key)
 {
-	enum AVLRES tmp = BALANCE;
+  enum AVLRES tmp = BALANCE;
 
-	if (!(*n)) {
-		return ERROR;
-	}
-	if (key < AVLKEY((*n)->d)) {
-		if ((tmp = avlremove(& (*n)->left, key)) == BALANCE) {
-			return avlleftshrunk(n);
-		}
-		return tmp;
-	}
-	if (key > AVLKEY((*n)->d)) {
-		if ((tmp = avlremove(& (*n)->right, key)) == BALANCE) {
-			return avlrightshrunk(n);
-		}
-		return tmp;
-	}
-	if ((*n)->left) {
-		if (avlfindhighest(*n, &((*n)->left), &tmp)) {
-			if (tmp == BALANCE) {
-				tmp = avlleftshrunk(n);
-			}
-			return tmp;
-		}
-	}
-	if ((*n)->right) {
-		if (avlfindlowest(*n, &((*n)->right), &tmp)) {
-			if (tmp == BALANCE) {
-				tmp = avlrightshrunk(n);
-			}
-			return tmp;
-		}
-	}
-	free(*n);
- 	*n = NULL;
-	return BALANCE;
+  if (!(*n)) {
+    return ERROR;
+  }
+  if (key < AVLKEY((*n)->d)) {
+    if ((tmp = avl_remove(& (*n)->left, key)) == BALANCE) {
+      return avl_left_shrunk(n);
+    }
+    return tmp;
+  }
+  if (key > AVLKEY((*n)->d)) {
+    if ((tmp = avl_remove(& (*n)->right, key)) == BALANCE) {
+      return avl_right_shrunk(n);
+    }
+    return tmp;
+  }
+  if ((*n)->left) {
+    if (avl_find_highest(*n, &((*n)->left), &tmp)) {
+      if (tmp == BALANCE) {
+        tmp = avl_left_shrunk(n);
+      }
+      return tmp;
+    }
+  }
+  if ((*n)->right) {
+    if (avl_find_lowest(*n, &((*n)->right), &tmp)) {
+      if (tmp == BALANCE) {
+        tmp = avl_right_shrunk(n);
+      }
+      return tmp;
+    }
+  }
+  free(*n);
+  *n = NULL;
+  return BALANCE;
 }
 
 /*
- *  avlaccess: retrieve the datum corresponding to a given AVLKEY.
+ *  avl_access: retrieve the datum corresponding to a given AVLKEY.
  *
  *  Parameters:
  *
@@ -496,23 +482,22 @@ avlremove(struct avlnode **n, int key)
  *
  *    NULL        The item could not be found.
  */
-AVLDATUM *
-avlaccess(struct avlnode *n, int key)
+AVLDATUM *avl_access(struct avlnode *n, int key)
 {
-        if (!n) {
-                return NULL;
-        }
-        if (key < AVLKEY((n)->d)) {
-                return avlaccess(n->left, key);
-        }
-        if (key > AVLKEY((n)->d)) {
-                return avlaccess(n->right, key);
-        }
-        return &(n->d);
+  if (!n) {
+    return NULL;
+  }
+  if (key < AVLKEY((n)->d)) {
+    return avl_access(n->left, key);
+  }
+  if (key > AVLKEY((n)->d)) {
+    return avl_access(n->right, key);
+  }
+  return &(n->d);
 }
 
 /*
- *  avldepthfirst: depth-first tree traversal.
+ *  avl_depth_first: depth-first tree traversal.
  *
  *  Parameters:
  *
@@ -527,40 +512,35 @@ avlaccess(struct avlnode *n, int key)
  *               to determine how many levels the node being processed
  *               is below the root node. Can be used, for example,
  *               for selecting the proper indentation width when
- *               avldepthfirst ist used to print a tree dump to
+ *               avl_depth_first ist used to print a tree dump to
  *               the screen.
  *
- *               Most of the time, you will want to call avldepthfirst
+ *               Most of the time, you will want to call avl_depth_first
  *               with a "depth" value of zero.
  */
-void
-avldepthfirst(struct avlnode *n, AVLWORKER *f, int param, int depth)
+void avl_depth_first(struct avlnode *n, AVLWORKER *f, int param, int depth)
 {
-	if (!n) return;
-	avldepthfirst(n->left, f, param, depth + 1);
-	(*f)(n, param, depth);
-	avldepthfirst(n->right, f, param, depth +1);
+  if (!n) return;
+  avl_depth_first(n->left, f, param, depth + 1);
+  (*f)(n, param, depth);
+  avl_depth_first(n->right, f, param, depth +1);
 }
 
 /*
- *  avlbreadthfirst: breadth-first tree traversal.
+ *  avl_breadth_first: breadth-first tree traversal.
  * 
- *  See avldepthfirst for details.
+ *  See avl_depth_first for details.
  */
-void
-avlbreadthfirst(struct avlnode *n, AVLWORKER *f, int param)
+void avl_breadth_first(struct avlnode *n, AVLWORKER *f, int param)
 {
-        struct queue q;
+  struct queue q;
 
-        if (!n) return;
-        qinit(&q);
-        qinsert(&q, n);
-        while (qremove(&q, &n)) {
-                (*f)(n, param, 0);
-                if (n->left) qinsert(&q, n->left);
-                if (n->right) qinsert(&q, n->right);
-        }
+  if (!n) return;
+  queue_init(&q);
+  queue_insert(&q, n);
+  while (queue_remove(&q, &n)) {
+    (*f)(n, param, 0);
+    if (n->left) queue_insert(&q, n->left);
+    if (n->right) queue_insert(&q, n->right);
+  }
 }
-
-
-

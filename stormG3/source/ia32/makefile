@@ -1,4 +1,4 @@
-# $chaos$
+# $chaos: makefile,v 1.1 2002/05/25 20:09:40 per Exp $
 
 # Abstract: storm G3 makefile
 # Authors: Henrik Hallin <hal@chaosdev.org>
@@ -18,6 +18,6 @@ install: all
 	$(INSTALL) $(BINARY) $(INSTALL_PATH)/system/kernel
 
 $(BINARY): $(OBJECTS)
-	$(CC) -o $(@) $(OBJECTS) $(GENERIC_OBJECTS) $(LDFLAGS)
+	$(CC) -o $(@) $(OBJECTS) -L.. -lgeneric $(LDFLAGS)
 
 include $(BUILD_ROOT)/storm.make

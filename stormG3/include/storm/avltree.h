@@ -1,30 +1,32 @@
 /* $chaos: xemacs-script,v 1.6 2002/05/24 17:34:57 per Exp $ */
 /* Abstract: Queue code, used by AVL library. */
 /* Author: Per Lundberg <per@chaosdev.org>
-           Georg Kraml <georg@purists.org> */
+   Georg Kraml <georg@purists.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file COPYING. */
 
-#ifndef AVLTREE_H
-#define AVLTREE_H
+#ifndef __STORM_AVLTREE_H__
+#define __STORM_AVLTREE_H__
 
-#ifndef AVLDATUM
-#error AVLDATUM undefined!
-#endif
+#include <storm/defines.h>
 
-#ifndef AVLKEY
-#error AVLKEY undefined!
-#endif
+typedef struct {
+  int key;
+} data;
+
+/* Function for getting the... */
+#define AVLKEY(data) (data.key)
+#define AVLDATUM data
 
 /*
  *  Which of a given node's subtrees is higher?
  */
 enum AVLSKEW 
 {
-	NONE,	
-	LEFT,
-	RIGHT
+  NONE,	
+  LEFT,
+  RIGHT
 };
 
 /*
@@ -32,9 +34,9 @@ enum AVLSKEW
  */
 enum AVLRES
 {
-	ERROR = 0,
-	OK,
-	BALANCE,
+  ERROR = 0,
+  OK,
+  BALANCE,
 };
 
 /*
@@ -42,13 +44,13 @@ enum AVLRES
  */
 struct avlnode
 {
-	struct avlnode *left, *right;
-	AVLDATUM d;
-	enum AVLSKEW skew;
+  struct avlnode *left, *right;
+  AVLDATUM d;
+  enum AVLSKEW skew;
 };
 
 /*
- *  avlinsert: insert a node into the AVL tree.
+ *  avl_insert: insert a node into the AVL tree.
  *
  *  Parameters:
  *
@@ -60,7 +62,7 @@ struct avlnode
  *
  *    nonzero     The item has been inserted. The excact value of 
  *                nonzero yields is of no concern to user code; when
- *                avlinsert recursively calls itself, the number 
+ *                avl_insert recursively calls itself, the number 
  *                returned tells the parent activation if the AVL tree 
  *                may have become unbalanced; specifically:
  *
@@ -76,11 +78,10 @@ struct avlnode
  *                item with which the same AVLKEY is associated), or
  *                due to insufficient memory.
  */   
-enum AVLRES
-avlinsert(struct avlnode **n, AVLDATUM d);
+extern enum AVLRES avl_insert(struct avlnode **n, AVLDATUM d);
 
 /*
- *  avlremove: remove an item from the tree.
+ *  avl_remove: remove an item from the tree.
  *
  *  Parameters:
  *
@@ -92,7 +93,7 @@ avlinsert(struct avlnode **n, AVLDATUM d);
  *
  *    nonzero     The item has been removed. The exact value of 
  *                nonzero yields if of no concern to user code; when
- *                avlremove recursively calls itself, the number
+ *                avl_remove recursively calls itself, the number
  *                returned tells the parent activation if the AVL tree
  *                may have become unbalanced; specifically:
  *
@@ -106,11 +107,10 @@ avlinsert(struct avlnode **n, AVLDATUM d);
  *   zero         The tree does not contain an item yielding the
  *                AVLKEY value provided by the caller.
  */
-enum AVLRES
-avlremove(struct avlnode **n, int key);
+extern enum AVLRES avl_remove(struct avlnode **n, int key);
 
 /*
- *  avlaccess: retrieve the datum corresponding to a given AVLKEY.
+ *  avl_access: retrieve the datum corresponding to a given AVLKEY.
  *
  *  Parameters:
  *
@@ -125,9 +125,7 @@ avlremove(struct avlnode **n, int key);
  *
  *    NULL        The item could not be found.
  */
-AVLDATUM *
-avlaccess(struct avlnode *n, int key);
-
+extern AVLDATUM *avl_access(struct avlnode *n, int key);
 
 /*
  *  Function to be called by the tree traversal functions.
@@ -142,13 +140,13 @@ avlaccess(struct avlnode *n, int key);
  *                determine how many levels the node bein processed is
  *                below the root node. Can be used, for example,
  *                for selecting the proper indentation width when
- *                avldepthfirst is used to print a tree dump to 
+ *                avl_depth_first is used to print a tree dump to 
  *                the screen.
  */
 typedef void AVLWORKER(struct avlnode *n, int param, int depth);
 
 /*
- *  avldepthfirst: depth-first tree traversal.
+ *  avl_depth_first: depth-first tree traversal.
  *
  *  Parameters:
  *
@@ -163,22 +161,21 @@ typedef void AVLWORKER(struct avlnode *n, int param, int depth);
  *               to determine how many levels the node being processed
  *               is below the root node. Can be used, for example,
  *               for selecting the proper indentation width when
- *               avldepthfirst ist used to print a tree dump to
+ *               avl_depth_first ist used to print a tree dump to
  *               the screen.
  *
- *               Most of the time, you will want to call avldepthfirst
+ *               Most of the time, you will want to call avl_depth_first
  *               with a "depth" value of zero.
  */
-void
-avldepthfirst(struct avlnode *n, AVLWORKER *f, int param, int depth);
+extern void avl_depth_first(struct avlnode *n, AVLWORKER *f, int param,
+                            int depth);
 
 /*
- *  avlbreadthfirst: breadth-first tree traversal.
+ *  avl_breadth_first: breadth-first tree traversal.
  * 
- *  See avldepthfirst for details.
+ *  See avl_depth_first for details.
  */
-void
-avlbreadthfirst(struct avlnode *n, AVLWORKER *f, int param);
+extern void avl_breadth_first(struct avlnode *n, AVLWORKER *f, int param);
 
 #endif
 
