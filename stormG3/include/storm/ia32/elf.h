@@ -1,4 +1,4 @@
-/* $chaos: elf.h,v 1.6 2002/06/17 22:56:43 per Exp $ */
+/* $chaos: elf.h,v 1.7 2002/06/20 20:32:37 per Exp $ */
 /* Abstract: ELF file format. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -225,8 +225,15 @@ enum
 /* Relocation types. */
 enum
 {
-    /*    ELF_RELOCATION_ = 1,
-          ELF_RELOCATION_ = 2, */
+    /* No relocation needs to be performed. */
+    ELF_RELOCATION_NONE,
+
+    /* The contents of the relocated place plus the address of the
+       symbol. */
+    /* ELF_RELOCATION, */ // FIXME: Put a name on this.
+    /* The contents of the relocated place plus the address of the
+     * symbol, minus the address of the symbol. */
+    /* ELF_RELOCATION, */ // FIXME: Put a name on this.
     /* The contents of the relocated place plus the base of the image
        in memory. */
     ELF_RELOCATION_RELATIVE = 8,

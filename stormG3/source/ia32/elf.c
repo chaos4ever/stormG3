@@ -1,4 +1,4 @@
-/* $chaos: elf.c,v 1.5 2002/06/19 07:28:13 per Exp $ */
+/* $chaos: elf.c,v 1.6 2002/06/20 20:32:39 per Exp $ */
 /* Abstract: ELF functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -169,7 +169,7 @@ return_t elf_relocate (elf_parsed_t *elf_parsed)
         else if (relocation[index].symbol_type == 2)
         {
             /* Are you confused yet? :-) */
-            *relocation_address = (address_t) (symbol_address - (address_t) relocation_address + *relocation_address);
+            *relocation_address =  *relocation_address + (address_t) (symbol_address - (address_t) relocation_address);
         }
         else if (relocation[index].symbol_type == ELF_RELOCATION_RELATIVE)
         {
