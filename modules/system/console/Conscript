@@ -1,6 +1,6 @@
-# $chaos: Conscript,v 1.1 2002/08/13 18:50:53 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.2 2002/08/13 19:12:03 per Exp $ -*- Perl -*-
 
-# Abstract: CONS script for the modules.
+# Abstract: CONS script for the console module.
 # Author: Per Lundberg <per@chaosdev.org>
 
 # Copyright 2002 chaos development.
@@ -9,7 +9,7 @@
 $module_binary = 'console.so';
 $module_path = 'system/console';
 
-Import qw( cons module_directory library_directory );
+Import qw( cons module_directory library_directory install );
 $cons = $cons->clone(LIBS => '-lunicode -lvideo');
 Depends $cons $module_binary, "$library_directory/libunicode.a",
   "$library_directory/libvideo.a";
