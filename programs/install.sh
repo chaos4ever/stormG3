@@ -15,6 +15,6 @@ mount ${RAMDISK_ROOT}
 for e in ${PROGRAMS}
 do
   echo "Copying $e"
-  cp ${ROOT}/system/programs/$e ${RAMDISK_ROOT} || (umount ${RAMDISK_ROOT} ; exit 1)
+  install -s ${ROOT}/system/programs/$e ${RAMDISK_ROOT} || (umount ${RAMDISK_ROOT} ; exit 1)
 done
 umount ${RAMDISK_ROOT}
