@@ -1,4 +1,4 @@
-/* $chaos: init.c,v 1.10 2002/08/08 19:55:57 per Exp $ */
+/* $chaos: init.c,v 1.11 2002/10/04 19:01:21 per Exp $ */
 /* Abstract: storm initialization. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -75,6 +75,8 @@ static uint16_t gdtr[] UNUSED =
    almost. _start () sets up some stuff first...) */
 static void kernel_entry (void)
 {
+    /* If we are compiled with GDB support, initialize the GDB code
+       and break, so the remote debugger will know we are here. */
 #ifdef GDB
     gdb_serial_init (GDB_PORT, GDB_SPEED);
     gdb_set_debug_traps ();
