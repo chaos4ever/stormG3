@@ -1,5 +1,5 @@
 <?xml version='1.0' ?> <!-- -*- xml -*- -->
-<!-- $chaos: process.xml,v 1.1 2002/05/27 07:52:29 per Exp $ -->
+<!-- $chaos: process.xml,v 1.2 2002/05/27 09:49:57 per Exp $ -->
 
 <chapter id="process">
   <?dbhtml filename="process.html"?>
@@ -15,6 +15,7 @@
   </section>
 
   <section>
+    <?dbhtml filename="processes.html"?>
     <title>
       Processes
     </title>
@@ -39,6 +40,7 @@ typedef struct
   </section>
 
   <section>
+    <?dbhtml filename="threads.html"?>
     <title>
       Threads
     </title>
