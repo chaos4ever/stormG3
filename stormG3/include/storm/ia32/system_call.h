@@ -1,4 +1,4 @@
-/* $chaos: system_call.h,v 1.4 2002/10/28 22:09:10 per Exp $ */
+/* $chaos: system_call.h,v 1.5 2002/10/28 22:24:59 per Exp $ */
 /* Abstract: System call prototypes etc. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -88,6 +88,47 @@ static inline unsigned int system_call_service_lookup (service_lookup_t *service
     return return_value;
 }
 
+/* Connect to a service that has been looked up. */
+static inline unsigned int system_call_service_connect (service_id_t service_id, service_connection_id_t *connection_id)
+{
+    unsigned int return_value;
+
+    asm volatile ("pushl        %1\n"   /* connection_id */
+                  "pushl        %2\n"   /* service_id */
+
+                  "pushl        %3\n"   /* number of arguments. */
+                  "pushl        %4\n"   /* system call number. */
+                  "int          %5"
+                  : 
+                  "=a" (return_value)
+                  :
+                  "g" (connection_id),
+                  "g" (service_id),
+                  "g" (2),              /* number of arguments. */
+                  "g" (SYSTEM_CALL_SERVICE_CONNECT),
+                  "N" (SYSTEM_CALL_IDT_ENTRY));
+    return return_value;
+}
+
+/* Close a connection to a service provider. */
+static inline unsigned int system_call_service_close (service_connection_id_t connection_id)
+{
+    unsigned int return_value;
+
+    asm volatile ("pushl        %1\n"   /* connection_id */
+
+                  "pushl        %2\n"   /* number of arguments. */
+                  "pushl        %3\n"   /* system call number. */
+                  "int          %4"
+                  : 
+                  "=a" (return_value)
+                  :
+                  "g" (connection_id),
+                  "g" (1),              /* number of arguments. */
+                  "g" (SYSTEM_CALL_SERVICE_CONNECT),
+                  "N" (SYSTEM_CALL_IDT_ENTRY));
+    return return_value;
+}
 
 #endif /* (! defined __STORM_KERNEL__ ) &&
           (! defined __STORM_KERNEL_MODULE__) */
