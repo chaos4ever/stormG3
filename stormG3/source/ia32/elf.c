@@ -1,4 +1,4 @@
-/* $chaos: elf.c,v 1.1 2002/06/16 21:44:08 per Exp $ */
+/* $chaos: elf.c,v 1.2 2002/06/17 07:23:15 per Exp $ */
 /* Abstract: ELF functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -6,8 +6,11 @@
 /* Use freely under the terms listed in the file COPYING. */
 
 #include <storm/return_value.h>
+#include <storm/ia32/defines.h>
 #include <storm/ia32/debug.h>
 #include <storm/ia32/elf.h>
+#include <storm/ia32/memory.h>
+#include <storm/ia32/memory_physical.h>
 #include <storm/ia32/string.h>
 
 /* Make sure this is a valid ELF for our platform. */
@@ -150,12 +153,8 @@ return_t elf_relocate (elf_parsed_t *elf_parsed)
             return return_value;
         }
 
-        debug_print ("%x %u %u\n",
-                     relocation[index].offset, relocation[index].symbol_type,
-                     relocation[index].symbol_index);
-
         /* Perform this relocation. */
-        relocation_address = (address_t *) (((address_t) elf_parsed->elf_header) + relocation[index].offset);
+        relocation_address = (address_t *) (((address_t) elf_parsed->image) + relocation[index].offset);
         
         if (relocation[index].symbol_type == 2)
         {
@@ -163,9 +162,20 @@ return_t elf_relocate (elf_parsed_t *elf_parsed)
             /* Are you confused yet? :-) */
             *relocation_address = (address_t) (symbol_address - (address_t) relocation_address + *relocation_address);
         }
-        else if (relocation[index].symbol_type == 8)
+        else if (relocation[index].symbol_type == 8 ||
+                 relocation[index].symbol_type == 1)
         {
-            *relocation_address = *relocation_address + (address_t) elf_header;
+            *relocation_address = *relocation_address + (address_t) elf_parsed->image;
+        }
+        else
+        {
+            debug_print ("Unknown relocation type: %u\n", 
+                        relocation[index].symbol_type);
+            debug_print ("%x %u %u\n",
+                         relocation[index].offset,
+                         relocation[index].symbol_type,
+                         relocation[index].symbol_index);
+            //            return STORM_RETURN_MODULE_INVALID;
         }
     }
 
@@ -216,4 +226,49 @@ return_t elf_symbol_find_by_name (elf_parsed_t *elf_parsed,
     return STORM_RETURN_MODULE_INVALID;
 }
 
+/* Load an ELF. Allocate memory for it, and copy the data from the
+   different sections there. */
+return_t elf_load (elf_parsed_t *elf_parsed)
+{
+    elf_header_t *elf_header = elf_parsed->elf_header;
+    address_t highest_address = 0;
+    return_t return_value;
+    void *image;
+
+    /* Find the highest end address of a section. This presumes that
+       the sections come right after each other, which is a reasonable
+       presumption since we control ELF generation for our OS. */
+    for (int index = 0; index < elf_header->section_header_entries; index++)
+    {
+        elf_section_header_t *section_header = (elf_section_header_t *) (((uint32_t) elf_header) + elf_header->section_header_offset + (index * elf_header->section_header_entry_size));
+        if (section_header->flags & ELF_SECTION_FLAG_ALLOCATE &&
+            section_header->address + section_header->size > highest_address)
+        {
+            highest_address = section_header->address + section_header->size;
+        }
+    }
+  
+    return_value = memory_physical_allocate (&image, highest_address / PAGE_SIZE + 1);
+    if (return_value != STORM_RETURN_SUCCESS)
+    {
+        return return_value;
+    }
+
+    /* Now, go through all the sections again, but this time copying
+       off all the sections into our new pointer. */
+    for (int index = 0; index < elf_header->section_header_entries; index++)
+    {
+        elf_section_header_t *section_header = (elf_section_header_t *) (((uint32_t) elf_header) + elf_header->section_header_offset + (index * elf_header->section_header_entry_size));
+        if (section_header->flags & ELF_SECTION_FLAG_ALLOCATE)
+        {
+            memory_copy ((void *) (((address_t) image) + section_header->address),
+                         (void *) (((address_t) elf_header) + section_header->offset),
+                         section_header->size);
+        }
+    }
+
+    elf_parsed->image = image;
+
+    return STORM_RETURN_SUCCESS;
+}
 
