@@ -1,4 +1,4 @@
-/* $chaos: debug.c,v 1.2 2002/06/05 18:17:26 per Exp $ */
+/* $chaos: debug.c,v 1.3 2002/06/12 19:28:20 per Exp $ */
 /* Abstract: Code used for debugging the kernel. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -131,9 +131,9 @@ void debug_memory_dump (uint32_t *memory, unsigned int length)
 
   for (index = 0; index < length; index++)
   {
-    if ((index % 8) == 0)
+    if ((index % 7) == 0)
     {
-      debug_print ("\n");
+      debug_print ("\n%x ", &memory[index]);
     }
 
     debug_print ("%x ", memory[index]);
