@@ -1,4 +1,4 @@
-/* $chaos: elf.c,v 1.3 2002/10/04 21:26:26 per Exp $ */
+/* $chaos: elf.c,v 1.4 2002/10/09 08:31:25 per Exp $ */
 /* Abstract: ELF module, implementing the exec service. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -40,7 +40,8 @@ static return_t elf_identify (elf_header_t *elf_header)
 /* Load an ELF. Allocate memory for it, and copy the data from the
    different sections there. */
 static return_t elf_load (elf_header_t *elf_header, 
-                          process_id_t process_id UNUSED)
+                          process_id_t process_id,
+                          page_directory_t *page_directory)
 {
     //    return_t return_value;
     //    void *image;
@@ -55,17 +56,40 @@ static return_t elf_load (elf_header_t *elf_header,
         elf_section_header_t *section_header = (elf_section_header_t *) (((uint32_t) elf_header) + elf_header->section_header_offset + (index * elf_header->section_header_entry_size));
         if (section_header->flags & ELF_SECTION_FLAG_ALLOCATE)
         {
-            // void *buffer; 
+            void *buffer; 
 
-            /* Allocate memory for this section and map it at the
-               right place. */
-            // memory_physical_allocate_for_process (buffer, process_id);
-            // memory_virtual_map ()
+            /* We have to take it one page at a time. */
+            for (unsigned int page = 0; page < section_header->size; page += PAGE_SIZE)
+            {
+                /* Allocate memory for this section and map it at the
+                   right place. */
+                return_t return_value = memory_physical_allocate_for_process (&buffer, process_id);
+                if (return_value != STORM_RETURN_SUCCESS)
+                {
+                    debug_print ("Failed to allocate memory");
+                    return return_value;
+                }
 
+                /* Map this memory at the right place. */
+                // FIXME: Get some of the flags from the section (like
+                // writable).
+                return_value = memory_virtual_map
+                    (page_directory, 
+                     PAGE_NUMBER (section_header->address + page),
+                     PAGE_NUMBER (buffer), 1, PAGE_WRITABLE |
+                     PAGE_NON_PRIVILEGED | PAGE_WRITE_THROUGH);
+                if (return_value != STORM_RETURN_SUCCESS)
+                {
+                    debug_print ("Failed to map memory");
+                    return return_value;
+                }
+            }
+            
             /* Copy the data from the image. */
-            //memory_copy ((void *) (((address_t) image) + section_header->address),
-            //                         (void *) (((address_t) elf_header) + section_header->offset),
-            //                         section_header->size);
+            memory_copy ((void *) section_header->address,
+                         (void *) (((address_t) elf_header) +
+                                   section_header->offset),
+                         section_header->size);
         }
     }
   
@@ -109,7 +133,7 @@ static return_t elf_run (void *buffer)
     }
    
     /* Allocate pages and copy the sections to this space. */
-    return_value = elf_load (elf_header, process_id);
+    return_value = elf_load (elf_header, process_id, page_directory);
     if (return_value != STORM_RETURN_SUCCESS)
     {
         debug_print ("Failed loading ELF.\n");
