@@ -1,4 +1,4 @@
-/* $chaos: $ */
+/* $chaos: console.h,v 1.1 2002/12/03 14:11:59 johannes Exp $ */
 /* Abstract: Definitions for the console protocol. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -13,7 +13,7 @@
 #ifndef __PROTOCOL_CONSOLE_H__
 #define __PROTOCOL_CONSOLE_H__
 
-/* A magic cookie, to make sure this is really a block service
+/* A magic cookie, to make sure this is really a console service
    provider. FIXME: Let this be truly unique. */
 #define CONSOLE_MAGIC_COOKIE              0x12345678
 
