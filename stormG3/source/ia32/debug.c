@@ -1,4 +1,4 @@
-/* $chaos: debug.c,v 1.3 2002/06/12 19:28:20 per Exp $ */
+/* $chaos: debug.c,v 1.4 2002/06/12 20:10:24 per Exp $ */
 /* Abstract: Code used for debugging the kernel. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -199,7 +199,6 @@ void debug_print (const char *format_string, ...)
                     }
                     
                     /* Signed number. */
-                    
                     case 'd':
                     {
                         char string[11];

@@ -1,0 +1,41 @@
+# $chaos$ -*- Perl -*-
+
+# Abstract: CONS script for stormG3
+# Author: Per Lundberg <per@chaosdev.org>
+
+# Copyright 2000 chaos development.
+# Use freely under the terms listed in the file COPYING.
+
+Conscript_chdir 0;
+
+# Change this to wherever your chaos installation root may be.
+$root = '/tftpboot';
+$header_directory = "$root/data/programming/c/headers";
+$kernel_directory = "$root/system/kernel";
+
+$include = "#include";
+$hostname = `hostname`;
+chop($hostname);
+$author = sprintf("%s@%s", $ENV{'USER'}, $hostname);
+$warnings = '-Wall -W -Wshadow -Wpointer-arith -Waggregate-return ' .
+  '-Wstrict-prototypes -Wredundant-decls -Winline -Wmissing-prototypes ' .
+  '-Werror -Wcast-align -Wbad-function-cast -Wsign-compare ' .
+  '-Wmissing-declarations -Wnested-externs ';
+$defs = "-DCREATOR=\\\"$author\\\" -DSTORM ";
+
+$cons = new cons (
+		  CC => ($ENV{'CC'} || 'gcc'),
+		  CPPPATH => $include,
+		  CFLAGS => $warnings .
+		  '-O3 -g -pipe -fno-builtin -funsigned-char ' .
+		  '-fomit-frame-pointer -ffreestanding -std=gnu99 ' .
+		  $defs,
+		  LDFLAGS => '-nostdlib -Wl,-T,source/ia32/kernel.ld'
+		);	
+
+Default qw(.);
+Export qw(cons header_directory kernel_directory);
+Build qw(source/ia32/Conscript
+         include/storm/Conscript
+         include/storm/ia32/Conscript);
+

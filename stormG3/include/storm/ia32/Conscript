@@ -1,0 +1,13 @@
+# $chaos$ -*- Perl -*-
+
+# Abstract: CONS script for stormG3
+# Author: Per Lundberg <per@chaosdev.org>
+
+# Copyright 2000 chaos development.
+# Use freely under the terms listed in the file COPYING.
+
+Import qw(cons header_directory);
+
+$headers = "memory.h port.h";
+
+Command $cons 'install', '', "mkdir -p $header_directory/storm/ia32 && for e in $headers ; do install include/storm/ia32/\$e $header_directory/storm/ia32 || exit ; done"

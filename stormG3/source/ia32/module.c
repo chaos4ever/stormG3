@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.10 2002/06/19 07:36:06 per Exp $ */
+/* $chaos: module.c,v 1.11 2002/06/20 22:40:57 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -20,7 +20,6 @@
 /* A list of functions provided through dynamic linking to kernel
    modules. We could export everything, but we don't want to do that
    to keep the API clean. */
-// TODO: log_print
 static module_function_t function[] = 
 {
     { "debug_print", (function_t) &debug_print },

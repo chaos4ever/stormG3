@@ -1,4 +1,4 @@
-/* $chaos: elf.c,v 1.6 2002/06/20 20:32:39 per Exp $ */
+/* $chaos: elf.c,v 1.7 2002/06/20 20:40:17 per Exp $ */
 /* Abstract: ELF functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -177,8 +177,13 @@ return_t elf_relocate (elf_parsed_t *elf_parsed)
         }
         else
         {
-            debug_print ("Unknown relocation type: %u\n", 
-                        relocation[index].symbol_type);
+            debug_print ("%x %u %u\n",
+                         relocation[index].offset,
+                         relocation[index].symbol_type,
+                         relocation[index].symbol_index);
+            debug_print ("Unknown relocation type: %u == %u\n", 
+                         relocation[index].symbol_type,
+                         relocation[index].symbol_type);
             debug_print ("%x %u %u\n",
                          relocation[index].offset,
                          relocation[index].symbol_type,

@@ -1,0 +1,19 @@
+# $chaos$ -*- Perl -*-
+
+# Abstract: CONS script for stormG3
+# Author: Per Lundberg <per@chaosdev.org>
+
+# Copyright 2000 chaos development.
+# Use freely under the terms listed in the file COPYING.
+
+Import qw(cons kernel_directory);
+
+Program $cons 'stormG3', ( 'cpu.c', 'debug.c', 'dispatch.c', 'dma.c',
+			   'elf.c', 'exception.c', 'exception_lowlevel.S',
+			   'idt.c', 'init.c', 'irq.c', 'irq_handlers.S',
+			   'main.c', 'memory_global.c', 'memory_physical.c',
+			   'memory_virtual.c', 'module.c',
+			   'multiboot.c', 'port.c', 'timer.c',
+			   'service.c' );
+Command $cons 'install', 'stormG3', "mkdir -p $kernel_directory && " .
+  "install source/ia32/stormG3 $kernel_directory && gzip -9f $kernel_directory/stormG3";
