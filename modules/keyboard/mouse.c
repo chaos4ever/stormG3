@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: mouse.c,v 1.1 2002/06/17 22:53:47 per Exp $ */
 /* Abstract: PS/2 mouse code for the keyboard server. */
 /* Author: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
@@ -161,8 +161,7 @@ static bool detect_ps2_port(void)
             break;
         }
         
-        asm ("hlt");
-        //system_sleep (1);
+        timer_sleep_milli (1);
     }
     
     return return_value;

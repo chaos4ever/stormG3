@@ -1,4 +1,4 @@
-/* $chaos: keyboard.c,v 1.5 2002/06/18 08:01:11 per Exp $ */
+/* $chaos: keyboard.c,v 1.6 2002/06/18 14:34:20 per Exp $ */
 /* Abstract: Keyboard module for chaos. */
 /* Authors: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
@@ -183,8 +183,7 @@ static bool send_data (unsigned char data)
                 break;
             }
             
-            asm ("hlt");
-            //            system_sleep (1);
+            timer_sleep_milli (1);
             timeout--;
       
             if (timeout == 0)

@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: controller.c,v 1.2 2002/06/18 09:22:35 per Exp $ */
 /* Abstract: Common code for the keyboard server. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -80,8 +80,7 @@ void controller_wait (void)
     }
     
     /* Sleep for one millisecond. */
-    asm ("hlt");
-    //    system_sleep (1);
+    timer_sleep_milli (1);
   }
   
   //  log_print (&log_structure, LOG_URGENCY_ERROR, "Keyboard timed out[1]");
@@ -101,8 +100,7 @@ int controller_wait_for_input (void)
       return return_value;
     }
 
-    asm ("hlt");
-    //    system_sleep (1);
+    timer_sleep_milli (1);
   }
   return -1;
 }

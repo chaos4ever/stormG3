@@ -1,4 +1,4 @@
-/* $chaos: init.c,v 1.1 2002/06/17 22:53:47 per Exp $ */
+/* $chaos: init.c,v 1.2 2002/06/18 08:01:52 per Exp $ */
 /* Abstract: Keyboard initialization code. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -18,16 +18,15 @@ bool init (void)
     const char *message;
 
     /* Try to allocate the keyboard controller's ports. */
-    /*  if (system_call_port_range_register (CONTROLLER_PORT_BASE,
-        CONTROLLER_PORTS,
-        "Keyboard controller") !=
+    if (port_range_register (CONTROLLER_PORT_BASE,
+                             CONTROLLER_PORTS,
+                             "Keyboard controller") !=
         STORM_RETURN_SUCCESS)
-        {
+    {
         //    log_print (&log_structure, LOG_URGENCY_EMERGENCY,
         //               "Could not allocate portrange 0x60 - 0x6F.");
         return FALSE;
-        }
-    */
+    }
     
     /* Flush any pending input. */
     keyboard_clear_input ();
