@@ -1,4 +1,4 @@
-/* $chaos: port.c,v 1.2 2002/08/08 23:16:26 hal Exp $ */
+/* $chaos: port.c,v 1.3 2002/10/04 19:01:21 per Exp $ */
 /* Abstract: I/O port management. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -12,7 +12,7 @@ port_range_t *port_list = NULL;
 
 /* Link in a port range into the list of allocated ports. */
 static bool port_range_link (unsigned int start, unsigned int ports, 
-                             char *description)
+                             const char *description)
 {
     port_range_t *node = port_list;
     port_range_t *new_node;
