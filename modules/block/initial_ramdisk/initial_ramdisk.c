@@ -66,8 +66,18 @@ return_t module_start (void)
     }
   
     /* Create the service. */
-    // FIXME: Create and use the block_register function.
-    return service_register ("block", "chaos development", "Initial ramdisk",
-                             "1", BLOCK_SERVICE_MAJOR_VERSION,
-                             BLOCK_SERVICE_MINOR_VERSION, &service_info);
+    service_register_t service_register_info;
+    service_register_info.vendor = "chaos development";
+    service_register_info.model = "Initial ramdisk";
+    service_register_info.device_id = "1";
+    service_register_info.info_handler = &service_info;
+
+    // FIXME: Add our methods here so this service provider can be
+    // used from userspace.
+    service_method_t service_method[] =
+        {
+            { -1, NULL }
+        };
+
+    return block_register (&service_register_info, service_method);
 }

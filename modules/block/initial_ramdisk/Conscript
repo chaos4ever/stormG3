@@ -11,9 +11,11 @@ $module_path = 'block/initial_ramdisk';
 
 Import qw( cons module_directory include build_directory library_directory
 	   install );
-$cons = $cons->clone(LIBS => '-llog');
+$cons = $cons->clone(LIBS => '-llog -lblock');
 Program $cons $module_binary, 'initial_ramdisk.c', 'ramdisk.S';
-Depends $cons $module_binary, "$library_directory/liblog.a";
+Depends $cons $module_binary,
+  "$library_directory/liblog.a",
+  "$library_directory/libblock.a";
 Depends $cons 'ramdisk.o', 'ramdisk.image';
 $install_cmd = eval $install;
 Command $cons 'install', $module_binary, $install_cmd;
