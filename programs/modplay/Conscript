@@ -1,0 +1,17 @@
+# $chaos: Conscript,v 1.1 2002/10/06 09:43:04 per Exp $ -*- Perl -*-
+
+# Abstract: CONS script for the modplay program.
+# Author: Per Lundberg <per@chaosdev.org>
+
+# Copyright 2002 chaos development.
+# Use freely under the terms listed in the file LICENSE.
+
+$program_binary = 'modplay';
+$program_directory = 'modplay';
+
+Import qw( cons program_install_directory install );
+Program $cons $program_binary, 'modplay.c';
+
+$install_cmd = eval $install;
+Command $cons 'install', $program_binary, $install_cmd;
+
