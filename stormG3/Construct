@@ -1,9 +1,9 @@
-# $chaos: Construct,v 1.11 2002/10/09 12:23:33 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.12 2002/10/15 10:03:29 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for stormG3
 # Author: Per Lundberg <per@chaosdev.org>
 
-# Copyright 2000 chaos development.
+# Copyright 2002 chaos development.
 # Use freely under the terms listed in the file LICENSE.
 
 use POSIX; # for getcwd.
