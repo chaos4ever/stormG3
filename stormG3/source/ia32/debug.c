@@ -1,4 +1,4 @@
-/* $chaos: debug.c,v 1.9 2002/08/09 09:16:05 hal Exp $ */
+/* $chaos: debug.c,v 1.10 2002/10/04 19:01:21 per Exp $ */
 /* Abstract: Code used for debugging the kernel. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -244,6 +244,17 @@ void debug_print (const char *format_string, ...)
                         char string[9];
                         
                         hex_string (string, va_arg (va_arguments, unsigned));
+                        print_simple (string);
+                        
+                        break;
+                    }
+
+                    /* 64-bit hexadecimal number. */
+                    case 'X':
+                    {
+                        char string[9];
+                        
+                        hex_string (string, va_arg (va_arguments, uint64_t));
                         print_simple (string);
                         
                         break;
