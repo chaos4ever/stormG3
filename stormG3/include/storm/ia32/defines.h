@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.19 2002/10/10 21:43:25 per Exp $ */
+/* $chaos: defines.h,v 1.20 2002/10/11 07:44:26 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -24,7 +24,7 @@
 /**
  * @brief               The number of bits of a page.
  */
-#define PAGE_BITS       10
+#define PAGE_BITS       12
 
 /**
  * @brief               The page number of an address, shifted 10 bits
