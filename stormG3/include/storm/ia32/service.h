@@ -1,12 +1,12 @@
-/* $chaos: service.h,v 1.10 2002/10/09 19:03:25 per Exp $ */
+/* $chaos: service.h,v 1.11 2002/10/22 20:56:26 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
 
 /**
- * @file service.h
- * @brief Service support. 
+ * @file                service.h
+ * @brief               Services implementation header.
  */
 
 #ifndef __STORM_IA32_SERVICE_H__
@@ -14,49 +14,55 @@
 
 #include <storm/storm.h>
 
-
 /**
- * @brief Information about a service provider. 
+ * @brief               Information about a service provider. 
  */
 typedef struct
 {
     /**
-     * @brief The service name. 
+     * @brief           The service name. 
      */
-    char name[SERVICE_NAME_LENGTH];
+    char                name[SERVICE_NAME_LENGTH];
 
     /**
-     * @brief The vendor name. 
+     * @brief           The vendor name. 
      */
-    char vendor[SERVICE_VENDOR_LENGTH];
+    char                vendor[SERVICE_VENDOR_LENGTH];
 
     /**
-     * @brief The model name. 
+     * @brief           The model name. 
      */
-    char model[SERVICE_MODEL_LENGTH];
+    char                model[SERVICE_MODEL_LENGTH];
 
     /**
-     * @brief A unique ID for this device. (MAC address, serial
-     * number, etc) Used to distinguish between different devices with
-     * the same model. 
+     * @brief           A unique ID for this device.
+
+     * Can be something like a MAC address, serial number, etc. Used
+     * to distinguish between different devices with the same model.
      */
-    char id[SERVICE_ID_LENGTH];
+    char                id[SERVICE_ID_LENGTH];
 
     /**
-     * @brief The version of the service provided. 
+     * @brief           The major version of the service provided. 
      */
-    unsigned int version;
+    unsigned int        major_version;
 
     /**
-     * @brief A function that the caller use to get information about
-     * this service provider. 
+     * @brief           The minor version of the service provided.
      */
-    service_info_t service_info;
+    unsigned int        minor_version;
 
     /**
-     * @brief A pointer to the next service. 
+     * @brief           A function that the caller use to get information
+     *                  about this service provider. 
      */
-    struct service_data_t *next;
+    service_info_t      service_info;
+
+    /**
+     * @brief           A pointer to the next service. 
+     */
+    struct service_data_t
+                        *next;
 } service_data_t;
 
 #endif /* !__STORM_IA32_SERVICE_H__ */
