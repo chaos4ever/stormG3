@@ -1,4 +1,4 @@
-/* $chaos: main.c,v 1.29 2002/10/15 18:02:51 per Exp $ */
+/* $chaos: main.c,v 1.30 2002/10/17 21:28:46 per Exp $ */
 /* Abstract: Main startup file. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -21,6 +21,7 @@
 #include <storm/ia32/module.h>
 #include <storm/ia32/multiboot.h>
 #include <storm/ia32/port.h>
+#include <storm/ia32/system_call.h>
 #include <storm/ia32/timer.h>
 
 /* The main function. */
@@ -46,6 +47,9 @@ void main_bootup (int argument_count UNUSED, char *arguments[] UNUSED)
 
     /* Set up virtual memory. */
     memory_virtual_init ();
+    
+    /* Set up system calls. */
+    system_call_init ();
 
     /* Set up process support. (Must be run before dispatch_init) */
     process_init ();
