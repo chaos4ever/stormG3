@@ -1,4 +1,4 @@
-/* $chaos */
+/* $chaos$ */
 /* Abstract: Ethernet library functions. */
 /* Author: Johannes Lundberg <jojo@chaosdev.org>
            Håkan Larsson     <trc@chaosdev.org> */

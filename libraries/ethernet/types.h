@@ -1,4 +1,4 @@
-/* $chaos */
+/* $chaos$ */
 /* Abstract: Ethernet library types. */
 /* Author: Johannes Lundberg <jojo@chaosdev.org>
            Håkan Larsson     <trc@chaosdev.org> */

@@ -1,4 +1,4 @@
-/* $chaos $ */
+/* $chaos$ */
 /* Abstract: Return values for the ethernet library. */
 /* Author: Johannes Lundberg <jojo@chaosdev.org> 
            Håkan Larsson     <trc@chaosdev.org> */

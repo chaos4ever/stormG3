@@ -1,4 +1,4 @@
-/* $chaos */
+/* $chaos$ */
 /* Abstract: Definition of the ethernet module protocol. */
 /* Author: Johannes Lundberg <jojo@chaosdev.org>
            Håkan Larsson     <trc@chaosdev.org> */

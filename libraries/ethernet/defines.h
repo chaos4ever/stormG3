@@ -1,4 +1,4 @@
-/* $chaos */
+/* $chaos$ */
 /* Abstract: ethernet library defines. */
 /* Author: Johannes Lundberg <jojo@chaosdev.org>
            Håkan Larsson     <trc@chaosdev.org> */
