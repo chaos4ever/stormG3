@@ -1,9 +1,11 @@
-/* $chaos: unicode_to_cp437.h,v 1.3 2002/05/23 11:23:56 per Exp $ */
+/* $chaos: unicode_to_cp437.h,v 1.1 2002/06/22 22:54:35 per Exp $ */
 /* Abstract: Translation map from UCS-2 to code page 437. */
 /* Author: Per Lundberg <plundis@chaosdev.org> */
 
 /* Copyright 2000-2002 chaos development. */
 /* Use freely under the terms listed in the file COPYING. */
+
+// FIXME: Should this be moved to the Unicode library?
 
 int translation[] = 
 {

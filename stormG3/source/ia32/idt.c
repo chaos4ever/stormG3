@@ -1,6 +1,6 @@
-/* $chaos: idt.c,v 1.2 2002/06/14 12:34:28 per Exp $ */
+/* $chaos: idt.c,v 1.3 2002/06/15 14:35:04 per Exp $ */
 /* Abstract: IDT management. */
-/* Authors: Per Lundberg <plundis@chaosdev.org>
+/* Authors: Per Lundberg <per@chaosdev.org>
             Henrik Hallin <hal@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */

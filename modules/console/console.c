@@ -1,8 +1,8 @@
-/* $chaos: console.c,v 1.3 2002/05/23 11:23:56 per Exp $ */
+/* $chaos: console.c,v 1.1 2002/06/22 22:54:35 per Exp $ */
 /* Abstract: Console module. Will eventually be 100% ANSI escape
              sequence compatible. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
-            Per Lundberg <plundis@chaosdev.org> */
+            Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 1999-2002 chaos development. */
 /* Use freely under the terms listed in the file COPYING. */

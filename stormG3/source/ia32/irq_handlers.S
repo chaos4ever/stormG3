@@ -1,6 +1,6 @@
-/* $chaos: irq_handlers.S,v 1.2 2002/06/16 22:01:50 per Exp $ */
+/* $chaos: irq_handlers.S,v 1.3 2002/06/16 22:04:46 per Exp $ */
 /* Abstract: IRQ management. */
-/* Author: Per Lundberg <plundis@chaosdev.org> */
+/* Author: Per Lundberg <per@chaosdev.org> */
 	
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file COPYING. */
