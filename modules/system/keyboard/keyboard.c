@@ -1,4 +1,4 @@
-/* $chaos: keyboard.c,v 1.11 2002/08/11 18:01:01 per Exp $ */
+/* $chaos: keyboard.c,v 1.1 2002/08/11 21:13:31 per Exp $ */
 /* Abstract: Keyboard module for chaos. */
 /* Authors: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
@@ -12,9 +12,8 @@
 #include <keyboard/keyboard.h>
 #include <string/string.h>
 
-/* FIXME: Set this to a dummy map, and let the boot-server set the
-   right key map. Or something. */
-/* A Swedish translation map, for now. */
+// FIXME: Don't compile all the keymaps into the module, but only one
+// default. Let all the others be loaded at runtime.
 #include "keyboard_maps/british.h"
 #include "keyboard_maps/swedish.h"
 #include "keyboard_maps/dvorak.h"
@@ -28,9 +27,11 @@
 /* The keyboard event handler that we are using. */
 console_key_event_t key_event = NULL;
 
-/* The keyboard maps convert keys to standard UTF-8 sequences. */
+/* The keyboard maps convert keys to standard UTF-8 sequences. We
+   default to the Swedish one since many developers live there. */
 static const char **keyboard_map = swedish_keyboard_map;
 static const char **keyboard_map_shift = swedish_keyboard_map_shift;
+static const char **keyboard_map_upper = swedish_keyboard_map_upper;
 static const char **keyboard_map_altgr = swedish_keyboard_map_altgr;
 
 /* We need to create an array of 16 bytes, for storing the currently
@@ -42,11 +43,11 @@ static volatile uint8_t keyboard_state_scroll = 0x0F;
 static volatile uint8_t keyboard_state_num = 0x0F;
 static volatile uint8_t keyboard_state_caps = 0x0F;
 
-/* The shift state. */
-static volatile unsigned int shift_state = 0;
-
 /* Is a keyboard connected? */
 static bool keyboard_exists = TRUE;
+
+/* Has an extended (0xE0) key been pressed? */
+static bool waiting_for_extended = FALSE;
 
 /* Used only by send_data - set by keyboard_interrupt. */
 static volatile int reply_expected = 0;
@@ -64,11 +65,13 @@ static uint8_t special_key_conversion[] =
     [SCAN_CODE_BACK_SPACE] = KEYBOARD_SPECIAL_KEY_BACK_SPACE,
     [SCAN_CODE_TAB] = KEYBOARD_SPECIAL_KEY_TAB,
     [SCAN_CODE_ENTER] = KEYBOARD_SPECIAL_KEY_ENTER,
-    [SCAN_CODE_CONTROL] = KEYBOARD_SPECIAL_KEY_CONTROL,
+    [SCAN_CODE_LEFT_CONTROL] = KEYBOARD_SPECIAL_KEY_LEFT_CONTROL,
+    [SCAN_CODE_RIGHT_CONTROL] = KEYBOARD_SPECIAL_KEY_RIGHT_CONTROL,
     [SCAN_CODE_LEFT_SHIFT] = KEYBOARD_SPECIAL_KEY_LEFT_SHIFT,
     [SCAN_CODE_RIGHT_SHIFT] = KEYBOARD_SPECIAL_KEY_RIGHT_SHIFT,
     [SCAN_CODE_PRINT_SCREEN] = KEYBOARD_SPECIAL_KEY_PRINT_SCREEN,
-    [SCAN_CODE_ALT] = KEYBOARD_SPECIAL_KEY_ALT,
+    [SCAN_CODE_LEFT_ALT] = KEYBOARD_SPECIAL_KEY_LEFT_ALT,
+    [SCAN_CODE_RIGHT_ALT] = KEYBOARD_SPECIAL_KEY_RIGHT_ALT,
     [SCAN_CODE_SPACE_BAR] = KEYBOARD_SPECIAL_KEY_SPACE_BAR,
     [SCAN_CODE_CAPS_LOCK] = KEYBOARD_SPECIAL_KEY_CAPS_LOCK,
     [SCAN_CODE_F1] = KEYBOARD_SPECIAL_KEY_F1,
@@ -101,12 +104,6 @@ static uint8_t special_key_conversion[] =
     [SCAN_CODE_LEFT_WINDOWS] = KEYBOARD_SPECIAL_KEY_LEFT_WINDOWS,
     [SCAN_CODE_RIGHT_WINDOWS] = KEYBOARD_SPECIAL_KEY_RIGHT_WINDOWS,
     [SCAN_CODE_MENU] = KEYBOARD_SPECIAL_KEY_MENU,
-    
-#if FALSE
-    [SCAN_CODE_INSERT] = KEYBOARD_SPECIAL_KEY_INSERT,
-    [SCAN_CODE_HOME] = KEYBOARD_SPECIAL_KEY_HOME,
-    [SCAN_CODE_END] = KEYBOARD_SPECIAL_KEY_END,
-#endif
 };
 
 /* Acknowledge the keyboard controller. */
@@ -269,13 +266,16 @@ static inline bool key_pressed (uint8_t scancode)
 /* Translate the given key according to the current keyboard map. */
 static const char *translate_key (uint8_t scancode)
 {
-    if ((shift_state & KEYBOARD_LEFT_SHIFT) == KEYBOARD_LEFT_SHIFT ||
-        (shift_state & KEYBOARD_RIGHT_SHIFT) == KEYBOARD_RIGHT_SHIFT ||
-        keyboard_state_caps == 0xF0)
+    if (key_pressed (SCAN_CODE_LEFT_SHIFT) ||
+        key_pressed (SCAN_CODE_RIGHT_SHIFT))
     {
         return keyboard_map_shift[scancode];
     }
-    else if (key_pressed (SCAN_CODE_ALT))
+    else if (keyboard_state_caps == 0xF0)
+    {
+        return keyboard_map_upper[scancode];
+    }
+    else if (key_pressed (SCAN_CODE_RIGHT_ALT) )
     {
         return keyboard_map_altgr[scancode];
     }
@@ -285,38 +285,184 @@ static const char *translate_key (uint8_t scancode)
     }
 }
 
+/* Parse a scancode, possibly translating it from an 0xE0 0xnn format
+   to a one-byte scancode. */
+static bool parse_scancode (uint8_t *scancode, bool *pressed)
+{
+    /* Special case -- this one is sent to us when the keyboard is
+       reset from an external device (like a keyboard/monitor
+       switch). It is also sent when right shift is released. What
+       a sick world this is... */
+    if (*scancode == 170)
+    {
+        keyboard_update_leds ();
+        keyboard_set_repeat_rate ();
+    }
+
+    /* Special keys are prefixed with 0xE0. */
+    if (*scancode == 0xE0)
+    {
+        waiting_for_extended = TRUE;
+        return FALSE;
+    }
+
+    /* Is it a press or a release? */
+    if ((*scancode & 0x80) == 0) 
+    {
+        *pressed = TRUE;
+    }
+    else
+    {
+        *pressed = FALSE;
+        *scancode &= 0x7F;
+    }
+
+    /* Now, make sure the scancode has the right value. */
+    if (waiting_for_extended)
+    {
+        switch (*scancode)
+        {
+            case 28:
+            {
+                *scancode = SCAN_CODE_NUMERIC_ENTER;
+                break;
+            }
+
+            case 29:
+            {
+                *scancode = SCAN_CODE_RIGHT_CONTROL;
+                break;
+            }
+
+            // FIXME: This won't work straight away.
+            case 42:
+            {
+                *scancode = SCAN_CODE_PRINT_SCREEN;
+                break;
+            }
+
+            case 53:
+            {
+                *scancode = SCAN_CODE_NUMERIC_SLASH;
+                break;
+            }
+
+            // FIXME: See note above.
+            case 55:
+            {
+                *scancode = SCAN_CODE_PRINT_SCREEN;
+                break;
+            }
+
+            case 56:
+            {
+                *scancode = SCAN_CODE_RIGHT_ALT;
+                break;
+            }
+
+            case 71:
+            {
+                *scancode = SCAN_CODE_HOME;
+                break;
+            }
+
+            case 72:
+            {
+                *scancode = SCAN_CODE_UP;
+                break;
+            }
+
+            case 73:
+            {
+                *scancode = SCAN_CODE_PAGE_UP;
+                break;
+            }
+
+            case 75:
+            {
+                *scancode = SCAN_CODE_LEFT;
+                break;
+            }
+
+            case 77:
+            {
+                *scancode = SCAN_CODE_RIGHT;
+                break;
+            }
+
+            case 79:
+            {
+                *scancode = SCAN_CODE_END;
+                break;
+            }
+
+            case 80:
+            {
+                *scancode = SCAN_CODE_DOWN;
+                break;
+            }
+
+            case 81:
+            {
+                *scancode = SCAN_CODE_PAGE_DOWN;
+                break;
+            }
+
+            case 82:
+            {
+                *scancode = SCAN_CODE_INSERT;
+                break;
+            }
+
+            case 83:
+            {
+                *scancode = SCAN_CODE_DELETE;
+                break;
+            }
+
+            /* Windows keys. The scancode is already right for those. */
+            case 91:
+            case 92:
+            case 93:
+            {
+                break;
+            }
+
+            default:
+            {
+                debug_print ("Unknown key %u pressed.\n", *scancode);
+                break;
+            }
+        }
+
+        waiting_for_extended = FALSE;
+    }
+
+    /* Over and out. */
+    return TRUE;
+}
+
 /* Handle a keyboard event. This function is called from the interrupt
    handler. */
 void keyboard_handle_event (uint8_t scancode)
 {
+    bool pressed;
     keyboard_exists = TRUE;
     memory_set_uint8 ((uint8_t *) &keyboard_packet, 0, sizeof (keyboard_packet_t));
 
     if (do_acknowledge (scancode))
     {
         const char *translated_key;
-        /* Special case -- this one is sent to us when the keyboard is
-           reset from an external device (like a keyboard/monitor
-           switch). It is also sent when right shift is released. What
-           a sick world this is... */
-        if (scancode == 170)
+
+        /* Do some parsing of this scancode. */
+        if (!parse_scancode (&scancode, &pressed))
         {
-            keyboard_update_leds ();
-            keyboard_set_repeat_rate ();
+            return;
         }
-
-        if (scancode == 224)
+        
+        /* Is this a key press? */
+        if (pressed) 
         {
-            // FIXME: Support this. The following key is an extended
-            // key (Right Alt, Right Ctrl, Insert, Delete, Home, End,
-            // Page Up, Page Down etc). We need to give them scan
-            // codes that are unique so we can distinguish between
-            // things like Left Alt and Right Alt.
-        }
-
-        if ((scancode & 0x80) == 0) 
-        {
-
             /* A key was pressed. */
             keyboard_pressed_keys[scancode / 8] |= (1 << (scancode % 8));
             
@@ -337,125 +483,38 @@ void keyboard_handle_event (uint8_t scancode)
                     keyboard_update_leds ();
                     break;
                 }
-                
+                    
                 case SCAN_CODE_SCROLL_LOCK:
                 {
                     keyboard_state_scroll = ~keyboard_state_scroll;
                     keyboard_update_leds ();
                     break;
                 }
-
+                
                 case SCAN_CODE_NUMERIC_DELETE:
+                case SCAN_CODE_DELETE:
                 {
-                    if ((shift_state & 
-                        (KEYBOARD_RIGHT_ALT + KEYBOARD_RIGHT_CONTROL)) ==
-                        (KEYBOARD_RIGHT_ALT + KEYBOARD_RIGHT_CONTROL))
+                    if (key_pressed (SCAN_CODE_LEFT_ALT) ||
+                        key_pressed (SCAN_CODE_RIGHT_ALT) ||
+                        key_pressed (SCAN_CODE_LEFT_CONTROL) ||
+                        key_pressed (SCAN_CODE_RIGHT_CONTROL))
                     {
                         /* Control-Alt-Delete has been pressed. Reboot
-                           the machine. FIXME: Make this
-                           configurable. */
+                           the machine. FIXME: Make this configurable,
+                           somehow. */
                         halt (HALT_REBOOT);
                     }
                     break;
                 }
-
+                
                 /* Other key. */
                 default:
                 {
-                    /* Does this change the shift state? If so, set the flag
-                       and notify our recipient. */
-                    switch (scancode)
-                    {
-                        case SCAN_CODE_LEFT_SHIFT:
-                        {
-                            shift_state |= KEYBOARD_LEFT_SHIFT;
-                            break;
-                        }
-                        
-                        case SCAN_CODE_RIGHT_SHIFT:
-                        {
-                            shift_state |= KEYBOARD_RIGHT_SHIFT;
-                            break;
-                        }
-                        
-                        case SCAN_CODE_ALT:
-                        {
-                            shift_state |= KEYBOARD_RIGHT_ALT;
-                            break;
-                        }
-                        
-                        case SCAN_CODE_CONTROL:
-                        {
-                            shift_state |= KEYBOARD_RIGHT_CONTROL;
-                            break;
-                        }
-                        
-                        default:
-                        {
-                            /* Seems to be a normal keypress. */
-                            keyboard_packet.key_pressed = TRUE;
-                
-                            /* Convert it to the chaos format. */
-                            translated_key = translate_key (scancode);
-                
-                            if (translated_key == NULL)
-                            {
-                                keyboard_packet.has_special_key = 1;
-                                keyboard_packet.special_key = special_key_conversion[scancode];
-                            }
-                            else
-                            {
-                                keyboard_packet.has_character_code = 1;
-                                string_copy (keyboard_packet.character_code, translated_key);
-                            }
-                            break;
-                        }
-                    }
-                }
-                
-                break;
-            }
-        }
-        else
-        {
-            /* A key was released. Start by masking away the highest bit and
-               update the keyboard_pressed_keys structure. */
-            scancode &= 0x7F;
-            keyboard_pressed_keys[scancode / 8] &= (~(1 << (scancode % 8)));
-            
-            switch (scancode)
-            {
-                case SCAN_CODE_LEFT_SHIFT:
-                {
-                    shift_state &= ~KEYBOARD_LEFT_SHIFT;
-                    break;
-                }
-                
-                case SCAN_CODE_RIGHT_SHIFT:
-                {
-                    shift_state &= ~KEYBOARD_RIGHT_SHIFT;
-                    break;
-                }
-                
-                case SCAN_CODE_ALT:
-                {
-                    shift_state &= ~KEYBOARD_RIGHT_ALT;
-                    break;
-                }
-                
-                case SCAN_CODE_CONTROL:
-                {
-                    shift_state &= ~KEYBOARD_RIGHT_CONTROL;
-                    break;
-                }
-                
-                /* Anything else will be E-lectric. */
-                default:
-                {
+                    keyboard_packet.key_pressed = TRUE;
+                                
+                    /* Convert it to the chaos format. */
                     translated_key = translate_key (scancode);
-                    
-                    /* If the key couldn't be translated, translate it
-                       in our own way. */
+                            
                     if (translated_key == NULL)
                     {
                         keyboard_packet.has_special_key = 1;
@@ -466,31 +525,50 @@ void keyboard_handle_event (uint8_t scancode)
                         keyboard_packet.has_character_code = 1;
                         string_copy (keyboard_packet.character_code, translated_key);
                     }
+
+                    break;
                 }
+                
+                break;
             }
         }
-
+        else
+        {
+            /* A key was released. Start by masking away the highest
+               bit and update the keyboard_pressed_keys structure. */
+            keyboard_pressed_keys[scancode / 8] &= (~(1 << (scancode % 8)));
+            
+            translated_key = translate_key (scancode);
+            
+            /* If the key couldn't be translated, translate it in our
+               own way. */
+            if (translated_key == NULL)
+            {
+                keyboard_packet.has_special_key = 1;
+                keyboard_packet.special_key = special_key_conversion[scancode];
+            }
+            else
+            {
+                keyboard_packet.has_character_code = 1;
+                string_copy (keyboard_packet.character_code, translated_key);
+            }
+        }
+        
         if (key_event != NULL)
         {
-            keyboard_packet.left_shift_down = 
-                ((shift_state & KEYBOARD_LEFT_SHIFT) ==
-                 KEYBOARD_LEFT_SHIFT ? 1 : 0);
-            keyboard_packet.right_shift_down = 
-                ((shift_state & KEYBOARD_RIGHT_SHIFT) ==
-                 KEYBOARD_RIGHT_SHIFT ? 1 : 0);
-            keyboard_packet.right_alt_down = 
-                ((shift_state & KEYBOARD_RIGHT_ALT) ==
-                 KEYBOARD_RIGHT_ALT ? 1 : 0);
-            keyboard_packet.right_control_down = 
-                ((shift_state & KEYBOARD_RIGHT_CONTROL) ==
-                 KEYBOARD_RIGHT_CONTROL ? 1 : 0);
+            keyboard_packet.left_shift_down = key_pressed (SCAN_CODE_LEFT_SHIFT);
+            keyboard_packet.right_shift_down = key_pressed (SCAN_CODE_RIGHT_SHIFT);
+            keyboard_packet.left_alt_down = key_pressed (SCAN_CODE_LEFT_ALT);
+            keyboard_packet.right_alt_down = key_pressed (SCAN_CODE_RIGHT_ALT);
+            keyboard_packet.left_control_down = key_pressed (SCAN_CODE_LEFT_CONTROL);
+            keyboard_packet.right_control_down = key_pressed (SCAN_CODE_RIGHT_CONTROL);
             key_event (&keyboard_packet);
         }
     }
 }	
 
 /* Handler for the keyboard IRQ. */
-void keyboard_irq_handler (unsigned int irq __attribute__ ((unused)))
+void keyboard_irq_handler (unsigned int irq UNUSED)
 {
     handle_event ();
 }
