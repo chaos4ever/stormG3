@@ -1,10 +1,14 @@
-/* $chaos */
+/* $chaos$ */
+/* Abstract: <some NIC-controller> ethernet module. */
+/* Author: Your Name <your@email> */
+           
+/* Copyright 2002 chaos development. */
+/* Use freely under the terms listed in the file COPYING. */
 
 #include <storm/storm.h>
 
 #include <ethernet/ethernet.h>
 
-#define ETHERNET_MODULE_VERSION 1
 #define unused __attribute__ ((unused))
 
 static return_t ethernet_send (ethernet_packet_t *packet unused, int length unused)
@@ -54,7 +58,6 @@ static return_t service_info (void *ethernet_void)
 
 return_t module_start (void)
 {
-  debug_print ("Tjolahopp\n");
-  return service_register ("3c509", "chaos development", "3c509",
-                           "0", ETHERNET_MODULE_VERSION, &service_info);
+  return service_register ("ethernet", "chaos development", "some-nic",
+                           "0", ETHERNET_SERVICE_VERSION, &service_info);
 }
