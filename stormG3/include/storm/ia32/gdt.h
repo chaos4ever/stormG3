@@ -1,4 +1,4 @@
-/* $chaos: gdt.h,v 1.8 2002/10/10 14:36:01 per Exp $ */
+/* $chaos: gdt.h,v 1.9 2002/10/13 13:53:38 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -14,6 +14,7 @@
 #define __STORM_IA32_GDT_H__
 
 #include <storm/ia32/descriptor.h>
+#include <storm/ia32/tss.h>
 
 /**
  * @brief               A GDT selector. 
@@ -81,5 +82,16 @@
  * @brief               The GDT.
  */
 extern descriptor_t gdt[];
+
+/**
+ * @brief               Setup a TSS descriptor gate in the GDT.
+ * @param entry         The entry in the GDT to set it at.
+ * @param address       The address of the TSS.
+ * @param dpl           The DPL (Descriptor Privilege Level, see Intel
+ *                      documentation)
+ * @param limit         The limit of the descriptor (size of the TSS).
+ */
+void gdt_setup_tss_descriptor (uint16_t entry, tss_t *address,
+                               int dpl, int limit);
 
 #endif /* !__STORM_IA32_GDT_H__ */
