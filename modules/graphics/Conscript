@@ -1,0 +1,14 @@
+# $chaos: Conscript,v 1.2 2002/08/13 19:12:00 per Exp $ -*- Perl -*-
+
+# Abstract: CONS script for the graphic card service providers.
+# Author: Per Lundberg <per@chaosdev.org>
+
+# Copyright 2002 chaos development.
+# Use freely under the terms listed in the file COPYING.
+
+Import qw( cons module_directory include build_directory library_directory
+           install );
+Build qw( vga/Conscript );
+
+
+
