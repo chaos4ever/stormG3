@@ -5,9 +5,10 @@
   <!ENTITY process SYSTEM "process.xml">
   <!ENTITY module SYSTEM "module.xml">
   <!ENTITY license SYSTEM "license.xml">
+  <!ENTITY data_types SYSTEM "data_types.xml">
   <!ENTITY stdint SYSTEM "stdint.xml">
 ]>
-<!-- $chaos: stormG3.xml,v 1.2 2002/05/27 07:52:29 per Exp $ -->
+<!-- $chaos: stormG3.xml,v 1.3 2002/05/27 09:49:31 per Exp $ -->
 
 <book>
   <bookinfo>
@@ -45,5 +46,6 @@
   &process;
   &module;
   &license;
+  &data_types;
   &stdint;
 </book>
