@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.6 2002/07/09 08:38:20 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.7 2002/07/10 20:16:31 johannes Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the modules.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -26,6 +26,14 @@ $warnings = '-Wall -W -Wshadow -Wpointer-arith -Waggregate-return ' .
   '-Wstrict-prototypes -Wredundant-decls -Winline -Wmissing-prototypes ' .
   '-Werror -Wcast-align -Wbad-function-cast -Wsign-compare ' .
   '-Wmissing-declarations -Wnested-externs ';
+$install = <<EOF;
+return qq(
+mkdir -p \$module_directory
+install \$module_path/\$module_binary \$module_directory
+strip \$module_directory/\$module_binary
+gzip -9f \$module_directory/\$module_binary
+	 );
+EOF
 
 $cons = new cons (
 		  CC => ($ENV{'CC'} || 'gcc'),
@@ -38,7 +46,7 @@ $cons = new cons (
 
 Default qw(.);
 Export qw( cons header_directory module_directory build_directory
-	   library_directory include );
+	   library_directory include install );
 Build qw( boot/Conscript
 	  block/Conscript
 	  console/Conscript
