@@ -1,4 +1,4 @@
-/* $chaos: string.h,v 1.4 2002/10/08 20:16:14 per Exp $ */
+/* $chaos: string.h,v 1.5 2002/10/09 21:20:06 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -79,7 +79,7 @@ static inline char *string_copy_max (char *destination, const char *source,
  * @param string1       The first string.
  * @param string2       The second string.
  * @return              0 if equal, negative if the first string is 'less'
- *                      than the second, or otherwise positive. 
+ *                      than the second, otherwise positive. 
  */
 static inline int string_compare (const char *string1, const char *string2)
 {
@@ -108,7 +108,7 @@ static inline int string_compare (const char *string1, const char *string2)
  * @param string2       The second string.
  * @param count         The limit length.
  * @return              0 if equal, negative if the first string is 'less'
- *                      than the second, or otherwise positive.
+ *                      than the second, otherwise positive.
  */
 static inline int string_compare_max  (const char *string1,
                                        const char *string2,
