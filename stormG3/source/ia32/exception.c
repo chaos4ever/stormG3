@@ -1,4 +1,4 @@
-/* $chaos: exception.c,v 1.2 2002/06/11 21:26:50 per Exp $ */
+/* $chaos: exception.c,v 1.3 2002/06/12 20:40:01 per Exp $ */
 /* Abstract: Exception handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -11,6 +11,23 @@
 #include <storm/ia32/exception.h>
 #include <storm/ia32/gdt.h>
 #include <storm/ia32/idt.h>
+
+/* Register values, saved on exception entry. */
+cpu_register_t registers;
+
+static inline void save_registers (void)
+{
+    asm volatile ("movl %%eax, registers + 0\n"
+                  "movl %%ebx, registers + 4\n"
+                  "movl %%ecx, registers + 8\n"
+                  "movl %%edx, registers + 12\n"
+                  "movl %%esi, registers + 16\n"
+                  "movl %%edi, registers + 20\n"
+                  :
+                  :
+                  :
+                  "memory");
+}
 
 /* One function for each exception. */
 static void exception_divide_error_fault (void)
@@ -99,7 +116,12 @@ static void exception_general_protection_fault (void)
 
 static void exception_page_fault (void)
 {
+    save_registers ();
     debug_print ("Page fault at %x.\n", cpu_get_cr2());
+    debug_print ("EAX: %x EBX: %x ECX: %x EDX: %x\n", registers.eax,
+                 registers.ebx, registers.ecx, registers.edx);
+    debug_print ("ESI: %x EDI: %x", registers.esi, 
+                 registers.edi);
     while (TRUE);
 }  
 
