@@ -1,4 +1,4 @@
-/* $chaos: ramdisk.S,v 1.2 2002/06/26 06:42:13 per Exp $ */
+/* $chaos: ramdisk.S,v 1.3 2002/07/04 21:38:38 per Exp $ */
 /* Abstract: The ramdisk. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -9,8 +9,10 @@
 #include "ramdisk.h"
 
 .data
-.globl			blocks
+.globl			ramdisk_block_count
+
 ramdisk:
 /* Because of the fact that we don't chdir... */
 .incbin					"initial_ramdisk/ramdisk.image"
-blocks:	 		.int		(. - ramdisk) / RAMDISK_BLOCK_SIZE
+
+ramdisk_block_count: 	.int		(. - ramdisk) / RAMDISK_BLOCK_SIZE

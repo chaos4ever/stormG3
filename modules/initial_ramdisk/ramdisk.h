@@ -1,4 +1,4 @@
-/* $chaos: ramdisk.h,v 1.1 2002/06/26 06:40:40 per Exp $ */
+/* $chaos: ramdisk.h,v 1.2 2002/06/26 06:45:43 per Exp $ */
 /* Abstract: Ramdisk header file. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -15,7 +15,7 @@
 extern const uint8_t ramdisk[];
 
 /* The number of blocks in this ramdisk. */
-extern unsigned int blocks;
+extern unsigned int ramdisk_block_count;
 
 #endif
 
