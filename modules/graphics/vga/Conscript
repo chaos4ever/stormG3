@@ -1,4 +1,4 @@
-# $chaos: Conscript,v 1.2 2002/07/21 11:16:38 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.1 2002/08/13 19:14:23 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the modules.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -7,7 +7,7 @@
 # Use freely under the terms listed in the file COPYING.
 
 $module_binary = 'vga.so';
-$module_path = 'vga';
+$module_path = 'graphics/vga';
 
 Import qw(cons module_directory install);
 Program $cons $module_binary, 'vga.c', 'vgamode.c';
