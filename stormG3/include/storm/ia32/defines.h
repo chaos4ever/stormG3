@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.1 2002/05/25 20:09:39 per Exp $ */
+/* $chaos: defines.h,v 1.2 2002/06/05 18:17:42 per Exp $ */
 /* Abstract: Generic storm defines. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -32,5 +32,8 @@
 #define KERNEL_STACK_BASE               (IDT_BASE + IDT_BASE)
 #define MODULE_NAME_BASE                (KERNEL_STACK_BASE + KERNEL_STACK_SIZE)
 #define MEMORY_MAP_BASE                 (MODULE_NAME_BASE + MODULE_NAME_SIZE)
+
+/* The end of the fixed-address kernel memory regions. */
+#define KERNEL_FIXED_END                (MEMORY_MAP_BASE + MEMORY_MAP_SIZE)
 
 #endif /* !__STORM_IA32_DEFINES_H__ */
