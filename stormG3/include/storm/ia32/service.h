@@ -1,4 +1,4 @@
-/* $chaos: service.h,v 1.15 2002/10/30 22:38:09 per Exp $ */
+/* $chaos: service.h,v 1.16 2002/11/03 22:26:47 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -77,7 +77,7 @@ typedef struct
 
     /**
      * @brief           A unique ID for this device.
-
+     *
      * Can be something like a MAC address, serial number, etc. Used
      * to distinguish between different devices with the same model.
      */
