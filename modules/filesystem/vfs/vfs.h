@@ -1,4 +1,4 @@
-/* $chaos: vfs.h,v 1.3 2002/08/11 18:32:53 per Exp $ */
+/* $chaos: vfs.h,v 1.4 2002/10/04 19:01:05 per Exp $ */
 /* Abstract: Virtual file system provider, header file. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -11,6 +11,7 @@
 #include <storm/storm.h>
 #include <block/block.h>
 #include <filesystem/filesystem.h>
+#include <memory/memory.h>
 #include <string/string.h>
 #include <vfs/vfs.h>
 
