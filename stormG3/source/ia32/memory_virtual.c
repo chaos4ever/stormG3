@@ -1,4 +1,4 @@
-/* $chaos: memory_virtual.c,v 1.4 2002/10/04 19:01:21 per Exp $ */
+/* $chaos: memory_virtual.c,v 1.5 2002/10/09 21:26:04 per Exp $ */
 /* Abstract: Virtual memory routines. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -71,7 +71,7 @@ static void create_page_directory_entry_4mb (page_directory_t *page_directory,
 
 /* Map memory. */
 void memory_virtual_map (page_directory_t *page_directory,
-                         uint32_t virtual_page, uint32_t physical_page,
+                         page_number_t virtual_page, page_number_t physical_page,
                          unsigned int pages, uint32_t flags) 
 {
     uint32_t counter;
