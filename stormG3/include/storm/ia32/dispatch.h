@@ -1,4 +1,4 @@
-/* $chaos: dispatch.h,v 1.5 2002/10/13 13:55:12 per Exp $ */
+/* $chaos: dispatch.h,v 1.6 2002/10/15 18:03:36 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -12,6 +12,7 @@
 #ifndef __STORM_IA32_DISPATCH_H__
 #define __STORM_IA32_DISPATCH_H__
 
+#include <storm/ia32/process.h>
 #include <storm/ia32/thread.h>
 #include <storm/ia32/tss.h>
 
@@ -27,9 +28,9 @@
 typedef struct
 {
     /**
-     * @brief           The TSS of this task.
+     * @brief           The thread that this task represents.
      */
-    tss_t *tss;
+    thread_t *thread;
 
     /**
      * @brief           The timeslices to let this run each time. (0-10 are
@@ -49,39 +50,52 @@ typedef struct
 } dispatch_t;
 
 /**
+ * @brief               The current thread.
+ */
+extern thread_t         *current_thread;
+
+/**
+ * @brief               The current process.
+ */
+extern process_t        *current_process;
+
+/**
+ * @brief               The kernel TSS.
+ */
+extern tss_t            *kernel_tss;
+
+/**
  * @brief               The idle task. 
  *
  * Runs when no other task is active. All it does is consume CPU
  * cycles. (It would be possible to add code here for APM sleep, GC or
  * whatever) 
  */
-void dispatch_idle (void) NORETURN;
+extern void dispatch_idle (void) NORETURN;
 
 /**
  * @brief               Initialize the dispatcher. 
  */
-void dispatch_init (void);
+extern void dispatch_init (void);
 
 /**
  * @brief               The task switcher -- IRQ0 handler. 
  */
-void dispatch_task_switcher (void);
+extern void dispatch_task_switcher (void);
 
 /**
  * @brief               Block the given thread.
  * @param thread        The thread to block. 
  * @return              STORM_RETURN_SUCCESS if successful.
  */
-return_t dispatch_block (thread_t *thread);
+extern return_t dispatch_block (thread_t *thread);
 
 /**
  * @brief               Unblock the given thread.
  * @param thread        The thread to unblock.
  * @return              STORM_RETURN_SUCCESS if successful.
- *
- * (This function is O(1)) 
  */
-return_t dispatch_unblock (thread_t *thread);
+extern return_t dispatch_unblock (thread_t *thread);
 
 /**
  * @brief               The number of ticks. 
