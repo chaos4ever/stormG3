@@ -1,4 +1,4 @@
-/* $chaos: process.c,v 1.2 2002/10/10 22:03:00 per Exp $ */
+/* $chaos: process.c,v 1.3 2002/10/15 21:56:07 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 /* Abstract: Process support. */
 
@@ -17,14 +17,56 @@
 #include <storm/ia32/string.h>
 #include <storm/return_value.h>
 
+/* A list of processes. */
+process_t *process_list = NULL;
+
 /* The lowest free process ID. */
 static process_id_t free_process_id = 1;
 
-/* A list of processes. */
-static process_t *process_list = NULL;
-
 /* A spinlock for the process list. */
 static spinlock_t process_list_lock = SPIN_UNLOCKED;
+
+/* Set up the process support. */
+void process_init (void)
+{
+    /* Allocate memory for kernel process. */
+    process_t *process;
+    return_t return_value = memory_global_allocate ((void **) &process, sizeof (process_t));
+    if (return_value != STORM_RETURN_SUCCESS)
+    {
+        DEBUG_HALT ("Failed to allocate memory for kernel process");
+    }
+
+    /* Allocate memory for kernel thread. */
+    thread_t *thread;
+    return_value = memory_global_allocate ((void **) &thread, sizeof (thread_t));
+    if (return_value != STORM_RETURN_SUCCESS)
+    {
+        DEBUG_HALT ("Failed to allocate memory for kernel thread");
+    }
+
+    /* Allocate memory for kernel TSS. */
+    return_value = memory_global_allocate ((void **) &kernel_tss, sizeof (tss_t));
+    if (return_value != STORM_RETURN_SUCCESS)
+    {
+        DEBUG_HALT ("Failed to allocate memory for kernel TSS.");
+    }
+
+    // FIXME: Have a function for allocating thread IDs.
+    thread->id = 0;
+    string_copy_max (thread->name, "Idle thread", THREAD_NAME_LENGTH);
+    thread->parent = (struct process_t *) process;
+    thread->lock = SPIN_LOCKED;
+    thread->tss = kernel_tss;
+    thread->previous = thread->next = NULL;
+
+    memory_set_uint8 ((void *) process, 0, sizeof (process_t));
+    process->id = 0;
+    string_copy_max (process->name, "Kernel process", PROCESS_NAME_LENGTH);
+    process->active = TRUE;
+    process->thread_list = thread;
+    process_list = process;
+}
 
 /* Find the process with the given ID. */
 static process_t *process_find (process_id_t process_id)
@@ -147,6 +189,8 @@ return_t process_create (process_id_t process_id UNUSED,
         spin_unlock (&process->lock);
         return return_value;
     }
+
+    thread->parent = (struct process_t *) process;
 
     /* Create a TSS for this process. */
     return_value = memory_global_allocate ((void **) &thread->tss, sizeof (tss_t));

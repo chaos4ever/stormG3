@@ -1,4 +1,4 @@
-/* $chaos: dispatch.c,v 1.5 2002/10/15 18:13:49 per Exp $ */
+/* $chaos: dispatch.c,v 1.6 2002/10/15 21:55:35 per Exp $ */
 /* Abstract: Dispatcher. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -16,17 +16,24 @@
 #include <storm/ia32/memory_global.h>
 #include <storm/ia32/spinlock.h>
 
+// FIXME: We may be able to move some of these?
 /* The number of ticks since IRQ0 was first enabled. */
 volatile unsigned int ticks = 0;
+
+/* The current thread. */
+thread_t *current_thread = NULL;
+
+/* The current process. */
+process_t *current_process = NULL;
+
+/* The kernel TSS. */
+tss_t *kernel_tss;
 
 /* The current entry in the dispatch list. Used for doing the dispatching. */
 static dispatch_t *dispatch_current = NULL;
 
 /* A lock is good for avoiding concurrency problems. */
 static spinlock_t dispatch_lock = SPIN_UNLOCKED;
-
-/* The kernel TSS. */
-static tss_t *kernel_tss;
 
 /* The current TSS. */
 static tss_t *current_tss;
@@ -57,7 +64,7 @@ return_t dispatch_unblock (thread_t *thread)
     }
 
     /* Set up this queue entry. */
-    dispatch->tss = thread->tss;
+    dispatch->thread = thread;
     // FIMXE: Support different priorities.
     dispatch->timeslices = 1;
 
@@ -102,14 +109,6 @@ void dispatch_idle (void)
 /* Initialize the dispatcher. */
 void dispatch_init (void)
 {
-    /* Set up a kernel TSS. */
-    return_t return_value = memory_global_allocate ((void **) &kernel_tss,
-                                                    sizeof (tss_t));
-    if (return_value != STORM_RETURN_SUCCESS)
-    {
-        DEBUG_HALT ("Failed to allocate memory for kernel TSS.");
-    }
-
     /* Fill in some important fields in this TSS. */
     kernel_tss->cr3 = cpu_get_cr3 ();
 
@@ -127,7 +126,7 @@ void dispatch_init (void)
 
     /* Create the list of tasks. */
     dispatch_t *dispatch;
-    return_value = memory_global_allocate ((void **) &dispatch, 
+    return_t return_value = memory_global_allocate ((void **) &dispatch, 
                                            sizeof (dispatch_t));
     if (return_value != STORM_RETURN_SUCCESS)
     {
@@ -135,7 +134,7 @@ void dispatch_init (void)
     }
 
     /* Set up this structure. */
-    dispatch->tss = kernel_tss;
+    dispatch->thread = process_list->thread_list;       /* The kernel thread. */
     dispatch->timeslices = 1;
     dispatch->next = dispatch->previous = (struct dispatch_t *) dispatch;
 
@@ -160,37 +159,37 @@ void dispatch_task_switcher (void)
     spin_unlock (&dispatch_lock);
 
     /* Okay, if it's a new one, we might as well dispatch it. */
-    if (dispatch_current->tss != current_tss)
+    if (dispatch_current->thread->tss != current_tss)
     {
         /* Toggle it. */
         task_flag ^= 1;
 
         /* Set it. */
-        current_tss = dispatch_current->tss;
-
-        //        debug_print ("Current tss: %x\n", dispatch_current->tss);
+        current_tss = dispatch_current->thread->tss;
 
         switch (task_flag)
         {
             case 0:
             {
-                //                debug_print ("Switch to TSS1");
                 gdt_setup_tss_descriptor (GDT_ENTRY (TSS1_SELECTOR),
-                                          dispatch_current->tss, 3,
+                                          current_tss, 3,
                                           sizeof (tss_t));
                 jump_data[1] = TSS1_SELECTOR;
                 break;
             }
             case 1:
             {
-                //                debug_print ("Switch to TSS2");
                 gdt_setup_tss_descriptor (GDT_ENTRY (TSS2_SELECTOR),
-                                          dispatch_current->tss, 3,
+                                          current_tss, 3,
                                           sizeof (tss_t) - 1);
                 jump_data[1] = TSS2_SELECTOR;
                 break;
             }
         }
+
+        /* Set up the "current" pointers to be right. */
+        current_thread = dispatch_current->thread;
+        current_process = (process_t *) dispatch_current->thread->parent;
 
         /* Do the task switch. But first ACK the interrupt so we can
            get more interrupts on this interrupt controller. */
