@@ -1,4 +1,4 @@
-/* $chaos: dma.c,v 1.3 2002/06/23 20:08:30 per Exp $ */
+/* $chaos: dma.c,v 1.4 2002/10/04 19:01:21 per Exp $ */
 /* Abstract: DMA routines. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -7,9 +7,10 @@
 
 #include <storm/ia32/dma.h>
 #include <storm/ia32/memory_physical.h>
+#include <storm/ia32/process.h>
 
 /* Initialize the DMA support. */
-void dma_init ()
+void dma_init (void)
 {
 }
 
