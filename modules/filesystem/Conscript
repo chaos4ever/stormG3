@@ -1,4 +1,4 @@
-# $chaos: Conscript,v 1.2 2002/07/21 12:40:09 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.3 2002/07/21 12:40:50 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the file system service providers.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -9,7 +9,7 @@
 Import qw( cons module_directory include build_directory library_directory
            install );
 Build qw( minix/Conscript
-	  virtual/Conscript );
+	  vfs/Conscript );
 
 
 
