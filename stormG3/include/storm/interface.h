@@ -1,4 +1,4 @@
-/* $chaos: interface.h,v 1.3 2002/10/23 07:25:21 per Exp $ */
+/* $chaos: interface.h,v 1.4 2002/10/23 21:03:51 per Exp $ */
 /* Abstract: stormG3 kernel interface. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -138,6 +138,22 @@ extern return_t memory_physical_allocate (void **pointer, unsigned int pages,
 return_t memory_physical_deallocate (void *pointer);
 
 /**
+ * @brief               Find the mapping that a page is mapped to.
+ * @param page_directory
+ *                      The page directory to inspect.
+ * @param virtual_page  The virtual page to check.
+ * @param physical_page Pointer to where the function will store the
+ *                      physical page number (note: not address, but
+ *                      page number).
+ * @param flags         Pointer to the flags of this mapping.
+ * @return              STORM_RETURN_SUCCESS if successful.
+ */
+extern return_t memory_virtual_find (void *page_directory,
+                                     page_number_t virtual_page,
+                                     page_number_t *physical_page,
+                                     unsigned int *flags);
+
+/**
  * @brief               Map memory into the given page directory. 
  * @param page_directory
  *                      The page directory in which to map.
@@ -151,7 +167,7 @@ extern return_t memory_virtual_map (void *page_directory,
                                     page_number_t virtual_page, 
                                     page_number_t physical_page,
                                     unsigned int pages,
-                                    uint32_t flags);
+                                    unsigned int flags);
 
 /**
  * @brief               Register a port range. 

@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.30 2002/10/21 19:31:55 per Exp $ */
+/* $chaos: module.c,v 1.31 2002/10/23 07:21:05 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -33,6 +33,7 @@ static module_function_t function[] =
     { "memory_physical_allocate", (function_t) &memory_physical_allocate },
     { "memory_physical_deallocate", (function_t) &memory_physical_deallocate },
 
+    { "memory_virtual_find", (function_t) &memory_virtual_find },
     { "memory_virtual_map", (function_t) &memory_virtual_map },
 //  { "memory_virtual_unmap", (function_t) &memory_virtual_unmap },
 

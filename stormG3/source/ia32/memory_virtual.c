@@ -1,4 +1,4 @@
-/* $chaos: memory_virtual.c,v 1.10 2002/10/20 19:30:00 per Exp $ */
+/* $chaos: memory_virtual.c,v 1.11 2002/10/23 07:21:26 per Exp $ */
 /* Abstract: Virtual memory routines. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -80,11 +80,37 @@ static void create_page_directory_entry_4mb (page_directory_t *page_directory,
 }
 #endif
 
+/* Find a mapping. */
+return_t memory_virtual_find (void *page_directory_void,
+                              page_number_t virtual_page,
+                              page_number_t *physical_page,
+                              unsigned int *flags)
+{
+    page_directory_t *page_directory = (page_directory_t *) page_directory_void;
+    unsigned int page_directory_index = virtual_page / 1024;
+    unsigned int page_table_index = virtual_page % 1024;
+    if (page_directory[page_directory_index].present == 0)
+    {
+        return STORM_RETURN_NOT_FOUND;
+    }
+
+    page_table_t *page_table = (page_table_t *) (page_directory[page_directory_index].page_table_base * PAGE_SIZE);
+    if (page_table[page_table_index].present == 0)
+    {
+        return STORM_RETURN_NOT_FOUND;
+    }
+
+    *flags = page_table[page_table_index].flags;
+    *physical_page = page_table[page_table_index].page_base;
+
+    return STORM_RETURN_SUCCESS;
+}
+
 /* Map memory. */
 return_t memory_virtual_map (void *page_directory_void,
                              page_number_t virtual_page,
                              page_number_t physical_page,
-                             unsigned int pages, uint32_t flags) 
+                             unsigned int pages, unsigned int flags) 
 {
     uint32_t counter;
     page_directory_t *page_directory = (page_directory_t *) page_directory_void;
