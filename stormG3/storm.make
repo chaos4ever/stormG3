@@ -1,4 +1,4 @@
-# $chaos: storm.make,v 1.4 2002/06/13 07:01:52 per Exp $
+# $chaos: storm.make,v 1.5 2002/06/15 13:50:24 per Exp $
 
 # Abstract: storm G3 makefile
 # Authors: Henrik Hallin <hal@chaosdev.org>
@@ -7,7 +7,6 @@
 # Copyright 2002 chaos development.
 
 # Settings.
-# CC = i686-storm-chaos-gcc
 INCLUDES = -I$(BUILD_ROOT)/include
 DEFINES = -DSTORM -DCREATOR=\"`whoami`@`hostname`\"
 EXTRA_CFLAGS = -std=gnu99 # This one requires a modern gcc, 3.0 or above.
