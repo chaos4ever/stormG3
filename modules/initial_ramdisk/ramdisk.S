@@ -1,4 +1,4 @@
-/* $chaos: ramdisk.S,v 1.1 2002/06/26 06:40:40 per Exp $ */
+/* $chaos: ramdisk.S,v 1.2 2002/06/26 06:42:13 per Exp $ */
 /* Abstract: The ramdisk. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -8,6 +8,7 @@
 #define ASSEMBLER			1
 #include "ramdisk.h"
 
+.data
 .globl			blocks
 ramdisk:
 /* Because of the fact that we don't chdir... */
