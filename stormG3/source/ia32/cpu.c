@@ -1,4 +1,4 @@
-/* $chaos: cpu.c,v 1.4 2002/10/08 20:17:43 per Exp $ */
+/* $chaos: cpu.c,v 1.5 2002/10/23 21:37:02 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -148,6 +148,5 @@ void cpu_init (void)
     if (cpu_info.flags.fpu == 1)
     {
         asm ("finit");
-        debug_print ("FPU detected and initialized.\n");
     }
 }
