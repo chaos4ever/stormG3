@@ -1,4 +1,4 @@
-/* $chaos: cpu.h,v 1.8 2002/06/13 22:11:40 per Exp $ */
+/* $chaos: cpu.h,v 1.9 2002/06/14 22:47:42 per Exp $ */
 /* Abstract: CPU defines and functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -13,6 +13,13 @@
 #include <storm/ia32/defines.h>
 
 /* Inline functions. */
+static inline void cpu_set_tr (uint16_t new_tr)
+{
+  asm volatile ("ltr %0"
+		:
+		: "r" (new_tr));
+}
+
 static inline void cpu_set_cr0 (uint32_t new_cr0)
 {
     asm volatile ("movl %0, %%cr0"
@@ -45,6 +52,16 @@ static inline uint32_t cpu_get_esp (void)
 		:);
 
   return return_value;
+}
+
+static inline void cpu_interrupts_disable (void)
+{
+  asm ("cli");
+}
+
+static inline void cpu_interrupts_enable (void)
+{
+  asm ("sti");
 }
 
 /* Function prototypes. */
