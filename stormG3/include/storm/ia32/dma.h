@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: dma.h,v 1.1 2002/06/12 12:20:37 per Exp $ */
 /* Abstract: DMA support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -8,6 +8,9 @@
 #ifndef __STORM_IA32_DMA_H__
 #define __STORM_IA32_DMA_H__
 
+#include <storm/storm.h>
+
+/* Initialize DMA support. */
 extern void dma_init (void);
 
 #endif /* !__STORM_IA32_DMA_H__ */
