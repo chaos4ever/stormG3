@@ -53,5 +53,10 @@ clean:
 	find . -type f -name \*.dep -exec rm {} ';'
 	find . -type f -name .#\* -exec rm {} ';'
 
-snapshot:
-	cd ../ && tar -c --exclude CVS --exclude contributed -vIf chaos_snapshot-$$(date +%Y%m%d).tar.bz2 chaos
+# Make sure you have a clean source tree before you run one of these.
+
+snapshot-bz2:
+	cd .. && tar -c --exclude CVS --exclude contributed -vIf chaos_snapshot-$$(date +%Y%m%d).tar.bz2 chaos
+
+snapshot-gz:
+	cd .. && tar -c --exclude CVS --exclude contributed -vzf chaos_snapshot-$$(date +%Y%m%d).tar.gz chaos
