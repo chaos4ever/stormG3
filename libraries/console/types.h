@@ -1,4 +1,4 @@
-/* $chaos: types.h,v 1.1 2002/06/24 21:36:43 per Exp $ */
+/* $chaos: types.h,v 1.2 2002/07/10 21:55:19 per Exp $ */
 /* Abstract: Console library types. */
 /* Author: Per Lundberg <per<@chaosdev.org> */
 
@@ -22,6 +22,10 @@ typedef return_t (*console_open_t)(console_id_t *console_id,
 /* Close a console. */
 typedef return_t (*console_close_t)(console_id_t console_id);
 
+/* Output something to the console. */
+typedef return_t (*console_output_t)(console_id_t console_id, 
+                                     const char *string);
+
 /* A console service. */
 typedef struct
 {
@@ -37,6 +41,11 @@ typedef struct
 
     /* A function for closing a previously opened console. */
     console_close_t close;
+
+    /* A function for outputting to this console. */
+    console_output_t output;
+
+    // TODO: console_input_t input (with and without blocking)
 } console_service_t;
 
 /* Initialization function. */
