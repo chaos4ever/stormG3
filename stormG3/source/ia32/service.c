@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: service.c,v 1.1 2002/06/20 22:40:57 per Exp $ */
 /* Abstract: Service support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -26,8 +26,13 @@ return_t service_register (char *name, unsigned int version,
         return return_value;
     }
 
-    // FIXME: Need to copy this to a buffer of our own, really.
-    service->name = name;
+    return_value = memory_global_allocate ((void **) &service->name, string_length (name) + 1);
+    if (return_value != STORM_RETURN_SUCCESS)
+    {
+        return return_value;
+    }
+
+    string_copy (service->name, name);
 
     service->version = version;
     service->handler = handler;
@@ -49,6 +54,7 @@ return_t service_resolve (char *name, unsigned int version,
                           function_t *handler)
 {
     service_t *service = first_service;
+
     while (service != NULL)
     {
         if (string_compare (service->name, name) == 0 && 
@@ -57,6 +63,8 @@ return_t service_resolve (char *name, unsigned int version,
             *handler = service->handler;
             return STORM_RETURN_SUCCESS;
         }
+
+        service = (service_t *) service->next;
     }
 
     return STORM_RETURN_NOT_FOUND;
