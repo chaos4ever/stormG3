@@ -1,0 +1,9 @@
+TODO ($chaos$)
+====
+
+In order of priority:
+* Finish memory allocation.
+* Use mutexes.
+* Exception handling.
+* Services.
+* IRQ/DMA support.
