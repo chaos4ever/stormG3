@@ -1,4 +1,4 @@
-/* $chaos: memory_virtual.h,v 1.4 2002/10/09 09:19:19 per Exp $ */
+/* $chaos: memory_virtual.h,v 1.5 2002/10/10 20:35:55 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -137,11 +137,11 @@ extern void memory_virtual_init (void);
  * @param physical_page The physical page base.
  * @param pages         The number of pages to map.
  * @param flags         The page flags to use.
- *
+ * @return              STORM_RETURN_SUCCESS if successful.
  */
-extern void memory_virtual_map (page_directory_t *page_directory,
-                                page_number_t virtual_page, 
-                                page_number_t physical_page, unsigned int pages,
-                                uint32_t flags);
+return_t memory_virtual_map (page_directory_t *page_directory,
+                             page_number_t virtual_page, 
+                             page_number_t physical_page, unsigned int pages,
+                             uint32_t flags);
 
 #endif /* !__STORM_IA32_MEMORY_VIRTUAL_H__ */
