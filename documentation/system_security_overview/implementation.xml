@@ -1,0 +1,57 @@
+<?xml version='1.0' ?> <!-- -*- xml -*- -->
+<!-- $chaos: solution.xml,v 1.2 2002/10/21 21:47:55 per Exp $ -->
+
+<chapter id="implementation">
+  <?dbhtml filename="implementation.html"?>
+  <title>The Implementation</title>
+  <para>
+    In this chapter, we specify how <link linkend="solution"> The
+    Solution</link> is implemented in the chaos operating system.
+  </para>
+
+  <section>
+    <title>Capability classes</title>
+    <para>
+      Not all capability classes that have been defined are listed
+      here; only those of very important priority. In general, all
+      services have a capability class with the same name as the
+      service. For example, the ipv4 service has a set of capabilities
+      called <literal>ipv4::listen_tcp_80</literal>,
+      <literal>ipv4::send_udp_67</literal> and so on. Another thing
+      that should be mentioned is the fact that all capability classes
+      should have the <literal>class::super_user</literal> capability,
+      inheriting its value from the
+      <literal>kernel::super_user</literal> capability. This makes it
+      very easy to make the system "Unix compatible" by giving a
+      certain user full access to everything.
+
+      <variablelist>
+        <varlistentry>
+          <term>
+            <literal>kernel::*</literal>
+          </term>
+          <listitem>
+            <para>
+              All kernel-related
+              capabilities are put into this capability class. The root
+              capability here is called
+              <literal>kernel::super_user</literal>. A user with the
+              capability of super-user is granted access to everything
+              in the system.
+            </para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term><literal>ipv4::*</literal></term>
+          
+          <listitem>
+            <para>
+              Capabilities in the ipv4 service.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </para>
+  </section>
+</chapter>
