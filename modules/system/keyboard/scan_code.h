@@ -1,4 +1,4 @@
-/* $chaos: scan_code.h,v 1.1 2002/08/11 21:13:31 per Exp $ */
+/* $chaos: scan_code.h,v 1.2 2002/08/19 20:38:47 per Exp $ */
 /* Abstract: Keyboard scan codes. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -55,23 +55,24 @@ enum
      technically don't generate these scancodes. */
   SCAN_CODE_NUMERIC_ENTER       = 89,
   SCAN_CODE_RIGHT_CONTROL       = 90,
-  SCAN_CODE_NUMERIC_SLASH       = 92,
-  SCAN_CODE_RIGHT_ALT           = 94,
-  SCAN_CODE_HOME                = 95,
-  SCAN_CODE_UP                  = 96,
-  SCAN_CODE_PAGE_UP             = 97,
-  SCAN_CODE_LEFT                = 98,
-  SCAN_CODE_RIGHT               = 99,
-  SCAN_CODE_END                 = 100,
-  SCAN_CODE_DOWN                = 101,
-  SCAN_CODE_PAGE_DOWN           = 102,
-  SCAN_CODE_INSERT              = 103,
-  SCAN_CODE_DELETE              = 104,
 
   /* Windows keys. */
-  SCAN_CODE_LEFT_WINDOWS        = 125,
-  SCAN_CODE_RIGHT_WINDOWS       = 126,
-  SCAN_CODE_MENU                = 127,
+  SCAN_CODE_LEFT_WINDOWS        = 91,
+  SCAN_CODE_RIGHT_WINDOWS       = 92,
+  SCAN_CODE_MENU                = 93,
+  SCAN_CODE_NUMERIC_SLASH       = 94,
+  SCAN_CODE_RIGHT_ALT           = 95,
+  SCAN_CODE_HOME                = 96,
+  SCAN_CODE_UP                  = 97,
+  SCAN_CODE_PAGE_UP             = 98,
+  SCAN_CODE_LEFT                = 99,
+  SCAN_CODE_RIGHT               = 100,
+  SCAN_CODE_END                 = 101,
+  SCAN_CODE_DOWN                = 102,
+  SCAN_CODE_PAGE_DOWN           = 103,
+  SCAN_CODE_INSERT              = 104,
+  SCAN_CODE_DELETE              = 105,
+
 };
 
 #endif /* !__SCANCODE_H__ */

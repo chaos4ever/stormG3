@@ -1,4 +1,4 @@
-/* $chaos: keyboard.c,v 1.1 2002/08/11 21:13:31 per Exp $ */
+/* $chaos: keyboard.c,v 1.2 2002/08/19 20:39:07 per Exp $ */
 /* Abstract: Keyboard module for chaos. */
 /* Authors: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
@@ -99,11 +99,22 @@ static uint8_t special_key_conversion[] =
     [SCAN_CODE_NUMERIC_3] = KEYBOARD_SPECIAL_KEY_NUMERIC_3,
     [SCAN_CODE_NUMERIC_0] = KEYBOARD_SPECIAL_KEY_NUMERIC_0,
     [SCAN_CODE_NUMERIC_DELETE] = KEYBOARD_SPECIAL_KEY_NUMERIC_DELETE,
+    [SCAN_CODE_NUMERIC_ENTER] = KEYBOARD_SPECIAL_KEY_NUMERIC_ENTER,
     [SCAN_CODE_F11] = KEYBOARD_SPECIAL_KEY_F11,
     [SCAN_CODE_F12] = KEYBOARD_SPECIAL_KEY_F12,
     [SCAN_CODE_LEFT_WINDOWS] = KEYBOARD_SPECIAL_KEY_LEFT_WINDOWS,
     [SCAN_CODE_RIGHT_WINDOWS] = KEYBOARD_SPECIAL_KEY_RIGHT_WINDOWS,
     [SCAN_CODE_MENU] = KEYBOARD_SPECIAL_KEY_MENU,
+    [SCAN_CODE_INSERT] = KEYBOARD_SPECIAL_KEY_INSERT,
+    [SCAN_CODE_DELETE] = KEYBOARD_SPECIAL_KEY_DELETE,
+    [SCAN_CODE_HOME] = KEYBOARD_SPECIAL_KEY_HOME,
+    [SCAN_CODE_END] = KEYBOARD_SPECIAL_KEY_END,
+    [SCAN_CODE_PAGE_UP] = KEYBOARD_SPECIAL_KEY_PAGE_UP,
+    [SCAN_CODE_PAGE_DOWN] = KEYBOARD_SPECIAL_KEY_PAGE_DOWN,
+    [SCAN_CODE_UP] = KEYBOARD_SPECIAL_KEY_UP,
+    [SCAN_CODE_DOWN] = KEYBOARD_SPECIAL_KEY_DOWN,
+    [SCAN_CODE_LEFT] = KEYBOARD_SPECIAL_KEY_LEFT,
+    [SCAN_CODE_RIGHT] = KEYBOARD_SPECIAL_KEY_RIGHT
 };
 
 /* Acknowledge the keyboard controller. */
@@ -504,7 +515,9 @@ void keyboard_handle_event (uint8_t scancode)
                            somehow. */
                         halt (HALT_REBOOT);
                     }
-                    break;
+
+                    /* Fall through if not Alt+Control pressed, so we
+                       can use Delete in other applications. */
                 }
                 
                 /* Other key. */
@@ -517,6 +530,7 @@ void keyboard_handle_event (uint8_t scancode)
                             
                     if (translated_key == NULL)
                     {
+                        debug_print ("Translating %u\n", scancode);
                         keyboard_packet.has_special_key = 1;
                         keyboard_packet.special_key = special_key_conversion[scancode];
                     }

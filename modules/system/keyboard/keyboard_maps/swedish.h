@@ -1,4 +1,4 @@
-/* $chaos: swedish.h,v 1.1 2002/08/11 21:13:32 per Exp $ */
+/* $chaos: swedish.h,v 1.2 2002/08/19 20:38:32 per Exp $ */
 /* Abstract: A swedish keyboard translation map for chaos. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -15,7 +15,7 @@ const char *swedish_keyboard_map[] =
   "q",  "w",  "e",  "r",  "t",  "y",  "u",  "i",
   "o",  "p",  "å",  NULL, NULL, NULL, "a",  "s",
   "d",  "f",  "g",  "h",  "j",  "k",  "l",  "ö",
-  "ä",  NULL, NULL, "'",  "z",  "x",  "c",  "v",
+  "ä",  "§",  NULL, "'",  "z",  "x",  "c",  "v",
   "b",  "n",  "m",  ",",  ".",  "-",  NULL, "*",
   NULL, " ",  NULL, NULL, NULL, NULL, NULL, NULL,
   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
@@ -32,7 +32,7 @@ const char *swedish_keyboard_map_upper[] =
   "Q",  "W",  "E",  "R",  "T",  "Y",  "U",  "I",
   "O",  "P",  "Å",  NULL, NULL, NULL, "A",  "S",
   "D",  "F",  "G",  "H",  "J",  "K",  "L",  "Ö",
-  "Ä",  NULL, NULL, "'",  "Z",  "X",  "C",  "V",
+  "Ä",  "§",  NULL, "'",  "Z",  "X",  "C",  "V",
   "B",  "N",  "M",  ",",  ".",  "-",  NULL, "*",
   NULL, " ",  NULL, NULL, NULL, NULL, NULL, NULL,
   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
@@ -49,7 +49,7 @@ const char *swedish_keyboard_map_shift[] =
   "Q",  "W",  "E",  "R",  "T",  "Y",  "U",  "I",
   "O",  "P",  "Å",  "^",  NULL, NULL, "A",  "S",
   "D",  "F",  "G",  "H",  "J",  "K",  "L",  "Ö",
-  "Ä",  NULL, NULL, "*",  "Z",  "X",  "C",  "V",
+  "Ä",  "½",  NULL, "*",  "Z",  "X",  "C",  "V",
   "B",  "N",  "M",  ";",  ":",  "_",  NULL, "*",
   NULL, " ",  NULL, NULL, NULL, NULL, NULL, NULL,
   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
@@ -63,7 +63,7 @@ const char *swedish_keyboard_map_altgr[] =
 {
   NULL, NULL, NULL, "@",  NULL, "$", NULL,  NULL,
   "{",  "[",  "]",  "}",  "\\", NULL, NULL, NULL,
-  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+  NULL, NULL, "�",  NULL, NULL, NULL, NULL, NULL,
   NULL, NULL, NULL, "~",  NULL, NULL, NULL, NULL,
   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
