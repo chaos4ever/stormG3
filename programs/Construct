@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.13 2002/10/04 19:00:59 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.1 2002/10/06 09:43:21 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the programs.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -32,6 +32,7 @@ return qq(
 mkdir -p \$program_install_directory
 install \$program_directory/\$program_binary \$program_install_directory
 strip \$program_install_directory/\$program_binary
+touch %0:a
 	 );
 EOF
 
