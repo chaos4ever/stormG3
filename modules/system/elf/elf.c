@@ -1,4 +1,4 @@
-/* $chaos: elf.c,v 1.6 2002/10/16 20:34:02 per Exp $ */
+/* $chaos: elf.c,v 1.7 2002/10/21 09:20:36 per Exp $ */
 /* Abstract: ELF module, implementing the exec service. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -7,6 +7,7 @@
 
 #include <storm/storm.h>
 #include <exec/exec.h>
+#include <memory/memory.h>
 
 #include "elf.h"
 
@@ -41,7 +42,7 @@ static return_t elf_identify (elf_header_t *elf_header)
    different sections there. */
 static return_t elf_load (elf_header_t *elf_header, 
                           process_id_t process_id,
-                          page_directory_t *page_directory)
+                          void *page_directory)
 {
     return_t return_value;
 
@@ -83,8 +84,7 @@ static return_t elf_load (elf_header_t *elf_header,
                 return_value = memory_virtual_map
                     (page_directory, 
                      PAGE_NUMBER (section_header->address),
-                     PAGE_NUMBER (buffer), 1, PAGE_WRITABLE |
-                     PAGE_NON_PRIVILEGED | PAGE_WRITE_THROUGH);
+                     PAGE_NUMBER (buffer), 1, PAGE_USER);
                 if (return_value != STORM_RETURN_SUCCESS)
                 {
                     debug_print ("Failed to map memory");
@@ -176,7 +176,7 @@ static return_t elf_run (void *buffer)
     return_t return_value;
     elf_header_t *elf_header = (elf_header_t *) buffer;
     process_id_t process_id;
-    page_directory_t *page_directory;
+    void *page_directory;
 
     /* Make sure this is a valid ELF. */
     return_value = elf_identify (elf_header);
