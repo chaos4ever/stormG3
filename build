@@ -1,9 +1,0 @@
-#!/bin/sh
-# $chaos: build,v 1.5 2002/05/23 10:51:50 per Exp $
-
-# If no install path has been set previously, fall back to the default.
-if [ -z "$CHAOS_INSTALL_PATH" ]; then
-	CHAOS_INSTALL_PATH=$(pwd)/root
-fi
-
-make build
