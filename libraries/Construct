@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.1 2002/06/23 20:35:06 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.2 2002/07/06 07:58:47 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the libraries.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -40,6 +40,6 @@ Export qw(cons header_directory library_static_directory build_directory);
 Build qw( block/Conscript
 	  console/Conscript
 	  log/Conscript
-	  unicode/Conscript );
-
-
+	  unicode/Conscript
+	  video/Conscript
+	);
