@@ -1,4 +1,4 @@
-/* $chaos: irq.h,v 1.10 2002/10/11 07:42:56 per Exp $ */
+/* $chaos: irq.h,v 1.11 2002/10/13 14:26:15 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -46,7 +46,8 @@
 /**
  * @brief               The IDT entry for IRQ level a.
  */
-#define IDT_ENTRY(a)                    (BASE_IRQ + a)
+#define IRQ_IDT_ENTRY(a) \
+                        (BASE_IRQ + a)
 
 /**
  * @brief               A structure with information about an IRQ level. 

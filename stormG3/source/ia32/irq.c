@@ -1,4 +1,4 @@
-/* $chaos: irq.c,v 1.8 2002/10/15 18:14:50 per Exp $ */
+/* $chaos: irq.c,v 1.9 2002/10/23 21:09:23 per Exp $ */
 /* Abstract: IRQ handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -95,39 +95,39 @@ void irq_init ()
     irq_remap ();
 
     /* Set up a handler for the task switcher. */
-    idt_setup_interrupt_gate (IDT_ENTRY(0), KERNEL_CODE_SELECTOR,
+    idt_setup_interrupt_gate (IRQ_IDT_ENTRY(0), KERNEL_CODE_SELECTOR,
                               irq0_handler, 0);
     
-    idt_setup_trap_gate (IDT_ENTRY(1), KERNEL_CODE_SELECTOR,
+    idt_setup_trap_gate (IRQ_IDT_ENTRY(1), KERNEL_CODE_SELECTOR,
                          irq1_handler, 0);
     
     /* IRQ 2 is used to connect the two interrupt controllers and can
        not be used as an ordinary IRQ. */
-    idt_setup_trap_gate (IDT_ENTRY(3), KERNEL_CODE_SELECTOR,
+    idt_setup_trap_gate (IRQ_IDT_ENTRY(3), KERNEL_CODE_SELECTOR,
                          irq3_handler, 0);
-    idt_setup_trap_gate (IDT_ENTRY(4), KERNEL_CODE_SELECTOR,
+    idt_setup_trap_gate (IRQ_IDT_ENTRY(4), KERNEL_CODE_SELECTOR,
                          irq4_handler, 0);
-    idt_setup_trap_gate (IDT_ENTRY(5), KERNEL_CODE_SELECTOR,
+    idt_setup_trap_gate (IRQ_IDT_ENTRY(5), KERNEL_CODE_SELECTOR,
                          irq5_handler, 0);
-    idt_setup_trap_gate (IDT_ENTRY(6), KERNEL_CODE_SELECTOR,
+    idt_setup_trap_gate (IRQ_IDT_ENTRY(6), KERNEL_CODE_SELECTOR,
                          irq6_handler, 0);
-    idt_setup_trap_gate (IDT_ENTRY(7), KERNEL_CODE_SELECTOR,
+    idt_setup_trap_gate (IRQ_IDT_ENTRY(7), KERNEL_CODE_SELECTOR,
                          irq7_handler, 0);
-    idt_setup_trap_gate (IDT_ENTRY(8), KERNEL_CODE_SELECTOR,
+    idt_setup_trap_gate (IRQ_IDT_ENTRY(8), KERNEL_CODE_SELECTOR,
                          irq8_handler, 0);
-    idt_setup_trap_gate (IDT_ENTRY(9), KERNEL_CODE_SELECTOR,
+    idt_setup_trap_gate (IRQ_IDT_ENTRY(9), KERNEL_CODE_SELECTOR,
                          irq9_handler, 0);
-    idt_setup_trap_gate (IDT_ENTRY(10), KERNEL_CODE_SELECTOR,
+    idt_setup_trap_gate (IRQ_IDT_ENTRY(10), KERNEL_CODE_SELECTOR,
                          irq10_handler, 0);
-    idt_setup_trap_gate (IDT_ENTRY(11), KERNEL_CODE_SELECTOR,
+    idt_setup_trap_gate (IRQ_IDT_ENTRY(11), KERNEL_CODE_SELECTOR,
                          irq11_handler, 0);
-    idt_setup_trap_gate (IDT_ENTRY(12), KERNEL_CODE_SELECTOR,
+    idt_setup_trap_gate (IRQ_IDT_ENTRY(12), KERNEL_CODE_SELECTOR,
                          irq12_handler, 0);
-    idt_setup_trap_gate (IDT_ENTRY(13), KERNEL_CODE_SELECTOR,
+    idt_setup_trap_gate (IRQ_IDT_ENTRY(13), KERNEL_CODE_SELECTOR,
                          irq13_handler, 0);
-    idt_setup_trap_gate (IDT_ENTRY(14), KERNEL_CODE_SELECTOR,
+    idt_setup_trap_gate (IRQ_IDT_ENTRY(14), KERNEL_CODE_SELECTOR,
                          irq14_handler, 0);
-    idt_setup_trap_gate (IDT_ENTRY(15), KERNEL_CODE_SELECTOR,
+    idt_setup_trap_gate (IRQ_IDT_ENTRY(15), KERNEL_CODE_SELECTOR,
                          irq15_handler, 0);
     
     /* Disable all IRQs. */
