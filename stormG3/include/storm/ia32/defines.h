@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.12 2002/06/15 14:34:40 per Exp $ */
+/* $chaos: defines.h,v 1.13 2002/06/15 15:32:15 per Exp $ */
 /* Abstract: Generic storm defines. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -27,5 +27,8 @@
 
 /* The kernel starts at 1 MiB. */
 #define KERNEL_BASE                     (1 * MIB)
+
+/* The maximum memory amount that we support. */
+#define MAX_MEMORY                      ((uint32_t) 2 * GIB)
 
 #endif /* !__STORM_IA32_DEFINES_H__ */
