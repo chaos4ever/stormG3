@@ -1,4 +1,4 @@
-/* $chaos: process.c,v 1.4 2002/10/17 21:28:58 per Exp $ */
+/* $chaos: process.c,v 1.5 2002/10/20 19:26:44 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 /* Abstract: Process support. */
 
@@ -107,10 +107,10 @@ static process_id_t process_find_free_id (void)
 
 /* Process "pre-creator"; allocate a process ID and page directory. */
 return_t process_precreate (process_id_t *process_id, 
-                            page_directory_t **page_directory)
+                            void **page_directory)
 {
     /* Allocate a page directory. */
-    return_t return_value = memory_global_allocate ((void **) page_directory, PAGE_SIZE);
+    return_t return_value = memory_global_allocate (page_directory, PAGE_SIZE);
 
     if (return_value != STORM_RETURN_SUCCESS)
     {
