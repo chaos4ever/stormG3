@@ -1,4 +1,4 @@
-/* $chaos: minix.h,v 1.2 2002/07/10 21:23:33 per Exp $ */
+/* $chaos: minix.h,v 1.3 2002/07/21 13:02:51 per Exp $ */
 /* Abstract: Minix file system data types. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -43,6 +43,9 @@
 #define MINIX_MODE_DIRECTORY            0040000
 #define MINIX_MODE_LINK                 0120000
 #define MINIX_MODE_FILE                 0100000
+
+/* Max open files at a time. FIXME: Replace with hash table. */
+#define MINIX_OPEN_FILES                16
 
 /* Super-block. */
 typedef struct
@@ -131,5 +134,15 @@ typedef struct
     /* The inode block number (where the inodes start). */
     unsigned int inode_block;
 } minix_fs_t;
+
+/* An open file. */
+typedef struct
+{
+    /* The inode. */
+    void *inode;
+
+    /* The file position. */
+    size_t position;
+} minix_file_t;
 
 #endif /* !__MINIX_H__ */

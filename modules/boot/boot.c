@@ -1,4 +1,4 @@
-/* $chaos: boot.c,v 1.3 2002/07/10 21:56:58 per Exp $ */
+/* $chaos: boot.c,v 1.4 2002/07/28 19:35:30 per Exp $ */
 /* Abstract: Boot module. The boot module takes care of setting up the
    system (opening virtual consoles, launching programs, etc). */
 /* Author: Per Lundberg <per@chaosdev.org> */
@@ -12,6 +12,9 @@
 #include <log/log.h>
 #include <vfs/vfs.h>
 
+/* The number of consoles that we are opening. */
+#define CONSOLES        2
+
 /* The log service provider we are using. */
 log_service_t log;
 
@@ -19,7 +22,7 @@ log_service_t log;
 console_service_t console;
 
 /* The ID of the console that we have opened. */
-console_id_t console_id;
+console_id_t console_id[CONSOLES];
 
 /* The block service provider we are using, for mounting the root
    file system. */
@@ -78,13 +81,41 @@ return_t module_start (void)
     }
 
     /* Open a file in the root directory. */
-    return_value = vfs.open ("/AreYouExcited.mod", &handle);
+    return_value = vfs.open ("/AreYouExcited.mod", VFS_FILE_MODE_READ,
+                             &handle);
     if (return_value != STORM_RETURN_SUCCESS)
     {
         log.print (LOG_URGENCY_EMERGENCY, "Opening file failed.");
         return return_value;
     }
 
+    /* Read the first 16 bytes from the file. */
+    uint8_t buffer[16];
+    memory_set_uint8 (buffer, 0, 16);
+    return_value = vfs.read (handle, &buffer, 16);
+    if (return_value != STORM_RETURN_SUCCESS)
+    {
+        log.print (LOG_URGENCY_EMERGENCY, "Reading from file failed.");
+        return return_value;
+    }
+    for (int c = 0; c < 16; c++)
+    {
+        debug_print ("%x ", buffer[c]);
+    }
+    debug_print ("\n");
+
+    return_value = vfs.read (handle, &buffer, 16);
+    if (return_value != STORM_RETURN_SUCCESS)
+    {
+        log.print (LOG_URGENCY_EMERGENCY, "Reading from file failed.");
+        return return_value;
+    }
+    for (int c = 0; c < 16; c++)
+    {
+        debug_print ("%x ", buffer[c]);
+    }
+    debug_print ("\n");
+    
     /* Close the file. */
     return_value = vfs.close (handle);
     if (return_value != STORM_RETURN_SUCCESS)
@@ -98,9 +129,11 @@ return_t module_start (void)
     /* Open virtual consoles. FIXME: Read a list from somewhere to
        know what consoles to open. If that list cannot be found, use
        some reasonable default. */
-#ifdef CONSOLE
-    console.open (&console_id, 0, 0, 0, CONSOLE_MODE_TEXT);
-    console.output (console_id, "\e[1;37;44mSystem startup complete. åäö is working!\e[K");
+#if FALSE
+    console.open (&console_id[0], 0, 0, 0, CONSOLE_MODE_TEXT);
+    console.output (console_id[0], "\e[1;37;44mSystem startup complete. åäö is working!\e[K\n");
+    console.open (&console_id[1], 0, 0, 0, CONSOLE_MODE_TEXT);
+    console.output (console_id[1], "Second console");
 #endif
 
     /* Launch the programs assigned to each console. */

@@ -1,4 +1,4 @@
-/* $chaos: minix.c,v 1.3 2002/07/21 13:02:18 per Exp $ */
+/* $chaos: minix.c,v 1.4 2002/07/28 19:34:23 per Exp $ */
 /* Abstract: Implementation of the Minix file system. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -24,6 +24,22 @@ minix_fs_t fs;
 
 uint8_t minix_buffer[MINIX_BLOCK_SIZE];
 uint8_t minix_buffer2[MINIX_BLOCK_SIZE];
+uint8_t read_buffer[MINIX_BLOCK_SIZE];
+
+minix_file_t file[MINIX_OPEN_FILES];
+vfs_file_handle_t free_handle = 0;
+
+/* Get a free file handle. */
+static vfs_file_handle_t minix_get_free_handle (void)
+{
+    free_handle++;
+    if (free_handle == MINIX_OPEN_FILES)
+    {
+        debug_print ("Reached open file limit! Please fix in %s, %u.\n", __FILE__, __LINE__);
+        while (TRUE);
+    }
+    return free_handle - 1;
+}
 
 /* Find an inode with the given inode number. */
 static minix2_inode_t *minix2_find_inode (minix_fs_t *minix_fs, unsigned int number)
@@ -99,7 +115,8 @@ static bool minix_init (minix_fs_t *minix_fs)
 static minix2_inode_t *minix2_find_file (minix_fs_t *minix_fs, char *filename)
 {
     /* Read the root inode. */
-    if (minix_fs->block.read ((minix_fs->inode_block * MINIX_BLOCK_SIZE) / minix_fs->block_size, MINIX_BLOCK_SIZE / minix_fs->block_size, minix_buffer) == 0)
+    if (minix_fs->block.read ((minix_fs->inode_block * MINIX_BLOCK_SIZE) / minix_fs->block_size,
+                              MINIX_BLOCK_SIZE / minix_fs->block_size, minix_buffer) == 0)
     {
         minix_inode_t *inode = (minix_inode_t *) &minix_buffer;
         minix2_inode_t *inode2 = (minix2_inode_t *) &minix_buffer;
@@ -158,11 +175,12 @@ static minix2_inode_t *minix2_find_file (minix_fs_t *minix_fs, char *filename)
 /* Mount a volume. */
 static return_t minix_mount (block_service_t *block)
 {
+    // FIXME: Use a linked list.
     minix_fs_t *minix_fs = &fs;
     block_info_t info;
 
     memory_copy (&minix_fs->block, block, sizeof (block_service_t));
-    minix_fs->block.info(&info);
+    minix_fs->block.info (&info);
     minix_fs->block_size = info.block_size;
 
     if (!minix_init (minix_fs))
@@ -174,6 +192,92 @@ static return_t minix_mount (block_service_t *block)
     return STORM_RETURN_SUCCESS;
 }
 
+/* Open a file. */
+static return_t minix_open (char *filename, vfs_file_mode_t mode,
+                            vfs_file_handle_t *handle __attribute__ ((unused)))
+{
+    // FIXME: Use a linked list of mounted filesystems.
+    minix_fs_t *minix_fs = &fs;
+
+    /* Check if the file exists. */
+    minix2_inode_t *inode2;    
+
+    if (minix_fs->version == 2)
+    {
+        inode2 = minix2_find_file (minix_fs, filename);
+    }
+    else
+    {
+        // FIXME: Implement.
+        return STORM_RETURN_NOT_IMPLEMENTED;
+    }
+
+    if (mode == VFS_FILE_MODE_READ)
+    {
+        // FIXME: Check for read permissions.
+    }
+    else
+    {
+        // FIXME: Implement.
+        return STORM_RETURN_NOT_IMPLEMENTED;
+    }
+
+    *handle = minix_get_free_handle ();
+    file[*handle].inode = inode2;
+    file[*handle].position = 0;
+
+    return STORM_RETURN_SUCCESS;
+}
+
+/* Close a previously opened file. */
+static return_t minix_close (vfs_file_handle_t handle)
+{
+    file[handle].inode = NULL;
+    return STORM_RETURN_SUCCESS;
+}
+
+/* Read from a previously opened file. */
+static return_t minix_read (vfs_file_handle_t handle, void *buffer, size_t count)
+{
+    // FIXME: Use a linked list.
+    minix_fs_t *minix_fs = &fs;
+    minix2_inode_t *inode = file[handle].inode;
+    unsigned int block = file[handle].position / MINIX_BLOCK_SIZE;
+
+    /* Where are we in the buffer. */
+    unsigned int where = 0; 
+
+    // FIXME: We need a for loop here, with special precautions for
+    // the first and last block that we are reading
+    // (file[handle].position % MINIX_BLOCK_SIZE for the first and
+    // count % MINIX_BLOCK_SIZE for the last). For now, just take one
+    // block.
+
+    debug_print ("%u\n", block);
+    if (block < 7)
+    {
+        block = inode->zone[block];
+        if (minix_fs->block.read ((block * MINIX_BLOCK_SIZE) /
+                                  minix_fs->block_size, MINIX_BLOCK_SIZE /
+                                  minix_fs->block_size, read_buffer) != 0)
+        {
+            // FIXME: Use another return value.
+            return STORM_RETURN_NOT_FOUND;
+        }
+
+        memory_copy ((uint8_t *) buffer + where, read_buffer + (file[handle].position % MINIX_BLOCK_SIZE), count % MINIX_BLOCK_SIZE);
+    }
+    else
+    {
+        // FIXME: Parse the indirect and double indirect blocks.
+        debug_print ("Unimplemented read! %s, %u\n", __FILE__, __LINE__);
+        return STORM_RETURN_SUCCESS;
+    }
+
+    file[handle].position += count;
+    return STORM_RETURN_SUCCESS;
+}
+
 /* Return some information about the filesystem service (function pointers to
    our functionality). */
 static return_t service_info (void *filesystem_void)
@@ -181,7 +285,10 @@ static return_t service_info (void *filesystem_void)
     filesystem_service_t *filesystem = (filesystem_service_t *) filesystem_void;
     filesystem->magic_cookie = FILESYSTEM_COOKIE;
     filesystem->mount = &minix_mount;
-    // filesystem->read = &minix_read;
+    filesystem->open = &minix_open;
+    filesystem->close = &minix_close;
+    filesystem->read = &minix_read;
+    // filesystem->write = &minix_write;
     return STORM_RETURN_SUCCESS;
 }
 
