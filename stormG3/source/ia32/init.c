@@ -1,4 +1,4 @@
-/* $chaos: init.c,v 1.5 2002/06/15 14:34:39 per Exp $ */
+/* $chaos: init.c,v 1.6 2002/06/15 15:11:51 per Exp $ */
 /* Abstract: storm initialization. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -75,10 +75,13 @@ static uint16_t gdtr[] UNUSED =
 static void kernel_entry (void)
 {
     multiboot_init ();
-    
-    //  main (((u32 *) arguments_kernel)[0], (char **) arguments_kernel + 1);
     main_bootup (0, NULL);
-    while (TRUE);
+
+    /* Idle thread. :) */
+    while (TRUE)
+    {
+        asm ("hlt");
+    }
 }
 
 /* Multiboot header. */
@@ -130,7 +133,7 @@ void _start (void)
          : 
          "g" (idt),
          "g" (IDT_SIZE / 4));
-    
+
     /* IDT base. Couldn't do this in the declaration above since the
        compiler claimed it could not compute the address of idt. */
     idtr[1] = LOW_16 ((uint32_t) &idt);
