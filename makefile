@@ -9,7 +9,7 @@
 # Default is to install to the location of the source, but
 # you may like to install directly to a mounted chaos partition or something.
 
-.PHONY:	all install clean snapshot autochaos configure
+.PHONY:	all install clean snapshot autochaos configure build
 
 all:
 	$(MAKE) -C storm install
@@ -26,8 +26,8 @@ configure:
 # This one is used for building a fresh source tree.
 
 build:
-	@ln -sf storm/ia32 storm/current-arch
-	@ln -sf storm/include/storm/ia32 storm/include/storm/current-arch
+	@ln -sf ia32 storm/current-arch
+	@ln -sf ia32 storm/include/storm/current-arch
 	cd storm && ./configure --install-prefix $$CHAOS_INSTALL_PATH
 	$(MAKE) -C storm install
 	$(MAKE) -C libraries configure
