@@ -1,4 +1,4 @@
-/* $chaos: vga.c,v 1.1 2002/06/23 12:09:07 per Exp $ */
+/* $chaos: vga.c,v 1.2 2002/06/23 20:42:00 per Exp $ */
 /* Abstract: VGA server for chaos. */
 /* Authors: Per Lundberg <per@chaosdev.org>
             Henrik Hallin <hal@chaosdev.org> */
@@ -7,28 +7,13 @@
 /* Use freely under the terms listed in the file COPYING. */
 
 #include <storm/storm.h>
+#include <video/video.h>
 
 #include "font_8x8.h"
 #include "vga.h"
 
 /* Define this to get some debug information. */
 #undef DEBUG
-
-extern void vga_set_mode (uint32_t mode);
-
-typedef struct
-{
-    unsigned int mode;
-    unsigned int width;
-    unsigned int height;
-    unsigned int bpp;
-    unsigned int type;
-} vga_mode_type;
-
-typedef struct
-{
-    uint8_t red, green, blue;
-} __attribute__ ((packed)) vga_palette_entry_type;
 
 // FIXME.
 vga_mode_type mode[] =
@@ -155,7 +140,7 @@ static void vga_font_set (uint8_t *font_data, unsigned int length)
 
 /* Place the text mode cursor. When in graphics mode, this function
    does nothing. */
-static void vga_cursor_place (int x, int y)
+static return_t vga_cursor_place (int x, int y)
 {
     int position;
 
@@ -171,8 +156,19 @@ static void vga_cursor_place (int x, int y)
         port_uint8_out (0x3D4, 0x0F);
         port_uint8_out (0x3D5, position % 256);
     }
+
+    return STORM_RETURN_SUCCESS;
 }
   
+/* Return some information about the video service (function pointers
+   to our functionality). */
+static return_t service_info (void *video_void)
+{
+    video_service_t *video = (video_service_t *) video_void;
+    video->cursor_place = &vga_cursor_place;
+    return STORM_RETURN_SUCCESS;
+}
+
 /* Main function. */
 return_t module_start (void)
 {
@@ -183,14 +179,10 @@ return_t module_start (void)
     };
 
     /* FIXME: Actually check if an adapter is present. How is this done? */
+    /* Create the service. */
+    return service_register ("video", "IBM", "VGA",
+                             "1", VIDEO_VERSION, &service_info);
 
-    // if (!vga_detect ())
-    // {
-    //   return -1;
-    // }
-  
-    //    system_call_memory_reserve (VGA_MEMORY, VGA_MEMORY_SIZE,
-    //                                (void **) &graphic_video_memory);
 
     return 0;
 }
