@@ -1,10 +1,11 @@
-/* $chaos: port.c,v 1.3 2002/10/04 19:01:21 per Exp $ */
+/* $chaos: port.c,v 1.4 2002/10/15 09:55:12 per Exp $ */
 /* Abstract: I/O port management. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
 
+#include <storm/storm.h>
 #include <storm/ia32/port.h>
 
 /* Linked list over allocated I/O regions. */
@@ -71,8 +72,8 @@ void port_init (void)
 }
 
 /* Register a port range. */
-return_t port_range_register (unsigned int start, unsigned int ports,
-                                 char *description)
+return_t port_range_register (unsigned int start, size_t ports,
+                              char *description)
 {
     /* Make sure we're not out of bounds. */
     if (start + ports > NUMBER_OF_PORTS)
