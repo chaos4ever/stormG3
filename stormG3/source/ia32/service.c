@@ -1,4 +1,4 @@
-/* $chaos: service.c,v 1.18 2002/10/30 22:43:41 per Exp $ */
+/* $chaos: service.c,v 1.20 2002/11/15 19:36:18 per Exp $ */
 /* Abstract: Service support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -31,7 +31,10 @@ static spinlock_t connection_lock = SPIN_UNLOCKED;
    variable will wrap around after 58494241735 years. I doubt you will
    have that kind of an uptime on a chaos machine. Please prove me
    wrong! ;-) */
-static uint64_t free_service_id = 0;
+static service_id_t free_service_id = 0;
+
+/* The next free connection ID. */
+static service_connection_id_t free_connection_id = 0;
 
 /* List of methods in our service providers (could be a hash table for
    faster access). Locked via service_lock. */
@@ -44,6 +47,15 @@ static service_id_t service_create_id (void)
 {
     service_id_t id = free_service_id;
     free_service_id++;
+
+    return id;
+}
+
+/* Create a new connection ID. */
+static service_id_t service_create_connection_id (void)
+{
+    service_connection_id_t id = free_connection_id;
+    free_connection_id++;
 
     return id;
 }
@@ -97,25 +109,60 @@ static service_connection_t *service_connection_find_by_id (service_connection_i
 
 /* Register a method in a service provider. This function takes for
    granted that service_lock has been acquired. */
-static return_t service_register_method (service_id_t service_id, 
-                                         service_method_id_t method_id,
-                                         function_t method_handler)
+static return_t service_register_method (service_id_t service_id, service_method_id_t method_id, service_function_t method_handler)
 {
+    if (service_lock == SPIN_UNLOCKED)
+    {
+        DEBUG_HALT ("Kernel bug: you need to lock the service_lock before calling this function");
+    }
+
     /* Allocate a new node. */
     service_method_data_t *method;
     return_t return_value = memory_global_allocate ((void **) &method, sizeof (service_method_data_t));
     if (return_value != STORM_RETURN_SUCCESS)
     {
+        DEBUG_INFO();
         return return_value;
     }
 
-    /* Set up the node. */
-    method->previous = (struct service_method_data_t *) method_list;
-    method->next = NULL;
+    if (method_list != NULL)
+    {
+        method_list->previous = (struct service_method_data_t *) method;
+    }
+
+    method->previous = NULL;
+    method->next = (struct service_method_data_t *) method_list;
     method->service_id = service_id;
     method->method_id = method_id;
     method->method = method_handler;
     method_list = method;
+
+    return STORM_RETURN_SUCCESS;
+}
+
+/* Find the given method in the given service provider. This function
+   takes for granted that service_lock has been acquired. */
+static service_function_t service_find_method (service_id_t service_id, service_method_id_t method_id)
+{
+    if (service_lock == SPIN_UNLOCKED)
+    {
+        DEBUG_HALT ("Kernel bug: you need to lock the service_lock before calling this function");
+    }
+
+    service_method_data_t *method = method_list;
+
+    while (method != NULL)
+    {
+        if (method->service_id == service_id && 
+            method->method_id == method_id)
+        {
+            break;
+        }
+
+        method = (service_method_data_t *) method->next;
+    }
+
+    return method->method;
 }
 
 /* Register a service provider. */
@@ -163,6 +210,7 @@ return_t service_register (service_register_t *register_info,
     spin_lock (&service_lock);
     service->id = service_create_id ();
     service->next = (struct service_data_t *) service_list;
+
     service_list = service;
 
     /* We need to register the service method handlers here, while the
@@ -187,7 +235,7 @@ return_t service_unregister (service_id_t service_id UNUSED)
 }
 
 /* Lookup a service. */
-// FIXME: Don't use so many parameters.
+// FIXME: Don't use so many parameters. Rather put it all in a struct.
 return_t service_lookup (const char *name, const char *vendor, 
                          const char *model, const char *device_id,
                          unsigned int major_version, 
@@ -231,6 +279,7 @@ return_t service_lookup (const char *name, const char *vendor,
     if (services_found > *services)
     {
         spin_unlock (&service_lock);
+        DEBUG_INFO();
         return STORM_RETURN_OUT_OF_MEMORY;
     }
 
@@ -268,7 +317,7 @@ return_t service_lookup (const char *name, const char *vendor,
 
 /* Connect to a service provider. */
 return_t service_connect (service_id_t service_id,
-                          service_connection_id_t *connection_id UNUSED)
+                          service_connection_id_t *connection_id)
 {
     /* Find this service provider. */
     spin_lock (&service_lock);
@@ -278,6 +327,7 @@ return_t service_connect (service_id_t service_id,
     /* Make sure this service exists. */
     if (service_data == NULL)
     {
+        DEBUG_INFO();
         return STORM_RETURN_NOT_FOUND;
     }
 
@@ -286,6 +336,7 @@ return_t service_connect (service_id_t service_id,
     return_t return_value = memory_global_allocate ((void **) &service_connection, sizeof (service_connection_t));
     if (return_value != STORM_RETURN_SUCCESS)
     {
+        DEBUG_INFO();
         return return_value;
     }
 
@@ -297,11 +348,13 @@ return_t service_connect (service_id_t service_id,
     /* Initialize the data structure. */
     service_connection->process = current_process;
     service_connection->service = service_data;
-    service_connection->previous = NULL;
+    service_connection->previous = (struct service_connection_t *) connection_list;
     service_connection->next = NULL;
 
     /* Add this connection to the list of connections. */
     spin_lock (&connection_lock);
+    service_connection->id = service_create_connection_id ();
+    *connection_id = service_connection->id;
     if (connection_list != NULL)
     {
         connection_list->next = (struct service_connection_t *) service_connection;
@@ -313,8 +366,9 @@ return_t service_connect (service_id_t service_id,
 }
 
 /* Close a connection. */
-return_t service_close (service_connection_id_t connection_id UNUSED)
+return_t service_close (service_connection_id_t connection_id)
 {
+    DEBUG_INFO();
     /* Find the connection. */
     service_connection_t *connection = service_connection_find_by_id (connection_id);
     
@@ -359,11 +413,32 @@ return_t service_close (service_connection_id_t connection_id UNUSED)
     return STORM_RETURN_SUCCESS;
 }
 
-/* Invoke a function in a service. */
+/* Invoke a method in a service. */
 return_t service_invoke (service_connection_id_t connection_id, 
-                         unsigned int function_number, void *data)
+                         service_method_id_t method_id, void *data)
 {
-    debug_print ("pip: %X %x %x\n", connection_id, function_number,
-                 data);
-    return STORM_RETURN_NOT_IMPLEMENTED;
+    /* Find the connection. */
+    spin_lock (&connection_lock);
+    service_connection_t *connection = service_connection_find_by_id (connection_id);
+    spin_unlock (&connection_lock);
+
+    if (connection == NULL)
+    {
+        return STORM_RETURN_INVALID_ARGUMENT;
+    }
+
+    /* Look this function up. */
+    spin_lock (&service_lock);
+
+    service_function_t function = service_find_method (connection->service->id, method_id);
+    spin_unlock (&service_lock);
+
+    if (function == NULL)
+    {
+        DEBUG_INFO();
+        return STORM_RETURN_INVALID_ARGUMENT;
+    }
+
+    /* Call the function. */
+    return function (connection->service->id, data);
 }
