@@ -1,4 +1,4 @@
-/* $chaos: interface.h,v 1.2 2002/10/22 21:03:31 per Exp $ */
+/* $chaos: interface.h,v 1.3 2002/10/23 07:25:21 per Exp $ */
 /* Abstract: stormG3 kernel interface. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -22,6 +22,36 @@
 /* Code that should only be accessible from within the kernel and the
    kernel modules. */
 #if (defined __STORM_KERNEL_MODULE__) || (defined __STORM_KERNEL__)
+
+/**
+ * @brief               Add the given capability to the given process.
+ * @param process_id    The process to modify.
+ * @param capability_class
+ *                      The class of the capability (for example "kernel").
+ * @param capability_name
+ *                      The unique name of the capability (for example 
+ *                      "super_user").
+ * @return              STORM_RETURN_SUCCESS if successful.
+ */
+extern return_t capability_add (process_id_t process_id,
+                                const char *capability_class,
+                                const char *capability_name);
+    
+/**
+ * @brief               Has the given process the given capability. 
+ * @param process_id    The process to check.
+ * @param capability_class
+ *                      The class of the capability (for example "kernel").
+ * @param capability_name 
+ *                      The name of the capability to test for.
+ * @param result        The result of the check.
+ * @return              STORM_RETURN_SUCCESS if result contains the result.
+ *                      of the check.
+ */
+extern return_t capability_has (process_id_t process_id, 
+                                const char *capability_class,
+                                const char *capability_name,
+                                bool *result);
 
 /**
  * @brief               Dump the contents of a memory region.
