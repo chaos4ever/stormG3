@@ -1,5 +1,5 @@
 <?xml version='1.0' ?> <!-- -*- xml -*- -->
-<!-- $chaos: module.xml,v 1.2 2002/05/27 10:09:00 per Exp $ -->
+<!-- $chaos: module.xml,v 1.3 2002/05/27 10:16:56 per Exp $ -->
 
 <chapter id="module">
   <?dbhtml filename="module.html"?>
@@ -13,18 +13,37 @@
       replaces the old server system that we used in older versions of
       the system.
       <programlisting id="module_t">
-/* A module ID. */
-typedef unsigned int mid_t;
-
 typedef struct
 {
     /* The magic cookie is unique for this type of data structure. */
     uint32_t magic_cookie;
 
     /* The module ID. */
-    mid_t mid;
+    <link linkend="data_types">module_id_t</link> mid;
+
+    /* The name of this module. */
+    char *name;
+
+    /* Reference counter -- to handle module dependencies. */
+    <link linkend="data_types">count_t</link> reference_count;
 } module_t;
       </programlisting>
+
+      <funcsynopsis>
+	<funcprototype>
+	  <funcdef>return_t <function>module_load</function></funcdef>
+	  <paramdef>
+	    <parameter>module_header_t *module_header</parameter>
+	  </paramdef>
+	</funcprototype>
+
+	<funcprototype>
+	  <funcdef>return_t <function>module_unload</function></funcdef>
+	  <paramdef>
+	    <parameter>char *name</parameter>
+	  </paramdef>
+	</funcprototype>
+      </funcsynopsis>
     </para>
   </section>
 </chapter>
