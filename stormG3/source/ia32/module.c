@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: module.c,v 1.1 2002/06/15 22:39:50 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -7,82 +7,68 @@
 
 #include <storm/ia32/debug.h>
 #include <storm/ia32/elf.h>
+#include <storm/ia32/memory.h>
 #include <storm/ia32/module.h>
 #include <storm/ia32/multiboot.h>
+#include <storm/ia32/string.h>
 #include <storm/return_value.h>
+
+/* A list of functions provided through dynamic linking to kernel
+   modules. */
+static module_function_t function[] = 
+{
+    { "debug_print", (function_t) &debug_print },
+    { "module_register", (function_t) &module_register },
+    { NULL, (function_t) NULL }
+};
 
 /* Link the given shared module into the kernel. */
 static return_t module_link (elf_header_t *elf_header)
 {
-    elf_program_header_t *program_header;
-    elf_section_header_t *section_header;
-    elf_section_header_t *symbol_header = NULL;
-    char *string_table = NULL;
-    elf_symbol_t *symbol;
+    return_t return_value;
+    elf_parsed_t elf_parsed;
+    function_t module_function = NULL;
 
-    /* First of all, make sure this is an ELF image... */
-    if (!(elf_header->identification[0] == 0x7F &&
-          elf_header->identification[1] == 'E' && 
-          elf_header->identification[2] == 'L' &&
-          elf_header->identification[3] == 'F'))
-    {
-        return STORM_RETURN_MODULE_INVALID;
-    }
-
-    /* ...and a 32-bit one, little-endian, relocatable... */
-    if (elf_header->class != ELF_CLASS_32BIT ||
-        elf_header->endian != ELF_ENDIAN_LITTLE ||
-        elf_header->type != ELF_TYPE_DYNAMIC ||
-        elf_header->version != ELF_VERSION_CURRENT ||
-        elf_header->machine != ELF_MACHINE_386)
-    {
-        return STORM_RETURN_MODULE_INVALID;
-    }
+    memory_set_uint8 ((uint8_t *) &elf_parsed, 0, sizeof (elf_parsed_t));
 
     /* Find the address of the symbol module_start, and pass control
        on to it. */
-    for (int index = 0; index < elf_header->program_header_entries; index++)
+    return_value = elf_parse (elf_header, &elf_parsed);
+    if (return_value != STORM_RETURN_SUCCESS)
     {
-        program_header = (elf_program_header_t *) (((uint32_t) elf_header) + elf_header->program_header_offset + (index * elf_header->program_header_entry_size));
-
+        return return_value;
     }
 
-    /* Find the string table. */
-    for (int index = 0; index < elf_header->section_header_entries; index++)
+    /* Try and resolve unresolved symbols */
+    return_value = elf_resolve (&elf_parsed, function);
+    if (return_value != STORM_RETURN_SUCCESS)
     {
-        section_header = (elf_section_header_t *) (((uint32_t) elf_header) + elf_header->section_header_offset + (index * elf_header->section_header_entry_size));
-        if (section_header->type == ELF_SECTION_TYPE_STRING_TABLE &&
-            section_header->flags & ELF_SECTION_FLAG_ALLOCATE)
-        {
-            string_table = (char *) (((uint32_t) elf_header) + section_header->offset);
-            debug_print ("%x\n", string_table);
-        }
-        else if (section_header->type == ELF_SECTION_TYPE_DYNAMIC_SYMBOL_TABLE)
-        {
-            symbol_header = section_header;
-        }
+        return return_value;
     }
 
-    /* If we don't have a string table and symbol table, we won't be
-       able to link this module into the kernel. */
-    if (string_table == NULL || symbol_header == NULL)
+    /* Relocate relocatable symbols (all kernel functions this module
+       is accessing). */
+    return_value = elf_relocate (&elf_parsed);
+    if (return_value != STORM_RETURN_SUCCESS)
     {
-        return STORM_RETURN_MODULE_INVALID;
+        return return_value;
     }
 
-    for (int symbol_index = 0; symbol_index * sizeof (elf_symbol_t) <
-             symbol_header->size; symbol_index++)
+    /* Everything seems to be fine. Now, we can allocate the pages
+       neccessary for this module, move the data and call
+       module_start. FIXME: Do this. */
+    return_value = elf_symbol_find_by_name (&elf_parsed, "module_start", (uint32_t *) &module_function);
+    if (return_value != STORM_RETURN_SUCCESS)
     {
-        symbol = (elf_symbol_t *) (((uint32_t) elf_header) + symbol_header->offset + symbol_index * sizeof (elf_symbol_t));
-        if (symbol->type == ELF_SYMBOL_TYPE_NONE)
-        {
-            continue;
-        }
-        
-        debug_print ("symbol type: %u, name: %s (%u), value: %x\n",
-                     symbol->type, string_table + symbol->name,
-                     symbol->name, symbol->value);
+        return return_value;
     }
+
+    module_function = (function_t) (((uint32_t) module_function) + ((uint32_t) elf_parsed.elf_header));
+
+    /* Call the module entry point. */
+    module_function ();
+
+    debug_print ("Returned!\n");
 
     return STORM_RETURN_SUCCESS;
 }
@@ -90,18 +76,28 @@ static return_t module_link (elf_header_t *elf_header)
 /* Initialize module support. */
 void module_init (void)
 {
-    if (multiboot_info.has_module_info == 1)
+    if (multiboot_info.has_module_info == 0 || 
+        multiboot_info.number_of_modules == 0)
+    {
+        debug_print ("Warning: No modules loaded. This system will not be usable.\n");
+    }
+    else
     {
         /* Check what modules GRUB has provided for us. */
         for (unsigned int counter = 0; 
              counter < multiboot_info.number_of_modules; counter++) 
         {
-            if (module_link ((elf_header_t *) multiboot_module_info[counter].start) != 
-                STORM_RETURN_SUCCESS)
+            if (module_link ((elf_header_t *) multiboot_module_info[counter].start) != STORM_RETURN_SUCCESS)
             {
                 debug_print ("Starting module %s failed.\n",
                              multiboot_module_info[counter].name);
             }
         }
     }
+}
+
+/* Register a module with the kernel. */
+void module_register (void)
+{
+    debug_print ("%s\n", __FUNCTION__);
 }
