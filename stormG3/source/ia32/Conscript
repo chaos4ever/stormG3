@@ -1,4 +1,4 @@
-# $chaos: Conscript,v 1.4 2002/08/11 18:39:03 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.5 2002/10/04 19:01:21 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for stormG3
 # Author: Per Lundberg <per@chaosdev.org>
@@ -16,7 +16,8 @@ Program $cons 'stormG3', ( 'cpu.c', 'debug.c', 'dispatch.c', 'dma.c',
 			   'module.c', 'multiboot.c', 'port.c', 'timer.c',
 			   'service.c' );
 Command $cons 'install', 'stormG3',
-  qq(mkdir -p $kernel_directory
+  qq(if [ -f source/ia32/stormg3.exe ]; then objcopy -O elf32-i386 source/ia32/stormG3.exe source/ia32/stormG3 ; fi
+     mkdir -p $kernel_directory
      install source/ia32/stormG3 $kernel_directory
      strip -s $kernel_directory/stormG3
      gzip -9f $kernel_directory/stormG3);
