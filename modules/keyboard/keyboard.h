@@ -1,8 +1,8 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: keyboard.h,v 1.1 2002/06/17 22:53:47 per Exp $ */
 /* Abstract: Header file for the keyboard module. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
-/* Copyright 19982002 chaos development. */
+/* Copyright 1998-2002 chaos development. */
 /* Use freely under the terms listed in the file COPYING. */
 
 #ifndef __KEYBOARD_H__
