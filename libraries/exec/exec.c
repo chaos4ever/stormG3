@@ -1,4 +1,4 @@
-/* $chaos: exec.c,v 1.5 2002/11/15 19:34:56 per Exp $ */
+/* $chaos: exec.c,v 1.6 2002/12/03 14:21:31 johannes Exp $ */
 /* Abstract: Exec library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -40,8 +40,8 @@ return_t exec_register (service_register_t *service_register_info,
                         service_method_t *service_method)
 {    
     service_register_info->protocol_name = "exec";
-    service_register_info->major_version = EXEC_SERVICE_MAJOR_VERSION;
-    service_register_info->minor_version = EXEC_SERVICE_MINOR_VERSION;
+    service_register_info->major_version = EXEC_PROTOCOL_MAJOR_VERSION;
+    service_register_info->minor_version = EXEC_PROTOCOL_MINOR_VERSION;
 
     return service_register (service_register_info, service_method);
 }
