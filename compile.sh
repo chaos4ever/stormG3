@@ -10,6 +10,7 @@ INSTALL_PREFIX=/tftpboot
 rm -f $ROOT/stormG3/include/storm/current-arch
 ln -sf $ROOT/stormG3/include/storm/ia32 $ROOT/stormG3/include/storm/current-arch
 
+# Build stormG3
 cd $ROOT/stormG3 || exit
 cons $STORM_OPTIONS || exit
 
@@ -17,6 +18,7 @@ cons $STORM_OPTIONS || exit
 rm -f $INSTALL_PREFIX/data/programming/c/headers/storm/current-arch
 ln -sf $INSTALL_PREFIX/data/programming/c/headers/storm/ia32 $INSTALL_PREFIX/data/programming/c/headers/storm/current-arch
 
+# Build the rest (order is important).
 cd $ROOT/libraries
 cons || exit
 cd $ROOT/programs
