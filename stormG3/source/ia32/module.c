@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.31 2002/10/23 07:21:05 per Exp $ */
+/* $chaos: module.c,v 1.32 2002/10/24 20:41:30 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -41,7 +41,7 @@ static module_function_t function[] =
 //  { "module_unregister", (function_t) &module_unregister },
 
     { "port_range_register", (function_t) &port_range_register },
-//  { "port_range_unregister", (function_t) &port_range_unregister },
+    { "port_range_unregister", (function_t) &port_range_unregister },
 
     { "process_precreate", (function_t) &process_precreate },
     { "process_create", (function_t) &process_create },
