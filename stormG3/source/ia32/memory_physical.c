@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.2 2002/06/05 19:55:32 per Exp $ */
+/* $chaos: memory_physical.c,v 1.3 2002/06/09 15:10:43 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -53,7 +53,8 @@ void memory_physical_init ()
         free_pages++;
     }
 
-    debug_print ("Free memory: %u KiB\n", free_pages * 4);
+    debug_print ("Free memory: %u pages, %u KiB, %u MiB.\n", 
+                 free_pages, free_pages * 4, free_pages / 256);
 }
 
 /* Allocate a number of pages. */
