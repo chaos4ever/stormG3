@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.2 2002/06/16 21:47:16 per Exp $ */
+/* $chaos: module.c,v 1.3 2002/06/17 07:26:11 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -48,6 +48,13 @@ static return_t module_link (elf_header_t *elf_header)
         return return_value;
     }
 
+    /* Allocate pages and copy the sections to this space. */
+    return_value = elf_load (&elf_parsed);
+    if (return_value != STORM_RETURN_SUCCESS)
+    {
+        return return_value;
+    }
+
     /* Relocate relocatable symbols (all kernel functions this module
        is accessing). */
     return_value = elf_relocate (&elf_parsed);
@@ -56,16 +63,17 @@ static return_t module_link (elf_header_t *elf_header)
         return return_value;
     }
 
-    /* Everything seems to be fine. Now, we can allocate the pages
-       neccessary for this module, move the data and call
-       module_start. FIXME: Do this. */
+    // FIXME: We should rewrite all entries in the symbol table, so we
+    // won't have to add elf_parsed.image here.
+
+    /* Everything seems to be fine. Now, we call module_start. */
     return_value = elf_symbol_find_by_name (&elf_parsed, "module_start", (uint32_t *) &module_function);
     if (return_value != STORM_RETURN_SUCCESS)
     {
         return return_value;
     }
 
-    module_function = (function_t) (((uint32_t) module_function) + ((uint32_t) elf_parsed.elf_header));
+    module_function = (function_t) (((uint32_t) module_function) + ((uint32_t) elf_parsed.image));
 
     /* Call the module entry point. */
     module_function ();
