@@ -1,4 +1,4 @@
-# $chaos: storm.make,v 1.1 2002/05/25 20:08:27 per Exp $
+# $chaos: storm.make,v 1.2 2002/05/26 10:59:18 hal Exp $
 
 # Abstract: storm G3 makefile
 # Authors: Henrik Hallin <hal@chaosdev.org>
@@ -16,7 +16,7 @@ CFLAGS = -Wall -W -Wshadow -Wpointer-arith -Waggregate-return \
 -Wmissing-declarations -pipe -Wnested-externs \
 -O3 -fno-builtin -funsigned-char -g -fomit-frame-pointer \
 -ffreestanding $(EXTRA_CFLAGS) $(DEFINES) $(INCLUDES)
-LDFLAGS = -nostdlib -Wl,-T,kernel.ld -lgcc $(EXTRA_LDFLAGS)
+LDFLAGS = -nostdlib -Wl,-T,kernel.ld $(EXTRA_LDFLAGS)
 INSTALL_PATH=/tftpboot
 
 # Programs.
