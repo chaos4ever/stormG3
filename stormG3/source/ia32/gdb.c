@@ -1,7 +1,7 @@
-/* $chaos: i386-stub.c,v 1.2 2002/06/14 12:34:14 per Exp $ */
+/* $chaos: gdb.c,v 1.1 2002/06/15 11:42:02 per Exp $ */
 /* Abstract: Stub used for GDB remote debugging. */
 /* Author: Andrey Karpov <nd-chaos@narod.ru>
-   Per Lundberg <per@chaosdev.org> */
+           Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file COPYING. */
@@ -98,10 +98,10 @@
 #define printf fprintf
 
 unsigned int i386at_serial_basetable[] = {
-    0x3f8,
-    0x2f8,
-    0x3e8,
-    0x2e8
+    0x3F8,
+    0x2F8,
+    0x3E8,
+    0x2E8
 };
 
 unsigned int i386at_serial_iobase = 0;
