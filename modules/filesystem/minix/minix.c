@@ -1,4 +1,4 @@
-/* $chaos: minix.c,v 1.6 2002/08/09 06:02:35 per Exp $ */
+/* $chaos: minix.c,v 1.7 2002/08/11 18:32:18 per Exp $ */
 /* Abstract: Implementation of the Minix file system. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -22,9 +22,12 @@ minix_superblock_t *superblock = (minix_superblock_t *) &minix_superblock_buffer
 // FIXME: One of these for each volume mounted.
 minix_fs_t fs;
 
+// FIXME: Perhaps these should be dynamically allocated, using the new
+// kernel VMA (bug #2).
 uint8_t minix_buffer[MINIX_BLOCK_SIZE];
 uint8_t minix_buffer2[MINIX_BLOCK_SIZE];
 uint8_t read_buffer[MINIX_BLOCK_SIZE];
+uint32_t indirect_buffer[256];
 
 minix_file_t file[MINIX_OPEN_FILES];
 vfs_file_handle_t free_handle = 0;
@@ -172,6 +175,56 @@ static minix2_inode_t *minix2_find_file (minix_fs_t *minix_fs, char *filename)
     return NULL;
 }
 
+/* Read a block from the given file. */
+static return_t minix_block_read (minix_fs_t *minix_fs, minix2_inode_t *inode,
+                                  size_t block, uint8_t *buffer)
+{
+    if (block >= 0 && block <= 7 + 256)
+    {
+        if (block < 7)
+        {
+            block = inode->zone[block];
+        }
+        /* Indirect blocks need to be taken care of. */
+        else if (block >= 7 && block <= 7 + 256)
+        {
+            if (minix_fs->block.read ((inode->zone[7] * MINIX_BLOCK_SIZE) /
+                                      minix_fs->block_size, MINIX_BLOCK_SIZE /
+                                      minix_fs->block_size, indirect_buffer) !=
+                STORM_RETURN_SUCCESS)
+            {
+                // FIXME: Use another return value.
+                return STORM_RETURN_NOT_FOUND;
+            }
+
+            debug_print ("%x %x %x %x\n", indirect_buffer[0], 
+                         indirect_buffer[1], indirect_buffer[2],
+                         indirect_buffer[3]);
+
+            block = indirect_buffer[block - 7];
+        }
+        
+        debug_print (" reading block %u\n", block);
+
+        if (minix_fs->block.read ((block * MINIX_BLOCK_SIZE) /
+                                  minix_fs->block_size, MINIX_BLOCK_SIZE /
+                                  minix_fs->block_size, buffer) != 
+            STORM_RETURN_SUCCESS)
+        {
+            // FIXME: Use another return value.
+            return STORM_RETURN_NOT_FOUND;
+        }
+    }
+    // FIXME: Support double indirect blocks.
+    else
+    {
+        debug_print ("Unimplemented read! %s, %u\n", __FILE__, __LINE__);
+        return STORM_RETURN_NOT_IMPLEMENTED;
+    }
+
+    return STORM_RETURN_SUCCESS;
+}
+
 /* Mount a volume. */
 static return_t minix_mount (block_service_t *block)
 {
@@ -237,42 +290,68 @@ static return_t minix_close (vfs_file_handle_t handle)
 }
 
 /* Read from a previously opened file. */
-static return_t minix_read (vfs_file_handle_t handle, void *buffer,
+static return_t minix_read (vfs_file_handle_t handle, void *buffer UNUSED,
                             size_t count)
 {
-    // FIXME: Use a linked list.
     minix_fs_t *minix_fs = &fs;
     minix2_inode_t *inode = file[handle].inode;
-    unsigned int block = file[handle].position / MINIX_BLOCK_SIZE;
 
     /* Where are we in the buffer. */
     unsigned int where = 0; 
 
-    // FIXME: We need a for loop here, with special precautions for
-    // the first and last block that we are reading
-    // (file[handle].position % MINIX_BLOCK_SIZE for the first and
-    // count % MINIX_BLOCK_SIZE for the last). For now, just take one
-    // block.
+    /* The block number and in-block position where we start
+       reading. */
+    size_t start_block = file[handle].position  / MINIX_BLOCK_SIZE;
+    size_t start_position =  file[handle].position % MINIX_BLOCK_SIZE;
 
-    debug_print ("block: %u\n", block);
-    if (block < 7)
+    /* The block number and in-block position where we end reading. */
+    size_t end_block = (file[handle].position + count) / MINIX_BLOCK_SIZE;
+    size_t end_position = (file[handle].position + count) % MINIX_BLOCK_SIZE;
+
+    /* The division does not round up, so we need to do that
+       manually. */
+    if (end_position != 0)
     {
-        block = inode->zone[block];
-        if (minix_fs->block.read ((block * MINIX_BLOCK_SIZE) /
-                                  minix_fs->block_size, MINIX_BLOCK_SIZE /
-                                  minix_fs->block_size, read_buffer) != 0)
+        end_block++;
+    }
+
+    for (int block = start_block; block < end_block; block++)
+    {
+        size_t bytes_to_read;
+        size_t in_block_position;
+
+        if (block == start_block)
+        {
+            bytes_to_read = MINIX_BLOCK_SIZE - start_position;
+            in_block_position = start_position;
+        }
+        else if (block == end_block - 1)
+        {
+            bytes_to_read = end_position;
+            in_block_position = 0;
+        }
+        else
+        {
+            bytes_to_read = MINIX_BLOCK_SIZE;
+            in_block_position = 0;
+        }
+
+        debug_print ("block: %u, reading %u bytes starting at ", block, 
+                     bytes_to_read, in_block_position);
+
+        if (minix_block_read (minix_fs, inode, block, read_buffer) != 
+            STORM_RETURN_SUCCESS)
         {
             // FIXME: Use another return value.
             return STORM_RETURN_NOT_FOUND;
         }
 
-        memory_copy ((uint8_t *) buffer + where, read_buffer + (file[handle].position % MINIX_BLOCK_SIZE), count % MINIX_BLOCK_SIZE);
-    }
-    else
-    {
-        // FIXME: Parse the indirect and double indirect blocks.
-        debug_print ("Unimplemented read! %s, %u\n", __FILE__, __LINE__);
-        return STORM_RETURN_SUCCESS;
+        // FIXME: We do not need to use double-buffering here, if the
+        // block is a full block. Handle that case specially so we
+        // improve speed a bit.
+        memory_copy ((uint8_t *) buffer + where, read_buffer +
+                     in_block_position, bytes_to_read);
+        where += bytes_to_read;
     }
 
     file[handle].position += count;
