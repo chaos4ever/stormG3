@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: dma.c,v 1.1 2002/06/12 12:20:35 per Exp $ */
 /* Abstract: DMA routines. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -10,4 +10,12 @@
 /* Initialize the DMA support. */
 void dma_init ()
 {
+}
+
+/* Register the given DMA channel. */
+return_t dma_register (unsigned int dma_channel, void **dma_buffer)
+{
+    dma_channel = 0;
+    dma_buffer = NULL;
+    return STORM_RETURN_NOT_IMPLEMENTED;
 }
