@@ -1,4 +1,4 @@
-/* $chaos: init.c,v 1.2 2002/06/18 08:01:52 per Exp $ */
+/* $chaos: init.c,v 1.3 2002/06/18 22:18:17 per Exp $ */
 /* Abstract: Keyboard initialization code. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -64,7 +64,7 @@ return_t module_start (void)
         //               "Mouse found at IRQ 12.");
     }
 
-    if (irq_register (KEYBOARD_IRQ, "Keyboard IRQ", &keyboard_irq_handler) != STORM_RETURN_SUCCESS)
+    if (irq_register (KEYBOARD_IRQ, "Keyboard", &keyboard_irq_handler) != STORM_RETURN_SUCCESS)
     {
         debug_print ("Failed to register keyboard IRQ.\n");
         return -1;
@@ -72,7 +72,7 @@ return_t module_start (void)
         
     if (has_mouse)
     {
-        if (irq_register (MOUSE_IRQ, "Mouse IRQ", &mouse_irq_handler) != STORM_RETURN_SUCCESS)
+        if (irq_register (MOUSE_IRQ, "Mouse", &mouse_irq_handler) != STORM_RETURN_SUCCESS)
         {
             debug_print ("Failed to register mouse IRQ.\n");
             return -1;
