@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: functions.h,v 1.1 2002/08/04 09:27:18 per Exp $ */
 /* Abstract: VFS module functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -47,5 +47,8 @@ return_t vfs_assign (char *virtual, char *logical);
 /* Read from a file. */
 return_t vfs_read (vfs_file_handle_t handle, void *buffer, 
                    size_t length);
+
+/* Get information about a file. */
+return_t vfs_info (char *path, vfs_file_info_t *info);
 
 #endif /* !__FUNCTIONS_H__ */
