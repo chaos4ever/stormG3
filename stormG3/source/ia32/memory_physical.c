@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.12 2002/06/19 07:37:36 per Exp $ */
+/* $chaos: memory_physical.c,v 1.13 2002/06/23 17:30:03 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -172,8 +172,9 @@ return_t memory_physical_allocate (void **pointer, unsigned int pages)
         unsigned int has_free = 0;
 
         /* Build up the bitmap. */
-        memory_set_uint32 (physical_page_bitmap, 0, 
+        memory_set_uint32 ((uint32_t *) &physical_page_bitmap, 0, 
                            physical_pages / 32);
+        
         slab  = first_free;
         while (slab != NULL)
         {
@@ -205,18 +206,18 @@ return_t memory_physical_allocate (void **pointer, unsigned int pages)
                     slab  = first_free;
                     while (slab != NULL)
                     {
-                        address_t next = (address_t) slab->next;
+                        volatile address_t next = (address_t) slab->next;
                         if (next >= (free_page * PAGE_SIZE) &&
                             next <= (free_page + pages - 1) * PAGE_SIZE)
                         {
                             /* Unlink this SLAB. */
-                            memory_physical_slab_t *block = (memory_physical_slab_t *) slab->next;
+                            volatile memory_physical_slab_t *block = (memory_physical_slab_t *) slab->next;
                             while (((address_t) block->next) >= (free_page * PAGE_SIZE) &&
                                    ((address_t) block->next) <= (free_page + pages - 1) * PAGE_SIZE)
                             {
                                 block = (memory_physical_slab_t *) block->next;
                             }
-                            
+
                             slab->next = block->next;
                         }
 
