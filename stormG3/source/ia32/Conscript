@@ -1,4 +1,4 @@
-# $chaos: Conscript,v 1.9 2002/10/15 18:39:00 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.10 2002/10/17 21:28:06 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for stormG3
 # Author: Per Lundberg <per@chaosdev.org>
@@ -13,7 +13,7 @@ Program $cons 'stormG3', ( 'capability.c', 'cpu.c', 'debug.c',
 'gdb.c', 'gdt.c', 'halt.c', 'idt.c', 'init.c', 'irq.c',
 'irq_handlers.S', 'main.c', 'memory_global.c', 'memory_physical.c',
 'memory_virtual.c', 'module.c', 'multiboot.c', 'port.c', 'process.c',
-'timer.c', 'service.c' );
+'timer.c', 'service.c', 'system_call.c', 'system_call_lowlevel.S' );
 
 Command $cons 'install', 'stormG3',
   qq(if [ -f source/ia32/stormg3.exe ]; then objcopy -O elf32-i386 source/ia32/stormG3.exe source/ia32/stormG3 ; fi
