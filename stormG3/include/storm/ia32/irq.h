@@ -1,4 +1,4 @@
-/* $chaos: irq.h,v 1.3 2002/06/17 07:26:46 per Exp $ */
+/* $chaos: irq.h,v 1.4 2002/06/17 18:51:22 per Exp $ */
 /* Abstract: IRQ handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -37,7 +37,7 @@ typedef struct
     char *description;
 
     /* The number of currently unhandled interrupts. */
-    unsigned int interrupts_pending;
+    volatile unsigned int interrupts_pending;
   
     /* The number of times this IRQ has been raised. */
     unsigned long long occurred;
