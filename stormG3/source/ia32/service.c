@@ -17,7 +17,7 @@
 /* Services are stored in this doubly-linked list. */
 static service_data_t *service_list = NULL;
 
-/* Lock used to protect the service list. */
+/* Lock used to protect the service and method lists. */
 static spinlock_t service_lock = SPIN_UNLOCKED;
 
 /* Connections are stored in this list. */
@@ -32,6 +32,10 @@ static spinlock_t connection_lock = SPIN_UNLOCKED;
    have that kind of an uptime on a chaos machine. Please prove me
    wrong! ;-) */
 static uint64_t free_service_id = 0;
+
+/* List of methods in our service providers (could be a hash table for
+   faster access). Locked via service_lock. */
+static service_method_data_t *method_list = NULL;
 
 /* Create a new service ID. Service IDs are not reused, and that is a
    design decision that we have made, so please don't file it as a
@@ -91,15 +95,43 @@ static service_connection_t *service_connection_find_by_id (service_connection_i
     return list;
 }
 
+/* Register a method in a service provider. This function takes for
+   granted that service_lock has been acquired. */
+static return_t service_register_method (service_id_t service_id, 
+                                         service_method_id_t method_id,
+                                         function_t method_handler)
+{
+    /* Allocate a new node. */
+    service_method_data_t *method;
+    return_t return_value = memory_global_allocate ((void **) &method, sizeof (service_method_data_t));
+    if (return_value != STORM_RETURN_SUCCESS)
+    {
+        return return_value;
+    }
+
+    /* Set up the node. */
+    method->previous = (struct service_method_data_t *) method_list;
+    method->next = NULL;
+    method->service_id = service_id;
+    method->method_id = method_id;
+    method->method = method_handler;
+    method_list = method;
+}
+
 /* Register a service provider. */
-return_t service_register (char *name, char *vendor, char *model, 
-                           char *device_id,
-                           unsigned int major_version,
-                           unsigned int minor_version,
-                           service_info_t service_info)
+return_t service_register (service_register_t *register_info,
+                           service_method_t *method)
 {
     service_data_t *service;
 
+    /* Check the input parameters. */
+    if (register_info == NULL ||
+        method == NULL)
+    {
+        return STORM_RETURN_INVALID_ARGUMENT;
+    }
+
+    /* Allocate memory for the node. */
     return_t return_value = memory_global_allocate ((void **) &service, sizeof (service_data_t));
     if (return_value != STORM_RETURN_SUCCESS)
     {
@@ -108,22 +140,23 @@ return_t service_register (char *name, char *vendor, char *model,
     }
 
     /* Make sure these fit. */
-    if (string_length (name) + 1 > SERVICE_NAME_LENGTH ||
-        string_length (vendor) + 1 > SERVICE_VENDOR_LENGTH ||
-        string_length (model) + 1 > SERVICE_MODEL_LENGTH ||
-        string_length (device_id) + 1 > SERVICE_ID_LENGTH)
+    if (string_length (register_info->service_name) + 1 > SERVICE_NAME_LENGTH ||
+        string_length (register_info->vendor) + 1 > SERVICE_VENDOR_LENGTH ||
+        string_length (register_info->model) + 1 > SERVICE_MODEL_LENGTH ||
+        string_length (register_info->device_id) + 1 > SERVICE_ID_LENGTH)
     {
         debug_print ("%s: One of the fields were too long.\n", __FUNCTION__);
         return STORM_RETURN_INVALID_ARGUMENT; 
     }
 
-    string_copy (service->name, name);
-    string_copy (service->vendor, vendor);
-    string_copy (service->model, model);
-    string_copy (service->device_id, device_id);
-    service->major_version = major_version;
-    service->minor_version = minor_version;
-    service->service_info = service_info;
+    /* Copy the strings to our service node. */
+    string_copy (service->name, register_info->service_name);
+    string_copy (service->vendor, register_info->vendor);
+    string_copy (service->model, register_info->model);
+    string_copy (service->device_id, register_info->device_id);
+    service->major_version = register_info->major_version;
+    service->minor_version = register_info->minor_version;
+    service->service_info = register_info->info_handler;
     service->reference_count = 0;
 
     /* Locked code (non-reentrant). */
@@ -131,19 +164,30 @@ return_t service_register (char *name, char *vendor, char *model,
     service->id = service_create_id ();
     service->next = (struct service_data_t *) service_list;
     service_list = service;
+
+    /* We need to register the service method handlers here, while the
+       lock is locked. Otherwise, we could get weird bugs. */
+    size_t count = 0;
+    while (method[count].method != NULL)
+    {
+        service_register_method (service->id, method[count].method_id,
+                                 method[count].method);
+        count++;
+    }    
+
     spin_unlock (&service_lock);
     return STORM_RETURN_SUCCESS;
 }
 
 /* Unregister a service provider. */
-return_t service_unregister (char *service UNUSED,
-                             function_t handler UNUSED)
+return_t service_unregister (service_id_t service_id UNUSED)
 {
-    // FIXME: Write this.
+    // BUG #45: Implement this.
     return STORM_RETURN_SUCCESS;
 }
 
 /* Lookup a service. */
+// FIXME: Don't use so many parameters.
 return_t service_lookup (const char *name, const char *vendor, 
                          const char *model, const char *device_id,
                          unsigned int major_version, 
