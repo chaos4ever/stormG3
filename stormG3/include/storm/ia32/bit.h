@@ -1,4 +1,4 @@
-/* $chaos: bit.h,v 1.8 2002/10/09 13:07:13 per Exp $ */
+/* $chaos: bit.h,v 1.9 2002/10/09 18:22:23 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -48,11 +48,24 @@
  */
 #define HIGH_8(x)                       ((x) >> 8)
 
-// FIXME: Document this.
-/* Bit manipulation macros. */
+/**
+ * @brief Set bit b in a.
+ */
 #define BIT_SET(a,b)                    ((a) |= (1 << (b)))
+
+/**
+ * @brief Clear bit b in a.
+ */
 #define BIT_CLEAR(a,b)                  ((a) &= !(1 << (b)))
+
+/**
+ * @brief Get bit b in a.
+ */
 #define BIT_GET(a,b)                    ((a) & (1 << (b)) ? 1 : 0) 
+
+/**
+ * @brief Calculate the number of bytes for a bits.
+ */
 #define BIT_IN_BYTES(a)                 ((a) % 8 != 0 ? (a) / 8 + 1 : (a) / 8)
 
 /**
