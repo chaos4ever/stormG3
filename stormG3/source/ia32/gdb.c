@@ -1,4 +1,4 @@
-/* $chaos: gdb.c,v 1.1 2002/06/15 11:42:02 per Exp $ */
+/* $chaos: gdb.c,v 1.2 2002/08/06 19:39:15 per Exp $ */
 /* Abstract: Stub used for GDB remote debugging. */
 /* Author: Andrey Karpov <nd-chaos@narod.ru>
            Per Lundberg <per@chaosdev.org> */
@@ -181,7 +181,7 @@ static char initialized;  /* boolean flag. != 0 means we've been initialized */
 int     remote_debug;
 /*  debug >  0 prints ill-formed commands in valid packets & checksum errors */
 
-static const char hexchars[]="0123456789abcdef";
+static const char hexchars[] = "0123456789abcdef";
 
 /* Number of registers.  */
 #define NUMREGS	16
@@ -815,7 +815,8 @@ void handle_exception (int exceptionVector)
 
     ptr = remcomOutBuffer;
 
-    *ptr++ = 'T';			/* notify gdb with signo, PC, FP and SP */
+    *ptr++ = 'T';			/* notify gdb with signo, PC, FP and
+                                           SP */
     *ptr++ = hexchars[sigval >> 4];
     *ptr++ = hexchars[sigval & 0xf];
 
