@@ -1,4 +1,4 @@
-/* $chaos: dotfile.emacs,v 1.43 2002/11/14 20:15:09 per Exp $ */
+/* $chaos: return_values.h,v 1.1 2002/12/17 21:48:02 per Exp $ */
 /* Abstract: Log library return values. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -17,6 +17,6 @@ enum log_return_t
 {
   /* The function executed successfully. */
   LOG_RETURN_SUCCESS,
-}
+};
 
 #endif /* !__LIBRARY_LOG_RETURN_VALUES_H__ */
