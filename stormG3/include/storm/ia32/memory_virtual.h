@@ -1,4 +1,4 @@
-/* $chaos: memory_virtual.h,v 1.3 2002/10/08 20:16:14 per Exp $ */
+/* $chaos: memory_virtual.h,v 1.4 2002/10/09 09:19:19 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -17,37 +17,77 @@
    really read-only for the kernel..), and global. */
 #define PAGE_KERNEL             PAGE_GLOBAL
 
-/* Standard flags. */
+/**
+ * @brief               Is the page writable?
+ */
 #define PAGE_WRITABLE           BIT_VALUE (0)
+
+/**
+ * @brief               Can the page be accessed from nonprivileged (ring 3)
+ *                      code?
+ */
 #define PAGE_NON_PRIVILEGED     BIT_VALUE (1)
+
+/**
+ * @brief               Is write-through cache enabled for the page?
+ */
 #define PAGE_WRITE_THROUGH      BIT_VALUE (2)
+
+/**
+ * @brief               Is caching completely disabled for this page?
+ *
+ * This flag is neccessary to use when mapping I/O devices.
+ */
 #define PAGE_CACHE_DISABLE      BIT_VALUE (3)
+
+/**
+ * @brief               Is this a global page, shared between all page
+ *                      directories?
+ */
 #define PAGE_GLOBAL             BIT_VALUE (4)
 
-/* The following flags are used when creating new entries in the page
-   directory. We let the page table set everything, so we need to have
-   this all-privileged. */
+/**
+ * @brief                Flags used when creating new entries in the page
+ *                       directory.
+ *
+ * We let the page table set everything, so we need to have this
+ * all-privileged. 
+ */
 #define PAGE_DIRECTORY_FLAGS     (PAGE_WRITABLE | PAGE_NON_PRIVILEGED)
 
-/* Structures. */
+/**
+ * @brief A page number. 
+ */
+typedef uint32_t page_number_t;
+
 /**
  * @brief A page directory entry (PDE) when using 4MiB pages. 
  */
 typedef struct
 {
-  uint32_t present              : 1;
-  uint32_t flags                : 4;
-  uint32_t accessed             : 1;
-  uint32_t dirty                : 1;
+    uint32_t present              : 1;
+    uint32_t flags                : 4;
+    uint32_t accessed             : 1;
+    uint32_t dirty                : 1;
+    
+    /**
+     * @brief           Should always be one (4 MiB pages, no page 
+     *                  tables). 
+     */
+    uint32_t page_size            : 1;
+    uint32_t global               : 1;
+    uint32_t available            : 3;
+    
+    /**
+     * @brief           Should always be zero.
+     */
+    uint32_t zero                 : 10;
 
-  /* Should always be one. */
-  uint32_t page_size            : 1;
-  uint32_t global               : 1;
-  uint32_t available            : 3;
-
-  /* Obvious? */
-  uint32_t zero                 : 10;
-  uint32_t page_base            : 10;
+    /**
+     * @brief           The physical base of this page, shifted 20 steps 
+     *                  to the right.
+     */
+    uint32_t page_base            : 10;
 } page_directory_4mb_t;
 
 /**
@@ -60,7 +100,9 @@ typedef struct
     uint32_t accessed             : 1;
     uint32_t zero                 : 1;
     
-    /** Should always be zero. */
+    /**
+     * @brief Should always be zero (4 KiB pages).
+     */
     uint32_t page_size            : 1;
     uint32_t global               : 1;
     uint32_t available            : 3;
@@ -82,18 +124,24 @@ typedef struct
     uint32_t page_base            : 20;
 } page_table_t;
 
-/* Prototypes. */
 /** 
  * @brief Initialize the virtual memory system. 
  */
 extern void memory_virtual_init (void);
 
 /**
- * @brief Map memory into the given page directory. 
+ * @brief               Map memory into the given page directory. 
+ * @param page_directory
+ *                      The page directory in which to map.
+ * @param virtual_page  The virtual page base.
+ * @param physical_page The physical page base.
+ * @param pages         The number of pages to map.
+ * @param flags         The page flags to use.
+ *
  */
 extern void memory_virtual_map (page_directory_t *page_directory,
-                                uint32_t virtual_page, 
-                                uint32_t physical_page, unsigned int pages,
+                                page_number_t virtual_page, 
+                                page_number_t physical_page, unsigned int pages,
                                 uint32_t flags);
 
 #endif /* !__STORM_IA32_MEMORY_VIRTUAL_H__ */
