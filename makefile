@@ -9,8 +9,6 @@
 # Default is to install to the location of the source, but
 # you may like to install directly to a mounted chaos partition or something.
 
-INSTALL_PATH=$$(pwd)/root
-
 .PHONY:	all install clean snapshot autochaos configure
 
 all:
@@ -20,25 +18,23 @@ all:
 	$(MAKE) -C programs install
 
 configure:
-	@export CHAOS_INSTALL_PATH=$(INSTALL_PATH)
 	cd storm && ./configure --install-prefix $$CHAOS_INSTALL_PATH
-	$(MAKE) -eC libraries configure
-	$(MAKE) -eC servers configure
-	$(MAKE) -eC program configure
+	$(MAKE) -C libraries configure
+	$(MAKE) -C servers configure
+	$(MAKE) -C program configure
 
 # This one is used for building a fresh source tree.
 
 build:
-	@export CHAOS_INSTALL_PATH=$(INSTALL_PATH)
 	@ln -sf storm/ia32 storm/current-arch
 	@ln -sf storm/include/storm/ia32 storm/include/storm/current-arch
 	cd storm && ./configure --install-prefix $$CHAOS_INSTALL_PATH
 	$(MAKE) -C storm install
-	$(MAKE) -eC libraries configure
+	$(MAKE) -C libraries configure
 	$(MAKE) -C libraries install
-	$(MAKE) -eC servers configure
+	$(MAKE) -C servers configure
 	$(MAKE) -C servers install
-	$(MAKE) -eC programs configure
+	$(MAKE) -C programs configure
 	$(MAKE) -C programs install
 
 autochaos:
