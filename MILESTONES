@@ -1,11 +1,14 @@
-MILESTONES ($chaos: MILESTONES,v 1.3 2002/06/11 15:53:37 per Exp $)
+MILESTONES ($chaos: MILESTONES,v 1.4 2002/06/11 16:48:49 per Exp $)
 ==========
 
 This is something like a road map for chaos as I see it:
 
 M1
 --
-Finish memory allocation (physical, global and virtual).
+Finish memory allocation (physical, global and virtual) AND
+deallocation. Physical allocation and deallocation works, global
+allocation is done but global deallocation and virtual allocation and
+deallocation remains to be done.
 
 M2
 --
