@@ -1,4 +1,4 @@
-# $Id$
+# $chaos$
 # Abstract: Top-level chaos makefile
 # Authors: Henrik Hallin <hal@chaosdev.org>
 #          Per Lundberg <per@chaosdev.org>

@@ -105,7 +105,7 @@
   (interactive)
   (goto-line 1)
 
-  (insert "/* $Id$ */\n")
+  (insert "/* $chaos$ */\n")
   (insert "/* Abstract: */\n")
   (insert "/* Author: " chaos-developer " <" chaos-mail-address "> */\n\n")
 
@@ -135,7 +135,7 @@
   (interactive)
   (goto-line 1)
 
-  (insert "/* $Id$ */\n")
+  (insert "/* $chaos$ */\n")
   (insert "/* Abstract: */\n")
   (insert "/* Author: " chaos-developer " <" chaos-mail-address "> */\n\n")
 

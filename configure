@@ -1,8 +1,3 @@
 #!/bin/sh
 
-# Ok, this is maybe not the nicest way of doing it, but how the h*ll am I
-# supposed to do it right?
-
-export CHAOS_INSTALL_PATH=$PWD/root
 make configure
-unset CHAOS_INSTALL_PATH
