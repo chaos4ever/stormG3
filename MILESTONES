@@ -1,4 +1,4 @@
-MILESTONES ($chaos: MILESTONES,v 1.5 2002/06/11 21:29:55 per Exp $)
+MILESTONES ($chaos: MILESTONES,v 1.6 2002/06/12 06:56:11 per Exp $)
 ==========
 
 This is something like a road map for chaos as I see it:
@@ -26,8 +26,8 @@ M4
 Porting all existing chaos code to the new stormG3 system, doing the
 neccessary adaptions.
 
-M5
---
+M??
+---
 Have the POSIX/ISO library support all that is needed to run common
 daily Unix programs, like bash, Apache, MySQL, gcc. This will provide
 a good base for writing the "real" chaos applications like tornado,
