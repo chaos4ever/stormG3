@@ -1,4 +1,4 @@
-/* $chaos: boot.c,v 1.5 2002/10/30 22:40:43 per Exp $ */
+/* $chaos: boot.c,v 1.7 2002/11/21 21:42:50 per Exp $ */
 /* Abstract: Boot program (somewhat like init in Unix systems). */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -15,11 +15,10 @@ char *test = "spam spam spam!";
 
 void _start (void)
 {
-   main (0, NULL);
-   // syscall_exit (0);
-   while (TRUE);
+    main (0, NULL);
+    // syscall_exit (0);
+    while (TRUE);
 }
-
 
 /* Main function. */
 int main (int argc UNUSED, char **argv UNUSED)
