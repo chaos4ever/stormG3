@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.h,v 1.5 2002/08/08 20:00:45 per Exp $ */
+/* $chaos: memory_physical.h,v 1.6 2002/08/08 20:14:18 per Exp $ */
 /* Abstract: Physical memory allocation prototypes. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -13,6 +13,11 @@
 /* The physical slab system. Awfully simple, isn't it? */
 typedef struct 
 {
+    /* Unique cookie, to make sure the data structure is of the right
+       type. */
+    uint32_t magic_cookie;
+
+    /* Pointer to next free SLAB. */
     struct memory_physical_slab_t *next;
 } memory_physical_slab_t;
 
