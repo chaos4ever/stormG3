@@ -1,4 +1,4 @@
-/* $chaos: process.c,v 1.7 2002/10/23 21:07:36 per Exp $ */
+/* $chaos: process.c,v 1.8 2002/10/23 21:20:29 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 /* Abstract: Process support. */
 
@@ -71,7 +71,7 @@ void process_init (void)
     /* The kernel process gets the super_user privilege. That way, the
        first process (usually the boot program) will inherit these
        privileges so that it can do everything that it needs. */
-    capability_add (process->id, "kernel", "super_user");
+    capability_add (PROCESS_ID_NONE, process, "kernel", "super_user");
 }
 
 /* Find the process with the given ID. */
