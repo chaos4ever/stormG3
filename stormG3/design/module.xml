@@ -1,8 +1,8 @@
 <?xml version='1.0' ?> <!-- -*- xml -*- -->
-<!-- $chaos: module.xml,v 1.1 2002/05/27 07:52:29 per Exp $ -->
+<!-- $chaos: module.xml,v 1.2 2002/05/27 10:09:00 per Exp $ -->
 
 <chapter id="module">
-  <?dbhtml filename="module"?>
+  <?dbhtml filename="module.html"?>
   <title>The Module Subsystem</title>
   <section>
     <title>
@@ -12,6 +12,19 @@
       The module subsystem is one of the key features of storm G3. It
       replaces the old server system that we used in older versions of
       the system.
+      <programlisting id="module_t">
+/* A module ID. */
+typedef unsigned int mid_t;
+
+typedef struct
+{
+    /* The magic cookie is unique for this type of data structure. */
+    uint32_t magic_cookie;
+
+    /* The module ID. */
+    mid_t mid;
+} module_t;
+      </programlisting>
     </para>
   </section>
 </chapter>
