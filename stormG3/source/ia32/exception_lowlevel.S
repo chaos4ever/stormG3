@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: exception_lowlevel.S,v 1.1 2002/06/13 07:01:13 per Exp $ */
 /* Abstract: Low-level exception handlers. Push registers etc. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -42,6 +42,7 @@ exception_general_protection_fault_lowlevel:
 	ret
 	
 exception_page_fault_lowlevel:
+	pushl %eax
 	pushl $exception_page_fault
 	jmp save_registers
 
@@ -52,5 +53,8 @@ exception_machine_check_abort_lowlevel:
 	ret
 	
 save_registers:
-	addl 4, %esp
+	movl 0(%esp), %eax
+	call *%eax
+	popl %eax
+	popl %eax
 	ret
