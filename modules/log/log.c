@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: log.c,v 1.1 2002/06/20 22:42:05 per Exp $ */
 /* Abstract: Kernel log module. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -6,12 +6,31 @@
 /* Use freely under the terms listed in the file COPYING. */
 
 #include <storm/storm.h>
+#include <log/log.h>
+
+static char *log_urgency[] =
+{
+    "Emergency",
+    "Error",
+    "Warning",
+    "Informative",
+    "Debug"
+};
+
+/* Print something to the kernel log. */
+static return_t log_print (unsigned int urgency __attribute__ ((unused)),
+                           char *string)
+{
+    debug_print ("%s: %s\n", log_urgency[urgency], string);
+    return STORM_RETURN_SUCCESS;
+}
 
 /* Return some information about the log service (function pointers to
    our functionality). */
-static return_t service_info (void *info __attribute__ ((unused)))
+static return_t service_info (log_service_t *log)
 {
-    debug_print ("hej! piff puff\n");
+    log->magic_cookie = LOG_COOKIE;
+    log->print = &log_print;
     return STORM_RETURN_SUCCESS;
 }
 
