@@ -1,4 +1,4 @@
-/* $chaos: main.c,v 1.14 2002/06/15 11:00:03 per Exp $ */
+/* $chaos: main.c,v 1.15 2002/06/15 22:40:11 per Exp $ */
 /* Abstract: This is the startup point of storm. It is executed right
    after the assembly language init code has set up the GDT, kernel
    stack, etc. Here, we initialise everything in the storm, like
@@ -27,7 +27,7 @@
 #include <storm/ia32/memory_virtual.h>
 #include <storm/ia32/module.h>
 #include <storm/ia32/multiboot.h>
-
+#include <storm/ia32/port.h>
 
 /* Do the bootup procedure. */
 void main_bootup (int argument_count UNUSED, char *arguments[] UNUSED)
@@ -53,6 +53,12 @@ void main_bootup (int argument_count UNUSED, char *arguments[] UNUSED)
 
     /* Set up DMA support. */
     dma_init ();
+
+    /* Set up port support. */
+    port_init ();
+
+    /* Set up timer support. */
+    timer_init ();
 
     /* Set up IRQ support. This will also enable interrupts, so the
        dispatcher will be called. */
