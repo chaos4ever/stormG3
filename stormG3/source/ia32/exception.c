@@ -1,4 +1,4 @@
-/* $chaos: exception.c,v 1.8 2002/06/14 22:52:02 per Exp $ */
+/* $chaos: exception.c,v 1.9 2002/06/15 10:24:16 per Exp $ */
 /* Abstract: Exception handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -198,8 +198,8 @@ static void setup_handler (int number, void *handler)
 void exception_init () 
 {
     /* Setup exception handlers for all exceptions. */
-    int counter;
-    for (counter = 0; exception_handler[counter].function != NULL; counter++)
+    for (int counter = 0; exception_handler[counter].function != NULL;
+         counter++)
     {
         setup_handler (counter, exception_handler[counter].function);
     }
