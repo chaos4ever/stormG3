@@ -1,6 +1,6 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: init.c,v 1.1 2002/05/25 20:09:40 per Exp $ */
 /* Abstract: storm initialization. */
-/* Author: Per Lundberg <per@halleluja.nu> 
+/* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */

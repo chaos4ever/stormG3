@@ -1,6 +1,6 @@
-/* $chaos: xemacs-script,v 1.6 2002/05/24 17:34:57 per Exp $ */
+/* $chaos: string.h,v 1.1 2002/05/25 20:09:39 per Exp $ */
 /* Abstract: Inlined string routines. */
-/* Author: Per Lundberg <per@halleluja.nu> */
+/* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file COPYING. */

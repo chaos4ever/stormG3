@@ -1,6 +1,6 @@
-/* $chaos: xemacs-script,v 1.6 2002/05/24 17:34:57 per Exp $ */
+/* $chaos: debug.h,v 1.1 2002/05/25 20:09:39 per Exp $ */
 /* Abstract: Debug declarations. */
-/* Author: Per Lundberg <per@halleluja.nu> 
+/* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
