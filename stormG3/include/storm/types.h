@@ -57,6 +57,11 @@ typedef uint64_t        service_id_t;
 typedef uint64_t        service_connection_id_t;
 
 /**
+ * @brief               An ID for a method in a protocol.
+ */
+typedef unsigned int    service_method_id_t;
+
+/**
  * @brief               A boolean value.
  */
 typedef int             bool;        /* no _t, since this should
@@ -156,5 +161,65 @@ typedef struct
      */
     unsigned int        minor_version;
 } service_lookup_t;
+
+/**
+ * @brief               This structure is used when registering a service.
+ */
+typedef struct
+{
+    /**
+     * @brief           The name of the service provided.
+     */
+    const char          *service_name;
+
+    /**
+     * @brief           The vendor of the service provider OR device. 
+     *                  FIXME: We need to take care of this ambiguity.
+     */
+    const char          *vendor;
+
+    /**
+     * @brief           The model of the device.
+     */
+    const char          *model;
+
+    /**
+     * @brief           Unique ID for this device. 
+     */
+    const char          *device_id;
+
+    /**
+     * @brief           The major version of the service provided.
+     */
+    unsigned int        major_version;
+
+    /**
+     * @brief           The minor version of the service provided.
+     */
+    unsigned int        minor_version;
+
+    /**
+     * @brief           An handler for returning information about this
+     *                  service provider (protocol-specific).
+     */
+    service_info_t      info_handler;
+} service_register_t;
+
+/**
+ * @brief               This structure is used for registering the methods
+ *                      in a service provider.
+ */
+typedef struct
+{
+    /**
+     * @brief           A protocol-specific number assigned to this method.
+     */
+    service_method_id_t method_id;
+
+    /**
+     * @brief           A pointer to the method handler.
+     */
+    function_t          method;
+} service_method_t;
 
 #endif /* !__STORM_TYPES_H__ */
