@@ -1,4 +1,4 @@
-/* $chaos: service.c,v 1.15 2002/10/29 22:36:39 per Exp $ */
+/* $chaos: service.c,v 1.16 2002/10/29 22:46:03 per Exp $ */
 /* Abstract: Service support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -8,16 +8,23 @@
 #include <storm/return_value.h>
 #include <storm/ia32/debug.h>
 #include <storm/ia32/defines.h>
+#include <storm/ia32/dispatch.h>
 #include <storm/ia32/spinlock.h>
 #include <storm/ia32/memory_global.h>
 #include <storm/ia32/service.h>
 #include <storm/ia32/string.h>
 
-/* Services are stored in a linked list for now. */
-static service_data_t *first_service = NULL;
+/* Services are stored in this doubly-linked list. */
+static service_data_t *service_list = NULL;
 
-/* Lock used to protect the service data structure. */
+/* Lock used to protect the service list. */
 static spinlock_t service_lock = SPIN_UNLOCKED;
+
+/* Connections are stored in this list. */
+static service_connection_t *connection_list = NULL;
+
+/* Lock used to protect the connection list. */
+static spinlock_t connection_lock = SPIN_UNLOCKED;
 
 /* The next free service ID. We take for granted that this will not
    wrap around. If you create ten new services every second, this
@@ -35,6 +42,53 @@ static service_id_t service_create_id (void)
     free_service_id++;
 
     return id;
+}
+
+/* Find a service provider by ID. The caller needs to lock the
+   service_lock! */
+static service_data_t *service_find_by_id (service_id_t service_id)
+{
+    if (service_lock == SPIN_UNLOCKED)
+    {
+        DEBUG_HALT ("Kernel bug: you need to lock the service_lock before calling this function");
+    }
+
+    service_data_t *list = service_list;
+
+    while (list != NULL)
+    {
+        if (list->id == service_id)
+        {
+            break;
+        }
+
+        list = (service_data_t *) list->next;
+    }
+
+    return list;
+}
+
+/* Find a connection by ID. */
+static service_connection_t *service_connection_find_by_id (service_connection_id_t connection_id)
+{
+    if (connection_lock == SPIN_UNLOCKED)
+    {
+        DEBUG_HALT ("Kernel bug: you need to lock the connection_lock before calling this function");
+    }
+
+    service_connection_t *list = connection_list;
+
+    while (list != NULL)
+    {
+        if (list->id == connection_id)
+        {
+            break;
+        }
+
+        list = (service_connection_t *) list->next;
+    }
+
+    return list;
 }
 
 /* Register a service provider. */
@@ -70,12 +124,13 @@ return_t service_register (char *name, char *vendor, char *model,
     service->major_version = major_version;
     service->minor_version = minor_version;
     service->service_info = service_info;
+    service->reference_count = 0;
 
     /* Locked code (non-reentrant). */
     spin_lock (&service_lock);
     service->id = service_create_id ();
-    service->next = (struct service_data_t *) first_service;
-    first_service = service;
+    service->next = (struct service_data_t *) service_list;
+    service_list = service;
     spin_unlock (&service_lock);
     return STORM_RETURN_SUCCESS;
 }
@@ -103,7 +158,7 @@ return_t service_lookup (const char *name, const char *vendor,
 
     /* Iterate two times. The first time is used to calculate the
        number of matching services. */
-    service = first_service;
+    service = service_list;
     while (service != NULL)
     {
         /* We take the fast (integer) comparisons first so that we be
@@ -138,7 +193,7 @@ return_t service_lookup (const char *name, const char *vendor,
     *services = services_found;
 
     /* Start doing our business. */
-    service = first_service;
+    service = service_list;
     while (service != NULL)
     {
         /* Numeric comparisons are fast so we do them first. */
@@ -168,14 +223,92 @@ return_t service_lookup (const char *name, const char *vendor,
 }
 
 /* Connect to a service provider. */
-return_t service_connect (service_id_t service_id UNUSED,
+return_t service_connect (service_id_t service_id,
                           service_connection_id_t *connection_id UNUSED)
 {
-    return STORM_RETURN_NOT_IMPLEMENTED;
+    /* Find this service provider. */
+    spin_lock (&service_lock);
+    service_data_t *service_data = service_find_by_id (service_id);
+    spin_unlock (&service_lock);
+
+    /* Make sure this service exists. */
+    if (service_data == NULL)
+    {
+        return STORM_RETURN_NOT_FOUND;
+    }
+
+    /* Allocate memory for the connection. */
+    service_connection_t *service_connection;
+    return_t return_value = memory_global_allocate ((void **) &service_connection, sizeof (service_connection_t));
+    if (return_value != STORM_RETURN_SUCCESS)
+    {
+        return return_value;
+    }
+
+    /* Increase the reference count (to handle unregister properly). */
+    spin_lock (&service_lock);
+    service_data->reference_count++;
+    spin_unlock (&service_lock);
+
+    /* Initialize the data structure. */
+    service_connection->process = current_process;
+    service_connection->service = service_data;
+    service_connection->previous = NULL;
+    service_connection->next = NULL;
+
+    /* Add this connection to the list of connections. */
+    spin_lock (&connection_lock);
+    if (connection_list != NULL)
+    {
+        connection_list->next = (struct service_connection_t *) service_connection;
+    }
+    connection_list = service_connection;
+    spin_unlock (&connection_lock);
+
+    return STORM_RETURN_SUCCESS;
 }
 
 /* Close a connection. */
 return_t service_close (service_connection_id_t connection_id UNUSED)
 {
-    return STORM_RETURN_NOT_IMPLEMENTED;
+    /* Find the connection. */
+    service_connection_t *connection = service_connection_find_by_id (connection_id);
+    
+    if (connection == NULL)
+    {
+        return STORM_RETURN_NOT_FOUND;
+    }
+
+    /* Make sure it's owned by us. */
+    if (connection->process != current_process)
+    {
+        return STORM_RETURN_ACCESS_DENIED;
+    }
+
+    connection->service->reference_count++;
+
+    /* It's ours, we can unlink it. */
+    spin_lock (&connection_lock);
+    service_connection_t *previous = (service_connection_t *) connection->previous;
+    service_connection_t *next = (service_connection_t *) connection->next;
+
+    if (previous != NULL)
+    {
+        previous->next = (struct service_connection_t *) next;
+    }
+    
+    if (next != NULL)
+    {
+        next->previous = (struct service_connection_t *) previous;
+    }
+
+    /* If this is the first item in the list, change the list to point
+       to the next item. */
+    if (connection_list == connection)
+    {
+        connection_list = next;
+    }
+    spin_unlock (&connection_lock);
+
+    return STORM_RETURN_SUCCESS;
 }
