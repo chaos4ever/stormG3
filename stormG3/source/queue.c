@@ -1,5 +1,4 @@
-/* $chaos: queue.c,v 1.3 2002/05/27 19:08:02 per Exp $ */
-/* Abstract: Queue code, used by AVL library. */
+/* $chaos: queue.c,v 1.4 2002/10/04 19:01:21 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org>
            Georg Kraml <georg@purists.org> */
 
