@@ -8,6 +8,18 @@
 #ifndef __STORM_IA32_MODULE_H__
 #define __STORM_IA32_MODULE_H__
 
+/* Type definitions. */
+/* A function provided to the kernel modules. */
+typedef struct
+{
+    char *name;
+    function_t function;
+} module_function_t;
+
+/* Initialize module support. */
 extern void module_init (void);
+
+/* Register a module with the kernel. */
+extern void module_register (void);
 
 #endif /* !__STORM_IA32_MODULE_H__ */
