@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.h,v 1.1 2002/06/05 19:55:32 per Exp $ */
+/* $chaos: memory_physical.h,v 1.2 2002/06/08 14:53:54 per Exp $ */
 /* Abstract: Physical memory allocation prototypes. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -7,6 +7,8 @@
 
 #ifndef __STORM_IA32_MEMORY_PHYSICAL_H__
 #define __STORM_IA32_MEMORY_PHYSICAL_H__
+
+#include <storm/types.h>
 
 /* The physical slab system. Awfully simple, isn't it? */
 typedef struct 
