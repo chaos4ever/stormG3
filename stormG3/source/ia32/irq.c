@@ -1,4 +1,4 @@
-/* $chaos: irq.c,v 1.1 2002/06/15 10:57:13 per Exp $ */
+/* $chaos: irq.c,v 1.2 2002/06/15 11:29:53 per Exp $ */
 /* Abstract: IRQ handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -126,7 +126,11 @@ void irq_init ()
                               irq14_handler, 0);
     idt_setup_interrupt_gate (IDT_ENTRY(15), KERNEL_CODE_SELECTOR,
                               irq15_handler, 0);
-
+    
+    /* Disable all IRQs. */
+    port_uint8_out (INTERRUPT_CONTROLLER_MASTER + 1, 0xFF);
+    port_uint8_out (INTERRUPT_CONTROLLER_SLAVE + 1, 0xFF);
+    
     /* Allocate IRQ 0 and 2 for the system. */
     irq[0].allocated = TRUE;
     irq[0].handler = NULL;
