@@ -3,11 +3,12 @@
 
 ROOT=$(pwd)
 cd $ROOT/stormG3 || exit
-cons || exit
+cons $STORM_OPTIONS || exit
 cd $ROOT/libraries
 cons || exit
-cd $ROOT/modules
-cons || exit
 cd $ROOT/programs
+cons || exit
+./install.sh
+cd $ROOT/modules
 cons || exit
 cd $ROOT
