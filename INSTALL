@@ -1,16 +1,6 @@
 INSTALL ($Id$)
 =======
 
-Do like this:
+To build chaos just type 'make build' in this directory after having unpacked the snapshot or checked the source out from CVS. Once you have ran 'make build', you can thereafter run 'make all' to rebuild chaos. The built kernels, libraries, servers and programs will be created in a chaos filesystem located under ./root. To change this (build directly to a mounted chaos partition or alike), edit the makefile and change the line INSTALL_PATH=...
 
-1) If you want to change the autochaos.rules files, you need to copy
-autochaos/autochaos to somewhere in your PATH (or even better, add the
-autochaos directory to your PATH). Otherwise, skip right to the next step.
-
-2) make install
-
-This will copy everything to /mnt/chaos. For more information about
-setting things up, see the 'Installation manual' which can be found on
-our web page and in the documentation subdirectory.
-
--- Per Lundberg <plundis@chaosdev.org>  Sun,  6 Aug 2000 15:20:30 +0200
+Questions, bug reports and general feedback go to staff@chaosdev.org or the appropriate mailing list. Please check out http://www.chaosdev.org/ if you feel unsure about anything.
