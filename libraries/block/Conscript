@@ -1,4 +1,4 @@
-# $chaos: Conscript,v 1.1 2002/07/09 08:39:44 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.2 2002/10/04 19:00:50 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the block library.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -8,10 +8,10 @@
 
 $library_binary = 'libblock.a';
 
-Import qw(cons library_static_directory);
+Import qw( cons library_static_directory install );
 Library $cons $library_binary, 'block.c';
-Command $cons 'install', $library_binary,
-  qq(mkdir -p $library_static_directory
-     install block/$library_binary $library_static_directory);
+
+$install_cmd = eval $install;
+Command $cons 'install', $library_binary, $install_cmd;
 
 # FIXME: Install headers also. We don't need it yet though.
