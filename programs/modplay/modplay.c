@@ -1,3 +1,4 @@
+/* $chaos$ */
 /* Abstract: Module player. */
 /* Author: Erik Moren <nemo@chaosdev.org> */
 
