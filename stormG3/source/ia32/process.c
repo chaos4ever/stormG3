@@ -1,4 +1,4 @@
-/* $chaos: process.c,v 1.11 2002/11/28 20:42:17 per Exp $ */
+/* $chaos: process.c,v 1.12 2002/11/30 11:56:23 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 /* Abstract: Process support. */
 
@@ -251,7 +251,5 @@ return_t process_create (process_id_t process_id UNUSED,
     /* Add this thread to the list of tasks in the dispatcher. */
     dispatch_unblock (thread);
 
-    /* Add to list of active tasks for the dispatcher. */
-    // FIXME: Do this.
     return STORM_RETURN_SUCCESS;
 }
