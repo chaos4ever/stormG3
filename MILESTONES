@@ -1,0 +1,24 @@
+MILESTONES ($chaos$)
+==========
+
+This is something like a road map for chaos as I see it:
+
+M1
+--
+stormG3 should be ready for development. Support memory allocation
+(physical, global and virtual), multi-tasking and modules (with
+services).
+
+M2
+--
+Porting all existing chaos code to the new stormG3 system, doing the
+neccessary adaptions.
+
+M3
+--
+Have the POSIX/ISO library support all that is needed to run common
+daily Unix programs, like bash, Apache, MySQL, gcc. This will provide
+a good base for writing the "real" chaos applications like tornado,
+cAPS and so on.
+
+-- Per Lundberg <per@chaosdev.org>  Wed,  5 Jun 2002 17:59:38 +0200
