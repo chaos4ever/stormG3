@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: service.h,v 1.1 2002/06/20 22:41:00 per Exp $ */
 /* Abstract: Service support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -11,11 +11,28 @@
 #include <storm/storm.h>
 #include <storm/ia32/types.h>
 
+/* Definitions. */
+#define SERVICE_MAX_NAME_LENGTH         32
+#define SERVICE_MAX_VENDOR_LENGTH       32
+#define SERVICE_MAX_MODEL_LENGTH        32
+#define SERVICE_MAX_ID_LENGTH            16
+
 /* Type definitions. */
 typedef struct
 {
     /* The service name. */
-    char *name;
+    char name[SERVICE_MAX_NAME_LENGTH];
+
+    /* The vendor name. */
+    char vendor[SERVICE_MAX_VENDOR_LENGTH];
+
+    /* The model name. */
+    char model[SERVICE_MAX_MODEL_LENGTH];
+
+    /* A unique ID for this device. (MAC address, serial number, etc)
+       Used to distinguish between different devices with the same
+       model. */
+    char id[SERVICE_MAX_ID_LENGTH];
 
     /* The version of the service provided. */
     unsigned int version;

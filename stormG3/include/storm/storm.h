@@ -1,4 +1,4 @@
-/* $chaos: storm.h,v 1.6 2002/06/19 07:29:26 per Exp $ */
+/* $chaos: storm.h,v 1.7 2002/06/20 22:41:49 per Exp $ */
 /* Abstract: storm kernel API. This header file can be included by a
    kernel module that wants to have access to kernel functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
@@ -31,14 +31,16 @@ extern return_t irq_register (unsigned int irq_number, char *description,
                               irq_handler_t *function);
 
 /* Register a service provider. */
-extern return_t service_register (char *service, unsigned int version,
+extern return_t service_register (char *name, char *vendor, char *model, 
+                                  char *id, unsigned int version,
                                   function_t handler);
 
 /* Unregister a service provider. */
 extern return_t service_unregister (char *service, function_t handler);
 
 /* Resolve a service. FIXME: Support multiple service providers. */
-extern return_t service_resolve (char *name, unsigned int version, 
+extern return_t service_resolve (char *name, char *vendor, char *model,
+                                 char *id, unsigned int version, 
                                  function_t *handler);
 
 /* Sleep for the given amount of milliseconds. */
