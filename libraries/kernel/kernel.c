@@ -1,4 +1,4 @@
-/* $chaos: kernel.c,v 1.1 2002/10/29 20:46:21 per Exp $ */
+/* $chaos: kernel.c,v 1.3 2002/11/20 20:05:38 per Exp $ */
 /* Abstract: */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -21,7 +21,7 @@ return_t kernel_lookup (kernel_service_t *kernel)
     service_t service;
 
     /* Find the exec service. */
-    if (service_lookup ("kernel", NULL, NULL, NULL, KERNEL_SERVICE_MAJOR_VERSION, KERNEL_SERVICE_MINOR_VERSION, &services, &service) != STORM_RETURN_SUCCESS)
+    if (service_lookup ("kernel", NULL, NULL, NULL, KERNEL_PROTOCOL_MAJOR_VERSION, KERNEL_PROTOCOL_MINOR_VERSION, &services, &service) != STORM_RETURN_SUCCESS)
     {
         debug_print ("Failed to lookup kernel service provider.\n");
         return KERNEL_RETURN_SERVICE_UNAVAILABLE;
@@ -38,8 +38,8 @@ return_t kernel_register (service_register_t *service_register_info,
                           service_method_t *service_method)
 {    
     service_register_info->service_name = "kernel";
-    service_register_info->major_version = KERNEL_SERVICE_MAJOR_VERSION;
-    service_register_info->minor_version = KERNEL_SERVICE_MINOR_VERSION;
+    service_register_info->major_version = KERNEL_PROTOCOL_MAJOR_VERSION;
+    service_register_info->minor_version = KERNEL_PROTOCOL_MINOR_VERSION;
 
     return service_register (service_register_info, service_method);
 }
