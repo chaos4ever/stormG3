@@ -1,12 +1,12 @@
-/* $chaos: debug.h,v 1.14 2002/10/15 16:11:00 per Exp $ */
+/* $chaos: debug.h,v 1.15 2002/10/15 21:57:14 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
 
-/** @file debug.h
-    @brief Functions used for debugging. */
+/** @file               debug.h
+    @brief              Functions used for debugging. */
 
 #ifndef __STORM_IA32_DEBUG_H__
 #define __STORM_IA32_DEBUG_H__
@@ -31,38 +31,40 @@
 #endif
 
 /**
- * @brief The width (in characters) of the screen.
+ * @brief               The width (in characters) of the screen.
  */
-#define DEBUG_SCREEN_WIDTH              80
+#define DEBUG_SCREEN_WIDTH \
+                        80
 
 /**
- * @brief The height (in characters9 of the screen.
+ * @brief               The height (in characters9 of the screen.
  */
-#define DEBUG_SCREEN_HEIGHT             25
+#define DEBUG_SCREEN_HEIGHT \
+                        25
 
 /**
- * @brief The physical base address of the screen. 
+ * @brief               The physical base address of the screen. 
  */
-#define BASE_SCREEN                     (0xB8000)
+#define BASE_SCREEN     (0xB8000)
 
 /**
- * @brief Easy EGA screen access. 
+ * @brief               Easy EGA screen access. 
  */
 typedef struct
 { 
     /**
-     * @brief The character of this location.
+     * @brief           The character of this location.
      */
     char character;
 
     /**
-     * @brief The attribute of this character.
+     * @brief           The attribute of this character.
      */
     uint8_t attribute;
 } debug_screen_type PACKED;
 
 /**
- * @brief Initialize debugging code. 
+ * @brief               Initialize debugging code. 
  */
 extern void debug_init (void);
 
@@ -71,5 +73,8 @@ extern void debug_init (void);
   debug_print (message); \
   debug_print (" (%s:%u)\n", __FILE__, __LINE__); \
   while (TRUE);
+
+#define DEBUG_INFO() \
+  debug_print ("Passed %s:%u (%s)\n", __FILE__, __LINE__, __FUNCTION__);
 
 #endif /* !__STORM_IA32_DEBUG_H__ */
