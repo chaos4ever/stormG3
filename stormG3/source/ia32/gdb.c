@@ -1,4 +1,4 @@
-/* $chaos: gdb.c,v 1.3 2002/08/08 10:52:01 per Exp $ */
+/* $chaos: gdb.c,v 1.4 2002/10/04 19:01:21 per Exp $ */
 /* Abstract: Stub used for GDB remote debugging. */
 /* Author: Andrey Karpov <nd-chaos@narod.ru>
            Per Lundberg <per@chaosdev.org> */
@@ -620,7 +620,7 @@ static void putpacket (unsigned char *buffer)
     while (getDebugChar () != '+');
 }
 
-static void debug_error (char *parm)
+static void debug_error (const char *parm)
 {
     if (remote_debug)
     {
