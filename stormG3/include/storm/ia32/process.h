@@ -1,4 +1,4 @@
-/* $chaos: process.h,v 1.10 2002/10/22 19:41:48 per Exp $ */
+/* $chaos: process.h,v 1.11 2002/10/23 07:23:16 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -114,5 +114,12 @@ extern process_t        *process_list;
  * @brief               Set up the process support. 
  */
 extern void process_init (void);
+
+/**
+ * @brief               Find the process with the given ID. 
+ * @return              The process_t structure for this process, or NULL
+ *                      if it can't be found.
+ */
+extern process_t *process_find (process_id_t process_id);
 
 #endif /* !__STORM_IA32_PROCESS_H__ */
