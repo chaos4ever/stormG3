@@ -1,4 +1,4 @@
-/* $chaos: soundblaster.h,v 1.2 2002/05/23 11:23:54 per Exp $ */
+/* $chaos: soundblaster.h,v 1.1 2002/06/18 22:30:14 per Exp $ */
 /* Authors: Per Lundberg <per@chaosdev.org>
             Erik Moren <nemo@chaosdev.org> */
 
@@ -65,9 +65,7 @@ typedef struct
     bool is_full;
 } double_buffer_t;
 
-void irq_handler (mailbox_id_type reply_mailbox_id,
-                  ipc_structure_type ipc_structure, unsigned int port_number);
-void handle_connection (mailbox_id_type reply_mailbox_id);
+void irq_handler (unsigned int irq);
 
 #endif /* !__SOUNDBLASTER_H__ */
 

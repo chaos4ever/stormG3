@@ -1,4 +1,4 @@
-/* $chaos: soundblaster.c,v 1.4 2002/05/23 11:23:54 per Exp $ */
+/* $chaos: soundblaster.c,v 1.1 2002/06/18 22:30:14 per Exp $ */
 /* Abstract: Sound Blaster server */
 
 /* Authors: Per Lundberg <per@chaosdev.org> 
@@ -18,7 +18,7 @@
 /* The default base port of the sound card. Can be overridden by a
    command parameter to the server (well, in the future...) */
 uint8_t *dma_buffer;
-double_buffer_type double_buffer[2];
+double_buffer_t double_buffer[2];
 unsigned int current_buffer = 0;
 
 /* Change these to fit your needs. */
@@ -38,62 +38,60 @@ SoundBlaster 16 SCSI-2     4.11  (4.11)
 SoundBlaster AWE32         4.12+ (4.12) */
 uint8_t major_version, minor_version;
 
-log_structure_type log_structure;
+//log_structure_t log_structure;
 
 /* FIXME: They should not be global variables, perhaps not even
    separate ones. */
-soundblaster_device_type soundblaster_device;
-soundblaster_event_type soundblaster_event;
+soundblaster_device_t soundblaster_device;
+soundblaster_event_t soundblaster_event;
 
 static void dsp_write (uint8_t data)
 {
-    while ((system_port_in_uint8_t (DSP_DATA_WRITE) & 0x80) != 0);
-    system_port_out_uint8_t (DSP_DATA_WRITE, (data));
+    while ((port_uint8_in (DSP_DATA_WRITE) & 0x80) != 0);
+    port_uint8_out (DSP_DATA_WRITE, (data));
 }
 
 static uint8_t dsp_read (void)
 {
-    while ((system_port_in_uint8_t (DSP_DATA_AVAILABLE) & 0x80) == 0);
-    return system_port_in_uint8_t (DSP_DATA_READ);
+    while ((port_uint8_in (DSP_DATA_AVAILABLE) & 0x80) == 0);
+    return port_uint8_in (DSP_DATA_READ);
 }
 
 static uint8_t dsp_mixer_read (uint8_t which_register)
 {
-    system_port_out_uint8_t (DSP_MIXER_REGISTER, which_register);
-    return system_port_in_uint8_t (DSP_MIXER_DATA);
+    port_uint8_out (DSP_MIXER_REGISTER, which_register);
+    return port_uint8_in (DSP_MIXER_DATA);
 }
 
 static void dsp_mixer_write (uint8_t which_register, uint8_t data)
 {
-    system_port_out_uint8_t (DSP_MIXER_REGISTER, which_register);
-    system_port_out_uint8_t (DSP_MIXER_DATA, data);
+    port_uint8_out (DSP_MIXER_REGISTER, which_register);
+    port_uint8_out (DSP_MIXER_DATA, data);
 }
 
 /* Detect if there is some kind of sound blaster card in this
    machine. */
-
 static bool detect_sb (void)
 {
     /* Register the I/O ports so that we can probe for the card. */
-
-    system_call_port_range_register (base_port, 16, "Sound Blaster");
+    if (port_range_register (base_port, 16, "Sound Blaster"))
+    {
+        // log_print ("Failed to register ports.\n");
+        return FALSE;
+    }
 
     /* Reset the DSP. */
-  
-    system_port_out_uint8_t (DSP_RESET, 0x01);
-    system_sleep (4);
-    system_port_out_uint8_t (DSP_RESET, 0x00);
+    port_uint8_out (DSP_RESET, 0x01);
+    timer_sleep_milli (4);
+    port_uint8_out (DSP_RESET, 0x00);
   
     /* FIXME: Should only wait for a maximum of 100 us. */
-  
-    while ((system_port_in_uint8_t (DSP_DATA_AVAILABLE) & (1 << 7)) == 0);
+    while ((port_uint8_in (DSP_DATA_AVAILABLE) & (1 << 7)) == 0);
 
     /* Check if the DSP was reset successfully. */
-
-    if (system_port_in_uint8_t (DSP_DATA_READ) == 0xAA)
+    if (port_uint8_in (DSP_DATA_READ) == 0xAA)
     {
         /* Let's check which kind of SB this is. */
-
         dsp_write (DSP_VERSION);
         major_version = dsp_read ();
         minor_version = dsp_read ();
@@ -102,14 +100,13 @@ static bool detect_sb (void)
     }
     else
     {
-        system_call_port_range_unregister (base_port);
+        port_range_unregister (base_port);
         return FALSE;
     }
 }
 
 /* Main function. */
-
-int main (void)
+int module_start (void)
 {
 #if FALSE
     ipc_structure_t ipc_structure;
@@ -171,14 +168,14 @@ int main (void)
                     }
                     case 12:
                     {
-                        log_print (&log_structure, LOG_URGENCY_INFORMATIVE,
-                                   "Sound Blaster AWE32 detected.");
+                        //                        log_print (&log_structure, LOG_URGENCY_INFORMATIVE,
+                        //                                   "Sound Blaster AWE32 detected.");
                         break;
                     }
                     default:
                     {
-                        log_print (&log_structure, LOG_URGENCY_INFORMATIVE,
-                                   "Some kind of 16-bit Sound Blaster (compatible) detected.");
+                        //                        log_print (&log_structure, LOG_URGENCY_INFORMATIVE,
+                        //                                   "Some kind of 16-bit Sound Blaster (compatible) detected.");
                         break;
                     }
                 }
@@ -198,312 +195,37 @@ int main (void)
     soundblaster_device.device_name = "Sound Blaster 2.0";
  
     /* Register the DMA channel. */
-    if (system_call_dma_register (soundblaster_device.dma_channel,
-                                  (void **) &dma_buffer) != STORM_RETURN_SUCCESS)
+    if (dma_register (soundblaster_device.dma_channel,
+                      (void **) &dma_buffer) != STORM_RETURN_SUCCESS)
     {
-        log_print (&log_structure, LOG_URGENCY_INFORMATIVE,
-                   "!storm_return-sucess.afsd");
+        //        log_print (&log_structure, LOG_URGENCY_INFORMATIVE,
+        //                   "!storm_return-sucess.afsd");
         return -1;
     }
 
     dsp_write (DSP_SPEAKER_ON);
   
-    /* Create sound service. */
-    if (ipc_service_create ("sound", &ipc_structure, &empty_tag) !=
-        IPC_RETURN_SUCCESS)
+    if (irq_register (soundblaster_device.irq, "Soundblaster",
+                      (irq_handler_t *) &irq_handler) != STORM_RETURN_SUCCESS)
     {
-        log_print (&log_structure, LOG_URGENCY_EMERGENCY,
-                   "Couldn't create service.");
+        //        log_print_formatted (&log_structure, LOG_URGENCY_EMERGENCY,
+        //                             "Could not allocate IRQ %u.", irq_number);
         return -1;
     }
-  
-    system_thread_name_set ("Service handler");
-    system_call_process_parent_unblock ();
 
-    /* Create a new thread for the IPC stuff. */
-    while (TRUE)
-    {
-        mailbox_id_t reply_mailbox_id;
-        
-        ipc_service_connection_wait (&ipc_structure);
-        reply_mailbox_id = ipc_structure.output_mailbox_id;
-        
-        if (system_thread_create () == SYSTEM_RETURN_THREAD_NEW)
-        {
-            system_thread_name_set ("Handling connection");
-      
-            handle_connection (reply_mailbox_id);
-        }
-
-        /* Install an interrupt handler. */
-        if (system_thread_create () == SYSTEM_RETURN_THREAD_NEW)
-        {
-            irq_handler (reply_mailbox_id, ipc_structure,
-                         soundblaster_device.irq);
-        }
-    }
+    return 0;
 }
  
-void irq_handler (mailbox_id_t reply_mailbox_id,
-                  ipc_structure_type ipc_structure, unsigned int irq_number)
+/* Handle interrupts. */
+void irq_handler (unsigned int irq_number __attribute__ ((unused)))
 {
-    /* This is a really stupid way of doing things... */
-    message_parameter_t message_parameter;
-    
-    ipc_structure.output_mailbox_id = reply_mailbox_id;
-    system_call_thread_name_set ("IRQ handler");
-    
-    if (system_call_irq_register (irq_number, "Sound Blaster") !=
-        STORM_RETURN_SUCCESS)
+    /* Clear the SB interrupt. */
+    port_uint8_in (DSP_DATA_AVAILABLE);
+        
+    /* If only a single sample was being played, do some stuff. */
+    if (!soundblaster_event.streaming)
     {
-        log_print_formatted (&log_structure, LOG_URGENCY_EMERGENCY,
-                             "Could not allocate IRQ %u.", irq_number);
-        return;
-    }
-    
-    while (TRUE)
-    {
-        unsigned char dummy_data[0];
-        
-        system_call_irq_wait (irq_number);
-        
-        /* Clear the SB interrupt. */
-        system_port_in_uint8_t (DSP_DATA_AVAILABLE);
-        
-        /* Send a acknowledge message to the client program. */
-        message_parameter.protocol = IPC_PROTOCOL_NONE;
-        message_parameter.message_class = IPC_CLASS_NONE;
-        message_parameter.length = 0;
-        message_parameter.data = dummy_data;
-        message_parameter.block = FALSE;
-        
-        if (ipc_send (ipc_structure.output_mailbox_id, &message_parameter) != 
-            IPC_RETURN_SUCCESS)
-        {
-            log_print (&log_structure, LOG_URGENCY_ERROR,
-                       "ipc_send failed.");
-            continue;
-        }
-        
-        /* If only a single sample was being played, do some stuff. */
-        if (!soundblaster_event.streaming)
-        {
-            soundblaster_event.is_playing = FALSE;
-            dsp_write (DSP_SPEAKER_OFF);
-        }
-        
-        system_call_irq_acknowledge (irq_number);
-    }
-}
-
-/* Handle an IPC connection. */
-void handle_connection (mailbox_id_t reply_mailbox_id)
-{
-    bool done = FALSE;
-    message_parameter_t message_parameter;
-    ipc_structure_t ipc_structure;
-    uint8_t *data;
-    
-    memory_allocate ((void **) &data, sizeof(sound_message_t) +
-                     MAX_SINGLE_SAMPLE_SIZE);
-    
-    /* Accept the connection. */
-    ipc_structure.output_mailbox_id = reply_mailbox_id;
-    ipc_connection_establish (&ipc_structure);
-    
-    log_print (&log_structure, LOG_URGENCY_DEBUG,
-               "soundblaster established connection.");
-  
-    /* Receive incoming requests. */
-    while (!done)
-    {
-        message_parameter.protocol = IPC_PROTOCOL_NONE;
-        message_parameter.message_class = IPC_CLASS_NONE;
-        message_parameter.length = (sizeof (sound_message_t) +
-                                    MAX_SINGLE_SAMPLE_SIZE);
-        message_parameter.data = data;
-        message_parameter.block = TRUE;
-        
-        if (ipc_receive (ipc_structure.input_mailbox_id, &message_parameter,
-                         NULL) != IPC_RETURN_SUCCESS)
-        {
-            log_print (&log_structure, LOG_URGENCY_ERROR,
-                       "soundblaster mailbox_receive failed.");
-            continue;
-        }
-        
-        switch (message_parameter.message_class)
-        {
-            case IPC_SOUND_REGISTER:
-            {
-                /* FIXME: Do this. */
-                break;
-            }
-            
-            case IPC_SOUND_UNREGISTER:
-            {
-                /* FIXME: Do this. */
-                break;
-            }
-            
-            case IPC_SOUND_CONFIGURE_PLAYMODE:
-            {
-                /* FIXME: Do we really need this? hmm...OSS uses a similar */
-            }
-            
-            case IPC_SOUND_PLAY_SAMPLE:
-            {
-                uint16_t time_constant;
-                uint16_t length;
-                sound_message_t *sound_message = (sound_message_t *) data;
-                
-                /* If parameters aren't checked, nobody wants to play
-                   the game. */
-                /* FIXME: Check parameters here or in library. */
-                
-                /* Turn on speaker. It takes some time for the
-                   soundblaster to actually turn it on, so do it first
-                   just in case. */
-                dsp_write (DSP_SPEAKER_ON);
-                
-                /* Copy sample data to dma buffer. */
-                memory_copy (dma_buffer, sound_message->data,
-                             sound_message->length);
-                
-                log_print (&log_structure, LOG_URGENCY_DEBUG, 
-                           "Starting DMA transfer");
-                
-                /* Program DMA for transfer. */
-                if (system_call_dma_transfer (soundblaster_device.dma_channel,
-                                              sound_message->length,
-                                              STORM_DMA_OPERATION_READ,
-                                              STORM_DMA_TRANSFER_MODE_SINGLE,
-                                              STORM_DMA_AUTOINIT_DISABLE) != TRUE)
-                {
-                    log_print (&log_structure, LOG_URGENCY_INFORMATIVE,
-                               "DMA transfer failed!!.");
-                }
-                
-                /* Program Sound Blaster time constant. */
-                time_constant = 65536 - (256000000 / sound_message->frequency);
-                dsp_write (DSP_SET_TIME_CONSTANT);
-                dsp_write ((uint8_t)(time_constant >> 8));
-                
-                /* Program Sound Blaster buffer length (triggers an
-                   interrupt after 'length' bytes transferred) */
-                length = sound_message->length-1;
-                dsp_write (DSP_MODE_DMA_8BIT_DAC);
-                dsp_write ((uint8_t) length);
-                dsp_write ((uint8_t) (length >> 8));
-                
-                /* Sample is hopefully being played now...so set some
-                   variables. */
-                soundblaster_event.is_playing = TRUE;
-                soundblaster_event.streaming = FALSE;
-                
-                break;
-            }
-            
-            case IPC_SOUND_PLAY_STREAM:
-            {
-                uint16_t time_constant;
-                uint16_t length;
-                sound_message_t *sound_message = (sound_message_t *) data;
-                
-                /* If parameters aren't checked, nobody wants to play
-                   the game. */
-                /* FIXME: Check parameters here or in library */
-                double_buffer[0].data = &dma_buffer[0];
-                double_buffer[1].data = &dma_buffer[sound_message->length];
-                
-                /* Fill double_buffer[current_buffer].data and then switch to
-                   the other double buffer. */
-                memory_copy (double_buffer[current_buffer].data,
-                             sound_message->data,
-                             sound_message->length);
-                double_buffer[current_buffer].is_full = TRUE;
-                
-                /* Must be a better way to just switch 1->0 and vice
-                   versa. Nemo: Is this good enough? */
-                current_buffer ^= 1;
-                
-                if (!soundblaster_event.is_playing)
-                {
-                    /* If both buffers are full, and we have not yet started
-                       playing, it is time to do some hat tricks! */
-                    if (double_buffer[0].is_full && double_buffer[1].is_full)
-                    {
-                        /* Turn on speaker. It takes some time for the
-                           soundblaster to actually turn it on, so do
-                           it first just in case. */
-                        dsp_write (DSP_SPEAKER_ON);
-                        
-                        log_print (&log_structure, LOG_URGENCY_DEBUG, 
-                                   "Starting DMA transfer");
-                        
-                        /* Program DMA for transfer. */
-                        if (system_call_dma_transfer (soundblaster_device.dma_channel,
-                                                      sound_message->length * 2,
-                                                      STORM_DMA_OPERATION_READ,
-                                                      STORM_DMA_TRANSFER_MODE_SINGLE,
-                                                      STORM_DMA_AUTOINIT_ENABLE) != TRUE)
-                        {
-                            log_print (&log_structure, LOG_URGENCY_ERROR,
-                                       "DMA transfer failed.");
-                        }
-                        
-                        /* Program Sound Blaster time constant. */
-                        time_constant = 65536 - (256000000 / 
-                                                 sound_message->frequency);
-                        dsp_write (DSP_SET_TIME_CONSTANT);
-                        dsp_write ((uint8_t) (time_constant >> 8));
-                        
-                        /* Program Sound Blaster buffer length (triggers an
-                           interrupt after 'length' bytes transferred). */
-                        length = sound_message->length - 1;
-                        dsp_write (DSP_SET_DMA_BLOCK_SIZE);
-                        dsp_write ((uint8_t) length);
-                        dsp_write ((uint8_t) (length >> 8));
-                        
-                        dsp_write (DSP_MODE_DMA_8BIT_AUTOINIT_DAC);
-                        
-                        /* Now the sample is being played hopefully,
-                           so set some variables. */
-                        soundblaster_event.is_playing = TRUE;
-                        soundblaster_event.streaming = TRUE;
-                    }
-                    else
-                    {
-                        /* Trigger the client to send more data because both
-                           double_buffers are not full. */
-                        unsigned char dummy_data[0];
-                        
-                        message_parameter.protocol = IPC_PROTOCOL_NONE;
-                        message_parameter.message_class = IPC_CLASS_NONE;
-                        message_parameter.length = 0;
-                        message_parameter.data = dummy_data;
-                        message_parameter.block = FALSE;
-                        
-                        if (ipc_send (ipc_structure.output_mailbox_id,
-                                      &message_parameter) != IPC_RETURN_SUCCESS)
-                        {
-                            log_print (&log_structure, LOG_URGENCY_ERROR,
-                                       "soundblaster mailbox_send failed.");
-                            continue;
-                        }
-                    }
-                }
-                break;
-            }
-            
-            default:
-            {
-                log_print_formatted (&log_structure, LOG_URGENCY_ERROR,
-                                     "MESSAGE_CLASS: %x",
-                                     message_parameter.message_class);
-                log_print (&log_structure, LOG_URGENCY_ERROR, "Unknown command.");
-                break;
-            }
-        }
+        soundblaster_event.is_playing = FALSE;
+        dsp_write (DSP_SPEAKER_OFF);
     }
 }
