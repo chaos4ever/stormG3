@@ -1,4 +1,4 @@
-/* $chaos: process.c,v 1.3 2002/10/15 21:56:07 per Exp $ */
+/* $chaos: process.c,v 1.4 2002/10/17 21:28:58 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 /* Abstract: Process support. */
 
@@ -218,7 +218,7 @@ return_t process_create (process_id_t process_id UNUSED,
        when going into an interrupt for example). */
     thread->tss->ss0 = KERNEL_DATA_SELECTOR;
     void *stack;
-    return_value = memory_physical_allocate_for_process ((void *) &stack, ((process_t *) thread->parent)->id);
+    return_value = memory_physical_allocate ((void *) &stack, 1, ((process_t *) thread->parent)->id);
     if (return_value != STORM_RETURN_SUCCESS)
     {
         DEBUG_HALT ("Failed allocating privileged stack for process.");
