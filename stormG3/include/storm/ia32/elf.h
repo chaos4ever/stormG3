@@ -1,4 +1,4 @@
-/* $chaos: elf.h,v 1.12 2002/10/10 13:57:06 per Exp $ */
+/* $chaos: elf.h,v 1.13 2002/10/15 10:04:11 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -346,7 +346,7 @@ typedef struct
      * string table. 
      */
     uint16_t section_string_index;
-} elf_header_t __attribute__ ((packed));
+} elf_header_t PACKED;
 
 /**
  * @brief       An ELF section header entry. 
@@ -468,7 +468,7 @@ typedef struct
      * defined in relation to. 
      */
     uint16_t section_header;
-} elf_symbol_t __attribute__ ((packed));
+} elf_symbol_t PACKED;
 
 /** 
  * @brief A relocation table entry.
