@@ -1,4 +1,4 @@
-/* $chaos: video.h,v 1.1 2002/07/11 21:43:44 per Exp $ */
+/* $chaos: video.h,v 1.2 2002/10/04 19:00:58 per Exp $ */
 /* Abstract: Video library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -9,7 +9,7 @@
 #define __VIDEO_VIDEO_H__
 
 #include <storm/storm.h>
-#include <video/defines.h>
+#include <protocol/video.h>
 #include <video/return_values.h>
 #include <video/types.h>
 #include <video/functions.h>
