@@ -1,4 +1,4 @@
-/* $chaos: exception.c,v 1.13 2002/08/08 23:15:44 hal Exp $ */
+/* $chaos: exception.c,v 1.14 2002/10/04 19:01:21 per Exp $ */
 /* Abstract: Exception handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -146,7 +146,8 @@ void exception_stack_fault (cpu_register_t registers)
 
 void exception_general_protection_fault (cpu_register_t registers)
 {
-    debug_print ("General protection fault.\n");
+    debug_print ("General protection fault, error code: %x.\n",
+                 registers.error_code);
     dump_registers (&registers);
     while (TRUE);
 }
