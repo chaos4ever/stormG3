@@ -1,4 +1,4 @@
-/* $chaos: types.h,v 1.16 2002/10/28 22:07:49 per Exp $ */
+/* $chaos: types.h,v 1.17 2002/10/29 20:49:47 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -54,7 +54,7 @@ typedef uint64_t        service_id_t;
 /**
  * @brief               An ID for a connection to a service provider.
  */
-typedef unsigned int    service_connection_id_t;
+typedef uint64_t        service_connection_id_t;
 
 /**
  * @brief               A boolean value.
