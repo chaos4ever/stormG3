@@ -1,4 +1,4 @@
-/* $chaos: types.h,v 1.14 2002/10/28 07:51:37 per Exp $ */
+/* $chaos: types.h,v 1.15 2002/10/28 21:50:04 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -104,5 +104,19 @@ typedef struct
      */
     service_info_t      service_info;
 } service_t;
+
+/**
+ * @brief               This structure is used when looking up services.
+ */
+typedef struct
+{
+    // FIXME: Document this.
+    const char          *name;
+    const char          *vendor;
+    const char          *model;
+    const char          *id;
+    unsigned int        major_version;
+    unsigned int        minor_version;
+} service_lookup_t;
 
 #endif /* !__STORM_TYPES_H__ */
