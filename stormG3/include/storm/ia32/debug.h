@@ -1,4 +1,4 @@
-/* $chaos: debug.h,v 1.5 2002/06/13 19:41:25 per Exp $ */
+/* $chaos: debug.h,v 1.6 2002/06/17 18:51:22 per Exp $ */
 /* Abstract: Debug declarations. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -14,8 +14,18 @@
 #include <storm/types.h>
 
 /* OpenBSD rules. */
-#define DEBUG_ATTRIBUTE_TEXT            0x17
-#define DEBUG_ATTRIBUTE_BACKGROUND      0x07
+#ifdef NETBSD_COLORS
+#  define DEBUG_ATTRIBUTE_TEXT           0x02
+#  define DEBUG_ATTRIBUTE_BACKGROUND     0x07
+#else
+# if defined(FREEBSD_COLORS)
+#  define DEBUG_ATTRIBUTE_TEXT           0x0F
+#  define DEBUG_ATTRIBUTE_BACKGROUND     0x07
+# else /* OpenBSD is the default. */
+#  define DEBUG_ATTRIBUTE_TEXT            0x17
+#  define DEBUG_ATTRIBUTE_BACKGROUND      0x07
+# endif
+#endif
 
 #define DEBUG_SCREEN_WIDTH              80
 #define DEBUG_SCREEN_HEIGHT             25
