@@ -1,4 +1,4 @@
-/* $chaos: exception.c,v 1.19 2002/10/21 20:33:31 per Exp $ */
+/* $chaos: exception.c,v 1.20 2002/10/22 19:40:51 per Exp $ */
 /* Abstract: Exception handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -166,7 +166,6 @@ void exception_page_fault (cpu_register_t registers)
     if (cr2 >= STACK_BASE - (2 * MIB))
     {
         void *pointer;
-        debug_print ("%x\n", current_process->id);
         return_t return_value = memory_physical_allocate (&pointer, 1, 
                                                           current_process->id);
         if (return_value != STORM_RETURN_SUCCESS)
