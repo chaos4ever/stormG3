@@ -34,7 +34,7 @@ return_t system_call (uint32_t *stack)
                capability? FIXME: I believe there is no point in this;
                it is not a security risk to be able to list service
                providers. */
-            if (capability_has (PROCESS_ID_NONE, current_process,
+            if (capability_has (PROCESS_ID_NONE, dispatch_current_process,
                                 "kernel", "service_lookup", &result) !=
                 STORM_RETURN_SUCCESS || !result)
             {
@@ -64,7 +64,7 @@ return_t system_call (uint32_t *stack)
         {
             bool result;
 
-            if (capability_has (PROCESS_ID_NONE, current_process,
+            if (capability_has (PROCESS_ID_NONE, dispatch_current_process,
                                 "kernel", "service_connect", &result) !=
                 STORM_RETURN_SUCCESS || !result)
             {
