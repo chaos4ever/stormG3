@@ -1,4 +1,4 @@
-/* $chaos: process.c,v 1.8 2002/10/23 21:20:29 per Exp $ */
+/* $chaos: process.c,v 1.9 2002/10/24 21:28:37 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 /* Abstract: Process support. */
 
@@ -67,7 +67,8 @@ void process_init (void)
     process->thread_list = thread;
     process->lock = SPIN_UNLOCKED;
     process_list = process;
-    
+    current_process = process;
+
     /* The kernel process gets the super_user privilege. That way, the
        first process (usually the boot program) will inherit these
        privileges so that it can do everything that it needs. */
@@ -151,6 +152,12 @@ return_t process_precreate (process_id_t *process_id,
     process->active = FALSE; /* Make sure the dispatcher won't take it
                                 and try to run it. */
     process->next = NULL;
+    return_value = capability_clone (&process->capability_list, 
+                                     current_process->capability_list);
+    if (return_value != STORM_RETURN_SUCCESS)
+    {
+        return return_value;
+    }
 
     /* Lock and update the structure. */
     spin_lock (&process_list_lock);
