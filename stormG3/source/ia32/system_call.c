@@ -1,4 +1,4 @@
-/* $chaos: system_call.c,v 1.1 2002/10/24 21:31:35 per Exp $ */
+/* $chaos: system_call.c,v 1.2 2002/10/24 22:13:38 per Exp $ */
 /* Abstract: */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -22,6 +22,8 @@ void system_call_init (void)
 /* The high-level system call handler, called from the low-level function. */
 void system_call (uint32_t *stack)
 {
+    /* stack[0] is the number of arguments, stack[1..n] is the
+       arguments. */
     bool result;
     return_t return_value = capability_has (0, current_process, "kernel",
                                             "debug_print", &result);
@@ -31,8 +33,8 @@ void system_call (uint32_t *stack)
     {
         //        address_t esp = cpu_get_esp ();
         //        debug_memory_dump ((uint32_t *) esp, 17);
-        debug_print ("We have a system call! %x %x", cpu_get_esp(), *stack);
-        debug_print ("This is the string: %s\n", *stack);
+        debug_print ("We have a system call! %x", stack[0]);
+        debug_print ("This is the string: %s\n", stack[1]);
     }
     else
     {

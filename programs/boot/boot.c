@@ -1,4 +1,4 @@
-/* $chaos: boot.c,v 1.1 2002/10/06 09:43:04 per Exp $ */
+/* $chaos: boot.c,v 1.2 2002/10/24 22:15:57 per Exp $ */
 /* Abstract: Boot program (somewhat like init in Unix systems). */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -35,6 +35,7 @@ int main (int argc UNUSED, char **argv UNUSED)
     //    p += 8.983293;
     q(p);
     asm("push test\n"
+        "pushl $0x1\n"
         "int $0x88");
     // while (TRUE);
     return 0;
