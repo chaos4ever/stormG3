@@ -1,19 +1,18 @@
-/* $chaos: memory_global.h,v 1.6 2002/10/08 20:16:14 per Exp $ */
+/* $chaos: memory_global.h,v 1.7 2002/10/09 19:02:38 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
 
 /**
- * @file memory_global.h
- * @brief Global memory allocation. 
+ * @file                memory_global.h
+ * @brief               Global memory allocation. 
  */
 
 #ifndef __STORM_IA32_MEMORY_GLOBAL_H__
 #define __STORM_IA32_MEMORY_GLOBAL_H__
 
 #include <storm/types.h>
-#ifdef STORM
 #include <storm/magic_cookies.h>
 
 /**
@@ -75,17 +74,5 @@ typedef struct
  * @brief Initialize global memory allocation. 
  */
 extern void memory_global_init (void);
-
-#endif /* STORM */
-
-/**
- * @brief Allocate global memory. 
- */
-return_t memory_global_allocate (void **pointer, unsigned int size);
-
-/**
- * @brief Deallocate global memory. 
- */
-return_t memory_global_deallocate (void *pointer);
 
 #endif /* !__STORM_IA32_MEMORY_GLOBAL_H__ */
