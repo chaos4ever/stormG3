@@ -1,4 +1,4 @@
-/* $chaos: storm.h,v 1.1 2002/10/22 20:57:27 per Exp $ */
+/* $chaos: storm.h,v 1.2 2002/10/22 21:14:45 per Exp $ */
 /* Abstract: IA32-specific includes. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -7,7 +7,8 @@
 
 /**
  * @file             ia32/storm.h
- * @brief            IA32-specific include files are included through this file.
+ * @brief            Modules get IA32-specific include files through this
+ *                   file. (included from storm/storm.h)
  */
 
 #ifndef __STORM_IA32_STORM_H__
@@ -16,5 +17,6 @@
 #include <storm/ia32/types.h>
 #include <storm/ia32/bit.h>
 #include <storm/ia32/port.h>
+#include <storm/ia32/spinlock.h>
 
 #endif /* !__STORM_IA32_STORM_H__ */
