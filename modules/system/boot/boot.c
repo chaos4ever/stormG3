@@ -1,4 +1,4 @@
-/* $chaos: boot.c,v 1.6 2002/08/09 06:02:37 per Exp $ */
+/* $chaos: boot.c,v 1.7 2002/08/11 18:34:33 per Exp $ */
 /* Abstract: Boot module. The boot module takes care of setting up the
    system (opening virtual consoles, launching programs, etc). */
 /* Author: Per Lundberg <per@chaosdev.org> */
