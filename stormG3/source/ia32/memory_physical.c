@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.7 2002/06/04 22:24:43 per Exp $ */
+/* $chaos: memory_physical.c,v 1.2 2002/06/05 19:55:32 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -52,6 +52,8 @@ void memory_physical_init ()
         first_free = next;
         free_pages++;
     }
+
+    debug_print ("Free memory: %u KiB\n", free_pages * 4);
 }
 
 /* Allocate a number of pages. */
