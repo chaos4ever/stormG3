@@ -1,9 +1,9 @@
-/* $chaos: irq.h,v 1.5 2002/06/18 21:58:04 per Exp $ */
+/* $chaos: irq.h,v 1.6 2002/07/21 09:55:57 per Exp $ */
 /* Abstract: IRQ handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __STORM_IA32_IRQ_H__
 #define __STORM_IA32_IRQ_H__

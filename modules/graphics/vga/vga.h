@@ -1,9 +1,9 @@
-/* $chaos: vga.h,v 1.2 2002/07/11 21:45:50 per Exp $ */
+/* $chaos: vga.h,v 1.1 2002/08/13 19:14:23 per Exp $ */
 /* Abstract: VGA header file. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2000-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __VGA_H__
 #define __VGA_H__

@@ -1,11 +1,11 @@
-/* $chaos: soundblaster.c,v 1.4 2002/08/09 06:02:34 per Exp $ */
+/* $chaos: soundblaster.c,v 1.1 2002/08/13 19:17:27 per Exp $ */
 /* Abstract: Sound Blaster server */
 
 /* Authors: Per Lundberg <per@chaosdev.org> 
    Erik Moren <nemo@chaosdev.org> */
 
 /* Copyright 1999-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 /* Most of the information in this server is based on information
    found in sblaster.doc, which can be found in the same directory as

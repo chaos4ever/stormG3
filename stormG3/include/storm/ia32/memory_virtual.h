@@ -1,9 +1,9 @@
-/* $chaos: memory_physical.h,v 1.1 2002/06/05 19:55:32 per Exp $ */
+/* $chaos: memory_virtual.h,v 1.1 2002/06/09 15:04:52 per Exp $ */
 /* Abstract: Virtual memory prototypes and data structures. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __STORM_IA32_MEMORY_VIRTUAL_H__
 #define __STORM_IA32_MEMORY_VIRTUAL_H__

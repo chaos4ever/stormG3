@@ -1,10 +1,10 @@
-/* $chaos: multiboot.c,v 1.6 2002/06/16 19:19:41 per Exp $ */
+/* $chaos: multiboot.c,v 1.7 2002/08/07 18:38:43 per Exp $ */
 /* Abstract: Parse multiboot header. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING.
+/* Use freely under the terms listed in the file LICENSE.
    reference documentation. */
 
 #include <storm/ia32/debug.h>

@@ -1,9 +1,9 @@
-/* $chaos: descriptor.h,v 1.1 2002/06/12 20:41:01 per Exp $ */
+/* $chaos: descriptor.h,v 1.2 2002/08/11 17:16:49 per Exp $ */
 /* Abstract: The descriptor structure. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __STORM_IA32_DESCRIPTOR_H__
 #define __STORM_IA32_DESCRIPTOR_H__

@@ -1,9 +1,9 @@
-/* $chaos: functions.h,v 1.1 2002/06/22 22:45:39 per Exp $ */
+/* $chaos: functions.h,v 1.2 2002/06/23 20:33:58 per Exp $ */
 /* Abstract: Function prototypes for the Unicode library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2000-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __LIBRARY_UNICODE_FUNCTIONS_H__
 #define __LIBRARY_UNICODE_FUNCTIONS_H__

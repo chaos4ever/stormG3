@@ -1,9 +1,9 @@
-/* $chaos: ramdisk.S,v 1.4 2002/07/06 07:55:16 per Exp $ */
+/* $chaos: ramdisk.S,v 1.1 2002/07/09 10:07:38 per Exp $ */
 /* Abstract: The ramdisk. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #define ASSEMBLER			1
 #include "ramdisk.h"

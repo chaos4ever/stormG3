@@ -1,9 +1,9 @@
-/* $chaos: ramdisk.h,v 1.1 2002/07/06 09:09:35 per Exp $ */
+/* $chaos: ramdisk.h,v 1.2 2002/07/21 12:32:10 per Exp $ */
 /* Abstract: Ramdisk header file. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2000-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __RAMDISK_H__
 #define __RAMDISK_H__

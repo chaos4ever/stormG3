@@ -1,9 +1,9 @@
-/* $chaos: module.c,v 1.21 2002/08/09 06:33:54 per Exp $ */
+/* $chaos: module.c,v 1.22 2002/08/11 18:39:58 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/ia32/debug.h>
 #include <storm/ia32/dma.h>

@@ -1,10 +1,10 @@
-/* $chaos$ */
+/* $chaos: 3c509.h,v 1.1 2002/07/28 11:21:49 johannes Exp $ */
 /* Abstract: Headerfile for the 3c509 module. */
 /* Author: Johannes Lundberg <jojo@chaosdev.org>
            Håkan Larsson     <trc@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __3C509_H__
 #define __3C509_H__

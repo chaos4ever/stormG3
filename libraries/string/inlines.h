@@ -1,9 +1,9 @@
-/* $chaos: inlines.h,v 1.3 2002/05/23 11:14:38 per Exp $ */
+/* $chaos: inlines.h,v 1.1 2002/06/23 20:33:12 per Exp $ */
 /* Abstract: Inlined functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2000-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __LIBRARY_STRING_INLINES_H__
 #define __LIBRARY_STRING_INLINES_H__

@@ -1,9 +1,9 @@
-/* $chaos: memory_global.c,v 1.5 2002/08/08 23:18:58 hal Exp $ */
+/* $chaos: memory_global.c,v 1.6 2002/08/09 06:16:18 per Exp $ */
 /* Abstract: Global memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/return_value.h>
 #include <storm/ia32/debug.h>

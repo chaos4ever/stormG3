@@ -1,9 +1,9 @@
-/* $chaos: service.h,v 1.4 2002/06/24 21:35:40 per Exp $ */
+/* $chaos: service.h,v 1.5 2002/08/08 23:14:19 hal Exp $ */
 /* Abstract: Service support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __STORM_IA32_SERVICE_H__
 #define __STORM_IA32_SERVICE_H__

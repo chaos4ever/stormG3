@@ -1,9 +1,9 @@
-/* $chaos: block.c,v 1.2 2002/07/21 12:35:30 per Exp $ */
+/* $chaos: block.c,v 1.3 2002/08/09 05:59:38 per Exp $ */
 /* Abstract: Block library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <block/block.h>
 

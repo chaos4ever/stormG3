@@ -1,9 +1,9 @@
-/* $chaos: exception_lowlevel.S,v 1.3 2002/06/13 22:10:25 per Exp $ */
+/* $chaos: exception_lowlevel.S,v 1.4 2002/06/14 22:47:27 per Exp $ */
 /* Abstract: Low-level exception handlers. Push registers etc. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 .globl exception_divide_error_fault_lowlevel
 .globl exception_debug_trap_lowlevel

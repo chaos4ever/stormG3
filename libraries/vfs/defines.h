@@ -1,9 +1,9 @@
-/* $chaos: defines.h,v 1.2 2002/07/28 19:30:54 per Exp $ */
+/* $chaos: defines.h,v 1.3 2002/08/04 09:28:43 per Exp $ */
 /* Abstract: Defines used by the virtual filesystem library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __VFS_DEFINES_H__
 #define __VFS_DEFINES_H__

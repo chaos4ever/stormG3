@@ -1,9 +1,9 @@
-/* $chaos: vgamode.c,v 1.3 2002/07/11 08:15:21 per Exp $ */
+/* $chaos: vgamode.c,v 1.1 2002/08/13 19:14:23 per Exp $ */
 /* Abstract: Mode setting code. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 /* Much of this code was taken from vgadrv.c in svgalib -- thanks to
    you guys! */

@@ -1,9 +1,9 @@
-/* $chaos: vfs.c,v 1.3 2002/07/31 21:18:55 per Exp $ */
+/* $chaos: vfs.c,v 1.4 2002/08/09 05:59:42 per Exp $ */
 /* Abstract: Virtual filesystem library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <vfs/vfs.h>
 

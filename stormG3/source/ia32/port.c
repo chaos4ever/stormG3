@@ -1,9 +1,9 @@
-/* $chaos: port.c,v 1.1 2002/06/18 19:40:47 per Exp $ */
+/* $chaos: port.c,v 1.2 2002/08/08 23:16:26 hal Exp $ */
 /* Abstract: I/O port management. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/ia32/port.h>
 

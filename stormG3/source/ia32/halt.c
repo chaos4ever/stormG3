@@ -1,9 +1,9 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: halt.c,v 1.1 2002/08/11 18:39:02 per Exp $ */
 /* Abstract: Functions for halting the machine. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/return_value.h>
 #include <storm/ia32/cpu.h>

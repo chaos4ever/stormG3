@@ -1,9 +1,9 @@
-/* $chaos: types.h,v 1.1 2002/06/23 20:33:11 per Exp $ */
+/* $chaos: types.h,v 1.1 2002/07/11 21:43:44 per Exp $ */
 /* Abstract: Video library types. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __LIBRARY_VIDOE_TYPES_H__
 #define __LIBRARY_VIDEO_TYPES_H__

@@ -1,9 +1,9 @@
-/* $chaos: controller.c,v 1.5 2002/06/23 20:37:43 per Exp $ */
+/* $chaos: controller.c,v 1.1 2002/08/11 21:13:31 per Exp $ */
 /* Abstract: Common code for the keyboard server. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2000-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include "controller.h"
 #include "keyboard.h"

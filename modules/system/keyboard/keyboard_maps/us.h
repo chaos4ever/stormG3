@@ -1,9 +1,9 @@
-/* $chaos: us.h,v 1.2 2002/06/18 09:37:50 per Exp $ */
+/* $chaos: us.h,v 1.1 2002/08/11 21:13:32 per Exp $ */
 /* Abstract: A US keyboard translation map for chaos. */
 /* Author: Andreas Zetterlund <metal_leif@mailcity.com */
 
 /* Copyright 1998-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __US_H__
 #define __US_H__

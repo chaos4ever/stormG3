@@ -1,10 +1,10 @@
-/* $chaos: initial_ramdisk.c,v 1.5 2002/07/24 08:28:24 per Exp $ */
+/* $chaos: initial_ramdisk.c,v 1.6 2002/08/09 06:02:36 per Exp $ */
 /* Abstract: Initial ramdisk server. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
             Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 1999-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/storm.h>
 #include <block/block.h>

@@ -1,10 +1,10 @@
-/* $chaos: multiboot.h,v 1.5 2002/06/16 18:32:56 per Exp $ */
+/* $chaos: multiboot.h,v 1.6 2002/08/11 17:15:29 per Exp $ */
 /* Abstract: Multiboot stuff. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __STORM_IA32_MULTIBOOT_H__
 #define __STORM_IA32_MULTIBOOT_H__

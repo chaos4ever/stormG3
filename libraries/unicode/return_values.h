@@ -1,9 +1,9 @@
-/* $chaos: return_values.h,v 1.1 2002/06/22 22:45:39 per Exp $ */
+/* $chaos: return_values.h,v 1.2 2002/06/23 20:34:14 per Exp $ */
 /* Abstract: Return values for unicode functions. */
 /* Author: Anders Ohrt <doa@chaosdev.org> */
 
 /* Copyright 2000-2002 chaos development */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __LIBRARY_UNICODE_RETURN_VALUES_H__
 #define __LIBRARY_UNICODE_RETURN_VALUES_H__

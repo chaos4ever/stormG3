@@ -1,9 +1,9 @@
-/* $chaos: minix.c,v 1.8 2002/08/31 10:04:19 per Exp $ */
+/* $chaos: minix.c,v 1.9 2002/09/01 21:03:26 per Exp $ */
 /* Abstract: Implementation of the Minix file system. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/storm.h>
 #include <block/block.h>

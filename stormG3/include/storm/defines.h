@@ -1,10 +1,10 @@
-/* $chaos: defines.h,v 1.3 2002/06/05 18:17:42 per Exp $ */
+/* $chaos: defines.h,v 1.4 2002/06/17 22:55:07 per Exp $ */
 /* Abstract: Generic storm defines. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __STORM_DEFINES_H__
 #define __STORM_DEFINES_H__

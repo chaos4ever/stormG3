@@ -1,10 +1,10 @@
-/* $chaos: xemacs-script,v 1.6 2002/05/24 17:34:57 per Exp $ */
+/* $chaos: avltree.h,v 1.2 2002/05/27 19:08:04 per Exp $ */
 /* Abstract: Queue code, used by AVL library. */
 /* Author: Per Lundberg <per@chaosdev.org>
    Georg Kraml <georg@purists.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __STORM_AVLTREE_H__
 #define __STORM_AVLTREE_H__

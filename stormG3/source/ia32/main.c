@@ -1,4 +1,4 @@
-/* $chaos: main.c,v 1.22 2002/08/08 20:18:02 per Exp $ */
+/* $chaos: main.c,v 1.23 2002/08/08 23:15:44 hal Exp $ */
 /* Abstract: This is the startup point of storm. It is executed right
    after the assembly language init code has set up the GDT, kernel
    stack, etc. Here, we initialise everything in the storm, like
@@ -10,7 +10,7 @@
            Henrik Hallin <hal@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING.
+/* Use freely under the terms listed in the file LICENSE.
    reference documentation. */
 
 #include <storm/config.h>

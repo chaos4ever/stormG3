@@ -1,10 +1,10 @@
-/* $chaos: keyboard.c,v 1.5 2002/08/20 18:22:41 per Exp $ */
+/* $chaos: keyboard.c,v 1.6 2002/08/20 18:53:18 per Exp $ */
 /* Abstract: Keyboard module for chaos. */
 /* Authors: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
 
 /* Copyright 1999-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 /* Parts of this file was inspired by the Linux keyboard support. */
 

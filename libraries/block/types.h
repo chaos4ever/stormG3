@@ -1,9 +1,9 @@
-/* $chaos: types.h,v 1.1 2002/07/06 07:58:49 per Exp $ */
+/* $chaos: types.h,v 1.2 2002/07/06 08:29:22 per Exp $ */
 /* Abstract: Types used by the block library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __BLOCK_TYPES_H__
 #define __BLOCK_TYPES_H__

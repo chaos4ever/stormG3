@@ -1,10 +1,10 @@
-# $chaos: modules.make,v 1.5 2002/06/18 22:19:17 per Exp $
+# $chaos: libraries.make,v 1.1 2002/06/21 08:01:02 per Exp $
 
 # Abstract: Modules makefile
 # Authors: Per Lundberg <per@chaosdev.org>
 
 # Copyright 2002 chaos development.
-# Use freely under the terms listed in the file COPYING.
+# Use freely under the terms listed in the file LICENSE.
 
 # Settings.
 # CC = i686-storm-chaos-gcc

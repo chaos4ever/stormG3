@@ -1,10 +1,10 @@
-/* $chaos: gdt.h,v 1.4 2002/06/14 21:53:28 per Exp $ */
+/* $chaos: gdt.h,v 1.5 2002/06/15 14:38:20 per Exp $ */
 /* Abstract: GDT definitions. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __STORM_IA32_GDT_H__
 #define __STORM_IA32_GDT_H__

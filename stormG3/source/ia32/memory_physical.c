@@ -1,9 +1,9 @@
-/* $chaos: memory_physical.c,v 1.18 2002/08/08 23:17:33 hal Exp $ */
+/* $chaos: memory_physical.c,v 1.19 2002/08/09 06:36:12 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/return_value.h>
 #include <storm/ia32/defines.h>

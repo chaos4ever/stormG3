@@ -1,9 +1,9 @@
-/* $chaos: defines.h,v 1.2 2002/07/10 21:55:18 per Exp $ */
+/* $chaos: defines.h,v 1.3 2002/07/21 12:13:50 per Exp $ */
 /* Abstract: Defines used by the console library. */
 /* Author: Per Lundberg <plundis@chaosdev.org> */
 
 /* Copyright 1999-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __CONSOLE_DEFINES_H__
 #define __CONSOLE_DEFINES_H__

@@ -1,9 +1,9 @@
-/* $chaos: functions.h,v 1.3 2002/05/23 11:14:38 per Exp $ */
+/* $chaos: functions.h,v 1.1 2002/06/23 20:33:12 per Exp $ */
 /* Abstract: Function prototypes. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2000-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __LIBRARY_STRING_FUNCTIONS_H__
 #define __LIBRARY_STRING_FUNCTIONS_H__

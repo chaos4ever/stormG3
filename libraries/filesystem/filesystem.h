@@ -1,10 +1,10 @@
-/* $chaos: block.h,v 1.2 2002/07/06 08:29:46 per Exp $ */
+/* $chaos: filesystem.h,v 1.1 2002/07/21 12:38:40 per Exp $ */
 /* Abstract: Function prototypes and structure definitions for the
    filesystem library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __FILESYSTEM_FILESYSTEM_H__
 #define __FILESYSTEM_FILESYSTEM_H__

@@ -1,9 +1,9 @@
-/* $chaos: time.h,v 1.1 2002/08/15 20:59:40 per Exp $ */
+/* $chaos: time.h,v 1.2 2002/08/15 22:21:16 per Exp $ */
 /* Abstract: Time module header file. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __TIME_H__
 #define __TIME_H__

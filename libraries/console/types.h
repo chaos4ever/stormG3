@@ -1,9 +1,9 @@
-/* $chaos: types.h,v 1.2 2002/07/10 21:55:19 per Exp $ */
+/* $chaos: types.h,v 1.3 2002/07/21 12:14:23 per Exp $ */
 /* Abstract: Console library types. */
 /* Author: Per Lundberg <per<@chaosdev.org> */
 
 /* Copyright 2000-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __CONSOLE_TYPES_H__
 #define __CONSOLE_TYPES_H__

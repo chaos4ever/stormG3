@@ -1,9 +1,9 @@
-/* $chaos: elf.h,v 1.7 2002/06/20 20:32:37 per Exp $ */
+/* $chaos: elf.h,v 1.8 2002/06/20 20:40:19 per Exp $ */
 /* Abstract: ELF file format. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 /* More information about the ELF format can be found in the ELF
    specification, as published by the Tool Interface Standards (TIS):

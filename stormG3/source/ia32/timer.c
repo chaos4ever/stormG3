@@ -1,9 +1,9 @@
-/* $chaos: timer.c,v 1.1 2002/06/18 19:42:00 per Exp $ */
+/* $chaos: timer.c,v 1.2 2002/06/18 22:16:20 per Exp $ */
 /* Abstract: Timer support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/ia32/bit.h>
 #include <storm/ia32/debug.h>

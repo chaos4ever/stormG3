@@ -1,9 +1,9 @@
-/* $chaos: functions.h,v 1.1 2002/06/24 21:36:43 per Exp $ */
+/* $chaos: functions.h,v 1.2 2002/08/09 05:59:39 per Exp $ */
 /* Abstract: Function definitions for the console library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 1999-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __LIBRARY_CONSOLE_FUNCTIONS_H__
 #define __LIBRARY_CONSOLE_FUNCTIONS_H__

@@ -1,10 +1,10 @@
-/* $chaos: debug.h,v 1.9 2002/08/10 11:11:16 per Exp $ */
+/* $chaos: debug.h,v 1.10 2002/08/11 14:29:31 per Exp $ */
 /* Abstract: Debug declarations. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __STORM_IA32_DEBUG_H__
 #define __STORM_IA32_DEBUG_H__

@@ -1,10 +1,10 @@
-# $chaos: Conscript,v 1.2 2002/07/12 09:15:50 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.3 2002/08/13 22:04:04 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the 3c509 module.
 # Author: Per Lundberg <per@chaosdev.org>
 
 # Copyright 2002 chaos development.
-# Use freely under the terms listed in the file COPYING.
+# Use freely under the terms listed in the file LICENSE.
 
 $module_binary = '3c509.so';
 

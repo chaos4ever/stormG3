@@ -1,10 +1,10 @@
-# $chaos: Construct,v 1.11 2002/08/13 22:04:01 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.12 2002/08/16 10:26:47 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the modules.
 # Author: Per Lundberg <per@chaosdev.org>
 
 # Copyright 2002 chaos development.
-# Use freely under the terms listed in the file COPYING.
+# Use freely under the terms listed in the file LICENSE.
 
 use POSIX; # for getcwd.
 

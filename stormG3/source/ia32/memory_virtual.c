@@ -1,9 +1,9 @@
-/* $chaos: memory_virtual.c,v 1.2 2002/06/09 15:04:52 per Exp $ */
+/* $chaos: memory_virtual.c,v 1.3 2002/08/08 19:57:13 per Exp $ */
 /* Abstract: Virtual memory routines. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/return_value.h>
 #include <storm/ia32/bit.h>

@@ -1,9 +1,9 @@
-/* $chaos: dma.h,v 1.2 2002/06/19 07:29:42 per Exp $ */
+/* $chaos: dma.h,v 1.3 2002/06/23 20:08:30 per Exp $ */
 /* Abstract: DMA support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __STORM_IA32_DMA_H__
 #define __STORM_IA32_DMA_H__

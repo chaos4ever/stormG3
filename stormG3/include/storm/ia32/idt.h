@@ -1,9 +1,9 @@
-/* $chaos: idt.h,v 1.2 2002/06/14 12:34:27 per Exp $ */
+/* $chaos: idt.h,v 1.3 2002/06/15 14:35:02 per Exp $ */
 /* Abstract: Function prototypes for IDT functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __STORM_IA32_IDT_H__
 #define __STORM_IA32_IDT_H__

@@ -1,9 +1,9 @@
-/* $chaos: memory_physical.h,v 1.6 2002/08/08 20:14:18 per Exp $ */
+/* $chaos: memory_physical.h,v 1.7 2002/08/11 18:41:12 per Exp $ */
 /* Abstract: Physical memory allocation prototypes. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __STORM_IA32_MEMORY_PHYSICAL_H__
 #define __STORM_IA32_MEMORY_PHYSICAL_H__

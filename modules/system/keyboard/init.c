@@ -1,9 +1,9 @@
-/* $chaos: init.c,v 1.9 2002/08/09 06:02:38 per Exp $ */
+/* $chaos: init.c,v 1.1 2002/08/11 21:13:31 per Exp $ */
 /* Abstract: Keyboard initialization code. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2000-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include "controller.h"
 #include "init.h"

@@ -1,10 +1,10 @@
-/* $chaos: console.h,v 1.3 2002/05/23 11:14:26 per Exp $ */
+/* $chaos: console.h,v 1.1 2002/06/24 21:36:43 per Exp $ */
 /* Abstract: Function prototypes and structure definitions for the
    console library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 1999-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __CONSOLE_CONSOLE_H__
 #define __CONSOLE_CONSOLE_H__

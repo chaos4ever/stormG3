@@ -1,10 +1,10 @@
-/* $chaos: gdb.c,v 1.2 2002/08/06 19:39:15 per Exp $ */
+/* $chaos: gdb.c,v 1.3 2002/08/08 10:52:01 per Exp $ */
 /* Abstract: Stub used for GDB remote debugging. */
 /* Author: Andrey Karpov <nd-chaos@narod.ru>
            Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 /****************************************************************************
  *  Header: remcom.c,v 1.34 91/03/09 12:29:49 glenne Exp $

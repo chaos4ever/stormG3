@@ -1,10 +1,10 @@
-/* $chaos$ */
+/* $chaos: types.h,v 1.4 2002/07/12 09:46:23 johannes Exp $ */
 /* Abstract: Ethernet library types. */
 /* Author: Johannes Lundberg <jojo@chaosdev.org>
            Håkan Larsson     <trc@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __ETHERNET_TYPES_H__
 #define __ETHERNET_TYPES_H__

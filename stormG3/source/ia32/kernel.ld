@@ -1,10 +1,10 @@
-/* $chaos: kernel.ld,v 1.2 2002/06/05 18:17:26 per Exp $ */
+/* $chaos: kernel.ld,v 1.3 2002/06/15 14:35:39 per Exp $ */
 /* Abstract: storm linker script. Heavily based on the elf_i386.xbn
    from GNU binutils. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING.
+/* Use freely under the terms listed in the file LICENSE.
    reference documentation. */
 
 OUTPUT_FORMAT("elf32-i386", "elf32-i386",

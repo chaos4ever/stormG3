@@ -1,9 +1,9 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: defines.h,v 1.1 2002/07/21 12:31:37 per Exp $ */
 /* Abstract: Block library defines. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __BLOCK_DEFINES_H__
 #define __BLOCK_DEFINES_H__

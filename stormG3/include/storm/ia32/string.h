@@ -1,9 +1,9 @@
-/* $chaos: string.h,v 1.1 2002/05/25 20:09:39 per Exp $ */
+/* $chaos: string.h,v 1.2 2002/06/05 18:17:43 per Exp $ */
 /* Abstract: Inlined string routines. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __STORM_IA32_STRING_H__
 #define __STORM_IA32_STRING_H__

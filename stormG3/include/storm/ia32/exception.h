@@ -1,9 +1,9 @@
-/* $chaos: exception.h,v 1.3 2002/06/13 22:11:03 per Exp $ */
+/* $chaos: exception.h,v 1.4 2002/06/14 22:47:29 per Exp $ */
 /* Abstract: Exception handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __STORM_IA32_EXCEPTION_H__
 #define __STORM_IA32_EXCEPTION_H__

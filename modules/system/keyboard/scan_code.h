@@ -1,9 +1,9 @@
-/* $chaos: scan_code.h,v 1.2 2002/08/19 20:38:47 per Exp $ */
+/* $chaos: scan_code.h,v 1.3 2002/08/20 06:36:24 per Exp $ */
 /* Abstract: Keyboard scan codes. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2000-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __SCAN_CODE_H__
 #define __SCAN_CODE_H__

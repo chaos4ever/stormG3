@@ -1,9 +1,9 @@
-/* $chaos: log.c,v 1.5 2002/06/24 21:40:30 per Exp $ */
+/* $chaos: log.c,v 1.1 2002/08/13 19:02:06 per Exp $ */
 /* Abstract: Kernel log module. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/storm.h>
 #include <log/log.h>

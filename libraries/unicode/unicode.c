@@ -1,10 +1,10 @@
-/* $chaos: unicode.c,v 1.3 2002/05/23 11:14:39 per Exp $ */
+/* $chaos: unicode.c,v 1.1 2002/06/23 20:34:44 per Exp $ */
 /* Abstract: Unicode library. */
 /* Authors: Anders Ohrt <doa@chaosdev.org>
             Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2000-2002 chaos development */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 /* See the specification (RFC 2279) for more information about
    UTF-8. If you are looking for general Unicode information, try out

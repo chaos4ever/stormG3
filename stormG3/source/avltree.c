@@ -1,10 +1,10 @@
-/* $chaos: avltree.c,v 1.2 2002/05/27 11:48:15 per Exp $ */
+/* $chaos: avltree.c,v 1.3 2002/05/27 19:08:02 per Exp $ */
 /* Abstract: AVL tree implementation. */
 /* Author: Per Lundberg <per@chaosdev.org>
    Georg Kraml <georg@purists.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/avltree.h>
 #include <storm/queue.h>

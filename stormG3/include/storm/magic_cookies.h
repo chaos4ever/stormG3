@@ -1,9 +1,9 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: magic_cookies.h,v 1.1 2002/06/11 20:26:36 per Exp $ */
 /* Abstract: Magic cookies. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __STORM_MAGIC_COOKIES_H__
 #define __STORM_MAGIC_COOKIES_H__

@@ -1,9 +1,9 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: assign.c,v 1.1 2002/08/04 09:27:18 per Exp $ */
 /* Abstract: vfs_assign () implementation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 /* Assign a directory in the virtual file system (with the root as //)
    into the logical file system (with the root /). */

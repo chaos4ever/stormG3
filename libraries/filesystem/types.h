@@ -1,9 +1,9 @@
-/* $chaos: types.h,v 1.3 2002/08/04 09:28:24 per Exp $ */
+/* $chaos: types.h,v 1.4 2002/08/11 18:38:31 per Exp $ */
 /* Abstract: Types used by the filesystem library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __FILESYSTEM_TYPES_H__
 #define __FILESYSTEM_TYPES_H__

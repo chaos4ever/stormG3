@@ -1,9 +1,9 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: types.h,v 1.1 2002/06/23 20:33:11 per Exp $ */
 /* Abstract: Log library types. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __LIBRARY_LOG_TYPES_H__
 #define __LIBRARY_LOG_TYPES_H__

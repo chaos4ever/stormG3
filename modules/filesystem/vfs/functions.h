@@ -1,9 +1,9 @@
-/* $chaos: functions.h,v 1.1 2002/08/04 09:27:18 per Exp $ */
+/* $chaos: functions.h,v 1.2 2002/08/11 18:33:39 per Exp $ */
 /* Abstract: VFS module functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __FUNCTIONS_H__
 #define __FUNCTIONS_H__

@@ -1,9 +1,9 @@
-/* $chaos: mount.c,v 1.1 2002/08/04 09:27:18 per Exp $ */
+/* $chaos: mount.c,v 1.2 2002/08/09 06:02:36 per Exp $ */
 /* Abstract: vfs_mount () implementation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include "vfs.h"
 

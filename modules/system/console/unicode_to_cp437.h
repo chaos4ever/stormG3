@@ -1,9 +1,9 @@
-/* $chaos: unicode_to_cp437.h,v 1.2 2002/06/23 12:09:05 per Exp $ */
+/* $chaos: unicode_to_cp437.h,v 1.1 2002/08/13 18:50:53 per Exp $ */
 /* Abstract: Translation map from UCS-2 to code page 437. */
 /* Author: Per Lundberg <plundis@chaosdev.org> */
 
 /* Copyright 2000-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 // FIXME: Should this be moved to the Unicode library?
 

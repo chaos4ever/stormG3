@@ -1,10 +1,10 @@
-/* $chaos: boot.c,v 1.2 2002/08/21 10:56:55 per Exp $ */
+/* $chaos: boot.c,v 1.3 2002/08/31 10:04:41 per Exp $ */
 /* Abstract: Boot module. The boot module takes care of setting up the
    system (opening virtual consoles, launching programs, etc). */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/storm.h>
 #include <block/block.h>
@@ -31,6 +31,9 @@ block_service_t block;
 
 /* The virtual filesystem service provider we are using. */
 vfs_service_t vfs;
+
+/* The exec service provider we are using. */
+exec_service_t exec;
 
 /* Entry point. */
 return_t module_start (void)
@@ -64,6 +67,13 @@ return_t module_start (void)
         log.print (LOG_URGENCY_EMERGENCY, "No virtual filesystem service found. Aborting.");
         return STORM_RETURN_NOT_FOUND;
     }
+
+    /* Make sure we have an exec service provider. */
+    if (exec_lookup (&exec) != EXEC_RETURN_SUCCESS)
+    {
+        log.print (LOG_URGENCY_EMERGENCY, "No exec service found. Aborting.");
+        return STORM_RETURN_NOT_FOUND;
+    }
     
     /* Mount the root file system. */
     return_value = vfs.mount ("//", &block);
@@ -81,8 +91,12 @@ return_t module_start (void)
         return return_value;
     }
 
-    /* Open a file in the root directory. */
-    return_value = vfs.open ("/AreYouExcited.mod", VFS_FILE_MODE_READ,
+    /* Run system initialization (start daemons etc). We do this
+       through a program called boot. */
+    // FIXME: Change the name of this to /system/programs/boot or
+    // something like this. I believe the Minix module would be
+    // patched for this to work, though.
+    return_value = vfs.open ("/boot", VFS_FILE_MODE_READ,
                              &handle);
     if (return_value != STORM_RETURN_SUCCESS)
     {
@@ -90,9 +104,8 @@ return_t module_start (void)
         return return_value;
     }
 
-    /* Get the size of the file. */
     vfs_file_info_t file_info;
-    return_value = vfs.info ("/AreYouExcited.mod", &file_info);
+    return_value = vfs.info ("/boot", &file_info);
 
     if (return_value != STORM_RETURN_SUCCESS)
     {
@@ -100,8 +113,6 @@ return_t module_start (void)
         return return_value;
     }
    
-    debug_print ("File size: %u\n", file_info.size);
-
     /* Read the file. */
     uint32_t *buffer;
     return_value = memory_global_allocate ((void **) &buffer, file_info.size);
@@ -126,7 +137,7 @@ return_t module_start (void)
 
 #endif
 
-#if TRUE || FALSE
+#if FALSE
     checksum_md5_digest_type digest;
     memory_set_uint8 ((uint8_t *) &digest, 0, 16);
     return_value = checksum_md5 (buffer, file_info.size,
@@ -147,8 +158,10 @@ return_t module_start (void)
         return return_value;
     }
 
+    /* Run this program. */
+    exec.run (buffer);
+
     // TODO:
-    /* Run system initialization (start daemons etc). */
     /* Open virtual consoles. FIXME: Read a list from somewhere to
        know what consoles to open. If that list cannot be found, use
        some reasonable default. */

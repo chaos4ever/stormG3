@@ -1,9 +1,9 @@
-/* $chaos$ */
+/* $chaos: skeleton.c,v 1.2 2002/07/12 10:13:31 johannes Exp $ */
 /* Abstract: <some NIC-controller> ethernet module. */
 /* Author: Your Name <your@email> */
            
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/storm.h>
 

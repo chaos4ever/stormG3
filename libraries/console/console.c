@@ -1,9 +1,9 @@
-/* $chaos: console.c,v 1.3 2002/07/09 08:40:14 per Exp $ */
+/* $chaos: console.c,v 1.4 2002/08/09 05:59:39 per Exp $ */
 /* Abstract: Console library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 1999-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <stdarg.h>
 #include <console/console.h>

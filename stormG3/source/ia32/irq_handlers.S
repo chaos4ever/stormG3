@@ -1,9 +1,9 @@
-/* $chaos: irq_handlers.S,v 1.4 2002/06/23 12:09:48 per Exp $ */
+/* $chaos: irq_handlers.S,v 1.5 2002/07/21 09:56:47 per Exp $ */
 /* Abstract: IRQ management. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 	
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 /* One interrupt handler for each interrupt, thank you verymuch. */
 

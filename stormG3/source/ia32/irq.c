@@ -1,9 +1,9 @@
-/* $chaos: irq.c,v 1.5 2002/06/18 22:15:09 per Exp $ */
+/* $chaos: irq.c,v 1.6 2002/07/21 09:56:47 per Exp $ */
 /* Abstract: IRQ handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/return_value.h>
 #include <storm/types.h>

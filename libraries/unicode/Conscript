@@ -1,10 +1,10 @@
-# $chaos: Conscript,v 1.1 2002/06/23 20:35:34 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.2 2002/08/31 10:05:06 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the Unicode library.
 # Author: Per Lundberg <per@chaosdev.org>
 
 # Copyright 2002 chaos development.
-# Use freely under the terms listed in the file COPYING.
+# Use freely under the terms listed in the file LICENSE.
 
 $library_binary = 'libunicode.a';
 

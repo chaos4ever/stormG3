@@ -1,9 +1,9 @@
-/* $chaos: cpu.c,v 1.1 2002/06/13 20:07:26 per Exp $ */
+/* $chaos: cpu.c,v 1.2 2002/08/08 23:15:44 hal Exp $ */
 /* Abstract: CPU initialization code. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/ia32/cpu.h>
 #include <storm/ia32/memory.h>

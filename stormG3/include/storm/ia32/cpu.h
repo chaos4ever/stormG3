@@ -1,9 +1,9 @@
-/* $chaos: cpu.h,v 1.12 2002/06/18 19:58:20 per Exp $ */
+/* $chaos: cpu.h,v 1.13 2002/06/18 20:52:20 per Exp $ */
 /* Abstract: CPU defines and functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __STORM_IA32_CPU_H__
 #define __STORM_IA32_CPU_H__

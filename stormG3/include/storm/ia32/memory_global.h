@@ -1,9 +1,9 @@
-/* $chaos: memory_global.h,v 1.3 2002/07/11 21:13:24 per Exp $ */
+/* $chaos: memory_global.h,v 1.4 2002/08/11 18:41:31 per Exp $ */
 /* Abstract: Global memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __STORM_IA32_MEMORY_GLOBAL_H__
 #define __STORM_IA32_MEMORY_GLOBAL_H__

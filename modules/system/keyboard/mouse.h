@@ -1,9 +1,9 @@
-/* $chaos: mouse.h,v 1.1 2002/06/17 22:53:47 per Exp $ */
+/* $chaos: mouse.h,v 1.1 2002/08/11 21:13:31 per Exp $ */
 /* Abstract: Mouse commands. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2000-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __MOUSE_H__
 #define __MOUSE_H__

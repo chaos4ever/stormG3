@@ -1,9 +1,9 @@
-/* $chaos: elf.c,v 1.8 2002/06/22 19:22:49 per Exp $ */
+/* $chaos: elf.c,v 1.9 2002/07/04 21:26:56 per Exp $ */
 /* Abstract: ELF functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/return_value.h>
 #include <storm/ia32/defines.h>

@@ -1,9 +1,9 @@
-/* $chaos: service.c,v 1.7 2002/07/04 21:26:38 per Exp $ */
+/* $chaos: service.c,v 1.8 2002/08/08 23:14:19 hal Exp $ */
 /* Abstract: Service support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/return_value.h>
 #include <storm/ia32/debug.h>

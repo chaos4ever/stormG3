@@ -1,9 +1,9 @@
-/* $chaos: common.c,v 1.1 2002/08/04 09:27:18 per Exp $ */
+/* $chaos: common.c,v 1.2 2002/08/11 18:34:07 per Exp $ */
 /* Abstract: Common helper functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 /* Make sure the virtual path given is of the right format. It needs
    to be //something, where something is a string consisting of only

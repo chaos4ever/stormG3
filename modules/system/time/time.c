@@ -1,9 +1,9 @@
-/* $chaos: time.c,v 1.3 2002/08/16 10:21:13 per Exp $ */
+/* $chaos: time.c,v 1.4 2002/08/18 20:31:09 per Exp $ */
 /* Abstract: Time module. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include "time.h"
 

@@ -1,16 +1,18 @@
-/* $chaos: console.c,v 1.11 2002/08/09 06:02:38 per Exp $ */
+/* $chaos: console.c,v 1.1 2002/08/13 18:50:53 per Exp $ */
 /* Abstract: Console module. Will eventually be 100% ANSI escape
              sequence compatible. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
             Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 1999-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <console/console.h>
 #include <video/video.h>
 
 #include "console.h"
+
+#define DEBUG
 
 volatile unsigned int number_of_consoles = 0;
 volatile unsigned int highest_console_id = -1;
@@ -219,7 +221,7 @@ static return_t console_handle_key_event (keyboard_packet_t *keyboard_packet)
         // debug_print ("stdin data received.\n");
     }        
 
-#if FALSE
+#ifdef DEBUG
     debug_print ("%s: We got an event: %u %u %u %u %u %u %s.\n", __FILE__,
                  keyboard_packet->has_character_code,
                  keyboard_packet->has_special_key,

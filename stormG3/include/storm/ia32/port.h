@@ -1,9 +1,9 @@
-/* $chaos: port.h,v 1.3 2002/06/23 13:42:49 per Exp $ */
+/* $chaos: port.h,v 1.4 2002/08/15 22:10:47 per Exp $ */
 /* Abstract: Port in/output. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __STORM_IA32_PORT_H__
 #define __STORM_IA32_PORT_H__

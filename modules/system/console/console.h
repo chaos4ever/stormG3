@@ -1,10 +1,10 @@
-/* $chaos: console.h,v 1.6 2002/07/21 11:28:01 per Exp $ */
+/* $chaos: console.h,v 1.1 2002/08/13 18:50:53 per Exp $ */
 /* Abstract: Console module header file. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
             Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2000-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __CONSOLE_H__
 #define __CONSOLE_H__

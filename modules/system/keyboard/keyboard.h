@@ -1,9 +1,9 @@
-/* $chaos: keyboard.h,v 1.4 2002/06/23 20:38:30 per Exp $ */
+/* $chaos: keyboard.h,v 1.1 2002/08/11 21:13:31 per Exp $ */
 /* Abstract: Header file for the keyboard module. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 1998-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __KEYBOARD_H__
 #define __KEYBOARD_H__

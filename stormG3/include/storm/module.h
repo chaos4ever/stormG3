@@ -1,9 +1,9 @@
-/* $chaos: module.h,v 1.2 2002/06/17 22:55:42 per Exp $ */
+/* $chaos: module.h,v 1.3 2002/07/12 09:43:36 per Exp $ */
 /* Abstract: Functions and variables defined by a module. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __STORM_MODULE_H__
 #define __STORM_MODULE_H__

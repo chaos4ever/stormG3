@@ -1,9 +1,9 @@
-/* $chaos: dispatch.c,v 1.2 2002/06/18 22:13:58 per Exp $ */
+/* $chaos: dispatch.c,v 1.3 2002/07/21 09:58:21 per Exp $ */
 /* Abstract: Dispatcher. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/ia32/defines.h>
 #include <storm/ia32/dispatch.h>

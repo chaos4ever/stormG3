@@ -1,9 +1,9 @@
-/* $chaos: vfs.h,v 1.2 2002/08/04 09:27:19 per Exp $ */
+/* $chaos: vfs.h,v 1.3 2002/08/11 18:32:53 per Exp $ */
 /* Abstract: Virtual file system provider, header file. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __VFS_H__
 #define __VFS_H__

@@ -1,9 +1,9 @@
-/* $chaos: memory.h,v 1.5 2002/06/12 06:48:23 per Exp $ */
+/* $chaos: memory.h,v 1.6 2002/08/31 09:14:52 per Exp $ */
 /* Abstract: Memory operations. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __STORM_IA32_MEMORY_H__
 #define __STORM_IA32_MEMORY_H__

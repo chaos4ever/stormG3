@@ -1,9 +1,9 @@
-/* $chaos: swedish.h,v 1.3 2002/08/20 06:36:25 per Exp $ */
+/* $chaos: swedish.h,v 1.4 2002/09/02 15:45:14 per Exp $ */
 /* Abstract: A swedish keyboard translation map for chaos. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 1998-2000 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __KEYBOARD_MAPS_SWEDISH_H__
 #define __KEYBOARD_MAPS_SWEDISH_H__

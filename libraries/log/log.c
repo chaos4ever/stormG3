@@ -1,9 +1,9 @@
-/* $chaos: log.c,v 1.4 2002/07/09 08:40:17 per Exp $ */
+/* $chaos: log.c,v 1.5 2002/08/09 05:59:41 per Exp $ */
 /* Abstract: Log library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <log/log.h>
 

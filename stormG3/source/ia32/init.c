@@ -1,10 +1,10 @@
-/* $chaos: init.c,v 1.9 2002/08/07 18:24:10 per Exp $ */
+/* $chaos: init.c,v 1.10 2002/08/08 19:55:57 per Exp $ */
 /* Abstract: storm initialization. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING.
+/* Use freely under the terms listed in the file LICENSE.
    reference documentation. */
 
 #include <storm/types.h>

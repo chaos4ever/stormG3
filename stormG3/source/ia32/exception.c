@@ -1,9 +1,9 @@
-/* $chaos: exception.c,v 1.12 2002/08/08 19:59:33 per Exp $ */
+/* $chaos: exception.c,v 1.13 2002/08/08 23:15:44 hal Exp $ */
 /* Abstract: Exception handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/ia32/cpu.h>
 #include <storm/ia32/debug.h>

@@ -1,9 +1,9 @@
-/* $chaos: soundblaster.h,v 1.2 2002/06/19 07:57:40 per Exp $ */
+/* $chaos: soundblaster.h,v 1.1 2002/08/13 19:17:27 per Exp $ */
 /* Authors: Per Lundberg <per@chaosdev.org>
             Erik Moren <nemo@chaosdev.org> */
 
 /* Copyright 1999-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 /* Most of the information in this server is based on information
    found in sblaster.doc, which can be found in the same directory as

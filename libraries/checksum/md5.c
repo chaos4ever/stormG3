@@ -1,4 +1,4 @@
-/* $chaos: md5.c,v 1.3 2002/05/23 11:14:25 per Exp $ */
+/* $chaos: md5.c,v 1.1 2002/08/31 09:17:40 per Exp $ */
 /* Abstract: RSA Data Security, Inc., MD5 message-digest algorithm. */
 /* Author: Per Lundberg <plundis@chaosdev.org>,
 
@@ -7,7 +7,7 @@
 
 /* Copyright 1991 RSA Data Security, Inc. */
 /* Copyright 2000, 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <checksum/checksum.h>
 

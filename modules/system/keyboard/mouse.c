@@ -1,10 +1,10 @@
-/* $chaos: mouse.c,v 1.2 2002/06/18 22:18:17 per Exp $ */
+/* $chaos: mouse.c,v 1.1 2002/08/11 21:13:31 per Exp $ */
 /* Abstract: PS/2 mouse code for the keyboard server. */
 /* Author: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
 
 /* Copyright 2000-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/storm.h>
 

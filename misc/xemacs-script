@@ -1,6 +1,6 @@
 ;; -*- Mode: Emacs-Lisp -*-
 
-;; $chaos: xemacs-script,v 1.6 2002/05/24 17:34:57 per Exp $
+;; $chaos: xemacs-script,v 1.7 2002/06/04 22:24:43 per Exp $
 
 ;; Abstract: Personal settings which aren't to be overwritten by M-x
 ;; customize or whatever.
@@ -94,12 +94,12 @@
   (interactive)
   (goto-line 1)
 
-  (insert "/* $chaos: xemacs-script,v 1.6 2002/05/24 17:34:57 per Exp $ */\n")
+  (insert "/* $chaos: xemacs-script,v 1.7 2002/06/04 22:24:43 per Exp $ */\n")
   (insert "/* Abstract: */\n")
   (insert "/* Author: " chaos-developer " <" chaos-mail-address "> */\n\n")
 
   (insert "/* Copyright " (get-year) " " copyright-holder ". */\n")
-  (insert "/* Use freely under the terms listed in the file COPYING. */\n\n")
+  (insert "/* Use freely under the terms listed in the file LICENSE. */\n\n")
 
   (goto-line 2)
   (move-to-column 13)

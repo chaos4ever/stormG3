@@ -1,10 +1,10 @@
-/* $chaos: storm.h,v 1.11 2002/08/11 17:33:25 per Exp $ */
+/* $chaos: storm.h,v 1.12 2002/08/15 18:57:07 per Exp $ */
 /* Abstract: storm kernel API. This header file can be included by a
    kernel module that wants to have access to kernel functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __STORM_STORM_H__
 #define __STORM_STORM_H__

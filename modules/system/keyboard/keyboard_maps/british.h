@@ -1,10 +1,10 @@
-/* $chaos: british.h,v 1.2 2002/06/18 09:38:45 per Exp $ */
+/* $chaos: british.h,v 1.1 2002/08/11 21:13:32 per Exp $ */
 /* Abstract: A british translation table for chaos. This probably
    needs some fixup before it is usable. */
 /* Author: John Hennessy <john@somewhere> */
 
 /* Copyright 2000-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __BRITISH_H__
 #define __BRITISH_H__

@@ -1,11 +1,11 @@
-/* $chaos: keyboard.h,v 1.2 2002/08/19 20:41:02 per Exp $ */
+/* $chaos: keyboard.h,v 1.3 2002/08/21 10:56:08 per Exp $ */
 /* Abstract: Protocol used when communicating with keyboard
    servers. */
 /* Authors: Per Lundberg <per@chaosdev.org>
             Henrik Hallin <hal@chaosdev.org> */
 
 /* Copyright chaos development 1999-2002. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __KEYBOARD_KEYBOARD_H__
 #define __KEYBOARD_KEYBOARD_H__

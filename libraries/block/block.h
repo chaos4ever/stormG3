@@ -1,10 +1,10 @@
-/* $chaos: block.h,v 1.2 2002/07/06 08:29:46 per Exp $ */
+/* $chaos: block.h,v 1.3 2002/07/21 12:31:37 per Exp $ */
 /* Abstract: Function prototypes and structure definitions for the
    block library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __BLOCK_BLOCK_H__
 #define __BLOCK_BLOCK_H__

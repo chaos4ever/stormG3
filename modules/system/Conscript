@@ -1,10 +1,10 @@
-# $chaos: Conscript,v 1.3 2002/08/15 20:59:22 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.4 2002/09/01 21:02:37 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the system service providers.
 # Author: Per Lundberg <per@chaosdev.org>
 
 # Copyright 2002 chaos development.
-# Use freely under the terms listed in the file COPYING.
+# Use freely under the terms listed in the file LICENSE.
 
 Import qw( cons module_directory include build_directory library_directory
            install );

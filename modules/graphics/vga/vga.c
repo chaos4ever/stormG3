@@ -1,10 +1,10 @@
-/* $chaos: vga.c,v 1.3 2002/07/11 21:46:04 per Exp $ */
+/* $chaos: vga.c,v 1.1 2002/08/13 19:14:23 per Exp $ */
 /* Abstract: VGA server for chaos. */
 /* Authors: Per Lundberg <per@chaosdev.org>
             Henrik Hallin <hal@chaosdev.org> */
 
 /* Copyright 1999-2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/storm.h>
 #include <video/video.h>

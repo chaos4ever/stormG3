@@ -1,9 +1,9 @@
-/* $chaos: minix.h,v 1.3 2002/07/21 13:02:51 per Exp $ */
+/* $chaos: minix.h,v 1.4 2002/08/04 09:27:17 per Exp $ */
 /* Abstract: Minix file system data types. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING. */
+/* Use freely under the terms listed in the file LICENSE. */
 
 #ifndef __MINIX_H__
 #define __MINIX_H__
