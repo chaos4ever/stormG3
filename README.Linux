@@ -1,10 +1,10 @@
-README.Linux ($Id$)
+README.Linux ($chaos$)
 ============
 
 chaos has been successfully compiled on the following distributions:
 
 * Debian GNU/Linux 2.2 (potato).
-* Debian GNU/Linux 2.x (woody).
+* Debian GNU/Linux 3.0 (woody).
 * Red Hat 6.2 (Cartman) (with updated binutils).
 * Slackware 7.0 (with updated binutils).
 
