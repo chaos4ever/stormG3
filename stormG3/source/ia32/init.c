@@ -1,4 +1,4 @@
-/* $chaos: init.c,v 1.8 2002/08/07 18:21:17 per Exp $ */
+/* $chaos: init.c,v 1.9 2002/08/07 18:24:10 per Exp $ */
 /* Abstract: storm initialization. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -167,7 +167,7 @@ void _start (void)
          :
          :
          "g" (KERNEL_DATA_SELECTOR),
-         "g" (&kernel_stack + KERNEL_STACK_SIZE));
+         "g" ((uint32_t) &kernel_stack + KERNEL_STACK_SIZE));
 
     /* Pass control to the kernel. */
     asm ("ljmp   %0, %1"
