@@ -1,4 +1,4 @@
-/* $chaos: exception.c,v 1.6 2002/06/13 22:10:25 per Exp $ */
+/* $chaos: exception.c,v 1.7 2002/06/14 22:47:27 per Exp $ */
 /* Abstract: Exception handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -156,7 +156,7 @@ void exception_page_fault (cpu_register_t registers)
     debug_print ("Page fault at %x, error code: %x.\n", cpu_get_cr2(), 
                  registers.error_code);
     dump_registers (&registers);
-    //    while (TRUE);
+    while (TRUE);
 }  
 
 void exception_dummy (cpu_register_t registers)
