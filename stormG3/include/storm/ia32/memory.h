@@ -1,4 +1,4 @@
-/* $chaos: memory.h,v 1.2 2002/06/05 18:17:43 per Exp $ */
+/* $chaos: memory.h,v 1.3 2002/06/09 15:04:52 per Exp $ */
 /* Abstract: Memory operations. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -11,8 +11,7 @@
 #include <storm/types.h>
 
 /* Inlines. */
-/* FIXME: These are not all nice. */
-static inline void *memory_copy (void *to, void *from, int n)
+static inline void *memory_copy (void *to, void *from, unsigned int size)
 {
     int ecx, edi, esi;
     
@@ -59,39 +58,39 @@ static inline void memory_set_uint8 (uint8_t *address, uint8_t c,
                   "memory");
 }
 
-static inline void memory_set_uint16 (uint16_t *addr, uint16_t c,
+static inline void memory_set_uint16 (uint16_t *address, uint16_t c,
                                       unsigned int size)
 {
-    int d0, d1;
+    int ecx, edi;
 
     asm volatile  ("cld\n"
                    "rep\n"
                    "stosw"
                    : 
-                   "=&c" (d0),
-                   "=&D" (d1)
+                   "=&c" (ecx),
+                   "=&D" (edi)
                    : 
                    "a" (c),
-                   "1" (addr),
+                   "1" (address),
                    "0" (size)
                    :
                    "memory");
 }
 
-static inline void memory_set_uint32 (uint32_t *addr, uint32_t c,
+static inline void memory_set_uint32 (uint32_t *address, uint32_t c,
                                       unsigned int size)
 {
-    int d0, d1;
+    int ecx, edi;
 
     asm volatile  ("cld\n"
                    "rep\n"
                    "stosl"
                    : 
-                   "=&c" (d0),
-                   "=&D" (d1)
+                   "=&c" (ecx),
+                   "=&D" (edi)
                    : 
                    "a" (c),
-                   "1" (addr),
+                   "1" (address),
                    "0" (size)
                    :
                    "memory");
