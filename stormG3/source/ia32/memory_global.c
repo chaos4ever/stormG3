@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: memory_global.c,v 1.2 2002/06/11 21:25:48 per Exp $ */
 /* Abstract: Global memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -6,6 +6,7 @@
 /* Use freely under the terms listed in the file COPYING. */
 
 #include <storm/return_value.h>
+#include <storm/ia32/debug.h>
 #include <storm/ia32/defines.h>
 #include <storm/ia32/memory_global.h>
 #include <storm/ia32/memory_physical.h>
@@ -109,6 +110,7 @@ return_t memory_global_allocate (void **pointer, unsigned int size)
         page = (memory_global_page_t *) new_page;
         page->magic_cookie = GLOBAL_PAGE_COOKIE;
         page->used_blocks = 0;
+        page->slab_header = global_slab;
 
         /* Handle the first one specially to avoid an if statement in
            the loop. */
@@ -136,8 +138,7 @@ return_t memory_global_allocate (void **pointer, unsigned int size)
         return STORM_RETURN_INTERNAL_DATA_ERROR;
     }
 
-    // FIXME: Define a macro for this.
-    our_page = (memory_global_page_t *) (((uint32_t) *global_slab) & 0xFFFFF000);
+    our_page = (memory_global_page_t *) PAGE_ADDRESS(*global_slab);
     if (our_page->magic_cookie != GLOBAL_PAGE_COOKIE)
     {
         return STORM_RETURN_INTERNAL_DATA_ERROR;
@@ -154,12 +155,40 @@ return_t memory_global_allocate (void **pointer, unsigned int size)
 /* Deallocate global memory. */
 return_t memory_global_deallocate (void *pointer)
 {
+    memory_global_slab_t **global_slab;
+    memory_global_page_t *our_page;
+    memory_global_slab_t *our_slab = (memory_global_slab_t *) pointer;
+
     /* Is this a 4096 block? */
     if ((uint32_t) pointer % PAGE_SIZE == 0)
     {
         return memory_physical_deallocate (pointer);
     }
+    else
+    {
+        our_page = (memory_global_page_t *) PAGE_ADDRESS(pointer);
+        global_slab = our_page->slab_header;
 
-    // FIXME: Implement this. It is a piece of cake.
-    return STORM_RETURN_NOT_IMPLEMENTED;
+        if (our_page->magic_cookie != GLOBAL_PAGE_COOKIE)
+        {
+            return STORM_RETURN_INTERNAL_DATA_ERROR;
+        }
+
+        our_page->used_blocks--;
+
+        /* If no slabs in this page is used, free the page. */
+        if (our_page->used_blocks == 0)
+        {
+            debug_print ("Freeing page. ");
+            *global_slab = NULL;
+            return memory_physical_deallocate (our_page);
+        }
+        else 
+        {
+            our_slab->magic_cookie = GLOBAL_SLAB_COOKIE;
+            our_slab->next = (struct memory_global_slab_t *) *global_slab;
+            *global_slab = our_slab;
+            return STORM_RETURN_SUCCESS;
+        }
+    }
 }
