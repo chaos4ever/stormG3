@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.16 2002/11/21 21:11:16 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.17 2002/11/26 21:10:34 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for stormG3
 # Author: Per Lundberg <per@chaosdev.org>
@@ -62,8 +62,9 @@ $cons = new cons (
 		  CPPPATH => $include,
 		  CFLAGS => $warnings .
 		  '-O3 -ggdb -pipe -fno-builtin -funsigned-char ' .
-		  '-fomit-frame-pointer -ffreestanding -fno-leading-underscore ' .
-                  '-std=gnu99 ' .
+		  '-ffreestanding -fno-leading-underscore ' .
+                  '-std=gnu99 ' . # -fomit-frame-pointer should be added if
+                                  # compiling a release.
 		  $defs,
 		  LDFLAGS => $LDFLAGS,
                   SUFEXE => ''
