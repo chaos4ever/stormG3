@@ -1,12 +1,12 @@
-/* $chaos: types.h,v 1.4 2002/10/08 20:11:40 per Exp $ */
+/* $chaos: types.h,v 1.5 2002/10/10 20:35:11 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
 
 /**
- * @file ia32/types.h
- * @brief IA32-specific types. 
+ * @file                ia32/types.h
+ * @brief               IA32-specific types. 
  */
 
 #ifndef __STORM_IA32_TYPES_H__
@@ -15,7 +15,7 @@
 #include <storm/types.h>
 
 /**
- * @brief A linear/physical address. 
+ * @brief               A linear/physical address. 
  */
 typedef uint32_t address_t;
 
