@@ -1,4 +1,4 @@
-/* $chaos: console.c,v 1.7 2002/07/21 11:27:18 per Exp $ */
+/* $chaos: console.c,v 1.8 2002/07/21 12:39:09 per Exp $ */
 /* Abstract: Console module. Will eventually be 100% ANSI escape
              sequence compatible. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
@@ -155,7 +155,7 @@ static void console_flip (console_t *console)
 static return_t console_handle_key_event (keyboard_packet_t *keyboard_packet)
 {
     /* Console switching? For now, ALT + TAB is used. This should be
-       customisable. */
+       customizable. */
     if (current_console != NULL)
     {
         if (keyboard_packet->key_pressed &&
