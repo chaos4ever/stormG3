@@ -1,11 +1,12 @@
-MILESTONES ($chaos: MILESTONES,v 1.7 2002/06/14 13:17:58 per Exp $)
+MILESTONES ($chaos: MILESTONES,v 1.8 2002/06/17 09:24:29 per Exp $)
 ==========
 
 This is something like a road map for chaos as I see it:
 
 M1
 --
-Finish module support, with services.
+Finish module support, with services. Rewrite the keyboard server as a
+module, to test the module support.
 
 M2
 --
@@ -35,4 +36,4 @@ daily Unix programs, like bash, Apache, MySQL, gcc. This will provide
 a good base for writing the "real" chaos applications like tornado,
 cAPS and so on.
 
--- Per Lundberg <per@chaosdev.org>  Wed, 12 Jun 2002 08:55:54 +0200
+-- Per Lundberg <per@chaosdev.org>  Mon, 17 Jun 2002 11:26:46 +0200
