@@ -1,4 +1,4 @@
-/* $chaos: exception.c,v 1.15 2002/10/14 08:31:18 per Exp $ */
+/* $chaos: exception.c,v 1.16 2002/10/15 21:56:36 per Exp $ */
 /* Abstract: Exception handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -8,6 +8,7 @@
 #include <storm/ia32/cpu.h>
 #include <storm/ia32/debug.h>
 #include <storm/ia32/defines.h>
+#include <storm/ia32/dispatch.h>
 #include <storm/ia32/exception.h>
 #include <storm/ia32/gdt.h>
 #include <storm/ia32/idt.h>
@@ -155,6 +156,31 @@ void exception_general_protection_fault (cpu_register_t registers)
 void exception_page_fault (cpu_register_t registers)
 {
     uint32_t cr2 = cpu_get_cr2 ();
+
+    /* The stack is dynamically allocated. */
+    if (cr2 >= STACK_BASE - (2 * MIB))
+    {
+        void *pointer;
+        return_t return_value = memory_physical_allocate_for_process (&pointer, current_process->id);
+        if (return_value != STORM_RETURN_SUCCESS)
+        {
+            DEBUG_HALT ("Failed to allocate stack memory");
+        }
+        
+        return_value = memory_virtual_map ((page_directory_t *) current_thread->tss->cr3, 
+                                           PAGE_NUMBER (cr2),
+                                           PAGE_NUMBER (pointer), 
+                                           1, PAGE_KERNEL);
+
+        if (return_value != STORM_RETURN_SUCCESS)
+        {
+            DEBUG_HALT ("Failed to map memory");
+        }
+       
+        /* Over and out. */
+        return;
+    }
+
     uint32_t cr3 = cpu_get_cr3 ();
     debug_print ("Page fault at %x, error code: %x.\n", cr2, 
                  registers.error_code);
