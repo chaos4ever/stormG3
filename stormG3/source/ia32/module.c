@@ -1,24 +1,15 @@
-/* $chaos: module.c,v 1.29 2002/10/20 19:29:38 per Exp $ */
+/* $chaos: module.c,v 1.30 2002/10/21 19:31:55 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
 
-#include <storm/ia32/debug.h>
-#include <storm/ia32/dma.h>
+#include <storm/storm.h>
 #include <storm/ia32/elf.h>
-#include <storm/ia32/halt.h>
-#include <storm/ia32/irq.h>
 #include <storm/ia32/memory.h>
-#include <storm/ia32/memory_physical.h>
-#include <storm/ia32/memory_virtual.h>
 #include <storm/ia32/module.h>
 #include <storm/ia32/multiboot.h>
-#include <storm/ia32/service.h>
-#include <storm/ia32/string.h>
-#include <storm/ia32/timer.h>
-#include <storm/return_value.h>
 
 /* A list of functions provided through dynamic linking to kernel
    modules. We could export everything, but we don't want to do that
