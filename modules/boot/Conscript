@@ -1,0 +1,19 @@
+# $chaos: Conscript,v 1.1 2002/06/22 22:54:35 per Exp $ -*- Perl -*-
+
+# Abstract: CONS script for the boot module.
+# Author: Per Lundberg <per@chaosdev.org>
+
+# Copyright 2000 chaos development.
+# Use freely under the terms listed in the file COPYING.
+
+$module_binary = 'boot.so';
+
+Import qw( cons module_directory library_directory );
+$cons = $cons->clone(LIBS => '-llog -lconsole');
+Depends $cons $module_binary, "$library_directory/liblog.a",
+  "$library_directory/libconsole.a";
+Program $cons $module_binary, 'boot.c';
+Command $cons 'install', $module_binary,
+  qq(mkdir -p $module_directory
+     install boot/$module_binary $module_directory
+     gzip -9f $module_directory/$module_binary);
