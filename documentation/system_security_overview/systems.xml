@@ -1,28 +1,29 @@
 <?xml version='1.0' ?> <!-- -*- xml -*- -->
-<!-- $chaos: license.xml,v 1.2 2002/05/27 09:48:51 per Exp $ -->
+<!-- $chaos: systems.xml,v 1.1 2002/10/21 21:34:46 per Exp $ -->
 
   <chapter id="systems">
   <?dbhtml filename="systems.html"?>
   <title>How security is handled in some common systems</title>
   <section>
-    <title>How security is handled in some common systems</title>
+    <title>Introduction</title>
     <para>
-      In the PC (Personal Computer) world, computer security is a
-      fairly new concept. It has traditionally only been a concern in
-      mainframe and other multi-user systems, where it has been
-      neccessary and the solutions have grown out of this
-      neccessity. In the PC world, where the basic idea is that each
-      user should have a <emphasis>Personal</emphasis> computer, it
-      has not been so important.
+      In the PC (Personal Computer) world, computer security is a fairly
+      new concept. It has traditionally only been a concern in mainframe
+      and other multi-user systems, where it has been neccessary and the
+      solutions have grown out of this neccessity. In the PC world,
+      where the basic idea is that each user should have a
+      <emphasis>Personal</emphasis> computer, it has not been so
+      important.
     </para>
+    
     <para>
       But times change, and so does the wonderful world of
       computers. Today, with the rise of the Internet, the need for
       security has shown to be essential. Therefore, many operating
       systems have adapted to this new world, to a smaller or greater
-      degree. In this chapter, we will go through some of these
-      systems and see how they deal (and don't deal) with crucial
-      security issues.
+      degree. In this chapter, we will go through some of these systems
+      and see how they deal (and don't deal) with crucial security
+      issues.
     </para>
 
     <section>
@@ -30,46 +31,47 @@
       <para>
         Microsoft Windows 95/98/Me all trace their roots back to
         Microsoft Windows 3.1, which was a 32-bit add-on to a 16-bit
-        operating system (DOS). DOS did not have any security at all;
-        it was a single-user system. Anyone with physical access to
-        the machine had full access to all the files on the
+        operating system (DOS). DOS did not have any security at all; it
+        was a single-user system. Anyone with physical access to the
+        machine had full access to all the files on the
         computer. However, some DOS and Windows-based programs that
-        needed some kind of security implemented security on their
-        own, which is not really a very good idea since security needs
-        to be in the operating system for it to be really secure.
+        needed some kind of security implemented security on their own,
+        which is not really a very good idea since security needs to be
+        in the operating system for it to be really secure.
       </para>
+      
       <para>
         This is easily shown by this example: imagine an application
         program putting a password lock on a given file. It can refuse
         to load the file if the password is not given, and if the file
-        format is a binary, proprietary format, it can be a bit hard
-        to extract the contents of the file. But it's doable with some
-        work. Compared to a multi-user system with file-level
-        security, systems like Windows 95/98/Me do not even try to
-        compete. They are designed for personal computers without need
-        for security. This creates problems when connecting these
-        computer to a network, like the Internet; they were never
-        designed for such an environment.
+        format is a binary, proprietary format, it can be a bit hard to
+        extract the contents of the file. But it's doable with some
+        work. Compared to a multi-user system with file-level security,
+        systems like Windows 95/98/Me do not even try to compete. They
+        are designed for personal computers without need for
+        security. This creates problems when connecting these computer
+        to a network, like the Internet; they were never designed for
+        such an environment.
       </para>
-
+      
       <para>
-        Because of these problems, we will not include these systems
-        in the further study on the subject of System Security. They
-        were only included since they are so popular and people would
-        wonder wh we didn't add them if we didn't. Use them if you
-        like and have bought a license from Microsoft, but be very
-        aware that your computer will not be secure if someone wants
-        to get hold of your private data.
+        Because of these problems, we will not include these systems in
+        the further study on the subject of System Security. They were
+        only included since they are so popular and people would wonder
+        why we didn't add them if we didn't. Use them if you like and
+        have bought a license from Microsoft, but be very aware that
+        your computer will not be secure if someone wants to get hold of
+        your private data.
       </para>
     </section>
-
+  
     <section>
       <title>Microsoft Windows NT/2000/XP</title>
       <para>
         TODO
       </para>
     </section>
-
+    
     <section>
       <title>GNU/Linux (and other Unix-compatible systems)</title>
       <para>
@@ -77,6 +79,7 @@
         including NetBSD, FreeBSD and OpenBSD, as well as proprietary,
         commercial Unix systems like Solaris and HP-UX)
       </para>
+      
       <para>
         Since GNU/Linux is a derivative of Unix, it uses the same
         security model. The basic design is very simple: Each process
@@ -87,5 +90,5 @@
         /etc/passwd and /etc/group).
       </para>
     </section>
-  </section>
+  </section>  
 </chapter>
