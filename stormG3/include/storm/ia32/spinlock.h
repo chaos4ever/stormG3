@@ -1,4 +1,4 @@
-/* $chaos: spinlock.h,v 1.3 2002/10/08 20:16:14 per Exp $ */
+/* $chaos: spinlock.h,v 1.4 2002/10/10 20:35:34 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -23,14 +23,14 @@ typedef unsigned int spinlock_t;
 enum spinlock_t
 {
     /**
-     * @brief           The lock is locked.
-     */
-    SPIN_LOCKED,
-
-    /**
      * @brief           The lock is unlocked.
      */
     SPIN_UNLOCKED
+
+    /**
+     * @brief           The lock is locked.
+     */
+    SPIN_LOCKED,
 };
 
 /** 
