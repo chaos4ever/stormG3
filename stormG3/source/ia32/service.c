@@ -1,4 +1,4 @@
-/* $chaos: service.c,v 1.20 2002/11/15 19:36:18 per Exp $ */
+/* $chaos: service.c,v 1.21 2002/11/21 20:50:21 per Exp $ */
 /* Abstract: Service support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -346,7 +346,7 @@ return_t service_connect (service_id_t service_id,
     spin_unlock (&service_lock);
 
     /* Initialize the data structure. */
-    service_connection->process = current_process;
+    service_connection->process = dispatch_current_process;
     service_connection->service = service_data;
     service_connection->previous = (struct service_connection_t *) connection_list;
     service_connection->next = NULL;
@@ -378,7 +378,7 @@ return_t service_close (service_connection_id_t connection_id)
     }
 
     /* Make sure it's owned by us. */
-    if (connection->process != current_process)
+    if (connection->process != dispatch_current_process)
     {
         return STORM_RETURN_ACCESS_DENIED;
     }
@@ -424,6 +424,7 @@ return_t service_invoke (service_connection_id_t connection_id,
 
     if (connection == NULL)
     {
+        DEBUG_INFO();
         return STORM_RETURN_INVALID_ARGUMENT;
     }
 
@@ -439,6 +440,5 @@ return_t service_invoke (service_connection_id_t connection_id,
         return STORM_RETURN_INVALID_ARGUMENT;
     }
 
-    /* Call the function. */
     return function (connection->service->id, data);
 }
