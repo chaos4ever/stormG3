@@ -1,4 +1,4 @@
-/* $chaos: console.c,v 1.2 2002/10/04 19:01:12 per Exp $ */
+/* $chaos: console.c,v 1.3 2002/10/16 20:33:37 per Exp $ */
 /* Abstract: Console module. Will eventually be 100% ANSI escape
              sequence compatible. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
@@ -8,6 +8,7 @@
 /* Use freely under the terms listed in the file LICENSE. */
 
 #include <console/console.h>
+#include <memory/memory.h>
 #include <video/video.h>
 
 #include "console.h"

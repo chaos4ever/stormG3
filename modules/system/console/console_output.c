@@ -1,4 +1,4 @@
-/* $chaos: console_output.c,v 1.1 2002/08/13 18:50:53 per Exp $ */
+/* $chaos: console_output.c,v 1.2 2002/10/04 19:01:12 per Exp $ */
 /* Abstract: Functions for writing to the console. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
             Per Lundberg <per@chaosdev.org> */
@@ -7,6 +7,7 @@
 /* Use freely under the terms listed in the file LICENSE. */
 
 #include <console/console.h>
+#include <memory/memory.h>
 #include <unicode/unicode.h>
 
 #include "console.h"

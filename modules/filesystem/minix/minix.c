@@ -1,4 +1,4 @@
-/* $chaos: minix.c,v 1.9 2002/09/01 21:03:26 per Exp $ */
+/* $chaos: minix.c,v 1.10 2002/10/04 19:01:03 per Exp $ */
 /* Abstract: Implementation of the Minix file system. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -9,6 +9,7 @@
 #include <block/block.h>
 #include <filesystem/filesystem.h>
 #include <log/log.h>
+#include <memory/memory.h>
 #include <string/string.h>
 
 #include "minix.h"

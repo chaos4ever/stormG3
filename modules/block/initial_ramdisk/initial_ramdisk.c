@@ -1,4 +1,4 @@
-/* $chaos: initial_ramdisk.c,v 1.6 2002/08/09 06:02:36 per Exp $ */
+/* $chaos: initial_ramdisk.c,v 1.7 2002/10/04 19:01:00 per Exp $ */
 /* Abstract: Initial ramdisk server. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
             Per Lundberg <per@chaosdev.org> */
@@ -9,6 +9,7 @@
 #include <storm/storm.h>
 #include <block/block.h>
 #include <log/log.h>
+#include <memory/memory.h>
 
 #include "ramdisk.h"
 

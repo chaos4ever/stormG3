@@ -1,4 +1,4 @@
-/* $chaos: md5.c,v 1.1 2002/08/31 09:17:40 per Exp $ */
+/* $chaos: md5.c,v 1.2 2002/10/04 19:00:51 per Exp $ */
 /* Abstract: RSA Data Security, Inc., MD5 message-digest algorithm. */
 /* Author: Per Lundberg <plundis@chaosdev.org>,
 
@@ -10,6 +10,7 @@
 /* Use freely under the terms listed in the file LICENSE. */
 
 #include <checksum/checksum.h>
+#include <memory/memory.h>
 
 static void checksum_md5_transform (uint32_t state[4],
                                     const uint8_t block[64]);

@@ -1,4 +1,4 @@
-/* $chaos: boot.c,v 1.5 2002/10/04 20:23:23 per Exp $ */
+/* $chaos: boot.c,v 1.6 2002/10/04 21:22:24 per Exp $ */
 /* Abstract: Boot module. The boot module takes care of setting up the
    system (opening virtual consoles, launching programs, etc). */
 /* Author: Per Lundberg <per@chaosdev.org> */
@@ -12,6 +12,7 @@
 #include <console/console.h>
 #include <exec/exec.h>
 #include <log/log.h>
+#include <memory/memory.h>
 #include <vfs/vfs.h>
 
 /* The number of consoles that we are opening. */
