@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.9 2002/06/15 15:38:16 per Exp $ */
+/* $chaos: memory_physical.c,v 1.10 2002/06/17 20:56:57 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -185,8 +185,6 @@ return_t memory_physical_allocate (void **pointer, unsigned int pages)
                     page_number % 32);
             slab = (memory_physical_slab_t *) slab->next;
         }
-
-        debug_memory_dump (physical_page_bitmap, 70);
 
         /* Now, iterate through this bitmap to see whether we have a
            contigous block of the right size. */
