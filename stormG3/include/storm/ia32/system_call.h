@@ -1,4 +1,4 @@
-/* $chaos: dotfile.emacs,v 1.37 2002/10/14 16:03:33 per Exp $ */
+/* $chaos: system_call.h,v 1.1 2002/10/24 21:31:29 per Exp $ */
 /* Abstract: System call prototypes etc. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -35,7 +35,7 @@ extern void system_call_lowlevel (void);
 /**
  * @brief               The high-level system call handler.
  */
-extern void system_call (void);
+extern void system_call (uint32_t *stack);
 
 #endif /* __STORM_KERNEL__ */
 
