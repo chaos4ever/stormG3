@@ -1,4 +1,4 @@
-/* $chaos: gdb.h,v 1.3 2002/10/08 20:16:14 per Exp $ */
+/* $chaos: gdb.h,v 1.4 2002/10/10 14:09:12 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -7,6 +7,21 @@
 /** 
  * @file        gdb.h
  * @brief       GDB support. 
+ *
+ * Setting up remote debugging with GDB is pretty easy. First you
+ * enable GDB code in the kernel:
+ *
+ * cons gdb=0,115200
+ *
+ * And then you run (while booting the kernel on the machine connected
+ * via a null modem cable):
+ *
+ * gdb -x remote.gdb source/ia32/stormG3
+ *
+ * If your serial port is something else than ttyS0 (COM1), you need
+ * to modify remote.gdb and/or the cons command line. remote.gdb is
+ * the setting on your GDB server, and the cons setting is the com
+ * port on the machine running stormG3.
  */
 
 #ifndef __STORM_IA32_GDB_H__
