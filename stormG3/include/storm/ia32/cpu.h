@@ -222,21 +222,21 @@ typedef struct
     /**
      * @brief           An error code (dummy for some exceptions). 
      */
-    unsigned int error_code;
+    unsigned int        error_code;
 
     /**
      * @brief           The current (or next) instruction. 
      */
-    unsigned int eip;
+    unsigned int        eip;
 
     /**
      * @brief           The code segment selector.
      */
-    unsigned int cs;
+    unsigned int        cs;
 
     /* @brief           EFLAGS get pushed first. 
      */
-    uint32_t eflags;
+    uint32_t            eflags;
 } cpu_register_t;
 
 /**
