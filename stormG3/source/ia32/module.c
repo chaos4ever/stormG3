@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.7 2002/06/18 19:40:32 per Exp $ */
+/* $chaos: module.c,v 1.8 2002/06/18 22:15:24 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -6,6 +6,7 @@
 /* Use freely under the terms listed in the file COPYING. */
 
 #include <storm/ia32/debug.h>
+#include <storm/ia32/dma.h>
 #include <storm/ia32/elf.h>
 #include <storm/ia32/irq.h>
 #include <storm/ia32/memory.h>
@@ -19,10 +20,10 @@
    modules. We could export everything, but we don't want to do that
    to keep the API clean. */
 // TODO: log_print
-// TODO: sleep
 static module_function_t function[] = 
 {
     { "debug_print", (function_t) &debug_print },
+    { "dma_register", (function_t) &dma_register },
     { "irq_register", (function_t) &irq_register },
     { "module_register", (function_t) &module_register },
     { "port_range_register", (function_t) &port_range_register },
