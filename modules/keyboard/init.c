@@ -1,4 +1,4 @@
-/* $chaos: init.c,v 1.6 2002/06/21 08:00:28 per Exp $ */
+/* $chaos: init.c,v 1.7 2002/06/23 20:37:43 per Exp $ */
 /* Abstract: Keyboard initialization code. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -54,7 +54,7 @@ bool init (void)
 /* This function is called when the module is started. */
 return_t module_start (void)
 {
-    return_t return_value;
+    volatile return_t return_value;
 
     if (log_init (&log) != LOG_RETURN_SUCCESS)
     {
