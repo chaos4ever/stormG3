@@ -1,4 +1,4 @@
-/* $chaos: memory_global.h,v 1.1 2002/06/11 21:25:51 per Exp $ */
+/* $chaos: memory_global.h,v 1.2 2002/06/12 06:53:46 per Exp $ */
 /* Abstract: Global memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -8,8 +8,9 @@
 #ifndef __STORM_IA32_MEMORY_GLOBAL_H__
 #define __STORM_IA32_MEMORY_GLOBAL_H__
 
-#include <storm/magic_cookies.h>
 #include <storm/types.h>
+#ifdef STORM
+#include <storm/magic_cookies.h>
 
 /* The global slab system. Awfully simple, isn't it? */
 typedef struct 
@@ -39,6 +40,8 @@ typedef struct
 /* Prototypes. */
 /* Initialize global memory allocation. */
 extern void memory_global_init (void);
+
+#endif /* STORM */
 
 /* Allocate global memory. */
 return_t memory_global_allocate (void **pointer, unsigned int size);
