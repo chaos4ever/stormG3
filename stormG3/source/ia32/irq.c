@@ -1,4 +1,4 @@
-/* $chaos: irq.c,v 1.6 2002/07/21 09:56:47 per Exp $ */
+/* $chaos: irq.c,v 1.7 2002/10/04 19:01:21 per Exp $ */
 /* Abstract: IRQ handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -137,12 +137,12 @@ void irq_init ()
     /* Allocate IRQ 0 and 2 for the system. */
     irq[0].allocated = TRUE;
     irq[0].handler = NULL;
-    irq[0].description = "System timer";
+    irq[0].description = (char *) "System timer";
     irq_enable (0);
 
     irq[2].allocated = TRUE;
     irq[2].handler = NULL;
-    irq[2].description = "Cascade IRQ";
+    irq[2].description = (char *) "Cascade IRQ";
     irq_enable (2);
 
     /* Enable interrupts. */
