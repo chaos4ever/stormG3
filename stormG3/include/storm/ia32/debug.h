@@ -1,4 +1,4 @@
-/* $chaos: debug.h,v 1.12 2002/10/08 20:13:22 per Exp $ */
+/* $chaos: debug.h,v 1.13 2002/10/10 12:12:52 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -59,7 +59,7 @@ typedef struct
      * @brief The attribute of this character.
      */
     uint8_t attribute;
-} debug_screen_type __attribute__ ((packed));
+} debug_screen_type PACKED;
 
 /**
  * @brief Initialize debugging code. 
