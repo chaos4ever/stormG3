@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: cpu.h,v 1.1 2002/06/09 15:05:14 per Exp $ */
 /* Abstract: CPU defines and functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -24,6 +24,17 @@ static inline void cpu_set_cr3 (uint32_t new_cr3)
     asm volatile ("movl %0, %%cr3"
                   :
                   : "r" (new_cr3));
+}
+
+static inline u32 cpu_get_esp (void)
+{
+  u32 return_value;
+
+  asm volatile ("movl %%esp, %0"
+		: "=a" (return_value)
+		:);
+
+  return return_value;
 }
 
 /* CR0 bits. */
