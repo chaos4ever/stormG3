@@ -1,4 +1,4 @@
-/* $chaos: service.c,v 1.21 2002/11/21 20:50:21 per Exp $ */
+/* $chaos: service.c,v 1.22 2002/12/01 22:57:42 per Exp $ */
 /* Abstract: Service support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -187,8 +187,9 @@ return_t service_register (service_register_t *register_info,
     }
 
     /* Make sure these fit. */
-    if (string_length (register_info->service_name) + 1 > SERVICE_NAME_LENGTH ||
-        string_length (register_info->vendor) + 1 > SERVICE_VENDOR_LENGTH ||
+    if (string_length (register_info->protocol_name) + 1 > SERVICE_PROTOCOL_NAME_LENGTH ||
+        string_length (register_info->device_vendor) + 1 > SERVICE_DEVICE_VENDOR_LENGTH ||
+        string_length (register_info->service_vendor) + 1 > SERVICE_VENDOR_LENGTH ||
         string_length (register_info->model) + 1 > SERVICE_MODEL_LENGTH ||
         string_length (register_info->device_id) + 1 > SERVICE_ID_LENGTH)
     {
@@ -197,8 +198,9 @@ return_t service_register (service_register_t *register_info,
     }
 
     /* Copy the strings to our service node. */
-    string_copy (service->name, register_info->service_name);
-    string_copy (service->vendor, register_info->vendor);
+    string_copy (service->protocol_name, register_info->protocol_name);
+    string_copy (service->service_vendor, register_info->service_vendor);
+    string_copy (service->device_vendor, register_info->device_vendor);
     string_copy (service->model, register_info->model);
     string_copy (service->device_id, register_info->device_id);
     service->major_version = register_info->major_version;
@@ -235,11 +237,7 @@ return_t service_unregister (service_id_t service_id UNUSED)
 }
 
 /* Lookup a service. */
-// FIXME: Don't use so many parameters. Rather put it all in a struct.
-return_t service_lookup (const char *name, const char *vendor, 
-                         const char *model, const char *device_id,
-                         unsigned int major_version, 
-                         unsigned int minor_version, size_t *services,
+return_t service_lookup (service_lookup_t *lookup, size_t *services,
                          service_t *out_service)
 {
     service_data_t *service;
@@ -255,12 +253,19 @@ return_t service_lookup (const char *name, const char *vendor,
     {
         /* We take the fast (integer) comparisons first so that we be
            efficient. */
-        if ((service->major_version == major_version) &&
-            (service->minor_version >= minor_version) &&
-            string_compare (service->name, name) == 0 && 
-            (vendor == NULL || string_compare (service->vendor, vendor) == 0) &&
-            (model == NULL || string_compare (service->model, model) == 0) &&
-            (device_id == NULL || string_compare (service->device_id, device_id) == 0))
+        if ((service->major_version == lookup->major_version) &&
+            (service->minor_version >= lookup->minor_version) &&
+            string_compare (service->protocol_name, lookup->protocol_name) == 0 && 
+            (lookup->service_vendor == NULL ||
+             string_compare (service->service_vendor,
+                             lookup->service_vendor) == 0) &&
+            (lookup->device_vendor == NULL ||
+             string_compare (service->device_vendor,
+                             lookup->device_vendor) == 0) &&
+            (lookup->model == NULL || 
+             string_compare (service->model, lookup->model) == 0) &&
+            (lookup->device_id == NULL || 
+             string_compare (service->device_id, lookup->device_id) == 0))
         {
             services_found++;
         }
@@ -290,15 +295,26 @@ return_t service_lookup (const char *name, const char *vendor,
     while (service != NULL)
     {
         /* Numeric comparisons are fast so we do them first. */
-        if (service->major_version == major_version &&
-            service->minor_version >= minor_version &&
-            string_compare (service->name, name) == 0 && 
-            (vendor == NULL || string_compare (service->vendor, vendor) == 0) &&
-            (model == NULL || string_compare (service->model, model) == 0) &&
-            (device_id == NULL || string_compare (service->device_id, device_id) == 0))
+        if (service->major_version == lookup->major_version &&
+            service->minor_version >= lookup->minor_version &&
+            string_compare (service->protocol_name, 
+                            lookup->protocol_name) == 0 && 
+            (lookup->service_vendor == NULL ||
+             string_compare (service->service_vendor, 
+                             lookup->service_vendor) == 0) &&
+            (lookup->device_vendor == NULL ||
+             string_compare (service->device_vendor, 
+                             lookup->device_vendor) == 0) &&
+            (lookup->model == NULL || 
+             string_compare (service->model, lookup->model) == 0) &&
+            (lookup->device_id == NULL ||
+             string_compare (service->device_id, lookup->device_id) == 0))
         {
-            string_copy (out_service[counter].name, service->name);
-            string_copy (out_service[counter].vendor, service->vendor);
+            string_copy (out_service[counter].protocol_name, service->protocol_name);
+            string_copy (out_service[counter].device_vendor,
+                         service->device_vendor);
+            string_copy (out_service[counter].service_vendor,
+                         service->service_vendor);
             string_copy (out_service[counter].model, service->model);
             string_copy (out_service[counter].device_id, service->device_id);
             out_service[counter].id = service->id;
