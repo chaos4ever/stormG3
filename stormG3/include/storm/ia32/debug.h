@@ -1,4 +1,4 @@
-/* $chaos: debug.h,v 1.8 2002/08/07 18:37:34 per Exp $ */
+/* $chaos: debug.h,v 1.9 2002/08/10 11:11:16 per Exp $ */
 /* Abstract: Debug declarations. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -48,7 +48,7 @@ extern void debug_memory_dump (uint32_t *memory, unsigned int length);
 /* Macros. */
 #define DEBUG_HALT(message) \
   debug_print (message); \
-  debug_print ("(%s:%u)\n", __FILE__, __LINE__); \
+  debug_print (" (%s:%u)\n", __FILE__, __LINE__); \
   while (TRUE);
 
 #endif /* !__STORM_IA32_DEBUG_H__ */
