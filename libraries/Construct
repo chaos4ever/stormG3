@@ -6,11 +6,11 @@
 # Copyright 2002 chaos development.
 # Use freely under the terms listed in the file LICENSE.
 
-use POSIX; # for getcwd.
+use Cwd;
 
 Conscript_chdir 0;
 
-$build_directory = getcwd();
+$build_directory = cwd();
 
 # Change this to wherever your chaos installation root may be.
 $root = ($ARG{'root'} || '/tftpboot');
@@ -18,7 +18,7 @@ $header_directory = "$root/data/programming/c/headers";
 $module_directory = "$root/system/modules";
 $library_static_directory = "$root/data/programming/libraries/static";
 
-$include = "$build_directory:$header_directory";
+$include = "$build_directory:$build_directory/..:$header_directory";
 $hostname = `hostname`;
 chop($hostname);
 $warnings = '-Wall -W -Wshadow -Wpointer-arith -Waggregate-return ' .

@@ -19,7 +19,7 @@ $module_directory = "$root/system/modules";
 $library_include_directory = "$build_directory/../libraries"; # FIXME: Replace with the path under $root
 $library_directory = "$root/data/programming/libraries/static";
 
-$include = "$header_directory:$library_include_directory";
+$include = "$build_directory/..:$header_directory:$library_include_directory";
 $hostname = `hostname`;
 chop($hostname);
 $warnings = '-Wall -W -Wshadow -Wpointer-arith -Waggregate-return ' .
