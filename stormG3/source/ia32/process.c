@@ -1,4 +1,4 @@
-/* $chaos: process.c,v 1.6 2002/10/23 07:20:35 per Exp $ */
+/* $chaos: process.c,v 1.7 2002/10/23 21:07:36 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 /* Abstract: Process support. */
 
@@ -208,7 +208,7 @@ return_t process_create (process_id_t process_id UNUSED,
     }
 
     /* Set it up properly. */
-    debug_print ("EIP: %x\n", entry_point);
+    //    debug_print ("EIP: %x\n", entry_point);
     thread->tss->eip = entry_point;
     thread->tss->cr3 = process->first_page_directory;
     thread->tss->cs = PROCESS_CODE_SELECTOR;
