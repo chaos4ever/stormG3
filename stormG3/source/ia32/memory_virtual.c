@@ -1,4 +1,4 @@
-/* $chaos: memory_virtual.c,v 1.7 2002/10/10 22:03:14 per Exp $ */
+/* $chaos: memory_virtual.c,v 1.8 2002/10/11 07:43:49 per Exp $ */
 /* Abstract: Virtual memory routines. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -14,6 +14,9 @@
 #include <storm/ia32/memory_virtual.h>
 #include <storm/ia32/multiboot.h>
 
+/* Set to TRUE if you want debug information. */
+#undef DEBUG
+
 // FIXME: Use PGE. This requires some CPU detection code in cpu.c
 
 /* The kernel page directory. */
@@ -25,6 +28,10 @@ static void create_page_table_entry (page_table_t *page_table,
                                      unsigned int physical_page,
                                      unsigned int flags)
 {
+#if DEBUG
+    debug_print ("%x %u %x %u\n", page_table, entry, physical_page, flags);
+#endif
+
     page_table[entry].present = 1;
     page_table[entry].flags = (flags & 0xF);
     page_table[entry].accessed = 0;
@@ -41,14 +48,18 @@ static void create_page_directory_entry (page_directory_t *page_directory,
                                          unsigned int page_table_page,
                                          unsigned int flags)
 {
-  page_directory[entry].present = 1;
-  page_directory[entry].flags = PAGE_DIRECTORY_FLAGS;
-  page_directory[entry].accessed = 0;
-  page_directory[entry].zero = 0;
-  page_directory[entry].page_size = 0;
-  page_directory[entry].global = ((flags & PAGE_GLOBAL) == 1) ? 1 : 0;
-  page_directory[entry].available = 0;
-  page_directory[entry].page_table_base = page_table_page;
+#if DEBUG
+    debug_print ("Create PDE: %x %u %x %u\n", page_directory, entry, page_table_page, flags);
+#endif    
+
+    page_directory[entry].present = 1;
+    page_directory[entry].flags = PAGE_DIRECTORY_FLAGS;
+    page_directory[entry].accessed = 0;
+    page_directory[entry].zero = 0;
+    page_directory[entry].page_size = 0;
+    page_directory[entry].global = ((flags & PAGE_GLOBAL) == 1) ? 1 : 0;
+    page_directory[entry].available = 0;
+    page_directory[entry].page_table_base = page_table_page;
 }
 
 #if FALSE
@@ -77,6 +88,11 @@ return_t memory_virtual_map (page_directory_t *page_directory,
 {
     uint32_t counter;
 
+#if DEBUG
+    debug_print ("Mapping memory: %x %x %x %u %u\n", page_directory,
+                 virtual_page, physical_page, pages, flags);
+#endif
+
     /* Main loop. */
     for (counter = 0; counter < pages; counter++) {
         uint32_t page_directory_index = (virtual_page + counter) / 1024;
@@ -97,7 +113,7 @@ return_t memory_virtual_map (page_directory_t *page_directory,
             /* Set up the page directory entry, referring to this
                newly created page table. */
             create_page_directory_entry (page_directory, page_directory_index,
-                                         (uint32_t) page_table / PAGE_SIZE, 
+                                         ((address_t) page_table) / PAGE_SIZE, 
                                          PAGE_DIRECTORY_FLAGS);
         }
         else 
@@ -131,7 +147,7 @@ void memory_virtual_init ()
                         physical_pages - 1, PAGE_KERNEL);
     
     /* Specify page directory to use for the kernel. */
-    cpu_set_cr3 ((uint32_t) kernel_page_directory); 
+    cpu_set_cr3 ((address_t) kernel_page_directory); 
 
     /* Enable paging (virtual memory), protection and set the extension
        type flag. */
