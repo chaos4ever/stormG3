@@ -1,6 +1,13 @@
+/* $chaos: xemacs-script,v 1.6 2002/05/24 17:34:57 per Exp $ */
+/* Abstract: Queue code, used by AVL library. */
+/* Author: Per Lundberg <per@chaosdev.org>
+           Georg Kraml <georg@purists.org> */
+
+/* Copyright 2002 chaos development. */
+/* Use freely under the terms listed in the file COPYING. */
 
 /*
- *  Queue item structure
+ * Queue item structure
  */
 struct qentry
 {
