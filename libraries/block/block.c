@@ -1,4 +1,4 @@
-/* $chaos: block.c,v 1.5 2002/10/28 07:56:33 per Exp $ */
+/* $chaos: block.c,v 1.7 2002/11/20 20:03:44 per Exp $ */
 /* Abstract: Block library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -14,12 +14,15 @@ return_t block_lookup (block_service_t *block)
     // FIXME: Support more than one block service. :-)
     size_t services = 1;
     service_t service;
+    service_lookup_t lookup;
 
     /* Find the block service. */
-    if (service_lookup ("block", NULL, NULL, NULL, 
-                        BLOCK_SERVICE_MAJOR_VERSION,
-                        BLOCK_SERVICE_MINOR_VERSION, &services, &service) != 
-        STORM_RETURN_SUCCESS)
+
+    lookup.protocol_name = "block";
+    lookup.major_version = BLOCK_PROTOCOL_MAJOR_VERSION;
+    lookup.minor_version = BLOCK_PROTOCOL_MINOR_VERSION;
+
+    if (service_lookup (&lookup, &services, &service) != STORM_RETURN_SUCCESS)
     {
         debug_print ("Failed to lookup block service provider.\n");
         return BLOCK_RETURN_SERVICE_UNAVAILABLE;
@@ -36,9 +39,9 @@ return_t block_lookup (block_service_t *block)
 return_t block_register (service_register_t *service_register_info,
                          service_method_t *service_method)
 {    
-    service_register_info->service_name = "block";
-    service_register_info->major_version = BLOCK_SERVICE_MAJOR_VERSION;
-    service_register_info->minor_version = BLOCK_SERVICE_MINOR_VERSION;
+    service_register_info->protocol_name = "block";
+    service_register_info->major_version = BLOCK_PROTOCOL_MAJOR_VERSION;
+    service_register_info->minor_version = BLOCK_PROTOCOL_MINOR_VERSION;
 
     return service_register (service_register_info, service_method);
 }
