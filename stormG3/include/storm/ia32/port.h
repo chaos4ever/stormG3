@@ -1,31 +1,29 @@
-/* $chaos: port.h,v 1.6 2002/10/08 20:16:14 per Exp $ */
+/* $chaos: port.h,v 1.7 2002/10/09 12:52:20 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
 
 /**
- * @file port.h
- * @brief Port in/output. 
+ * @file                port.h
+ * @brief               Port in/output. 
  */
 
 #ifndef __STORM_IA32_PORT_H__
 #define __STORM_IA32_PORT_H__
 
 #include <storm/return_value.h>
-#ifdef STORM
 #include <storm/ia32/defines.h>
 #include <storm/ia32/memory_global.h>
 #include <storm/ia32/string.h>
 #include <storm/ia32/types.h>
-#endif /* STORM */
 
 /* The total number of ports in the system. */
 #define NUMBER_OF_PORTS                 65536
 
 /* Type definitions. */
 /** 
- * @brief A port range. 
+ * @brief               A port range. 
  */
 typedef struct
 {
@@ -124,24 +122,10 @@ static inline void port_uint32_out_string (uint16_t port, uint32_t *data,
                   "d" (port));
 }
 
-/**
- * @brief Register a port range. 
- */
-extern return_t port_range_register (unsigned int base, unsigned int ports,
-                                     char *description);
 
 /**
- * @brief Unregister a port range. 
- */
-extern return_t port_range_unregister (unsigned int start);
-
-#ifdef STORM
-
-/**
- * @brief Initialize port allocation. 
+ * @brief               Initialize port allocation. 
  */
 extern void port_init (void);
-
-#endif /* STORM */
 
 #endif /* !__STORM_IA32_PORT_H__ */
