@@ -1,7 +1,7 @@
-/* $chaos: dvorak.h,v 1.3 2002/05/23 11:23:58 per Exp $ */
+/* $chaos: dvorak.h,v 1.1 2002/06/17 22:53:49 per Exp $ */
 /* Abstract: A dvorak translation table for chaos. This probably
    needs some fixup before it is usable. */
-/* Author: Andreas etterlund <metal_leif@lycos.com> */
+/* Author: Andreas Zetterlund <metal_leif@lycos.com> */
 
 /* Copyright 2000 chaos development. */
 
