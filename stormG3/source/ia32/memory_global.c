@@ -1,4 +1,4 @@
-/* $chaos: memory_global.c,v 1.4 2002/08/08 19:58:39 per Exp $ */
+/* $chaos: memory_global.c,v 1.5 2002/08/08 23:18:58 hal Exp $ */
 /* Abstract: Global memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -76,7 +76,7 @@ return_t memory_global_allocate (void **pointer, unsigned int size)
     else 
     {
         /* Just return a number of physical pages instead */
-        return memory_physical_allocate (pointer, (size % 4096) == 0 ? (size / 4096) : (size / 4096) + 1);
+        return memory_physical_allocate (pointer, (size % PAGE_SIZE) == 0 ? (size / PAGE_SIZE) : (size / PAGE_SIZE) + 1);
     }
 
     /* The slab structure we are accessing is now in
@@ -147,7 +147,7 @@ return_t memory_global_deallocate (void *pointer)
     memory_global_page_t *our_page;
     memory_global_slab_t *our_slab = (memory_global_slab_t *) pointer;
 
-    /* Is this a 4096 block? */
+    /* Is this a page block? */
     if ((uint32_t) pointer % PAGE_SIZE == 0)
     {
         return memory_physical_deallocate (pointer);
