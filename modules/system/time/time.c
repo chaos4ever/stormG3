@@ -1,4 +1,4 @@
-/* $chaos: time.c,v 1.2 2002/08/15 22:21:16 per Exp $ */
+/* $chaos: time.c,v 1.3 2002/08/16 10:21:13 per Exp $ */
 /* Abstract: Time module. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -96,7 +96,7 @@ return_t module_start ()
     }
 
     /* We have the hardware. Now, read the current time and update
-       time. FIXME: Do this. */
+       the time distance from the epoch. FIXME: Do this. */
 
     /* Enable the 1 Hz clock. */
     port_uint8_out_pause (RTC_COMMAND, RTC_REGISTER_B);
