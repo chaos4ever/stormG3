@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.3 2002/06/22 20:21:24 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.4 2002/06/23 11:59:27 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for stormG3
 # Author: Per Lundberg <per@chaosdev.org>
@@ -52,3 +52,12 @@ Build qw(source/ia32/Conscript
          include/storm/Conscript
          include/storm/ia32/Conscript);
 
+Help 
+  qq(Available options:
+
+color=netbsd			Use NetBSD colors for debug text.
+color=freebsd			Use FreeBSD colors for debug text.
+color=openbsd			Use OpenBSD colors for debug text (default).
+root=/somewhere			The installation root you are using (defaults
+                                to /tftpboot).
+       );
