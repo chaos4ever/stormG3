@@ -1,4 +1,4 @@
-/* $chaos: gdt.h,v 1.1 2002/05/25 20:09:39 per Exp $ */
+/* $chaos: gdt.h,v 1.2 2002/06/05 18:17:43 per Exp $ */
 /* Abstract: GDT definitions. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -11,6 +11,9 @@
 
 /* Defines. */
 #define GDT(number,privilege)           (((number) << 3) + privilege)
+
+/* The location of the exceptions in the GDT. */
+#define GDT_BASE_EXCEPTIONS             (16)
 
 /* Selectors. */
 #define KERNEL_CODE_SELECTOR            (GDT (1, 0))
