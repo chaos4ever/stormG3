@@ -1,4 +1,4 @@
-/* $chaos: video.c,v 1.4 2002/10/28 08:11:15 per Exp $ */
+/* $chaos: video.c,v 1.6 2002/11/20 19:50:25 per Exp $ */
 /* Abstract: Video library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -12,9 +12,15 @@ return_t video_lookup (video_service_t *video)
 {
     size_t services = 1;
     service_t service;
+    service_lookup_t lookup;
 
     /* Find the log service. */
-    if (service_lookup ("video", NULL, NULL, NULL, VIDEO_SERVICE_MAJOR_VERSION, VIDEO_SERVICE_MINOR_VERSION, &services, &service) != STORM_RETURN_SUCCESS)
+
+    lookup.protocol_name = "video";
+    lookup.major_version = VIDEO_PROTOCOL_MAJOR_VERSION;
+    lookup.minor_version = VIDEO_PROTOCOL_MINOR_VERSION;
+    
+    if (service_lookup (&lookup, &services, &service) != STORM_RETURN_SUCCESS)
     {
         debug_print ("Failed to lookup video service provider.\n");
         return VIDEO_RETURN_SERVICE_UNAVAILABLE;
@@ -31,9 +37,9 @@ return_t video_lookup (video_service_t *video)
 return_t video_register (service_register_t *service_register_info,
                          service_method_t *service_method)
 {    
-    service_register_info->service_name = "video";
-    service_register_info->major_version = VIDEO_SERVICE_MAJOR_VERSION;
-    service_register_info->minor_version = VIDEO_SERVICE_MINOR_VERSION;
+    service_register_info->protocol_name = "video";
+    service_register_info->major_version = VIDEO_PROTOCOL_MAJOR_VERSION;
+    service_register_info->minor_version = VIDEO_PROTOCOL_MINOR_VERSION;
 
     return service_register (service_register_info, service_method);
 }
