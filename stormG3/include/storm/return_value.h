@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.7 2002/06/04 22:24:43 per Exp $ */
+/* $chaos: return_value.h,v 1.1 2002/06/05 19:55:49 per Exp $ */
 /* Abstract: Return values. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -16,7 +16,10 @@ enum {
     STORM_RETURN_NOT_IMPLEMENTED,
 
     /* The system is out of memory. */
-    STORM_RETURN_OUT_OF_MEMORY
+    STORM_RETURN_OUT_OF_MEMORY,
+
+    /* One of the internal data structures was broken. */
+    STORM_RETURN_INTERNAL_DATA_ERROR
 };
 
 #endif /* !__STORM_RETURN_VALUES_H__ */
