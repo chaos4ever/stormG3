@@ -1,4 +1,5 @@
-/* $chaos: main.c,v 1.25 2002/10/08 20:16:53 per Exp $ */
+/* $chaos: main.c,v 1.26 2002/10/08 20:17:30 per Exp $ */
+/* Abstract: Main startup file. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
