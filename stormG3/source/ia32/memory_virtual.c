@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: memory_virtual.c,v 1.2 2002/06/09 15:04:52 per Exp $ */
 /* Abstract: Virtual memory routines. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -14,7 +14,7 @@
 #include <storm/ia32/memory_virtual.h>
 #include <storm/ia32/multiboot.h>
 
-/* FIXME: Use PGE. This requires some CPU detection code in cpu.c */
+// FIXME: Use PGE. This requires some CPU detection code in cpu.c
 
 /* The kernel page directory. */
 static page_directory_t *kernel_page_directory;
@@ -125,12 +125,11 @@ void memory_virtual_init ()
     /* Map the physical memory. We skip the first page to trap NULL
        references. */
     memory_virtual_map (kernel_page_directory, 1, 1, 
-                        (multiboot_info.memory_upper + 1024) / 4 - 1,
-                        PAGE_KERNEL);
+                        physical_pages - 1, PAGE_KERNEL);
     
     /* Specify page directory to use for the kernel. */
     cpu_set_cr3 ((uint32_t) kernel_page_directory); 
-    
+
     /* Enable paging (virtual memory), protection and set the extension
        type flag. */
     cpu_set_cr0 (CPU_CR0_PE | CPU_CR0_PG | CPU_CR0_ET);
