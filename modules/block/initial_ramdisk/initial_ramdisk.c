@@ -1,4 +1,4 @@
-/* $chaos: initial_ramdisk.c,v 1.3 2002/07/10 21:55:50 per Exp $ */
+/* $chaos: initial_ramdisk.c,v 1.4 2002/07/21 12:32:09 per Exp $ */
 /* Abstract: Initial ramdisk server. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
             Per Lundberg <per@chaosdev.org> */
@@ -38,10 +38,10 @@ static return_t block_write (unsigned int starting_block, unsigned int blocks,
 }
 
 /* Get information about this block device. */
-static return_t block_info (block_info_t *block_info)
+static return_t block_info (block_info_t *info)
 {
-    block_info->block_size = RAMDISK_BLOCK_SIZE;
-    block_info->block_count = ramdisk_block_count;
+    info->block_size = RAMDISK_BLOCK_SIZE;
+    info->block_count = ramdisk_block_count;
     return STORM_RETURN_SUCCESS;
 }
 
