@@ -1,11 +1,23 @@
 /* $chaos$ */
+/* Abstract: 3Com Etherlink III module (3c509) */
+/* Author: Johannes Lundberg <jojo@chaosdev.org>
+           Håkan Larsson     <trc@chaosdev.org> */
+
+/* Copyright 2002 chaos development. */
+/* Use freely under the terms listed in the file COPYING. */
+=======
 
 #include <storm/storm.h>
 
+#include <log/log.h>
 #include <ethernet/ethernet.h>
+
+#include <3c509.h>
 
 #define ETHERNET_MODULE_VERSION 1
 #define unused __attribute__ ((unused))
+
+log_service_t log;
 
 static return_t ethernet_send (ethernet_packet_t *packet unused, int length unused)
 {
@@ -52,9 +64,43 @@ static return_t service_info (void *ethernet_void)
   return STORM_RETURN_SUCCESS;
 }
 
+return_t probe (void)
+{
+  int id_port = 0x110;
+
+  /* Select an open I/O location at 0x1*0, and probe for the 3c509 card. */
+
+  for ( ; id_port < 0x200; id_port += 0x10)
+  {
+    if (port_range_register (id_port, 1 , "3Com Etherlink III ID port") !=
+        STORM_RETURN_SUCCES)
+    {
+      continue;
+    }
+    port_out (id_port, 0x00);
+    port_out (id_port, 0xFF);
+    if (port_in_u8 (id_port) & 0x01)
+    {
+      break;
+    }
+  } 
+
+  if (id_port >= 0x200)
+  {
+    
+  }
+} 
+
 return_t module_start (void)
 {
-  debug_print ("Tjolahopp\n");
-  return service_register ("3c509", "chaos development", "3c509",
+  log_init (&log);
+  if (probe ())
+  {
+    
+  }
+
+  log.print (LOG_URGENCY_DEBUG, "3c509 module initializing.");
+
+  return service_register ("ethernet", "chaos development", "3c509",
                            "0", ETHERNET_MODULE_VERSION, &service_info);
 }
