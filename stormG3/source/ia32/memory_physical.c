@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.13 2002/06/23 17:30:03 per Exp $ */
+/* $chaos: memory_physical.c,v 1.14 2002/06/25 20:06:05 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -21,6 +21,14 @@ static memory_physical_slab_t *first_free = NULL;
 
 /* Used to find the end of the kernel. */
 extern int _end;
+
+// FIXME: Replace this bitmap trash with the new system. Like this:
+// static memory_physical_slab_t *first_free_4k = NULL;
+// static memory_physical_slab_t *first_free_8k = NULL;
+// static memory_physical_slab_t *first_free_16k = NULL;
+// static memory_physical_slab_t *first_free_32k = NULL;
+// static memory_physical_slab_t *first_free_64k = NULL;
+// static memory_physical_slab_t *first_free_128k = NULL;
 
 /* A bitmap of all the free pages. (Don't worry, this is not used on
    ordinary memory allocation...) 
