@@ -1,4 +1,4 @@
-/* $chaos: exception.c,v 1.10 2002/06/15 12:18:40 per Exp $ */
+/* $chaos: exception.c,v 1.11 2002/08/08 10:51:42 per Exp $ */
 /* Abstract: Exception handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -60,11 +60,11 @@ void exception_divide_error_fault (cpu_register_t registers)
     while (TRUE);
 }
 
-void exception_debug_trap (cpu_register_t registers)
+/* The debug trap is a software-generated exception; therefore we
+   don't need t halt for it. */
+void exception_debug_trap (cpu_register_t registers __attribute__ ((unused)))
 {
     debug_print ("Debug trap.\n");
-    dump_registers (&registers);
-    while (TRUE);
 }
 
 void exception_nmi (cpu_register_t registers)
@@ -74,11 +74,11 @@ void exception_nmi (cpu_register_t registers)
     while (TRUE);
 }
 
-void exception_breakpoint_trap (cpu_register_t registers)
+/* The breakpoint trap is a software-generated exception; therefore we
+   don't need t halt for it. */
+void exception_breakpoint_trap (cpu_register_t registers __attribute__ ((unused)))
 {
     debug_print ("Breakpoint trap.\n");
-    dump_registers (&registers);
-    while (TRUE);
 }
 
 void exception_overflow_trap (cpu_register_t registers)
