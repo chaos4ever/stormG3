@@ -1,4 +1,4 @@
-/* $chaos: service.c,v 1.10 2002/10/09 19:03:10 per Exp $ */
+/* $chaos: service.c,v 1.11 2002/10/10 20:33:13 per Exp $ */
 /* Abstract: Service support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -21,7 +21,8 @@ static spinlock_t service_lock = SPIN_UNLOCKED;
 
 /* Register a service provider. */
 return_t service_register (char *name, char *vendor, char *model, char *id,
-                           unsigned int version,
+                           unsigned int major_version,
+                           unsigned int minor_version,
                            service_info_t service_info)
 {
     service_data_t *service;
@@ -47,7 +48,8 @@ return_t service_register (char *name, char *vendor, char *model, char *id,
     string_copy (service->vendor, vendor);
     string_copy (service->model, model);
     string_copy (service->id, id);
-    service->version = version;
+    service->major_version = major_version;
+    service->minor_version = minor_version;
     service->service_info = service_info;
 
     spin_lock (&service_lock);
@@ -67,7 +69,8 @@ return_t service_unregister (char *service __attribute__ ((unused)),
 
 /* Lookup a service. */
 return_t service_lookup (char *name, char *vendor, char *model, char *id,
-                         unsigned int version, size_t *services,
+                         unsigned int major_version, 
+                         unsigned int minor_version, size_t *services,
                          service_t **out_service)
 {
     service_data_t *service;
@@ -82,8 +85,11 @@ return_t service_lookup (char *name, char *vendor, char *model, char *id,
     service = first_service;
     while (service != NULL)
     {
-        if ((string_compare (service->name, name) == 0 && 
-             service->version == version) &&
+        /* We take the fast (integer) comparisons first so that we be
+           efficient. */
+        if ((service->major_version == major_version) &&
+            (service->minor_version >= minor_version) &&
+            string_compare (service->name, name) == 0 && 
             (vendor == NULL || string_compare (service->vendor, vendor) == 0) &&
             (model == NULL || string_compare (service->model, model) == 0) &&
             (id == NULL || string_compare (service->id, id) == 0))
@@ -116,8 +122,10 @@ return_t service_lookup (char *name, char *vendor, char *model, char *id,
     service = first_service;
     while (service != NULL)
     {
-        if ((string_compare (service->name, name) == 0 && 
-             service->version == version) &&
+        /* Numeric comparisons are fast so we do them first. */
+        if (service->major_version == major_version &&
+            service->minor_version >= minor_version &&
+            string_compare (service->name, name) == 0 && 
             (vendor == NULL || string_compare (service->vendor, vendor) == 0) &&
             (model == NULL || string_compare (service->model, model) == 0) &&
             (id == NULL || string_compare (service->id, id) == 0))
@@ -126,7 +134,8 @@ return_t service_lookup (char *name, char *vendor, char *model, char *id,
             string_copy ((*out_service)[counter].vendor, service->vendor);
             string_copy ((*out_service)[counter].model, service->model);
             string_copy ((*out_service)[counter].id, service->id);
-            (*out_service)[counter].version = service->version;
+            (*out_service)[counter].major_version = service->major_version;
+            (*out_service)[counter].minor_version = service->minor_version;
             (*out_service)[counter].service_info = service->service_info;
             counter++;
         }
