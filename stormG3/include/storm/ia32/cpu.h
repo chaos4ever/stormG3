@@ -1,4 +1,4 @@
-/* $chaos: cpu.h,v 1.2 2002/06/12 19:21:00 per Exp $ */
+/* $chaos: cpu.h,v 1.3 2002/06/12 19:29:15 per Exp $ */
 /* Abstract: CPU defines and functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -17,6 +17,15 @@ static inline void cpu_set_cr0 (uint32_t new_cr0)
     asm volatile ("movl %0, %%cr0"
                   :
                   : "r" (new_cr0));
+}
+
+static inline uint32_t cpu_get_cr2 (void)
+{			   
+    uint32_t return_value;
+    asm volatile ("movl %%cr2, %0"
+                  : "=a" (return_value) 
+                  :);
+    return return_value;
 }
 
 static inline void cpu_set_cr3 (uint32_t new_cr3)
