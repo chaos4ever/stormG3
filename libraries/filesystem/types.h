@@ -1,4 +1,4 @@
-/* $chaos: types.h,v 1.2 2002/07/29 07:11:20 per Exp $ */
+/* $chaos: types.h,v 1.3 2002/08/04 09:28:24 per Exp $ */
 /* Abstract: Types used by the filesystem library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -15,6 +15,7 @@ typedef return_t (*filesystem_mount_t)(block_service_t *block);
 typedef return_t (*filesystem_open_t)(char *filename, vfs_file_mode_t mode, vfs_file_handle_t *handle);
 typedef return_t (*filesystem_close_t)(vfs_file_handle_t handle);
 typedef return_t (*filesystem_read_t)(vfs_file_handle_t handle, void *buffer, size_t count);
+typedef return_t (*filesystem_info_t)(char *filename, vfs_file_info_t *info);
 
 typedef struct
 {
@@ -32,6 +33,9 @@ typedef struct
 
     /* Read from a file. */
     filesystem_read_t read;
+
+    /* Get information about a file. */
+    filesystem_info_t info;
 
     // TODO:
     /* Write to a file. */
