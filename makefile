@@ -4,6 +4,9 @@
 
 # Copyright 1998-2000 chaos development.
 
+ROOT=/mnt/chaos
+DIRECTORES=system system/kernel system/servers data data/programming data/programming/c data/programming/c/headers
+
 .PHONY:	all install clean snapshot autochaos configure
 
 all:
@@ -24,7 +27,10 @@ install-servers: configure-servers
 install-programs: configure-programs
 	$(MAKE) -C programs install
 
-install: install-storm install-libraries install-servers install-programs
+directories:
+	for e in $(DIRECTORES) ; do if ! [ -e "$(ROOT)/$$e" ] ; then mkdir $(ROOT)/$$e ; fi ; done
+
+install: directories install-storm install-libraries install-servers install-programs
 
 autochaos:
 	cd storm && autochaos
