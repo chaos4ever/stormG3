@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.26 2002/10/10 21:38:50 per Exp $ */
+/* $chaos: module.c,v 1.27 2002/10/11 07:43:23 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -26,6 +26,7 @@
 static module_function_t function[] = 
 {
     { "debug_print", (function_t) &debug_print },
+    { "debug_memory_dump", (function_t) &debug_memory_dump },
 
     { "dma_register", (function_t) &dma_register },
 //  { "dma_unregister", (function_t) &dma_unregister },
