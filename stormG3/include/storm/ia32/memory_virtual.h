@@ -87,7 +87,7 @@ typedef struct
 } page_table_t;
 
 /** 
- * @brief Initialize the virtual memory system. 
+ * @brief               Initialize the virtual memory system. 
  */
 extern void memory_virtual_init (void);
 
