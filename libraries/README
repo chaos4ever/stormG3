@@ -5,4 +5,8 @@ The chaos libraries are used to define the protocol used by a service
 provider. For example, if a module provides the service "log", it will
 use structures from a library called "log".
 
--- Per Lundberg <per@chaosdev.org>  Fri, 21 Jun 2002 09:31:14 +0200
+This is not 100% strict though, since some libraries (like the string
+and memory library) don't use nor contact a service provider at
+all. Maybe we should move these somewhere else?
+
+-- Per Lundberg <per@chaosdev.org>  Fri, 16 Aug 2002 11:28:35 +0200
