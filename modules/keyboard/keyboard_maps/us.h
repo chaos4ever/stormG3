@@ -1,23 +1,9 @@
-/* $chaos: us.h,v 1.3 2002/05/23 11:23:58 per Exp $ */
-/* Abstract: A swedish keyboard translation map for chaos. */
+/* $chaos: us.h,v 1.1 2002/06/17 22:53:49 per Exp $ */
+/* Abstract: A US keyboard translation map for chaos. */
 /* Author: Andreas Zetterlund <metal_leif@mailcity.com */
 
-/* Copyright 1998-2000 chaos development. */
-
-/* This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public License as
-   published by the Free Software Foundation; either version 2 of the
-   License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful, but
-   WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-   USA. */
+/* Copyright 1998-2002 chaos development. */
+/* Use freely under the terms listed in the file COPYING. */
 
 #ifndef __US_H__
 #define __US_H__
