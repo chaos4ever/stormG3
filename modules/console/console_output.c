@@ -1,7 +1,7 @@
-/* $chaos: console_output.c,v 1.3 2002/05/23 11:23:56 per Exp $ */
+/* $chaos: console_output.c,v 1.1 2002/06/22 22:54:35 per Exp $ */
 /* Abstract: Functions for writing to the console. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
-   Per Lundberg <per@chaosdev.org> */
+            Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2000-2002 chaos development. */
 /* Use freely under the terms listed in the file COPYING. */
@@ -135,7 +135,7 @@ static void console_kill_line (console_t *console, int argument)
     }
 }
 
-static void console_kill_screen (console_t *console, int argument)
+void console_kill_screen (console_t *console, int argument)
 {
     switch (argument)
     {
@@ -230,7 +230,7 @@ static void console_cursor_left (console_t *console, int argument)
     }
 }
 
-static void console_cursor_move (console_t *console, int x, int y)
+void console_cursor_move (console_t *console, int x, int y)
 {
     x--;
     y--;
@@ -259,6 +259,11 @@ static void console_cursor_move (console_t *console, int x, int y)
     else
     {
         console->cursor_y = y;
+    }
+
+    if (console == current_console)
+    {
+        video.cursor_place (x, y);
     }
 }
 
