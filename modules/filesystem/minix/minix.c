@@ -1,4 +1,4 @@
-/* $chaos: minix.c,v 1.7 2002/08/11 18:32:18 per Exp $ */
+/* $chaos: minix.c,v 1.8 2002/08/31 10:04:19 per Exp $ */
 /* Abstract: Implementation of the Minix file system. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -197,14 +197,18 @@ static return_t minix_block_read (minix_fs_t *minix_fs, minix2_inode_t *inode,
                 return STORM_RETURN_NOT_FOUND;
             }
 
+#if DEBUG
             debug_print ("%x %x %x %x\n", indirect_buffer[0], 
                          indirect_buffer[1], indirect_buffer[2],
                          indirect_buffer[3]);
+#endif
 
             block = indirect_buffer[block - 7];
         }
-        
+
+#if DEBUG        
         debug_print (" reading block %u\n", block);
+#endif
 
         if (minix_fs->block.read ((block * MINIX_BLOCK_SIZE) /
                                   minix_fs->block_size, MINIX_BLOCK_SIZE /
@@ -336,8 +340,10 @@ static return_t minix_read (vfs_file_handle_t handle, void *buffer UNUSED,
             in_block_position = 0;
         }
 
+#if DEBUG
         debug_print ("block: %u, reading %u bytes starting at ", block, 
                      bytes_to_read, in_block_position);
+#endif
 
         if (minix_block_read (minix_fs, inode, block, read_buffer) != 
             STORM_RETURN_SUCCESS)
