@@ -1,4 +1,4 @@
-/* $chaos: process.c,v 1.5 2002/10/20 19:26:44 per Exp $ */
+/* $chaos: process.c,v 1.6 2002/10/23 07:20:35 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 /* Abstract: Process support. */
 
@@ -56,7 +56,7 @@ void process_init (void)
     thread->id = 0;
     string_copy_max (thread->name, "Idle thread", THREAD_NAME_LENGTH);
     thread->parent = (struct process_t *) process;
-    thread->lock = SPIN_LOCKED;
+    thread->lock = SPIN_UNLOCKED;
     thread->tss = kernel_tss;
     thread->previous = thread->next = NULL;
 
@@ -65,13 +65,19 @@ void process_init (void)
     string_copy_max (process->name, "Kernel process", PROCESS_NAME_LENGTH);
     process->active = TRUE;
     process->thread_list = thread;
+    process->lock = SPIN_UNLOCKED;
     process_list = process;
+    
+    /* The kernel process gets the super_user privilege. That way, the
+       first process (usually the boot program) will inherit these
+       privileges so that it can do everything that it needs. */
+    capability_add (process->id, "kernel", "super_user");
 }
 
 /* Find the process with the given ID. */
-static process_t *process_find (process_id_t process_id)
+process_t *process_find (process_id_t process_id)
 {
-    spin_lock (&process_list_lock);
+    spin_lock_interrupt (&process_list_lock);
     process_t *process = process_list;
 
     while (process != NULL)
