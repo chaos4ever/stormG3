@@ -1,4 +1,4 @@
-/* $chaos: string.h,v 1.3 2002/10/04 19:01:20 per Exp $ */
+/* $chaos: string.h,v 1.4 2002/10/08 20:16:14 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -12,8 +12,12 @@
 #ifndef __STORM_IA32_STRING_H__
 #define __STORM_IA32_STRING_H__
 
-/* FIXME: Clean up those functions. */
-/* Copy a string. */
+/**
+ * @brief               Copy a string.
+ * @param destination   The destination string.
+ * @param source        The source string.
+ * @return              The destination string.
+ */
 static inline char *string_copy (char *destination, const char *source)
 {
     int d0, d1, d2;
@@ -34,7 +38,13 @@ static inline char *string_copy (char *destination, const char *source)
     return destination;
 }
 
-/* Copy a string, but no more than 'count' bytes. */
+/**
+ * @brief               Copy a string, but no more than 'count' bytes.
+ * @param destination   The destination string. 
+ * @param source        The source string.
+ * @param count         The maximum number of characters to copy.
+ * @return              The destination string.
+ */
 static inline char *string_copy_max (char *destination, const char *source,
                                      unsigned int count)
 {
@@ -64,8 +74,13 @@ static inline char *string_copy_max (char *destination, const char *source,
     return destination;
 }
 
-/* Compare two strings. Returns 0 if equal, negative if the first
-   string is 'less' than the second, or otherwise positive. */
+/**
+ * @brief               Compare two strings.
+ * @param string1       The first string.
+ * @param string2       The second string.
+ * @return              0 if equal, negative if the first string is 'less'
+ *                      than the second, or otherwise positive. 
+ */
 static inline int string_compare (const char *string1, const char *string2)
 {
     int counter = -1;
@@ -87,7 +102,14 @@ static inline int string_compare (const char *string1, const char *string2)
     return 0;
 }
 
-/* Compare two strings, but no more than count characters. */
+/**
+ * @brief               Compare two strings, but no more than count characters.
+ * @param string1       The first string.
+ * @param string2       The second string.
+ * @param count         The limit length.
+ * @return              0 if equal, negative if the first string is 'less'
+ *                      than the second, or otherwise positive.
+ */
 static inline int string_compare_max  (const char *string1,
                                        const char *string2,
                                        unsigned int count)
@@ -121,7 +143,10 @@ static inline int string_compare_max  (const char *string1,
     return eax;
 }
 
-/* Returns the string length. */
+/**
+ * @brief               Returns the string length.
+ * @param string        The string.
+ * @return              The string length. */
 static inline unsigned int string_length (const char *string)
 {
     int edi;
@@ -142,9 +167,14 @@ static inline unsigned int string_length (const char *string)
     return return_value;
 }
 
-/* Returns the string length, but only if it is less than size. */
+/**
+ * @brief               Returns the string length or size, whichever is smallest.
+ * @param string        The string.
+ * @param size          The maximum size.
+ * @return              MIN(size, string_length(string))
+ */
 static inline unsigned int string_length_max (const char *string,
-                                              unsigned int count)
+                                              unsigned int size)
 {
     int edi;
     register int return_value;
@@ -163,7 +193,7 @@ static inline unsigned int string_length_max (const char *string,
                   "=&d" (edi)
                   :
                   "c" (string),
-                  "1" (count));
+                  "1" (size));
 
     return return_value;
 }
