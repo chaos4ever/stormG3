@@ -1,4 +1,4 @@
-# $chaos$
+# $chaos: makefile,v 1.13 2002/05/23 11:13:51 per Exp $
 # Abstract: Top-level chaos makefile
 # Authors: Henrik Hallin <hal@chaosdev.org>
 #          Per Lundberg <per@chaosdev.org>
@@ -28,6 +28,7 @@ configure:
 build:
 	@ln -sf ia32 storm/current-arch
 	@ln -sf ia32 storm/include/storm/current-arch
+	@ln -sf ia32 stormG2/include/storm/current-arch
 	cd storm && ./configure --install-prefix $$CHAOS_INSTALL_PATH
 	$(MAKE) -C storm install
 	$(MAKE) -C libraries configure
