@@ -1,4 +1,4 @@
-/* $chaos: storm.h,v 1.3 2002/06/17 20:58:28 per Exp $ */
+/* $chaos: storm.h,v 1.4 2002/06/17 22:56:23 per Exp $ */
 /* Abstract: storm kernel API. This header file can be included by a
    kernel module that wants to have access to kernel functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
@@ -25,5 +25,8 @@ extern void debug_print (const char *format_string, ...);
 /* Register an IRQ for use by a module. */
 extern return_t irq_register (unsigned int irq_number, char *description,
                               irq_handler_t *function);
+
+/* Sleep for the given amount of milliseconds. */
+extern return_t timer_sleep_milli (unsigned int time);
 
 #endif /* !__STORM_STORM_H__ */
