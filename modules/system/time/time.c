@@ -1,4 +1,4 @@
-/* $chaos: time.c,v 1.1 2002/08/15 20:59:40 per Exp $ */
+/* $chaos: time.c,v 1.2 2002/08/15 22:21:16 per Exp $ */
 /* Abstract: Time module. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -11,7 +11,8 @@
 log_service_t log;
 
 /* 'chaos time' -- similar to UNIX time, but with a 64-bit time_t. */
-time_t time = 0;
+static time_t time = 0;
+static time_t uptime = 0;
 
 /* The current time & date. */
 volatile unsigned int second, minute, hour, date, month, year, century;
@@ -21,6 +22,9 @@ extern void irq_handler (unsigned int irq UNUSED);
 /* The IRQ handler. */
 void irq_handler (unsigned int irq UNUSED)
 {
+    // FIXME: Should we just read the time once and convert it into
+    // chaos time, and never more use the CMOS time, or what?
+
     /* Read the time and date. We don't set binary mode, since it's
        broken or buggy on many machines. */
     port_uint8_out_pause (RTC_COMMAND, RTC_REGISTER_SECOND);
@@ -57,6 +61,10 @@ void irq_handler (unsigned int irq UNUSED)
 
     year += century * 100;
 
+    /* Increase our time pointer as well. */
+    time++;
+    uptime++;
+
     /* Read the C register. */
     port_uint8_out_pause (RTC_COMMAND, RTC_REGISTER_C);
     port_uint8_in (RTC_DATA);
@@ -70,7 +78,7 @@ return_t module_start ()
         return STORM_RETURN_NOT_FOUND;
     }
 
-        /* Try to allocate the RTC's ports. */
+    /* Try to allocate the RTC's ports. */
     if (port_range_register (RTC_BASE, RTC_PORTS,"RTC") !=
         STORM_RETURN_SUCCESS)
     {
@@ -86,6 +94,9 @@ return_t module_start ()
         log.print (LOG_URGENCY_EMERGENCY, "Could not allocate IRQ.");
         return STORM_RETURN_BUSY;
     }
+
+    /* We have the hardware. Now, read the current time and update
+       time. FIXME: Do this. */
 
     /* Enable the 1 Hz clock. */
     port_uint8_out_pause (RTC_COMMAND, RTC_REGISTER_B);
