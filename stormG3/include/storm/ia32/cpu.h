@@ -1,4 +1,4 @@
-/* $chaos: cpu.h,v 1.3 2002/06/12 19:29:15 per Exp $ */
+/* $chaos: cpu.h,v 1.4 2002/06/12 20:26:58 per Exp $ */
 /* Abstract: CPU defines and functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -45,6 +45,29 @@ static inline uint32_t cpu_get_esp (void)
 
   return return_value;
 }
+
+/* The IA32 registers. */
+typedef struct
+{
+    /* General-purpose. */
+    uint32_t eax;
+    uint32_t ebx;
+    uint32_t ecx;
+    uint32_t edx;
+
+    /* Index registers. */
+    uint32_t esi;
+    uint32_t edi;
+
+    /* Flags. */
+    uint32_t eflags;
+
+    /* Segment registers. */
+    uint32_t cs;
+    uint32_t ds;
+    uint32_t es;
+    uint32_t fs;
+} cpu_register_t;
 
 /* CR0 bits. */
 /* Paging enabled. */
