@@ -1,5 +1,5 @@
 <?xml version='1.0' ?> <!-- -*- xml -*- -->
-<!-- $chaos: process.xml,v 1.3 2002/05/27 10:07:11 per Exp $ -->
+<!-- $chaos: process.xml,v 1.4 2002/05/27 21:29:58 per Exp $ -->
 
 <chapter id="process">
   <?dbhtml filename="process.html"?>
@@ -17,9 +17,10 @@
   <section>
     <?dbhtml filename="processes.html"?>
     <title>
-      A process is: TODO.
+      Processes.
     </title>
     <para>
+      A process is: TODO.
       <programlisting id="process_t">
 typedef struct
 {
