@@ -1,4 +1,4 @@
-/* $chaos: cpu.h,v 1.7 2002/06/13 20:07:38 per Exp $ */
+/* $chaos: cpu.h,v 1.8 2002/06/13 22:11:40 per Exp $ */
 /* Abstract: CPU defines and functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -114,11 +114,21 @@ typedef struct
 typedef struct
 {
     /* These ones are pushed manually. */
-    uint32_t ds, es, fs, gs;
+    uint32_t gs, fs, es, ds;
 
     /* These are gently stored by a pusha. */
     uint32_t edi, esi, ebp, esp;
     uint32_t ebx, edx, ecx, eax;
+
+    /* An error code (dummy for some exceptions). */
+    unsigned int error_code;
+
+    /* The current (or next) instruction. */
+    unsigned int eip;
+    unsigned int cs;
+
+    /* EFLAGS get pushed first. */
+    uint32_t eflags;
 } cpu_register_t;
 
 /* External variables. */
