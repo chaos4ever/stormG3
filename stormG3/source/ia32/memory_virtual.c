@@ -1,4 +1,4 @@
-/* $chaos: memory_virtual.c,v 1.5 2002/10/09 21:26:04 per Exp $ */
+/* $chaos: memory_virtual.c,v 1.6 2002/10/10 20:34:21 per Exp $ */
 /* Abstract: Virtual memory routines. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -120,7 +120,7 @@ void memory_virtual_init ()
     }
 
     /* Make sure it is cleared out. */
-    memory_set_uint32 ((uint32_t *) kernel_page_directory, 0, PAGE_SIZE / 4);
+    memory_clear_page (kernel_page_directory);
 
     /* Map the physical memory. We skip the first page to trap NULL
        references. */
