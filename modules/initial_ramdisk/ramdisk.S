@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: ramdisk.S,v 1.1 2002/06/26 06:40:40 per Exp $ */
 /* Abstract: The ramdisk. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -7,7 +7,8 @@
 
 #define ASSEMBLER			1
 #include "ramdisk.h"
-	
+
+.globl			blocks
 ramdisk:
 /* Because of the fact that we don't chdir... */
 .incbin					"initial_ramdisk/ramdisk.image"
