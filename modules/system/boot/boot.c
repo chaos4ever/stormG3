@@ -1,4 +1,4 @@
-/* $chaos: boot.c,v 1.3 2002/08/31 10:04:41 per Exp $ */
+/* $chaos: boot.c,v 1.4 2002/10/04 19:01:10 per Exp $ */
 /* Abstract: Boot module. The boot module takes care of setting up the
    system (opening virtual consoles, launching programs, etc). */
 /* Author: Per Lundberg <per@chaosdev.org> */
@@ -33,7 +33,7 @@ block_service_t block;
 vfs_service_t vfs;
 
 /* The exec service provider we are using. */
-exec_service_t exec;
+//exec_service_t exec;
 
 /* Entry point. */
 return_t module_start (void)
@@ -68,12 +68,14 @@ return_t module_start (void)
         return STORM_RETURN_NOT_FOUND;
     }
 
+#if FALSE
     /* Make sure we have an exec service provider. */
     if (exec_lookup (&exec) != EXEC_RETURN_SUCCESS)
     {
         log.print (LOG_URGENCY_EMERGENCY, "No exec service found. Aborting.");
         return STORM_RETURN_NOT_FOUND;
     }
+#endif
     
     /* Mount the root file system. */
     return_value = vfs.mount ("//", &block);
@@ -94,8 +96,8 @@ return_t module_start (void)
     /* Run system initialization (start daemons etc). We do this
        through a program called boot. */
     // FIXME: Change the name of this to /system/programs/boot or
-    // something like this. I believe the Minix module would be
-    // patched for this to work, though.
+    // something like this. I believe the Minix module would have to
+    // be patched for this to work, though.
     return_value = vfs.open ("/boot", VFS_FILE_MODE_READ,
                              &handle);
     if (return_value != STORM_RETURN_SUCCESS)
@@ -137,7 +139,6 @@ return_t module_start (void)
 
 #endif
 
-#if FALSE
     checksum_md5_digest_type digest;
     memory_set_uint8 ((uint8_t *) &digest, 0, 16);
     return_value = checksum_md5 (buffer, file_info.size,
@@ -148,7 +149,6 @@ return_t module_start (void)
         debug_print ("%x ", digest[c]);
     }
     debug_print ("\n");
-#endif    
 
     /* Close the file. */
     return_value = vfs.close (handle);
@@ -159,7 +159,7 @@ return_t module_start (void)
     }
 
     /* Run this program. */
-    exec.run (buffer);
+    //exec.run (buffer);
 
     // TODO:
     /* Open virtual consoles. FIXME: Read a list from somewhere to
