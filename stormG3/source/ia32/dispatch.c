@@ -1,4 +1,4 @@
-/* $chaos: dispatch.c,v 1.1 2002/06/15 10:47:46 per Exp $ */
+/* $chaos: dispatch.c,v 1.2 2002/06/18 22:13:58 per Exp $ */
 /* Abstract: Dispatcher. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -11,17 +11,14 @@
 /* The number of ticks since IRQ0 was first enabled. */
 volatile unsigned int ticks = 0;
 
-/* The task switcher -- IRQ0 handler. */
+/* The task switcher -- IRQ0 handler (called from irq_handlers.S that
+   does the register preservation. */
 void dispatch_task_switcher (void)
 {
-    /* Return straight away for now. */
     asm ("incl ticks\n"
-         "notl 0xB8000\n"
-         "movb $0x20, %al\n"
-         "outb %al, $0x20");
-    asm ("iret");
-
-    /* Just to make gcc happy, so that it will know that this function
-       will never return... */
-    while (TRUE);
+         "movl 0xB8000, %eax\n"
+         "xorl $0x10001000, %eax\n"
+         "movl %eax, 0xB8000\n");
 }
+
+
