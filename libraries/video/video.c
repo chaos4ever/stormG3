@@ -1,4 +1,4 @@
-/* $chaos: video.c,v 1.6 2002/11/20 19:50:25 per Exp $ */
+/* $chaos: video.c,v 1.7 2002/12/03 14:46:16 johannes Exp $ */
 /* Abstract: Video library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -8,18 +8,22 @@
 #include <video/video.h>
 
 /* Get a connection to the video service provider. */
+// FIXME: Take a service_lookup_t as parameter as well.
 return_t video_lookup (video_service_t *video)
 {
     size_t services = 1;
     service_t service;
-    service_lookup_t lookup;
+    service_lookup_t lookup =
+        {
+            "video",    /* protocol_name */
+            NULL,       /* service_vendor */
+            NULL,       /* device_vendor */
+            NULL,       /* model */
+            NULL,       /* device_id */
+            VIDEO_PROTOCOL_MAJOR_VERSION,       /* major version */
+            VIDEO_PROTOCOL_MINOR_VERSION,       /* minor version */
+        };
 
-    /* Find the log service. */
-
-    lookup.protocol_name = "video";
-    lookup.major_version = VIDEO_PROTOCOL_MAJOR_VERSION;
-    lookup.minor_version = VIDEO_PROTOCOL_MINOR_VERSION;
-    
     if (service_lookup (&lookup, &services, &service) != STORM_RETURN_SUCCESS)
     {
         debug_print ("Failed to lookup video service provider.\n");
