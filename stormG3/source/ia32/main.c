@@ -1,4 +1,4 @@
-/* $chaos: main.c,v 1.3 2002/05/26 10:56:43 hal Exp $ */
+/* $chaos: main.c,v 1.4 2002/05/26 10:59:18 hal Exp $ */
 /* Abstract: This is the startup point of storm. It is executed right
    after the assembly language init code has set up the GDT, kernel
    stack, etc. Here, we initialise everything in the storm, like
@@ -6,7 +6,7 @@
    of the host CPU and multitasking. It is also responsible for
    starting the servers loaded by the Multiboot compliant boot
    loader. */
-/* Author: Per Lundberg <per@halleluja.nu> 
+/* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
