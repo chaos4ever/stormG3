@@ -1,4 +1,4 @@
-/* $chaos: types.h,v 1.2 2002/07/28 19:30:54 per Exp $ */
+/* $chaos: types.h,v 1.3 2002/08/04 09:29:04 per Exp $ */
 /* Abstract: Types used by the virtual filesystem library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -16,6 +16,13 @@ typedef int vfs_file_handle_t;
 /* A file mode. File modes are defined in vfs/defines.h. */
 typedef int vfs_file_mode_t;
 
+/* A file info structure, used for returning file information. */
+typedef struct
+{
+    /* Size of the file. */
+    size_t size;
+} vfs_file_info_t;
+
 typedef return_t (*vfs_mount_t)(char *path, block_service_t *block);
 typedef return_t (*vfs_assign_t)(char *virtual_path, char *logical_path);
 typedef return_t (*vfs_open_t)(char *filename, vfs_file_mode_t file_mode, 
@@ -23,6 +30,7 @@ typedef return_t (*vfs_open_t)(char *filename, vfs_file_mode_t file_mode,
 typedef return_t (*vfs_close_t)(vfs_file_handle_t handle);
 typedef return_t (*vfs_read_t)(vfs_file_handle_t handle, void *buf, 
                                size_t length);
+typedef return_t (*vfs_info_t)(char *path, vfs_file_info_t *info);
 // FIXME: Implement the following.
 typedef return_t (*vfs_write_t)(vfs_file_handle_t handle, void *buf,
                                 size_t length);
@@ -49,9 +57,13 @@ typedef struct
     /* Read from a file. */
     vfs_read_t read;
 
-    // TODO:
-    /* 'stat' a file. */
+    /* Get information about a file. */
+    vfs_info_t info;
+
     /* Set the location in a file. */
+    vfs_seek_t seek;
+
+    // TODO:
     /* Return the location in a file. */
     /* Write to a file. */
     /* Read from a directory. */
