@@ -1,4 +1,4 @@
-/* $chaos: dotfile.emacs,v 1.37 2002/10/14 16:03:33 per Exp $ */
+/* $chaos: kernel.h,v 1.2 2002/12/02 21:22:47 per Exp $ */
 /* Abstract: Kernel library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -19,4 +19,4 @@
 #include <kernel/types.h>
 #include <kernel/functions.h>
 
-#endif /* !__KERNEL_KENEL_H__ */
+#endif /* !__KERNEL_KERNEL_H__ */
