@@ -1,4 +1,4 @@
-/* $chaos: return_value.h,v 1.1 2002/06/05 19:55:49 per Exp $ */
+/* $chaos: return_value.h,v 1.2 2002/06/11 21:27:34 per Exp $ */
 /* Abstract: Return values. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -19,7 +19,10 @@ enum {
     STORM_RETURN_OUT_OF_MEMORY,
 
     /* One of the internal data structures was broken. */
-    STORM_RETURN_INTERNAL_DATA_ERROR
+    STORM_RETURN_INTERNAL_DATA_ERROR,
+    
+    /* The module was invalid in some way. */
+    STORM_RETURN_MODULE_INVALID
 };
 
 #endif /* !__STORM_RETURN_VALUES_H__ */
