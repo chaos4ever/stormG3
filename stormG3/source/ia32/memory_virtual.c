@@ -1,4 +1,4 @@
-/* $chaos: memory_virtual.c,v 1.8 2002/10/11 07:43:49 per Exp $ */
+/* $chaos: memory_virtual.c,v 1.9 2002/10/15 19:22:29 per Exp $ */
 /* Abstract: Virtual memory routines. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -102,7 +102,7 @@ return_t memory_virtual_map (page_directory_t *page_directory,
         if (page_directory[page_directory_index].present == 0) 
         {
             /* We need to set up a page table. */
-            if (memory_physical_allocate((void **) &page_table, 1) != STORM_RETURN_SUCCESS)
+            if (memory_physical_allocate((void **) &page_table, 1, PROCESS_ID_KERNEL) != STORM_RETURN_SUCCESS)
             {
                 DEBUG_HALT ("Failed to allocate a page for the page table.");
             }
@@ -133,7 +133,7 @@ return_t memory_virtual_map (page_directory_t *page_directory,
 void memory_virtual_init ()
 {
     /* Allocate a page for the kernel page directory. */
-    if (memory_physical_allocate((void **) &kernel_page_directory, 1) != STORM_RETURN_SUCCESS)
+    if (memory_physical_allocate((void **) &kernel_page_directory, 1, PROCESS_ID_KERNEL) != STORM_RETURN_SUCCESS)
     {
         DEBUG_HALT ("Failed to allocate a page for the kernel page directory.");
     }
