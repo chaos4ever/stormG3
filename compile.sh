@@ -1,7 +1,7 @@
 # $chaos$
 # Abstract: Quick and dirty hack to compile everything.
 
-# The source root
+# The source root.
 ROOT=$(pwd)
 INSTALL_PREFIX=/tftpboot
 
