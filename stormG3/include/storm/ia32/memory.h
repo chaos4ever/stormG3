@@ -1,4 +1,4 @@
-/* $chaos: memory.h,v 1.4 2002/06/12 06:48:01 per Exp $ */
+/* $chaos: memory.h,v 1.5 2002/06/12 06:48:23 per Exp $ */
 /* Abstract: Memory operations. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -11,7 +11,7 @@
 #include <storm/types.h>
 
 /* Inlines. */
-static inline void *memory_copy (void *to, void *from, unsigned int size)
+static inline void *memory_copy (void *to, const void *from, unsigned int size)
 {
     int ecx, edi, esi;
     
