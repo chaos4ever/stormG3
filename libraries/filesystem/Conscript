@@ -1,6 +1,6 @@
-# $chaos: Conscript,v 1.1 2002/07/09 08:39:44 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.1 2002/07/21 12:38:40 per Exp $ -*- Perl -*-
 
-# Abstract: CONS script for the block library.
+# Abstract: CONS script for the filesystem library.
 # Author: Per Lundberg <per@chaosdev.org>
 
 # Copyright 2002 chaos development.
