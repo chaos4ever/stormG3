@@ -285,7 +285,9 @@ return_t service_close (service_connection_id_t connection_id UNUSED)
         return STORM_RETURN_ACCESS_DENIED;
     }
 
+    spin_lock (&service_lock);
     connection->service->reference_count++;
+    spin_unlock (&service_lock);
 
     /* It's ours, we can unlink it. */
     spin_lock (&connection_lock);
