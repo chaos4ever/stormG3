@@ -1,4 +1,4 @@
-# $chaos: storm.make,v 1.2 2002/05/26 10:59:18 hal Exp $
+# $chaos: storm.make,v 1.3 2002/05/26 20:08:23 per Exp $
 
 # Abstract: storm G3 makefile
 # Authors: Henrik Hallin <hal@chaosdev.org>
@@ -28,6 +28,10 @@ clean::
 	rm -f $(OBJECTS)
 
 %.o: %.c
+	$(CC) -c $< -o $(@) $(CFLAGS)
+	@$(CC) -M $< $(CFLAGS) $(INCLUDES) $(DEFS) > $(*F).dep
+
+%.o: %.S
 	$(CC) -c $< -o $(@) $(CFLAGS)
 	@$(CC) -M $< $(CFLAGS) $(INCLUDES) $(DEFS) > $(*F).dep
 
