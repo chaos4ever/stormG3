@@ -1,9 +1,9 @@
-TODO ($chaos$)
+TODO ($chaos: TODO,v 1.1 2002/06/12 06:24:22 per Exp $)
 ====
 
 In order of priority:
 * Finish memory allocation.
 * Use mutexes.
-* Exception handling.
 * Services.
 * IRQ/DMA support.
+* Module support.
