@@ -1,12 +1,12 @@
-/* $chaos: storm.h,v 1.14 2002/10/08 20:16:14 per Exp $ */
+/* $chaos: storm.h,v 1.15 2002/10/09 09:18:27 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
 
 /**
- * @file storm.h
- * @brief storm kernel API.
+ * @file                storm.h
+ * @brief               storm kernel API.
  *
  * This header file can be included by a kernel module that wants to
  * have access to kernel functions.
@@ -26,6 +26,7 @@
 #include <storm/ia32/halt.h>
 #include <storm/ia32/memory.h>
 #include <storm/ia32/memory_global.h>
+#include <storm/ia32/memory_physical.h>
 #include <storm/ia32/memory_virtual.h>
 #include <storm/ia32/port.h>
 #include <storm/ia32/process.h>
