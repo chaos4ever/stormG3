@@ -1,5 +1,5 @@
 <?xml version='1.0' ?> <!-- -*- xml -*- -->
-<!-- $chaos: module.xml,v 1.5 2002/05/28 07:02:38 per Exp $ -->
+<!-- $chaos: module.xml,v 1.6 2002/05/28 09:52:42 per Exp $ -->
 
 <chapter id="module">
   <?dbhtml filename="module.html"?>
@@ -11,14 +11,85 @@
     <para>
       The module subsystem is one of the key features of storm G3. It
       replaces the old server system that we used in older versions of
-      the system.
+      the system. However, this does not mean that we skip the micro
+      kernel approach altogether. We are only shaping the clay to form
+      an even better pot, if you understand what I mean. These are the
+      key features of the module subsystem.
+
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    <emphasis>Be feature-rich.</emphasis> In the old storm
+	    kernel, we focused on having a clean interface. This is of
+	    course a ver good thing. However, we can not be so
+	    over-zealous that we say that having a kernel-debugger,
+	    for instance, is a no-no. Features are important. They
+	    need to be taken under consideration when you do the
+	    design. (This is one of the reasons we have decided to
+	    allow in-kernel modules)
+	  </para>
+	</listitem>
+	
+	<listitem>
+	  <para>
+	    <emphasis>Be clean design-wise.</emphasis> This has always
+	    been something that we have tried to push real hard. We
+	    have found so many systems that are are really far too
+	    "hackish" to be very maintainable, and this is what we
+	    want to avoid.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    <emphasis>Be flexible.</emphasis> We are perfectly aware
+	    of the plain fact that no system in this world can do
+	    <emphasis>everything</emphasis>. However, this does not
+	    mean that a system can not be flexible. We achieve this
+	    flexibility through our unique system of loadable kernel
+	    modules that can be loaded in the kernel <emphasis>as well
+	    as</emphasis> stand-alone processes. Are you confused?
+	    Keep reading.
+	  </para>
+	</listitem>
+      </itemizedlist>
     </para>
   </section>
   
   <section>
+    <?dbhtml filename="module_services.html"?>
+    <title>Services</title>
+    <para>
+      The service concept is one of the key things in the chaos
+      system. It is what makes all the difference. Instead of looking
+      at a system providing ethernet support, IPv4 support, console
+      support and so forth, we try to abstract it one level. A system
+      provides a number of <emphasis>services</emphasis>. Each service
+      is of a given class. The class is identifed by a string. This
+      means that the kernel is not aware of the services that it is
+      providing, and this is of course one of the key benefits. It
+      makes everything highly flexible.
+    </para>
+    <para>
+      Each service provides one or more 
+    </para>
+  </section>
+
+  <section>
     <?dbhtml filename="module_data_structures.html"?>
     <title>Data Structures</title>
     <para>
+      <programlisting id="service_t">
+typedef struct
+{
+    /* The magic cookie is unique for this type of data structure. */
+    uint32_t magic_cookie;
+
+    /* The service name. */
+    char *service_class;
+} service_t;
+      </programlisting>
+
       <programlisting id="module_t">
 typedef struct
 {
