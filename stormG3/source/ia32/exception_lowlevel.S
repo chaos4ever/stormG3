@@ -25,6 +25,10 @@
 .globl exception_alignment_check_fault_lowlevel
 .globl exception_machine_check_abort_lowlevel
 
+#ifdef GDB
+.globl catchException14
+#endif /* GDB */
+         
 /* This (code duplication) doesn't look extremely nice, but it gives
    the best performance. The amount of instructions in an exception
    handler must be kept down. */
@@ -216,10 +220,30 @@ exception_machine_check_abort_lowlevel:
 save_registers:
 	popl %eax
 	call *%eax
-	popl %eax /* GS */
+#ifdef GDB
+        /* Check the return value; if 1, call the GDB stub. Otherwise, just
+           return as if the exception had never occured. */
+        cmpl $1, %eax
+        je gdb14
+#endif /* GDB */
+        
+      	popl %eax /* GS */
 	popl %eax /* FS */
 	popl %eax /* ES */
 	popl %eax /* DS */
 	popa
 	addl $0x4, %esp
-	iret
+        iret
+        
+#ifdef GDB
+gdb14:
+        /* Now, pass on control to GDB. */
+      	popl %eax /* GS */
+	popl %eax /* FS */
+	popl %eax /* ES */
+	popl %eax /* DS */
+	popa
+	addl $0x4, %esp
+
+        jmp catchException14
+#endif /* GDB */
