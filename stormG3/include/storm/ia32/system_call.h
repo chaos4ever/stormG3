@@ -1,4 +1,4 @@
-/* $chaos: system_call.h,v 1.3 2002/10/28 22:08:16 per Exp $ */
+/* $chaos: system_call.h,v 1.4 2002/10/28 22:09:10 per Exp $ */
 /* Abstract: System call prototypes etc. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -39,6 +39,26 @@ extern void system_call_lowlevel (void);
  * @return              The return value of the system call.
  */
 extern return_t system_call (uint32_t *stack);
+
+/* Easy access to the caller's stack. */
+#define SYSTEM_CALL_NUMBER \
+                        stack[0]
+
+#define SYSTEM_CALL_ARGUMENTS \
+                        stack[1]
+
+/* The first argument, etc */
+#define SYSTEM_CALL_ARGUMENT_0 \
+                        stack[2]
+
+#define SYSTEM_CALL_ARGUMENT_1 \
+                        stack[3]
+
+#define SYSTEM_CALL_ARGUMENT_2 \
+                        stack[4]
+
+#define SYSTEM_CALL_ARGUMENT_3 \
+                        stack[5]
 
 #endif /* __STORM_KERNEL__ */
 
