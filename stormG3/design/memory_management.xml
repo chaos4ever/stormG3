@@ -1,0 +1,91 @@
+<?xml version='1.0' ?> <!-- -*- xml -*- -->
+<chapter id="memory_management">
+  <title>The Memory Management Subsystem</title>
+  
+  <section>
+    <title>Virtual memory map</title>
+    <mediaobject>
+      <imageobject>
+	<imagedata fileref="memory_map.png" format="PNG" align="center" />
+      </imageobject>
+    </mediaobject>
+
+    <para>
+      We believe this design will be highly effective. In the previous
+      storm generation, we did not map all of the physical memory in a
+      shared region. This has some advantages; the biggest one being
+      the fact that it gives each process more virtual memory
+      space. However, the disadvantages of this algorithm are so big
+      and since it makes writing the kernel much more complex, we have
+      decided to change to the layout seen above.
+    </para>
+    <para>
+      The first page is not mapped. This is of course to trap NULL
+      pointer refernces. We could map this page somewhere else, but we
+      have decided that wasting it is easier since it gives you a pure
+      1-to-1 mapping between the physical address and the virtual
+      address.
+    </para>
+    <para>
+      You see also that we have only one fourth of the memory area
+      available for the process code &amp; data, that is: one full
+      gigabyte. If your application needs more than this, you should
+      probably not be using 32-bit architecture anyway, but rather try
+      a 64-bit platform such as the Alpha, PowerPC, UltraSparc or
+      IA64.
+    </para>
+    <para>
+      We also have all the stacks for the given process mapped right
+      at the end of the memory. One could argue that you should skip
+      this and instead have only the current thread stack mapped. This
+      would give a little less than a gigabyte more memory available
+      for user processes. However, this would make inter-thread
+      communication harder, since local variables are allocated on the
+      stack. When one thread would be sending data to another thread
+      in the same process, you would have to copy the stack variables
+      to a memory area dynamically allocated. This would give a slight
+      speed decrease, and we have set one of the design goals for
+      storm G3 to be speed. Therefore, we will do it this way.      
+    </para>
+  </section>
+  
+  <section>
+    <title>Limitations</title>
+    
+    <para>
+      Limitations of this design:
+
+      <itemizedlist>    
+	<listitem>
+	  <para>
+	    Maximum of 2 gigabyte physical memory (more can be
+	    available, but will not be used by the system). See the
+	    section on the memory management for the technical reasons
+	    for this.
+	  </para>
+	</listitem>
+	
+	<listitem>
+	  <para>
+	    Maximum of 1 gigabyte memory per process for code and data.
+	  </para>
+	</listitem>
+	
+	<listitem>
+	  <para>
+	    Maximum of 512 threads per process.
+	  </para>
+	</listitem>
+	
+	<listitem>
+	  <para>
+	    Maximum of 2 megabyte stack memory per thread.
+	  </para>
+	</listitem>
+      </itemizedlist>
+
+      We find all of these limitations to be reasonable for our
+      requirements.
+    </para>
+  </section>
+</chapter>

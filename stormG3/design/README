@@ -1,0 +1,11 @@
+README ($chaos)
+======
+
+One of the big, big problema with the old storm kernel was the lack of
+a good design document (well, actually, a good design...). Therefore,
+I am purposed to overtake this task.
+
+I use the Docbook format since I believe it is a good format to use
+for a task such as this.
+
+-- Per Lundberg <per@chaosdev.org>  Sun, 26 May 2002 18:18:26 +0200
