@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.19 2002/08/09 06:36:12 per Exp $ */
+/* $chaos: memory_physical.c,v 1.20 2002/10/04 19:01:21 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -18,6 +18,10 @@ unsigned int free_pages = 0;
 
 /* For allocation & deallocation. */
 static memory_physical_slab_t *first_free = NULL;
+
+/* A list of pages allocated by certain processes, to be able to free
+   its resources when it's killed. */
+memory_physical_process_page_t *process_page = NULL;
 
 /* Used to find the end of the kernel. */
 extern int _end;
@@ -157,6 +161,45 @@ void memory_physical_init ()
                  free_pages, free_pages * 4, free_pages / 256);
 }
 
+/* Allocate a page for a process. */
+return_t memory_physical_allocate_for_process (void **pointer, 
+                                               process_id_t process_id)
+{
+    /* Get the page. */
+    return_t return_value = memory_physical_allocate (pointer, 1);
+    if (return_value != STORM_RETURN_SUCCESS)
+    {
+        /* Extra security precaution. */
+        *pointer = NULL;
+        return return_value;
+    }
+
+    /* Register it in our structure. */
+    memory_physical_process_page_t *page;
+    return_value = memory_global_allocate ((void **) &page, sizeof (memory_physical_process_page_t));
+    if (return_value != STORM_RETURN_SUCCESS)
+    {
+        /* Extra security precaution. */
+        return return_value;
+    }
+
+    /* Set up the data about the page. */
+    page->process_id = process_id;
+    page->page_address = *pointer;
+
+    /* Link it in. */
+    if (process_page != NULL)
+    {
+        process_page->next = (struct memory_physical_process_page_t *) page;
+    }
+
+    page->previous = (struct memory_physical_process_page_t *) process_page;
+    page->next = (struct memory_physical_process_page_t *) NULL;
+    process_page = page;
+
+    return STORM_RETURN_SUCCESS;
+}
+
 /* Allocate a number of pages. */
 return_t memory_physical_allocate (void **pointer, unsigned int pages) 
 {
@@ -273,4 +316,19 @@ return_t memory_physical_deallocate (void *pointer)
     free_pages++;
     BIT_SET (physical_page_bitmap[page / 32], page % 32);
     return STORM_RETURN_SUCCESS;
+}
+
+/* Deallocate a page for a process. */
+return_t memory_physical_deallocate_for_process (void *pointer UNUSED)
+{
+    // FIXME: Implement this.
+    return STORM_RETURN_NOT_IMPLEMENTED;
+}
+
+/* Free all pages that belongs to the given process. */
+return_t memory_physical_free_process (process_id_t process_id UNUSED)
+{
+    // FIXME: Implement this. Very simple, just 1) iterate 2)
+    // deallocate 3) unlink
+    return STORM_RETURN_NOT_IMPLEMENTED;
 }
