@@ -1,4 +1,4 @@
-/* $chaos: return_value.h,v 1.2 2002/06/11 21:27:34 per Exp $ */
+/* $chaos: return_value.h,v 1.3 2002/06/15 22:39:17 per Exp $ */
 /* Abstract: Return values. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -22,7 +22,13 @@ enum {
     STORM_RETURN_INTERNAL_DATA_ERROR,
     
     /* The module was invalid in some way. */
-    STORM_RETURN_MODULE_INVALID
+    STORM_RETURN_MODULE_INVALID,
+
+    /* The resource we attempted to use was busy. */
+    STORM_RETURN_BUSY,
+
+    /* A kernel function was passed an invalid argument. */
+    STORM_RETURN_INVALID_ARGUMENT
 };
 
 #endif /* !__STORM_RETURN_VALUES_H__ */
