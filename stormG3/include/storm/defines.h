@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.6 2002/10/08 20:13:50 per Exp $ */
+/* $chaos: defines.h,v 1.7 2002/10/10 12:17:42 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -15,7 +15,7 @@
 
 #undef NULL
 /**
- * @brief A pointer to the lowest accessible memory address.
+ * @brief               A pointer to the lowest accessible memory address.
  *
  * This address is not mapped. Therefore, it may be used for
  * specifying an "empty pointer", pointing to nothing -- a very common
@@ -24,44 +24,57 @@
 #define NULL                            ((void *) 0)
 
 /**
- * @brief A true boolean value.
+ * @brief               A true boolean value.
  */
 #define TRUE                            (1 == 1)
 
 /**
- * @brief A false boolean value.
+ * @brief               A false boolean value.
  */
 #define FALSE                           (!TRUE)
 
 /**
- * @brief A kibibyte.
+ * @brief               A kibibyte.
  */
 #define KIB                             (1024)
 
 /**
- * @brief A mibibyte.
+ * @brief               A mibibyte.
  */
 #define MIB                             (1024 * KIB)
 
 /**
- * @brief A gibibyte.
+ * @brief               A gibibyte.
  */
 #define GIB                             (1024 * MIB)
 
 /**
- * @brief Use this define to attribute that the function will not
- * ever return. 
+ * @brief               Use this define to attribute that the function
+ *                      will not ever return. 
  */
 #define NORETURN                        __attribute__ ((noreturn))
 
 /**
- * @brief Use this define to tell the compiler that an argument or
- * variable is not used. 
+ * @brief               Use this define to tell the compiler that an
+ *                      argument or variable is not used. 
  */
 #define UNUSED                          __attribute__ ((unused))
 
 /**
- * @brief The maximum number of servers to start at boot time. 
+ * @brief               Use this define to tell the compiler that a
+ *                      structure should be packed.
+ * 
+ * A packed structure uses no padding, which may otherwise be put in
+ * by the compiler to get a certain alignment on the data. For some
+ * structures that are locked to a specific format (for example a
+ * binary file format), such practices are directly harmful and you
+ * need to mark such structures as PACKED for the code to work
+ * properly..
+ */
+#define PACKED                          __attribute__ ((packed))
+
+/**
+ * @brief               The maximum number of servers to start at boot time. 
  */
 #define MAX_STARTUP_SERVERS             32
 
