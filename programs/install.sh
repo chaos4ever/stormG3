@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# $Id$
+# $chaos$
 # Abstract: Install our programs onto the ramdisk.
 # Author: Per Lundberg <per@chaosdev.org>
 
