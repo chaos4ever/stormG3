@@ -1,4 +1,4 @@
-/* $chaos: boot.c,v 1.1 2002/06/23 20:42:32 per Exp $ */
+/* $chaos: boot.c,v 1.2 2002/07/09 08:39:01 per Exp $ */
 /* Abstract: Boot module. The boot module takes care of setting up the
    system (opening virtual consoles, launching programs, etc). */
 /* Author: Per Lundberg <per@chaosdev.org> */
@@ -20,6 +20,9 @@ console_service_t console;
 /* The block service provider that we are using, for mounting the root
    file system. */
 block_service_t block;
+
+/* The ID of the console that we have opened. */
+console_id_t console_id;
 
 /* Entry point. */
 return_t module_start (void)
@@ -51,6 +54,9 @@ return_t module_start (void)
     /* Mount the root file system. */
     /* Run system initialization (start daemons etc). */
     /* Open virtual consoles. */
+    console.open (&console_id, 0, 0, 0, CONSOLE_MODE_TEXT);
+    debug_print ("%u\n", console_id);
+
     /* Launch the programs assigned to each console. */
 
     log.print (LOG_URGENCY_INFORMATIVE, "System startup complete.");
