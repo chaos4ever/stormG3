@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.15 2002/11/14 12:24:18 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.16 2002/11/21 21:11:16 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for stormG3
 # Author: Per Lundberg <per@chaosdev.org>
@@ -32,7 +32,7 @@ $warnings = '-Wall -W -Wshadow -Wpointer-arith -Waggregate-return ' .
   '-Wmissing-declarations -Wnested-externs -Wwrite-strings ' .
   '-Wpadded -Werror '; # -Wmissing-noreturn
 $version = "-DSTORM_VERSION=\\\"$storm_version\\\" -DSTORM_APPEND=\\\"$storm_append\\\"";
-$defs = "-DCREATOR=\\\"$author\\\" -D__STORM_KERNEL__ " . $version;
+$defs = "-DCREATOR=\\\"$author\\\" -D__STORM_KERNEL__ " . $version . " ";
 
 if ($ARG{color} eq 'freebsd')
 {
