@@ -1,4 +1,4 @@
-/* $chaos: vfs.c,v 1.1 2002/08/03 12:05:22 per Exp $ */
+/* $chaos: vfs.c,v 1.2 2002/08/04 09:27:19 per Exp $ */
 /* Abstract: Virtual file system provider. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -17,7 +17,7 @@ assign_t *first_assign = NULL;
 file_t *first_file;
 
 /* Information about our block device. */
-block_info_t info;
+block_info_t block_info;
 
 /* The first free file handle. */
 vfs_file_handle_t free_handle = 0;
@@ -33,6 +33,7 @@ static return_t service_info (void *vfs_void)
     vfs->open = vfs_open;
     vfs->close = vfs_close;
     vfs->read = vfs_read;
+    vfs->info = vfs_info;
     return STORM_RETURN_SUCCESS;
 }
 
