@@ -1,4 +1,4 @@
-/* $chaos: service.h,v 1.13 2002/10/29 20:48:01 per Exp $ */
+/* $chaos: service.h,v 1.14 2002/10/29 22:37:45 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -40,6 +40,11 @@ typedef struct
      * @brief           A unique service provider ID.
      */
     service_id_t        id;
+
+    /**
+     * @brief           A reference count of this service provider.
+     */
+    unsigned int        reference_count;
 
     /**
      * @brief           The service name. 
@@ -86,5 +91,40 @@ typedef struct
     struct service_data_t
                         *next;
 } service_data_t;
+
+/**
+ * @brief               A connection by a process to a service.
+ */
+typedef struct
+{
+    /**
+     * @brief           A connection ID.
+     */
+    service_connection_id_t
+                        id;
+
+    /**
+     * @brief           The process that is connected to this service.
+     */
+    process_t           *process;
+
+    /**
+     * @brief           A pointer to the service we are connected to.
+     */
+    service_data_t      *service;
+    
+    /**
+     * @brief           A pointer to the previous connection.
+     */
+    struct service_connection_t
+                        *previous;
+
+    /**
+     * @brief           A pointer to the next connection.
+     */
+    struct service_connection_t
+                        *next;
+    
+} service_connection_t;
 
 #endif /* !__STORM_IA32_SERVICE_H__ */
