@@ -1,0 +1,17 @@
+# $chaos: Conscript,v 1.4 2002/10/04 20:53:58 per Exp $ -*- Perl -*-
+
+# Abstract: CONS script for the boot program.
+# Author: Per Lundberg <per@chaosdev.org>
+
+# Copyright 2002 chaos development.
+# Use freely under the terms listed in the file LICENSE.
+
+$program_binary = 'boot';
+$program_directory = 'boot';
+
+Import qw( cons program_install_directory install );
+Program $cons $program_binary, 'boot.c';
+
+$install_cmd = eval $install;
+Command $cons 'install', $program_binary, $install_cmd;
+
