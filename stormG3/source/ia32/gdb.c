@@ -93,11 +93,8 @@
 #include <storm/ia32/port.h>
 #include <storm/ia32/string.h>
 
-// FIXME: Replace these in the code.
-#define fprintf debug_print
-#define printf fprintf
-
-unsigned int i386at_serial_basetable[] = {
+unsigned int i386at_serial_basetable[] = 
+{
     0x3F8,
     0x2F8,
     0x3E8,
@@ -120,12 +117,12 @@ void gdb_serial_init (unsigned short port, unsigned int speed)
     /*	CS8 */
     dfr |= 0x03;  /* or 0x02 */
     /*	Initialize port */
-    port_uint8_out (i386at_serial_iobase+3, 0x80 | dfr);
-    port_uint8_out (i386at_serial_iobase+0, divisor & 0xFF);
-    port_uint8_out (i386at_serial_iobase+1, divisor >> 8);
-    port_uint8_out (i386at_serial_iobase+3, 0x03 | dfr);
-    port_uint8_out (i386at_serial_iobase+1, 0x00);
-    port_uint8_out (i386at_serial_iobase+4, 0x0B);
+    port_uint8_out (i386at_serial_iobase + 3, 0x80 | dfr);
+    port_uint8_out (i386at_serial_iobase + 0, divisor & 0xFF);
+    port_uint8_out (i386at_serial_iobase + 1, divisor >> 8);
+    port_uint8_out (i386at_serial_iobase + 3, 0x03 | dfr);
+    port_uint8_out (i386at_serial_iobase + 1, 0x00);
+    port_uint8_out (i386at_serial_iobase + 4, 0x0B);
 
     /*	Clear all interrupts. */
     port_uint8_in (i386at_serial_iobase + 6);
@@ -178,7 +175,7 @@ static void exceptionHandler (int exception, void *address)
 
 static char initialized;  /* boolean flag. != 0 means we've been initialized */
 
-int     remote_debug;
+int     remote_debug = 1;
 /*  debug >  0 prints ill-formed commands in valid packets & checksum errors */
 
 static const char hexchars[] = "0123456789abcdef";
@@ -189,10 +186,12 @@ static const char hexchars[] = "0123456789abcdef";
 /* Number of bytes of registers.  */
 #define NUMREGBYTES (NUMREGS * 4)
 
-enum regnames {EAX, ECX, EDX, EBX, ESP, EBP, ESI, EDI,
-	       PC /* also known as eip */,
-	       PS /* also known as eflags */,
-	       CS, SS, DS, ES, FS, GS};
+enum regnames
+{
+    EAX, ECX, EDX, EBX, ESP, EBP, ESI, EDI,
+    PC /* also known as eip */,
+    PS /* also known as eflags */,
+    CS, SS, DS, ES, FS, GS};
 
 /*
  * these should not be static because they can be used outside this module
@@ -566,7 +565,7 @@ static unsigned char *getpacket (void)
 	    {
                 if (remote_debug)
 		{
-                    fprintf ("bad checksum.  My count = 0x%x, sent=0x%x. buf=%s\n",
+                    debug_print ("bad checksum.  My count = 0x%x, sent=0x%x. buf=%s\n",
                              checksum, xmitcsum, buffer);
 		}
                 putDebugChar ('-');	/* failed checksum */
@@ -624,7 +623,7 @@ static void debug_error (const char *parm)
 {
     if (remote_debug)
     {
-        fprintf (parm);
+        debug_print (parm);
     }
 }
 
@@ -806,8 +805,8 @@ void handle_exception (int exceptionVector)
 
     if (remote_debug)
     {
-        printf ("vector=%d, sr=0x%x, pc=0x%x\n",
-                exceptionVector, registers[PS], registers[PC]);
+        debug_print ("vector=%d, sr=0x%x, pc=0x%x\n",
+                     exceptionVector, registers[PS], registers[PC]);
     }
 
     /* reply to host that an exception has occurred */
@@ -979,7 +978,8 @@ void gdb_set_debug_traps (void)
     exceptionHandler (11, catchException11);
     exceptionHandler (12, catchException12);
     exceptionHandler (13, catchException13);
-    exceptionHandler (14, catchException14);
+    /* We don't hook page faults since they need to be handled by the
+     * kernel first to see if it is a "valid" page fault... :) */
     exceptionHandler (16, catchException16);
 
     initialized = 1;
