@@ -1,0 +1,11 @@
+README ($chaos)
+======
+
+Here we put system-overall documentation, like the FHS. The documentation
+format that we prefer is Docbook XML; see http://www.docbook.org for more
+information about how to use this DTD.
+
+Component-specific documentation like stormG3 design is not to be put here but
+rather under the sub-project's directory.
+
+-- Per Lundberg <per@chaosdev.org>  Thu, 10 Oct 2002 11:42:04 +0200
