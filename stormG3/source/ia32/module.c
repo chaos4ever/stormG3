@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.17 2002/07/12 09:39:19 per Exp $ */
+/* $chaos: module.c,v 1.18 2002/07/21 10:21:52 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -10,6 +10,7 @@
 #include <storm/ia32/elf.h>
 #include <storm/ia32/irq.h>
 #include <storm/ia32/memory.h>
+#include <storm/ia32/memory_physical.h>
 #include <storm/ia32/module.h>
 #include <storm/ia32/multiboot.h>
 #include <storm/ia32/service.h>
@@ -87,8 +88,6 @@ static return_t module_link (elf_header_t *elf_header)
     /* Call the module entry point. */
     return_value = module_start ();
 
-    // FIXME Deallocate memory used by the ELF image. A simple for
-    // loop really.
     // FIXME: If return_value != STORM_RETURN_SUCCESS, run module_stop.
 
     return return_value;
@@ -114,6 +113,14 @@ void module_init (void)
             {
                 debug_print ("Starting module %s failed.\n",
                              multiboot_module_info[counter].name);
+            }
+            else
+            {
+                /* Free the memory used by the ELF image. */
+                for (unsigned int page_number = multiboot_module_info[counter].start / PAGE_SIZE; page_number < multiboot_module_info[counter].end / PAGE_SIZE; page_number++)
+                {
+                    memory_physical_deallocate ((void *) (page_number * PAGE_SIZE));
+                }
             }
         }
     }
