@@ -1,4 +1,4 @@
-/* $chaos: exception.c,v 1.9 2002/06/15 10:24:16 per Exp $ */
+/* $chaos: exception.c,v 1.10 2002/06/15 12:18:40 per Exp $ */
 /* Abstract: Exception handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -197,10 +197,12 @@ static void setup_handler (int number, void *handler)
 /* Initialize exceptions. */
 void exception_init () 
 {
+#ifndef GDB /* The GDB code provides exception handlers of it own. */
     /* Setup exception handlers for all exceptions. */
     for (int counter = 0; exception_handler[counter].function != NULL;
          counter++)
     {
         setup_handler (counter, exception_handler[counter].function);
     }
+#endif
 }
