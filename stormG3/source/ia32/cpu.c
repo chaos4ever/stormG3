@@ -1,5 +1,4 @@
-/* $chaos: cpu.c,v 1.2 2002/08/08 23:15:44 hal Exp $ */
-/* Abstract: CPU initialization code. */
+/* $chaos: cpu.c,v 1.3 2002/10/04 19:01:21 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
