@@ -1,4 +1,4 @@
-/* $chaos: port.h,v 1.7 2002/10/09 12:52:20 per Exp $ */
+/* $chaos: port.h,v 1.8 2002/10/22 19:37:41 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -12,29 +12,7 @@
 #ifndef __STORM_IA32_PORT_H__
 #define __STORM_IA32_PORT_H__
 
-#include <storm/return_value.h>
-#include <storm/ia32/defines.h>
-#include <storm/ia32/memory_global.h>
-#include <storm/ia32/string.h>
 #include <storm/ia32/types.h>
-
-/* The total number of ports in the system. */
-#define NUMBER_OF_PORTS                 65536
-
-/* Type definitions. */
-/** 
- * @brief               A port range. 
- */
-typedef struct
-{
-    unsigned int start;
-    unsigned int length;
-    // FIXME: Add this field.    module_id_t module_id;
-    struct port_range_t *next;
-    struct port_range_t *previous;
-    char *description;
-} port_range_t;
-
 
 /* Inline functions. */
 static inline void port_uint8_out (unsigned short port, uint8_t data)
@@ -122,10 +100,37 @@ static inline void port_uint32_out_string (uint16_t port, uint32_t *data,
                   "d" (port));
 }
 
+/* The rest is only for the kernel and its modules. */
+#if (defined __STORM_KERNEL__) || (defined __STORM_KERNEL_MODULE__)
+
+#include <storm/return_value.h>
+#include <storm/ia32/defines.h>
+#include <storm/ia32/memory_global.h>
+#include <storm/ia32/string.h>
+
+/**
+ * @brief The total number of ports in the system. 
+ */
+#define NUMBER_OF_PORTS                 65536
+
+/** 
+ * @brief               A port range. 
+ */
+typedef struct
+{
+    unsigned int        start;
+    unsigned int        length;
+    // FIXME: Add this field.    module_id_t module_id;
+    struct port_range_t *next;
+    struct port_range_t *previous;
+    char                *description;
+} port_range_t;
 
 /**
  * @brief               Initialize port allocation. 
  */
 extern void port_init (void);
+
+#endif /* (defined __STORM_KERNEL__) || (defined __STORM_KERNEL_MODULE__) */
 
 #endif /* !__STORM_IA32_PORT_H__ */
