@@ -1,4 +1,4 @@
-/* $chaos: process.h,v 1.9 2002/10/20 16:48:26 per Exp $ */
+/* $chaos: process.h,v 1.10 2002/10/22 19:41:48 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -114,33 +114,5 @@ extern process_t        *process_list;
  * @brief               Set up the process support. 
  */
 extern void process_init (void);
-
-/**
- * @brief               Pre-create a process.
- * @param process_id    A pointer to the process ID where this function
- *                      will store the process ID generated.
- * @param page_directory
- *                      A pointer to where this function will store
- *                      a pointer to the new process' page directory.
- * @return              STORM_RETURN_SUCCESS if successful.
- *
- * Allocate a process ID and page directory for it, so we can start
- * mapping memory and set things up.
- */
-extern return_t process_precreate (process_id_t *process_id, 
-                                   page_directory_t **page_directory);
-
-/**
- * @brief               Create a process that's previously been pre-created.
- * @param process_id    The process ID.
- * @param entry_point   The process entry point.
- * @return              STORM_RETURN_SUCCESS if successful.
- *
- * This function adds the process to the system list of processes and
- * includes it in the list of tasks to run. It is run at the very end
- * of a program (ELF or otherwise) loader.
- */
-extern return_t process_create (process_id_t process_id,
-                                address_t entry_point);
 
 #endif /* !__STORM_IA32_PROCESS_H__ */
