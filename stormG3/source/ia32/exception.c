@@ -1,4 +1,4 @@
-/* $chaos: exception.c,v 1.20 2002/10/22 19:40:51 per Exp $ */
+/* $chaos: exception.c,v 1.22 2002/11/28 20:42:17 per Exp $ */
 /* Abstract: Exception handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -154,7 +154,7 @@ void exception_general_protection_fault (cpu_register_t registers)
     while (TRUE);
 }
 
-void exception_page_fault (cpu_register_t registers)
+return_t exception_page_fault (cpu_register_t registers)
 {
     uint32_t cr2 = cpu_get_cr2 ();
 
@@ -182,8 +182,12 @@ void exception_page_fault (cpu_register_t registers)
         }
         
         /* Over and out. */
-        return;
+        return 0;
     }
+
+#if GDB
+    return 1;
+#endif
 
     uint32_t cr3 = cpu_get_cr3 ();
     debug_print ("Page fault at %x, error code: %x.\n", cr2, 
@@ -243,5 +247,9 @@ void exception_init ()
         idt_setup_interrupt_gate (index, KERNEL_CODE_SELECTOR,
                                   exception_handler[index].function, 0);
     }
-#endif
+#else /* GDB */
+    /* We need to handle the page faults since we do lots of lazy
+       allocation. */
+    idt_setup_interrupt_gate (EXCEPTION_PAGE_FAULT, KERNEL_CODE_SELECTOR, exception_handler[EXCEPTION_PAGE_FAULT].function, 0);
+#endif /* GDB */
 }
