@@ -1,4 +1,4 @@
-/* $chaos: process.h,v 1.8 2002/10/17 21:27:52 per Exp $ */
+/* $chaos: process.h,v 1.9 2002/10/20 16:48:26 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -12,6 +12,7 @@
 #ifndef __STORM_IA32_PROCESS_H__
 #define __STORM_IA32_PROCESS_H__
 
+#include <storm/storm.h>
 #include <storm/ia32/capability.h>
 #include <storm/ia32/defines.h>
 #include <storm/ia32/memory_virtual.h>
@@ -39,11 +40,6 @@
  */
 #define PROCESS_NAME_LENGTH \
                         32
-
-/**
- * @brief               A unique process ID.
- */
-typedef unsigned int    process_id_t;
 
 /**
  * @brief               A structure with information about process.
