@@ -1,4 +1,4 @@
-/* $chaos: types.h,v 1.17 2002/10/29 20:49:47 per Exp $ */
+/* $chaos: types.h,v 1.19 2002/11/15 19:52:25 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -70,10 +70,15 @@ typedef int             bool;        /* no _t, since this should
 
 /**
  * @brief               A function that provides info about
- *                      this service provider. The data
- *                      returned is protocol specific.
+ *                      this service. The data returned is
+ *                      protocol specific.
  */
 typedef return_t (*service_info_t)(void *);
+
+/**
+ * @brief               A function provided by a service.
+ */
+typedef return_t (*service_function_t)(service_id_t service_id, void *data);
 
 /**
  * @brief               A structure used for returning information to the
@@ -219,7 +224,7 @@ typedef struct
     /**
      * @brief           A pointer to the method handler.
      */
-    function_t          method;
+    service_function_t  method;
 } service_method_t;
 
 #endif /* !__STORM_TYPES_H__ */
