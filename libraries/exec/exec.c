@@ -1,4 +1,4 @@
-/* $chaos: dotfile.emacs,v 1.34 2002/09/30 13:33:00 per Exp $ */
+/* $chaos: exec.c,v 1.1 2002/10/04 20:53:22 per Exp $ */
 /* Abstract: Exec library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -28,3 +28,10 @@ return_t exec_lookup (exec_service_t *exec)
     return EXEC_RETURN_SUCCESS;
 }
 
+/* Register an exec service provider. */
+return_t exec_register (char *vendor, char *model, char *id,
+                        service_info_t service_info)
+{    
+    return service_register ("exec", vendor, model, id, EXEC_SERVICE_VERSION,
+                             service_info);
+}
