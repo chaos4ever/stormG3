@@ -1,4 +1,4 @@
-/* $chaos: debug.h,v 1.11 2002/10/04 19:01:20 per Exp $ */
+/* $chaos: debug.h,v 1.12 2002/10/08 20:13:22 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -30,22 +30,49 @@
 # endif
 #endif
 
+/**
+ * @brief The width (in characters) of the screen.
+ */
 #define DEBUG_SCREEN_WIDTH              80
+
+/**
+ * @brief The height (in characters9 of the screen.
+ */
 #define DEBUG_SCREEN_HEIGHT             25
+
+/**
+ * @brief The physical base address of the screen. 
+ */
 #define BASE_SCREEN                     (0xB8000)
 
-/* Typedefs. */
-/** @brief Easy EGA screen access. */
+/**
+ * @brief Easy EGA screen access. 
+ */
 typedef struct
 { 
-  char character;
-  uint8_t attribute;
+    /**
+     * @brief The character of this location.
+     */
+    char character;
+
+    /**
+     * @brief The attribute of this character.
+     */
+    uint8_t attribute;
 } debug_screen_type __attribute__ ((packed));
 
-/** @brief Initialize debugging code. */
+/**
+ * @brief Initialize debugging code. 
+ */
 extern void debug_init (void);
 
-/** @brief Dump memory. */
+/**
+ * @brief               Dump the contents of a memory region.
+ * @param memory        The address of the memory to dump.
+ * @param length        The number of uint32s to dump.
+ *
+ * The memory is dumped in hexadecimal format.
+ */
 extern void debug_memory_dump (uint32_t *memory, unsigned int length);
 
 /* Macros. */
