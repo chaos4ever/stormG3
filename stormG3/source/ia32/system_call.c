@@ -1,4 +1,4 @@
-/* $chaos: system_call.c,v 1.6 2002/10/29 22:37:48 per Exp $ */
+/* $chaos: system_call.c,v 1.8 2002/11/30 12:16:36 per Exp $ */
 /* Abstract: System call implementation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -44,10 +44,7 @@ return_t system_call (uint32_t *stack)
             if (SYSTEM_CALL_ARGUMENTS == 3)
             {
                 service_lookup_t *lookup = (service_lookup_t *) SYSTEM_CALL_ARGUMENT_0;
-                service_lookup (lookup->name, lookup->vendor,
-                                lookup->model, lookup->device_id,
-                                lookup->major_version, lookup->minor_version,
-                                (size_t *) SYSTEM_CALL_ARGUMENT_1,
+                service_lookup (lookup, (size_t *) SYSTEM_CALL_ARGUMENT_1,
                                 (service_t *) SYSTEM_CALL_ARGUMENT_2);
                 return STORM_RETURN_SUCCESS;
             }
