@@ -1,11 +1,10 @@
-/* $chaos: debug.c,v 1.4 2002/06/12 20:10:24 per Exp $ */
+/* $chaos: debug.c,v 1.5 2002/06/22 19:22:49 per Exp $ */
 /* Abstract: Code used for debugging the kernel. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
-/* Use freely under the terms listed in the file COPYING.
-   reference documentation. */
+/* Use freely under the terms listed in the file COPYING. */
 
 #include <stdarg.h>
 #include <storm/defines.h>
