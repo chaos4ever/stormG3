@@ -1,4 +1,4 @@
-/* $chaos: irq_handlers.S,v 1.1 2002/06/15 10:57:42 per Exp $ */
+/* $chaos: irq_handlers.S,v 1.2 2002/06/16 22:01:50 per Exp $ */
 /* Abstract: IRQ management. */
 /* Author: Per Lundberg <plundis@chaosdev.org> */
 	
@@ -26,7 +26,7 @@
 
 #define IRQ_HANDLER(x) \
    pushal ;\
-   pushl $x ;\
+   pushl $ x ;\
    call irq_handler ;\
    addl $4, %esp ;\
    popal ;\
