@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: types.h,v 1.1 2002/06/16 21:18:18 per Exp $ */
 /* Abstract: IA32-specific types. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -12,5 +12,8 @@
 
 /* A linear/physical address. */
 typedef uint32_t address_t;
+
+/* A page number. */
+typedef uint32_t page_number_t;
 
 #endif /* !__STORM_IA32_TYPES_H__ */
