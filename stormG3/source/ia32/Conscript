@@ -1,20 +1,20 @@
-# $chaos: Conscript,v 1.8 2002/10/14 21:40:40 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.9 2002/10/15 18:39:00 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for stormG3
 # Author: Per Lundberg <per@chaosdev.org>
 
-# Copyright 2000 chaos development.
+# Copyright 2002 chaos development.
 # Use freely under the terms listed in the file LICENSE.
 
 Import qw(cons kernel_directory);
 
-Program $cons 'stormG3', ( 'cpu.c', 'debug.c', 'dispatch.c', 'dma.c',
-			   'elf.c', 'exception.c', 'exception_lowlevel.S',
-			   'gdb.c', 'gdt.c', 'halt.c', 'idt.c', 'init.c', 'irq.c',
-			   'irq_handlers.S', 'main.c', 'memory_global.c',
-			   'memory_physical.c', 'memory_virtual.c',
-			   'module.c', 'multiboot.c', 'port.c', 'process.c',
-                           'timer.c', 'service.c' );
+Program $cons 'stormG3', ( 'capability.c', 'cpu.c', 'debug.c',
+'dispatch.c', 'dma.c', 'elf.c', 'exception.c', 'exception_lowlevel.S',
+'gdb.c', 'gdt.c', 'halt.c', 'idt.c', 'init.c', 'irq.c',
+'irq_handlers.S', 'main.c', 'memory_global.c', 'memory_physical.c',
+'memory_virtual.c', 'module.c', 'multiboot.c', 'port.c', 'process.c',
+'timer.c', 'service.c' );
+
 Command $cons 'install', 'stormG3',
   qq(if [ -f source/ia32/stormg3.exe ]; then objcopy -O elf32-i386 source/ia32/stormG3.exe source/ia32/stormG3 ; fi
      mkdir -p $kernel_directory
