@@ -419,9 +419,19 @@ int module_start (void)
     //    inode2 = minix2_find_file (minix_fs, "razor_1911_cracks.mod");
     //    debug_print ("%s %x %u %u\n", "razor_1911_cracks.mod",
     //                 inode2->mode, inode2->uid, inode2->gid);
-    
-    // FIXME: Create and use the filesystem_register function (bug #54)
-    return service_register ("filesystem", "chaos development", "Minix module",
-                             "1", FILESYSTEM_SERVICE_MAJOR_VERSION,
-                             FILESYSTEM_SERVICE_MINOR_VERSION, &service_info);
+
+    /* Create the service. */    
+    service_register_t service_register_info;
+    service_register_info.vendor = "chaos development";
+    service_register_info.model = "Minix module";
+    service_register_info.device_id = "1";
+    service_register_info.info_handler = &service_info;
+
+    // FIXME: Fill in this structure.
+    service_method_t service_method[] =
+        {
+            { -1, NULL }
+        };
+
+    return filesystem_register (&service_register_info, service_method);
 }

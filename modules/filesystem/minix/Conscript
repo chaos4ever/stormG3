@@ -10,9 +10,11 @@ $module_binary = 'minix.so';
 $module_path = 'filesystem/minix';
 
 Import qw( cons module_directory library_directory install );
-$cons = $cons->clone(LIBS => '-lblock -llog');
+$cons = $cons->clone(LIBS => '-lblock -lfilesystem -llog');
 Depends $cons $module_binary, "$library_directory/libblock.a",
-  "$library_directory/liblog.a";
+  "$library_directory/libblock.a",
+  "$library_directory/liblog.a",
+  "$library_directory/libfilesystem.a";
 Program $cons $module_binary, 'minix.c';
 $install_cmd = eval $install;
 Command $cons 'install', $module_binary, $install_cmd;
