@@ -9,8 +9,11 @@
 $module_binary = 'log.so';
 $module_path = 'system/log';
 
-Import qw( cons module_directory install );
+Import qw( cons install library_directory module_directory );
+$cons = $cons->clone(LIBS => '-llog -lblock');
 Program $cons $module_binary, 'log.c';
+Depends $cons $module_binary,
+  "$library_directory/liblog.a";
 $install_cmd = eval $install;
 Command $cons 'install', $module_binary, $install_cmd;
 
