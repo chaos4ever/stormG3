@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.6 2002/06/11 21:27:10 per Exp $ */
+/* $chaos: defines.h,v 1.7 2002/06/12 06:27:30 per Exp $ */
 /* Abstract: Generic storm defines. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -16,7 +16,7 @@
 #define PAGE_SIZE                       0x1000
 
 /* The page number of an address, shifted 10 bits to the left. */
-#define PAGE_ADDRESS(x)                 ((void*) (((uint32_t) x) & 0xFFFFF000))
+#define PAGE_ADDRESS(x)                 ((void *) (((uint32_t) x) & 0xFFFFF000))
 
 /* Size of some reserved regions. */
 #define GDT_SIZE                        (2 * KIB)
