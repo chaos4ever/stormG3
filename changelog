@@ -1,3 +1,8 @@
+2002-05-20  Per Lundberg  <per@halleluja.nu>
+
+	* CPL: New file. This is the new chaos license - please comment if
+	you like to.
+
 2000-10-16  Per Lundberg  <plundis@chaosdev.org>
 
 	* servers/network/3c509/3c509.c: Cleaned up parts of the Linux mess.
