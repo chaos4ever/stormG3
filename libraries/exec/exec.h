@@ -1,4 +1,4 @@
-/* $chaos: vfs.h,v 1.2 2002/10/04 19:00:57 per Exp $ */
+/* $chaos: exec.h,v 1.1 2002/10/04 20:53:22 per Exp $ */
 /* Abstract: Function prototypes and structure definitions for the
    exec library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
@@ -10,7 +10,7 @@
 #define __EXEC_EXEC_H__
 
 #include <storm/storm.h>
-#include <exec/defines.h>
+#include <protocol/exec.h>
 #include <exec/return_values.h>
 #include <exec/types.h>
 #include <exec/functions.h>
