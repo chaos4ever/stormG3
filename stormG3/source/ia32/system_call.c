@@ -1,4 +1,4 @@
-/* $chaos: system_call.c,v 1.2 2002/10/24 22:13:38 per Exp $ */
+/* $chaos: system_call.c,v 1.3 2002/10/27 20:30:24 per Exp $ */
 /* Abstract: */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -20,24 +20,60 @@ void system_call_init (void)
 }
 
 /* The high-level system call handler, called from the low-level function. */
-void system_call (uint32_t *stack)
+return_t system_call (uint32_t *stack)
 {
-    /* stack[0] is the number of arguments, stack[1..n] is the
-       arguments. */
-    bool result;
-    return_t return_value = capability_has (0, current_process, "kernel",
-                                            "debug_print", &result);
-    
-    if (return_value == STORM_RETURN_SUCCESS &&
-        result)
+    switch (SYSTEM_CALL_NUMBER)
     {
-        //        address_t esp = cpu_get_esp ();
-        //        debug_memory_dump ((uint32_t *) esp, 17);
-        debug_print ("We have a system call! %x", stack[0]);
-        debug_print ("This is the string: %s\n", stack[1]);
-    }
-    else
-    {
-        debug_print ("You don't have the permission to do this.");
+        /* Get the list of service providers for a service. */
+        case SYSTEM_CALL_SERVICE_LOOKUP:
+        {
+            // FIXME: Add capability check here?
+            if (SYSTEM_CALL_ARGUMENTS == 3)
+            {
+                service_lookup_t *lookup = (service_lookup_t *) SYSTEM_CALL_ARGUMENT_0;
+                service_lookup (lookup->name, lookup->vendor,
+                                lookup->model, lookup->id,
+                                lookup->major_version, lookup->minor_version,
+                                (size_t *) SYSTEM_CALL_ARGUMENT_1,
+                                (service_t **) SYSTEM_CALL_ARGUMENT_2);
+                return STORM_RETURN_SUCCESS;
+            }
+            else
+            {
+                debug_print ("Invalid number of arguments in SYSTEM_CALL_SERVICE_LOOKUP");
+                return STORM_RETURN_INVALID_ARGUMENT;
+            }
+            break;
+        }
+
+        /* Connect to a service provider. */
+        case SYSTEM_CALL_SERVICE_CONNECT:
+        {
+            return STORM_RETURN_NOT_IMPLEMENTED;
+            break;
+        }
+
+        /* Close a previously opened connection to a service
+           provider. */
+        case SYSTEM_CALL_SERVICE_CLOSE:
+        {
+            return STORM_RETURN_NOT_IMPLEMENTED;
+            break;
+        }
+
+        /* Invoke a function in a service provider. */
+        case SYSTEM_CALL_SERVICE_INVOKE:
+        {
+            return STORM_RETURN_NOT_IMPLEMENTED;
+            break;
+        }
+
+        /* An unsupported system call. */
+        default:
+        {
+            debug_print ("Invalid system call executed: %u\n", stack[0]);
+            return STORM_RETURN_INVALID_ARGUMENT;
+            break;
+        }
     }
 }
