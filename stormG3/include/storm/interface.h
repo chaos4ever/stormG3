@@ -1,4 +1,4 @@
-/* $chaos: interface.h,v 1.7 2002/10/28 07:52:34 per Exp $ */
+/* $chaos: interface.h,v 1.8 2002/10/28 21:45:27 per Exp $ */
 /* Abstract: stormG3 kernel interface. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -229,8 +229,8 @@ extern return_t process_create (process_id_t process_id,
  *                      if the vendor and model is the same).
  * @param major_version The major version of the service we require.
  * @param minor_version The minor version of the service we require.
- * @param services      A pointer to where the number of services found will 
- *                      be put.
+ * @param services      A pointer to how big our service array is. On
+ *                      exit, it will contain the number of services found.
  * @param service       An array of services.
  * @return              STORM_RETURN_SUCCESS if successful.
  *
@@ -241,7 +241,7 @@ extern return_t service_lookup (const char *name, const char *vendor,
                                 const char *model, const char *id,
                                 unsigned int major_version, 
                                 unsigned int minor_version,
-                                size_t *services, service_t **service);
+                                size_t *services, service_t *service);
 
 /**
  * @brief               Register a service provider. 

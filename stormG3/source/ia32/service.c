@@ -1,4 +1,4 @@
-/* $chaos: service.c,v 1.13 2002/10/28 21:47:31 per Exp $ */
+/* $chaos: service.c,v 1.14 2002/10/29 20:45:36 per Exp $ */
 /* Abstract: Service support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -24,15 +24,15 @@ static spinlock_t service_lock = SPIN_UNLOCKED;
    variable will wrap around after 58494241735 years. I doubt you will
    have that kind of an uptime on a chaos machine. Please prove me
    wrong! ;-) */
-static uint64_t service_id = 0;
+static uint64_t free_service_id = 0;
 
 /* Create a new service ID. Service IDs are not reused, and that is a
    design decision that we have made, so please don't file it as a
    bug. It will not be changed. */
 static service_id_t service_create_id (void)
 {
-    service_id_t id = service_id;
-    service_id++;
+    service_id_t id = free_service_id;
+    free_service_id++;
 
     return id;
 }
@@ -93,15 +93,14 @@ return_t service_lookup (const char *name, const char *vendor,
                          const char *model, const char *device_id,
                          unsigned int major_version, 
                          unsigned int minor_version, size_t *services,
-                         service_t **out_service)
+                         service_t *out_service)
 {
     service_data_t *service;
     unsigned int counter = 0;
+    size_t services_found = 0;
 
     spin_lock (&service_lock);
 
-    (*services) = 0;
-    
     /* Iterate two times. The first time is used to calculate the
        number of matching services. */
     service = first_service;
@@ -116,29 +115,27 @@ return_t service_lookup (const char *name, const char *vendor,
             (model == NULL || string_compare (service->model, model) == 0) &&
             (device_id == NULL || string_compare (service->device_id, device_id) == 0))
         {
-            (*services)++;
+            services_found++;
         }
 
         service = (service_data_t *) service->next;
     }
 
     /* Any matches? */
-    if ((*services) == 0)
+    if (services_found == 0)
     {
         spin_unlock (&service_lock);
         return STORM_RETURN_NOT_FOUND;
     }
 
-    /* Allocate memory for the data structure. We can only allocate
-       max 4 KiB this way, but since one service is less than 128
-       byte, that's at least 32 service providers anyway. Bill Gates,
-       I love you! :-) We should use memory_virtual_allocate
-       anyway.. (at least for proceses) */
-    if (memory_global_allocate ((void **) out_service, (*services) * sizeof (service_t)) != STORM_RETURN_SUCCESS)
+    /* Enough space for these services? */
+    if (services_found > *services)
     {
         spin_unlock (&service_lock);
-        return STORM_RETURN_OUT_OF_MEMORY;
+        return STORM_RETURN_INVALID_ARGUMENT;
     }
+
+    *services = services_found;
 
     /* Start doing our business. */
     service = first_service;
@@ -152,14 +149,14 @@ return_t service_lookup (const char *name, const char *vendor,
             (model == NULL || string_compare (service->model, model) == 0) &&
             (device_id == NULL || string_compare (service->device_id, device_id) == 0))
         {
-            string_copy ((*out_service)[counter].name, service->name);
-            string_copy ((*out_service)[counter].vendor, service->vendor);
-            string_copy ((*out_service)[counter].model, service->model);
-            string_copy ((*out_service)[counter].device_id, service->device_id);
-            (*out_service)[counter].id = service->id;
-            (*out_service)[counter].major_version = service->major_version;
-            (*out_service)[counter].minor_version = service->minor_version;
-            (*out_service)[counter].service_info = service->service_info;
+            string_copy (out_service[counter].name, service->name);
+            string_copy (out_service[counter].vendor, service->vendor);
+            string_copy (out_service[counter].model, service->model);
+            string_copy (out_service[counter].device_id, service->device_id);
+            out_service[counter].id = service->id;
+            out_service[counter].major_version = service->major_version;
+            out_service[counter].minor_version = service->minor_version;
+            out_service[counter].service_info = service->service_info;
             counter++;
         }
 
@@ -168,4 +165,17 @@ return_t service_lookup (const char *name, const char *vendor,
 
     spin_unlock (&service_lock);
     return STORM_RETURN_SUCCESS;
+}
+
+/* Connect to a service provider. */
+return_t service_connect (service_id_t service_id UNUSED,
+                          service_connection_id_t *connection_id UNUSED)
+{
+    return STORM_RETURN_NOT_IMPLEMENTED;
+}
+
+/* Close a connection. */
+return_t service_close (service_connection_id_t connection_id UNUSED)
+{
+    return STORM_RETURN_NOT_IMPLEMENTED;
 }
