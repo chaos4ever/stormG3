@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.20 2002/10/11 07:44:26 per Exp $ */
+/* $chaos: defines.h,v 1.21 2002/10/14 21:32:46 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -19,7 +19,7 @@
 /**
  * @brief               The size of a physical page. 
  */
-#define PAGE_SIZE       0x1000
+#define PAGE_SIZE       (0x1000U)
 
 /**
  * @brief               The number of bits of a page.
