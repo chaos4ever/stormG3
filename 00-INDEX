@@ -1,6 +1,12 @@
-documentation	The documentation (very unfinished)
-libraries	The chaos libraries
-misc		Miscellaneous files
-modules		The chaos kernel modules
-programs	The chaos programs
-stormG3		The chaos kernel
+documentation
+	- The documentation (very unfinished)
+libraries
+	- The chaos libraries
+misc
+	- Miscellaneous files
+modules
+	- The chaos kernel modules
+programs
+	- The chaos programs
+stormG3
+	- The chaos kernel
