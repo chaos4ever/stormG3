@@ -1,14 +1,9 @@
 #!/bin/sh
-# $chaos$
+# $chaos: build,v 1.5 2002/05/23 10:51:50 per Exp $
 
 # If no install path has been set previously, fall back to the default.
 if [ -z "$CHAOS_INSTALL_PATH" ]; then
 	CHAOS_INSTALL_PATH=$(pwd)/root
 fi
 
-if [ ! -f config.install-path ]; then
-	echo "CHAOS_INSTALL_PATH=$CHAOS_INSTALL_PATH" > config.install-path
-fi
-
-. config.install-path
 make build
