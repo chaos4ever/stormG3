@@ -40,10 +40,17 @@ static return_t service_info (void *vfs_void)
 
 int module_start (void)
 {
-    // FIXME: Use vfs_register (bug #54)
-    return service_register ("vfs", "chaos development",
-                             "VFS module", "1",
-                             VFS_SERVICE_MAJOR_VERSION,
-                             VFS_SERVICE_MINOR_VERSION,
-                             &service_info);
+    service_register_t service_register_info;
+    service_register_info.vendor = "chaos development";
+    service_register_info.model = "VFS module";
+    service_register_info.device_id = "1";
+    service_register_info.info_handler = &service_info;
+
+    // FIXME: Fill in this structure.
+    service_method_t service_method[] =
+        {
+            { -1, NULL }
+        };
+
+    return vfs_register (&service_register_info, service_method);
 }
