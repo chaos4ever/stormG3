@@ -1,4 +1,4 @@
-# $chaos: makefile,v 1.9 2002/06/12 20:40:15 per Exp $
+# $chaos: makefile,v 1.10 2002/06/13 07:01:25 per Exp $
 
 # Abstract: storm G3 makefile
 # Authors: Henrik Hallin <hal@chaosdev.org>
@@ -6,8 +6,8 @@
 
 # Copyright 2002 chaos development.
 
-OBJECTS = debug.o dma.o exception.o exception_lowlevel.o idt.o init.o \
-main.o memory_global.o memory_physical.o memory_virtual.o \
+OBJECTS = cpu.o debug.o dma.o exception.o exception_lowlevel.o idt.o \
+init.o main.o memory_global.o memory_physical.o memory_virtual.o \
 multiboot.o
 
 BINARY = stormG3
