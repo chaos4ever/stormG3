@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: descriptor.h,v 1.1 2002/06/12 20:41:01 per Exp $ */
 /* Abstract: The descriptor structure. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -29,7 +29,7 @@ typedef struct
     uint8_t dpl : 2;                    /* Descriptor privilege level. */
     uint8_t segment_present : 1;        /* Zero if segment isn't used. */
     uint8_t limit_hi : 4;               /* High four bits of segment limit. */
-    uint8_t unused : 1;
+    uint8_t : 1;                        /* Unused. */
     uint8_t zero : 1;                   /* Always zero! */
     uint8_t operation_size : 1;         /* 0 = 16-bit, 1 = 32-bit. */
     uint8_t granularity : 1;            /* If 1, segment limit is multiplied
