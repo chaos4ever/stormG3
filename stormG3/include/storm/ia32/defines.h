@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.3 2002/06/05 19:57:00 per Exp $ */
+/* $chaos: defines.h,v 1.4 2002/06/08 15:10:19 per Exp $ */
 /* Abstract: Generic storm defines. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -13,14 +13,6 @@
 
 /* The size of a physical page. */
 #define PAGE_SIZE                       4096
-
-/* Get the low or high 16 bits of a 32 bit integer
-   variable. (Endian-specific) */
-#define LOW_U16(x)                      ((x) & 0xFFFF)
-#define HIGH_U16(x)                     ((x) >> 16)
-
-/* Get the value of a bit. (Endian-specific) */
-#define BIT_VALUE(x)                    (1 << x)
 
 /* Size of some reserved regions. */
 #define GDT_SIZE                        (2 * KIB)
