@@ -1,4 +1,4 @@
-/* $chaos: memory_virtual.c,v 1.3 2002/08/08 19:57:13 per Exp $ */
+/* $chaos: memory_virtual.c,v 1.4 2002/10/04 19:01:21 per Exp $ */
 /* Abstract: Virtual memory routines. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -91,7 +91,7 @@ void memory_virtual_map (page_directory_t *page_directory,
             }
 
             /* Make sure it is cleared out. */
-            memory_set_uint32 ((uint32_t *) page_table, 0, PAGE_SIZE / 4);
+            memory_clear_page (page_table);
 
             /* Set up the page directory entry, referring to this
                newly created page table. */
