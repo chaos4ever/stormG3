@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.9 2002/10/04 19:01:18 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.10 2002/10/09 12:22:13 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for stormG3
 # Author: Per Lundberg <per@chaosdev.org>
@@ -9,7 +9,6 @@
 use POSIX; # for getcwd.
 
 ($sysname) = uname ();
-print $sysname, "\n";
 
 Conscript_chdir 0;
 
@@ -44,11 +43,12 @@ if ($ARG{gdb})
   $defs .= "-DGDB -DGDB_PORT=$port -DGDB_SPEED=$speed ";
 }
 
+$LDFLAGS = '-nostdlib ';
 if ($sysname =~ m/^CYGWIN/) {
-  $LDFLAGS = '-nostdlib -Wl,-e,_start'; 
+  $LDFLAGS .= '-Wl,-e,_start'; 
 }
 else {
-  $LDFLAGS = '-Wl,-T,source/ia32/kernel.ld';
+  $LDFLAGS .= '-nostdlib -Wl,-T,source/ia32/kernel.ld';
 }
 
 $cons = new cons (
