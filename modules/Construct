@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.13 2002/10/04 19:00:59 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.14 2002/10/09 08:31:49 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the modules.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -29,9 +29,11 @@ $warnings = '-Wall -W -Wshadow -Wpointer-arith -Waggregate-return ' .
 $install = <<EOF;
 return qq(
 mkdir -p \$module_directory
-install \$module_path/\$module_binary \$module_directory
-strip \$module_directory/\$module_binary
+cp \$module_path/\$module_binary /tmp
+strip /tmp/\$module_binary
+install /tmp/\$module_binary \$module_directory
 gzip -9f \$module_directory/\$module_binary
+touch %0:a
 	 );
 EOF
 
