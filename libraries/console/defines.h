@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.3 2002/05/23 11:14:26 per Exp $ */
+/* $chaos: defines.h,v 1.1 2002/06/24 21:36:43 per Exp $ */
 /* Abstract: Defines used by the console library. */
 /* Author: Per Lundberg <plundis@chaosdev.org> */
 
@@ -44,6 +44,12 @@ enum
 {
     CONSOLE_EVENT_KEYBOARD,
     CONSOLE_EVENT_MOUSE
+};
+
+enum
+{
+    CONSOLE_MODE_TEXT,
+    CONSOLE_MODE_GRAPHICS
 };
 
 #endif /* !__CONSOLE_DEFINES_H__ */

@@ -1,4 +1,4 @@
-/* $chaos: console.c,v 1.3 2002/06/23 20:37:02 per Exp $ */
+/* $chaos: console.c,v 1.4 2002/06/24 21:40:30 per Exp $ */
 /* Abstract: Console module. Will eventually be 100% ANSI escape
              sequence compatible. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
@@ -16,9 +16,7 @@ volatile unsigned int number_of_consoles = 0;
 character_t *screen = (character_t *) NULL;
 volatile console_t *current_console = NULL;
 console_t *console_list = NULL;
-//ipc_structure_type video_structure;
 volatile bool has_video = FALSE;
-volatile unsigned int console_id = 0;
 volatile console_t *console_shortcut[12] =
 {
     NULL,
@@ -216,6 +214,22 @@ static return_t console_handle_key_event (keyboard_packet_t *keyboard_packet)
     return STORM_RETURN_SUCCESS;
 }
 
+/* Open a new console. */
+static return_t console_open (console_id_t *console_id, size_t width,
+                              size_t height, size_t depth, int mode_type)
+{
+    width = height = depth = mode_type;
+    *console_id = 1;
+    return STORM_RETURN_NOT_IMPLEMENTED;
+}
+
+/* Close a previously opened console. */
+static return_t console_close (console_id_t console_id)
+{
+    console_id = 0;
+    return STORM_RETURN_NOT_IMPLEMENTED;
+}
+
 /* Return some information about the console service (function pointers to
    our functionality). */
 static return_t service_info (void *console_void)
@@ -223,6 +237,8 @@ static return_t service_info (void *console_void)
     console_service_t *console = (console_service_t *) console_void;
     console->magic_cookie = CONSOLE_COOKIE;
     console->key_event = &console_handle_key_event;
+    console->open = &console_open;
+    console->close = &console_close;
     return STORM_RETURN_SUCCESS;
 }
 
