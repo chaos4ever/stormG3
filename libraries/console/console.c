@@ -1,4 +1,4 @@
-/* $chaos: console.c,v 1.8 2002/11/20 20:03:29 per Exp $ */
+/* $chaos: console.c,v 1.9 2002/12/03 14:15:01 johannes Exp $ */
 /* Abstract: Console library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -8,21 +8,25 @@
 #include <stdarg.h>
 #include <console/console.h>
 
-/* Initialize a connection between the application and the console
-   service. */
+/* Get a connection to the console service. */
+// FIXME: Take a service_lookup_t parameter.
 return_t console_lookup (console_service_t *console)
 {
     // FIXME: Fix this fulkod ASAP.
     size_t services = 1;
     service_t service;
-    service_lookup_t lookup;
+    service_lookup_t lookup =
+        {
+            "console",  /* protocol_name */
+            NULL,       /* service_vendor */
+            NULL,       /* device_vendor */
+            NULL,       /* model */
+            NULL,       /* device_id */
+            CONSOLE_PROTOCOL_MAJOR_VERSION,     /* major version */
+            CONSOLE_PROTOCOL_MINOR_VERSION,     /* minor version */
+        };
 
     /* Find the console service. */
-
-    lookup.protocol_name = "console";
-    lookup.major_version = CONSOLE_PROTOCOL_MAJOR_VERSION;
-    lookup.minor_version = CONSOLE_PROTOCOL_MINOR_VERSION;
-    
     if (service_lookup (&lookup, &services, &service) != STORM_RETURN_SUCCESS)
     {
         debug_print ("Failed to lookup console service provider.\n");
