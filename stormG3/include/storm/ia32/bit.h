@@ -1,4 +1,4 @@
-/* $chaos: bit.h,v 1.1 2002/05/25 20:09:39 per Exp $ */
+/* $chaos: bit.h,v 1.2 2002/06/05 18:17:42 per Exp $ */
 /* Abstract: Bit manipulation macros. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -9,6 +9,14 @@
 #ifndef __STORM_IA32_BIT_H__
 #define __STORM_IA32_BIT_H__
 
+/* This file is endian-specific. */
+
+/* Get the low or high 16 bits of a 32 bit integer
+   variable. (Endian-specific) */
+#define LOW_16(x)                       ((x) & 0xFFFF)
+#define HIGH_16(x)                      ((x) >> 16)
+
+/* Bit manipulation macros. */
 #define BIT_SET(a,b) ((a) |= (1 << (b)))
 #define BIT_CLEAR(a,b) ((a) &= !(1 << (b)))
 #define BIT_GET(a,b) ((a) & (1 << (b)) ? 1 : 0) 
