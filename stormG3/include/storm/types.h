@@ -1,4 +1,4 @@
-/* $chaos: types.h,v 1.3 2002/06/05 19:57:25 per Exp $ */
+/* $chaos: types.h,v 1.4 2002/06/11 20:56:53 per Exp $ */
 /* Abstract: storm types. */
 /* Author: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
@@ -11,6 +11,9 @@
 
 #include <stdint.h>
 
+/* Type definitions. */
 typedef int return_t;
+typedef int bool; /* no _t, since this should really have been a
+                     built-in type in C. */
 
 #endif /* !__STORM_TYPES_H__ */
