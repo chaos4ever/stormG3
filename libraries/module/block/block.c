@@ -1,4 +1,4 @@
-/* $chaos: block.c,v 1.8 2002/12/03 14:00:15 johannes Exp $ */
+/* $chaos: block.c,v 1.9 2002/12/03 21:46:07 per Exp $ */
 /* Abstract: Block library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 

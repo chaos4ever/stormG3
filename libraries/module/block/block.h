@@ -1,4 +1,4 @@
-/* $chaos: block.h,v 1.4 2002/10/04 19:00:50 per Exp $ */
+/* $chaos: block.h,v 1.5 2002/12/03 13:59:23 johannes Exp $ */
 /* Abstract: Function prototypes and structure definitions for the
    block library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
