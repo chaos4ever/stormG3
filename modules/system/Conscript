@@ -1,4 +1,4 @@
-# $chaos: Conscript,v 1.4 2002/09/01 21:02:37 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.5 2002/10/04 19:01:09 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the system service providers.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -12,6 +12,7 @@ Build qw( boot/Conscript
 	  console/Conscript
 	  elf/Conscript
 	  keyboard/Conscript
+          kernel/Conscript
 	  log/Conscript
 	  time/Conscript );
 
