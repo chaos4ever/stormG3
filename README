@@ -1,15 +1,14 @@
-README ($chaos: README,v 1.5 2002/06/22 20:13:32 per Exp $)
+README ($chaos: README,v 1.6 2002/07/28 19:04:09 per Exp $)
 ======
 
-This is chaos, a free (licensed under the BSD license without
-advertisment clause) operating system. It implements advanced features
-such as virtual memory, interrupt/exception management, memory
-protection, I/O protection, preemptive multitasking, ELF support, and
-much, much more. It is a work in progress, and thus some parts might
-be unfinished. If you are a programmer and would like to help us,
-please contact us and we can see what you can help us with. Our
-contact information can be found on the web page --
-http://www.chaosdev.org/
+This is chaos, a free (licensed under the BSD license) operating
+system. It implements advanced featuressuch as virtual memory,
+interrupt/exception management, memoryprotection, I/O protection,
+preemptive multitasking, ELF support, andmuch, much more. It is a
+work in progress, and thus some parts might be unfinished. If you
+are a programmer and would like to help us, please contact us and
+we can see what you can help us with. Our contact information can
+be found on the web page -- http://web.chaosdev.org/
 
 The following programs are required to compile:
 
@@ -19,16 +18,18 @@ The following programs are required to compile:
 
 Please consult README.Linux for some (possibly outdated) help about
 building the system under your specific system. If you're running
-anything else, you're totally on yourself.
+anything else, you're on yourself. Though, the people in #chaos on
+irc.chaosdev.org might be able to help you.
 
 chaos is known to run correctly on the following computers (at some
 time):
 
 * No-name Pentium 133 MHz (32 MiB RAM)
+* AMD Athlon Thunderbird 900MHz (256 MiB RAM)
 
 If you successfully compile/run it on another platform, with or
-without patches, please tell us! Any experiences are welcome. Check
-out http://www.chaosdev.org/
+without patches, please tell us! Any experiences are welcome. Don't
+forget to check out http://web.chaosdev.org/
 
 -- Per Lundberg <per@chaosdev.org>  Sun, 28 Jul 2002 21:03:26 +0200
 
