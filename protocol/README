@@ -1,0 +1,15 @@
+README ($chaos: README,v 1.1 2002/11/14 20:48:04 per Exp $)
+======
+
+Here, information about protocols is stored. The implementation of a
+protocol is three-layered:
+
+  * Layer 1: one or more modules implementing the protocol. (this is
+    called a "service")
+  * Layer 2: a library for accessing services implementing this
+    protocol from within kernel modules. (Using near calls, which
+    means very good performance)
+  * Layer 3: a library for accessing services implementing this
+    protocol from userspace.
+
+-- Per Lundberg <per@chaosdev.org>  Mon,  2 Dec 2002 21:46:25 +0100
