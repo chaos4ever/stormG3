@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.4 2002/06/17 22:57:35 per Exp $ */
+/* $chaos: module.c,v 1.5 2002/06/18 07:35:42 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -64,18 +64,14 @@ static return_t module_link (elf_header_t *elf_header)
     }
 
     /* Everything seems to be fine. Now, we call module_start. */
-    return_value = elf_symbol_find_by_name (&elf_parsed, "module_start", (uint32_t *) &module_function);
+    return_value = elf_symbol_find_by_name (&elf_parsed, "module_start", (address_t *) &module_function);
     if (return_value != STORM_RETURN_SUCCESS)
     {
         return return_value;
     }
 
-    debug_print ("%x\n", module_function);
-
     /* Call the module entry point. */
     module_function ();
-
-    debug_print ("Returned!\n");
 
     // FIXME Deallocate memory used by the ELF image. A simple for
     // loop really.
