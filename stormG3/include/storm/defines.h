@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.11 2002/10/17 21:25:47 per Exp $ */
+/* $chaos: defines.h,v 1.12 2002/10/22 21:00:27 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -122,6 +122,21 @@
  */
 #define SERVICE_ID_LENGTH \
                         (16)
+
+/**
+ * @brief               Different ways of halting.
+ */
+enum halt_t {
+    /**
+     * @brief           Reboot the machine. 
+     */
+    HALT_REBOOT,
+
+    /**
+     * @brief           Shut it down (with possible power-down as well). 
+     */
+    HALT_SHUTDOWN
+};
 
 /* Stupid, but just to get the AVL code compiling. FIXME: Remove this
    ASAP. */
