@@ -1,4 +1,4 @@
-/* $chaos: console.c,v 1.3 2002/05/23 11:14:26 per Exp $ */
+/* $chaos: console.c,v 1.1 2002/06/24 21:36:43 per Exp $ */
 /* Abstract: Console library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -19,7 +19,7 @@ return_t console_init (console_service_t *console)
     /* Find the console service. */
     if (service_resolve ("console", NULL, NULL, NULL, 1, &services, &service) != STORM_RETURN_SUCCESS)
     {
-        debug_print ("Failed to resolved log service provider.\n");
+        debug_print ("Failed to resolve console service provider.\n");
         return CONSOLE_RETURN_SERVICE_UNAVAILABLE;
     }
     service[0].service_info (console);

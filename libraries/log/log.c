@@ -1,4 +1,4 @@
-/* $chaos: log.c,v 1.1 2002/06/23 20:34:44 per Exp $ */
+/* $chaos: log.c,v 1.2 2002/06/24 21:36:56 per Exp $ */
 /* Abstract: Log library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -16,7 +16,7 @@ return_t log_init (log_service_t *log)
     /* Find the log service. */
     if (service_resolve ("log", NULL, NULL, NULL, 1, &services, &service) != STORM_RETURN_SUCCESS)
     {
-        debug_print ("Failed to resolved log service provider.\n");
+        debug_print ("Failed to resolve log service provider.\n");
         return LOG_RETURN_SERVICE_UNAVAILABLE;
     }
 
