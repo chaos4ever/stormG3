@@ -1,4 +1,4 @@
-/* $chaos: console.c,v 1.2 2002/06/23 12:09:05 per Exp $ */
+/* $chaos: console.c,v 1.3 2002/06/23 20:37:02 per Exp $ */
 /* Abstract: Console module. Will eventually be 100% ANSI escape
              sequence compatible. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
@@ -218,8 +218,9 @@ static return_t console_handle_key_event (keyboard_packet_t *keyboard_packet)
 
 /* Return some information about the console service (function pointers to
    our functionality). */
-static return_t service_info (console_service_t *console)
+static return_t service_info (void *console_void)
 {
+    console_service_t *console = (console_service_t *) console_void;
     console->magic_cookie = CONSOLE_COOKIE;
     console->key_event = &console_handle_key_event;
     return STORM_RETURN_SUCCESS;
@@ -227,5 +228,6 @@ static return_t service_info (console_service_t *console)
 
 return_t module_start (void)
 {
-    return service_register ("console", 1, (function_t) &service_info);
+    return service_register ("console", "chaos development", "Console module",
+                             "1", 1, &service_info);
 }

@@ -1,4 +1,4 @@
-/* $chaos: log.c,v 1.3 2002/06/22 22:54:58 per Exp $ */
+/* $chaos: log.c,v 1.4 2002/06/23 20:39:44 per Exp $ */
 /* Abstract: Kernel log module. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -37,8 +37,9 @@ static return_t log_print_formatted (unsigned int urgency, char *string, ...)
 
 /* Return some information about the log service (function pointers to
    our functionality). */
-static return_t service_info (log_service_t *log)
+static return_t service_info (void *log_void)
 {
+    log_service_t *log = (log_service_t *) log_void;
     log->magic_cookie = LOG_COOKIE;
     log->print = &log_print;
     log->print_formatted = &log_print_formatted;
@@ -47,5 +48,6 @@ static return_t service_info (log_service_t *log)
 
 return_t module_start (void)
 {
-    return service_register ("log", LOG_SERVICE_VERSION, (function_t) &service_info);
+    return service_register ("log", "chaos development", "Log module",
+                             "1", LOG_SERVICE_VERSION, &service_info);
 }
