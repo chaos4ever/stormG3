@@ -1,4 +1,4 @@
-/* $chaos: types.h,v 1.12 2002/10/22 20:58:07 per Exp $ */
+/* $chaos: types.h,v 1.13 2002/10/24 21:36:22 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -88,9 +88,14 @@ typedef struct
     char                id[SERVICE_ID_LENGTH];
 
     /**
-     * @brief           The version of the service provided. 
+     * @brief           The major version of the service provided. 
      */
-    unsigned int        version;
+    unsigned int        major_version;
+
+    /**
+     * @brief           The minor version of the service provided. 
+     */
+    unsigned int        minor_version;
 
     /**
      * @brief           A function that the caller use to get information
