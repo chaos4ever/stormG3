@@ -1,10 +1,12 @@
-/* $chaos: process.c,v 1.1 2002/10/10 21:39:15 per Exp $ */
+/* $chaos: process.c,v 1.2 2002/10/10 22:03:00 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 /* Abstract: Process support. */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
 
+#include <storm/ia32/debug.h>
+#include <storm/ia32/dispatch.h>
 #include <storm/ia32/gdb.h>
 #include <storm/ia32/gdt.h>
 #include <storm/ia32/memory.h>
@@ -155,7 +157,8 @@ return_t process_create (process_id_t process_id UNUSED,
         return return_value;
     }
 
-    /* Set it up. */
+    /* Set it up properly. */
+    debug_print ("EIP: %x\n", entry_point);
     thread->tss->eip = entry_point;
     thread->tss->cr3 = process->first_page_directory;
     thread->tss->cs = PROCESS_CODE_SELECTOR;
@@ -164,7 +167,20 @@ return_t process_create (process_id_t process_id UNUSED,
         thread->tss->fs =
         thread->tss->gs = 
         thread->tss->ss = PROCESS_DATA_SELECTOR;
+
     thread->tss->eflags = TSS_NEW_EFLAGS;
+
+    /* Set up PL0 stack (neccessary; the CPU switches automatically
+       when going into an interrupt for example). */
+    thread->tss->ss0 = KERNEL_DATA_SELECTOR;
+    void *stack;
+    return_value = memory_physical_allocate_for_process ((void *) &stack, ((process_t *) thread->parent)->id);
+    if (return_value != STORM_RETURN_SUCCESS)
+    {
+        DEBUG_HALT ("Failed allocating privileged stack for process.");
+    }
+    thread->tss->esp0 = ((address_t) stack) + PAGE_SIZE;
+
     thread->tss->esp = 0;
 
     /* We don't allow I/O from userland. */
@@ -173,6 +189,9 @@ return_t process_create (process_id_t process_id UNUSED,
     /* You don't wanna have these in the wrong order. :-) */
     process->active = TRUE;
     spin_unlock (&process->lock);
+
+    /* Add this thread to the list of tasks in the dispatcher. */
+    dispatch_unblock (thread);
 
     /* Add to list of active tasks for the dispatcher. */
     // FIXME: Do this.
