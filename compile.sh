@@ -1,4 +1,4 @@
-# $Id$
+# $chaos$
 # Abstract: Quick and dirty hack to compile everything.
 
 # The source root
