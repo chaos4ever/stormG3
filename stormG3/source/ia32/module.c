@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.16 2002/07/11 20:57:23 per Exp $ */
+/* $chaos: module.c,v 1.17 2002/07/12 09:39:19 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -108,14 +108,11 @@ void module_init (void)
         for (unsigned int counter = 0; 
              counter < multiboot_info.number_of_modules; counter++) 
         {
+            debug_print ("Starting module %s.\n",
+                         multiboot_module_info[counter].name);
             if (module_link ((elf_header_t *) multiboot_module_info[counter].start) != STORM_RETURN_SUCCESS)
             {
                 debug_print ("Starting module %s failed.\n",
-                             multiboot_module_info[counter].name);
-            }
-            else
-            {
-                debug_print ("Started module %s.\n",
                              multiboot_module_info[counter].name);
             }
         }
