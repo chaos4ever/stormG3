@@ -1,4 +1,4 @@
-/* $chaos: log.c,v 1.1 2002/06/20 22:42:05 per Exp $ */
+/* $chaos: log.c,v 1.2 2002/06/21 08:00:08 per Exp $ */
 /* Abstract: Kernel log module. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -36,6 +36,5 @@ static return_t service_info (log_service_t *log)
 
 return_t module_start (void)
 {
-    service_register ("log", 1, (function_t) &service_info);
-    return STORM_RETURN_SUCCESS;
+    return service_register ("log", 1, (function_t) &service_info);
 }
