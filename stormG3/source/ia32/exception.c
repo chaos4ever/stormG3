@@ -1,4 +1,4 @@
-/* $chaos: exception.c,v 1.16 2002/10/15 21:56:36 per Exp $ */
+/* $chaos: exception.c,v 1.17 2002/10/17 21:29:13 per Exp $ */
 /* Abstract: Exception handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -158,10 +158,16 @@ void exception_page_fault (cpu_register_t registers)
     uint32_t cr2 = cpu_get_cr2 ();
 
     /* The stack is dynamically allocated. */
+    // FIXME: Need to change this a bit when adding support for
+    // multiple threads OR use some kind of copy-on-write
+    // stack... Check out how it works with pthreads and some other
+    // implementations to know how incompatible we'll be.
     if (cr2 >= STACK_BASE - (2 * MIB))
     {
         void *pointer;
-        return_t return_value = memory_physical_allocate_for_process (&pointer, current_process->id);
+        debug_print ("%x\n", current_process->id);
+        return_t return_value = memory_physical_allocate (&pointer, 1, 
+                                                          current_process->id);
         if (return_value != STORM_RETURN_SUCCESS)
         {
             DEBUG_HALT ("Failed to allocate stack memory");
