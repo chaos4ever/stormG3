@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.13 2002/06/23 15:27:12 per Exp $ */
+/* $chaos: module.c,v 1.14 2002/06/25 20:06:05 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -48,7 +48,6 @@ static return_t module_link (elf_header_t *elf_header)
     return_value = elf_parse (elf_header, &elf_parsed);
     if (return_value != STORM_RETURN_SUCCESS)
     {
-        debug_print ("v ");
         return return_value;
     }
 
@@ -56,7 +55,6 @@ static return_t module_link (elf_header_t *elf_header)
     return_value = elf_load (&elf_parsed);
     if (return_value != STORM_RETURN_SUCCESS)
     {
-        debug_print ("w ");
         return return_value;
     }
 
@@ -64,7 +62,6 @@ static return_t module_link (elf_header_t *elf_header)
     return_value = elf_resolve (&elf_parsed, function);
     if (return_value != STORM_RETURN_SUCCESS)
     {
-        debug_print ("z ");
         return return_value;
     }
 
@@ -73,7 +70,6 @@ static return_t module_link (elf_header_t *elf_header)
     return_value = elf_relocate (&elf_parsed);
     if (return_value != STORM_RETURN_SUCCESS)
     {
-        debug_print ("y %u ", return_value);
         return return_value;
     }
 
@@ -81,7 +77,6 @@ static return_t module_link (elf_header_t *elf_header)
     return_value = elf_symbol_find_by_name (&elf_parsed, "module_start", (address_t *) &module_function);
     if (return_value != STORM_RETURN_SUCCESS)
     {
-        debug_print ("x ");
         return return_value;
     }
 
@@ -90,8 +85,6 @@ static return_t module_link (elf_header_t *elf_header)
 
     // FIXME Deallocate memory used by the ELF image. A simple for
     // loop really.
-
-    debug_print ("Everything seemed to work.\n");
     // FIXME: If return_value != STORM_RETURN_SUCCESS, run module_stop.
 
     return return_value;
