@@ -1,4 +1,4 @@
-/* $chaos: console.h,v 1.3 2002/06/23 20:37:02 per Exp $ */
+/* $chaos: console.h,v 1.4 2002/07/11 21:46:42 per Exp $ */
 /* Abstract: Console module header file. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
             Per Lundberg <per@chaosdev.org> */
@@ -109,5 +109,6 @@ extern void console_link (console_t *console);
 extern void console_flip (console_t *console);
 extern void console_kill_screen (console_t *console, int argument);
 extern void console_cursor_move (console_t *console, int x, int y);
+extern void console_output (console_t *console, const char *string);
 
 #endif /* !__CONSOLE_H__ */
