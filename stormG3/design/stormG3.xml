@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no"?> <!-- -*- xml -*- -->
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"[
+  <!ENTITY goals SYSTEM "goals.xml">
   <!ENTITY memory_management SYSTEM "memory_management.xml">
   <!ENTITY process SYSTEM "process.xml">
   <!ENTITY module SYSTEM "module.xml">
@@ -8,7 +9,7 @@
   <!ENTITY data_types SYSTEM "data_types.xml">
   <!ENTITY stdint SYSTEM "stdint.xml">
 ]>
-<!-- $chaos: stormG3.xml,v 1.3 2002/05/27 09:49:31 per Exp $ -->
+<!-- $chaos: stormG3.xml,v 1.4 2002/05/27 21:29:39 per Exp $ -->
 
 <book>
   <bookinfo>
@@ -42,6 +43,7 @@
     </legalnotice>
   </bookinfo>
   
+  &goals;
   &memory_management;
   &process;
   &module;
