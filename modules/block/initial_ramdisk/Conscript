@@ -1,0 +1,20 @@
+# $chaos: Conscript,v 1.1 2002/06/26 06:40:40 per Exp $ -*- Perl -*-
+
+# Abstract: CONS script for the initial ramdisk module.
+# Author: Per Lundberg <per@chaosdev.org>
+
+# Copyright 2000 chaos development.
+# Use freely under the terms listed in the file COPYING.
+
+$module_binary = 'initial_ramdisk.so';
+
+Import qw( cons module_directory include build_directory library_directory );
+$cons = $cons->clone(LIBS => '-llog');
+Program $cons $module_binary, 'initial_ramdisk.c', 'ramdisk.S';
+Depends $cons $module_binary, "$library_directory/liblog.a";
+Depends $cons 'ramdisk.o', 'ramdisk.image';
+Command $cons 'install', $module_binary,
+  qq(mkdir -p $module_directory
+     install block/initial_ramdisk/$module_binary $module_directory
+     gzip -9f $module_directory/$module_binary);
+
