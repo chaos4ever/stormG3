@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.1 2002/06/15 22:39:50 per Exp $ */
+/* $chaos: module.c,v 1.2 2002/06/16 21:47:16 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -7,6 +7,7 @@
 
 #include <storm/ia32/debug.h>
 #include <storm/ia32/elf.h>
+#include <storm/ia32/irq.h>
 #include <storm/ia32/memory.h>
 #include <storm/ia32/module.h>
 #include <storm/ia32/multiboot.h>
@@ -18,6 +19,7 @@
 static module_function_t function[] = 
 {
     { "debug_print", (function_t) &debug_print },
+    { "irq_register", (function_t) &irq_register },
     { "module_register", (function_t) &module_register },
     { NULL, (function_t) NULL }
 };
