@@ -1,60 +1,51 @@
 # $Id$
 # Abstract: Top-level chaos makefile
-# Author: Per Lundberg <plundis@chaosdev.org>
+# Authors: Henrik Hallin <hal@chaosdev.org>
+#          Per Lundberg <per@chaosdev.org>
 
 # Copyright 1998-2000 chaos development.
 
-PREFIX=/mnt/chaos
-DIRECTORES=data data/programming data/programming/c data/programming/c/headers system system/kernel system/servers
+# Installation root. Change this if you want to install to a specific location.
+# Default is to install to the location of the source, but
+# you may like to install directly to a mounted chaos partition or something.
+
+INSTALL_PATH=$$(pwd)/root
 
 .PHONY:	all install clean snapshot autochaos configure
 
 all:
-	$(MAKE) -C storm
-	$(MAKE) -C libraries
-	$(MAKE) -C servers
-	$(MAKE) -C programs
-
-install-storm: configure-storm
-	$(MAKE) -C storm current-arch install
-
-install-libraries: configure-libraries
+	$(MAKE) -C storm install
 	$(MAKE) -C libraries install
-
-install-servers: configure-servers
 	$(MAKE) -C servers install
-
-install-programs: configure-programs
 	$(MAKE) -C programs install
 
-directories:
-	for e in $(DIRECTORES) ; do if ! [ -e "$(PREFIX)/$$e" ] ; then mkdir $(PREFIX)/$$e ; fi ; done
+configure:
+	@export CHAOS_INSTALL_PATH=$(INSTALL_PATH)
+	cd storm && ./configure --install-prefix $$CHAOS_INSTALL_PATH
+	$(MAKE) -eC libraries configure
+	$(MAKE) -eC servers configure
+	$(MAKE) -eC program configure
 
-install: directories install-storm install-libraries install-servers install-programs
+# This one is used for building a fresh source tree.
+
+build:
+	@export CHAOS_INSTALL_PATH=$(INSTALL_PATH)
+	@ln -sf storm/ia32 storm/current-arch
+	@ln -sf storm/include/storm/ia32 storm/include/storm/current-arch
+	cd storm && ./configure --install-prefix $$CHAOS_INSTALL_PATH
+	$(MAKE) -C storm install
+	$(MAKE) -eC libraries configure
+	$(MAKE) -C libraries install
+	$(MAKE) -eC servers configure
+	$(MAKE) -C servers install
+	$(MAKE) -eC programs configure
+	$(MAKE) -C programs install
 
 autochaos:
 	cd storm && autochaos
 	$(MAKE) -C libraries autochaos
 	$(MAKE) -C servers autochaos
 	$(MAKE) -C programs autochaos
-
-configure: configure-storm configure-libraries configure-servers configure-programs
-
-configure-storm:
-	cd storm && ./configure
-	touch configure-storm
-
-configure-libraries:
-	$(MAKE) -C libraries configure
-	touch configure-libraries
-
-configure-servers:
-	$(MAKE) -C servers configure
-	touch configure-servers
-
-configure-programs:
-	$(MAKE) -C programs configure
-	touch configure-programs
 
 clean:
 	$(MAKE) -C storm clean
@@ -65,9 +56,6 @@ clean:
 	find . -type f -name \*~ -exec rm {} ';'
 	find . -type f -name \*.dep -exec rm {} ';'
 	find . -type f -name .#\* -exec rm {} ';'
-
-clean-all: clean
-	rm -f configure-storm configure-libraries configure-servers configure-programs
 
 snapshot:
 	cd ../ && tar -c --exclude CVS --exclude contributed -vIf chaos_snapshot-$$(date +%Y%m%d).tar.bz2 chaos
