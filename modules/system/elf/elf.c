@@ -1,4 +1,4 @@
-/* $chaos: elf.c,v 1.7 2002/10/21 09:20:36 per Exp $ */
+/* $chaos: elf.c,v 1.8 2002/10/23 07:30:50 per Exp $ */
 /* Abstract: ELF module, implementing the exec service. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -67,41 +67,65 @@ static return_t elf_load (elf_header_t *elf_header,
             {
                 unsigned int offset = section_header->address % PAGE_SIZE;
                 size_t size = MIN(section_header->size, PAGE_SIZE - offset);
-                debug_print ("Section header size: %x\n", section_header->size);
+                // debug_print ("Section header size: %x\n",
+                // section_header->size);
 
-                /* Allocate memory for this section and map it at the
-                   right place. */
-                return_value = memory_physical_allocate (&buffer, 1, process_id);
-                if (return_value != STORM_RETURN_SUCCESS)
-                {
-                    debug_print ("Failed to allocate memory");
-                    return return_value;
-                }
+                /* If this section overlaps another section, find the
+                   physical addres of the page that has already been
+                   mapped at this place. */
+                unsigned int flags;
+                page_number_t page_number;
+                return_value = memory_virtual_find (page_directory, PAGE_NUMBER (section_header->address), &page_number, &flags);
 
-                /* Map this memory at the right place. */
-                // FIXME: Get some of the flags from the section (like
-                // writable).
-                return_value = memory_virtual_map
-                    (page_directory, 
-                     PAGE_NUMBER (section_header->address),
-                     PAGE_NUMBER (buffer), 1, PAGE_USER);
-                if (return_value != STORM_RETURN_SUCCESS)
+                /* Yes -- use this physical address instead. */
+                // FIXME: Check that the flags are valid.
+                if (return_value == STORM_RETURN_SUCCESS)
                 {
-                    debug_print ("Failed to map memory");
-                    return return_value;
+                    buffer = (void *) (page_number * PAGE_SIZE);
                 }
+                /* The page is not mapped, so map it please. */
+                else 
+                {
+                    /* Allocate memory for this section and map it at
+                       the right place. */
+                    return_value = memory_physical_allocate (&buffer, 1, process_id);
+                    if (return_value != STORM_RETURN_SUCCESS)
+                    {
+                        debug_print ("Failed to allocate memory");
+                        return return_value;
+                    }
+                    
+                    /* Map this memory at the right place. */
+                    // FIXME: Get some of the flags from the section
+                    // (like writable).
+                    return_value = memory_virtual_map
+                        (page_directory, 
+                         PAGE_NUMBER (section_header->address),
+                         PAGE_NUMBER (buffer), 1, PAGE_USER);
+                    if (return_value != STORM_RETURN_SUCCESS)
+                    {
+                        debug_print ("Failed to map memory");
+                        return return_value;
+                    }
+                }                    
                 
+#if DEBUG
                 debug_print ("Copying to %x from %x (length %d)\n",
                              (void *) ((address_t) buffer + offset),
                              (void *) (elf_header + section_header->offset),
                              size);
-                debug_memory_dump ((void *) (((address_t) elf_header) + section_header->offset),
+                debug_memory_dump ((void *) (((address_t) elf_header) +
+                                             section_header->offset),
                                    size / 4);
+#endif         
                 memory_copy ((void *) ((address_t) buffer + offset),
-                             (void *) (((address_t) elf_header) + section_header->offset),
-                             size);
-                debug_memory_dump ((void *) (((address_t) elf_header) + section_header->offset),
+                             (void *) (((address_t) elf_header) +
+                                       section_header->offset), size);
+#if DEBUG
+                debug_memory_dump ((void *) (((address_t) elf_header) + 
+                                             section_header->offset),
                                    size / 4);
+#endif
                 
                 remaining_size -= size;
                 file_offset += size;
@@ -111,27 +135,42 @@ static return_t elf_load (elf_header_t *elf_header,
             /* We have to take it one page at a time. */
             while (remaining_size > 0)
             {
-                /* Allocate memory for this section and map it at the
-                   right place. */
-                    return_value = memory_physical_allocate (&buffer, 1, process_id);
-                if (return_value != STORM_RETURN_SUCCESS)
-                {
-                    debug_print ("Failed to allocate memory");
-                    return return_value;
-                }
+                /* If this section overlaps another section, find the
+                   physical addres of the page that has already been
+                   mapped at this place. */
+                unsigned int flags;
+                page_number_t page_number;
+                return_value = memory_virtual_find (page_directory, PAGE_NUMBER (section_header->address), &page_number, &flags);
 
-                /* Map this memory at the right place. */
-                // FIXME: Get some of the flags from the section (like
-                // writable).
-                return_value = memory_virtual_map
-                    (page_directory, 
-                     PAGE_NUMBER (section_header->address) + page_offset,
-                     PAGE_NUMBER (buffer), 1, PAGE_WRITABLE |
-                     PAGE_NON_PRIVILEGED | PAGE_WRITE_THROUGH);
-                if (return_value != STORM_RETURN_SUCCESS)
+                /* If it was found, use it instead of overwriting it. */
+                if (return_value == STORM_RETURN_SUCCESS)
                 {
-                    debug_print ("Failed to map memory");
-                    return return_value;
+                    buffer = (void *) (page_number * PAGE_SIZE);
+                }
+                else
+                {
+                    /* Allocate memory for this section and map it at the
+                       right place. */
+                    return_value = memory_physical_allocate (&buffer, 1, process_id);
+                    if (return_value != STORM_RETURN_SUCCESS)
+                    {
+                        debug_print ("Failed to allocate memory");
+                        return return_value;
+                    }
+                    
+                    /* Map this memory at the right place. */
+                    // FIXME: Get some of the flags from the section (like
+                    // writable).
+                    return_value = memory_virtual_map
+                        (page_directory, 
+                         PAGE_NUMBER (section_header->address) + page_offset,
+                         PAGE_NUMBER (buffer), 1, PAGE_WRITABLE |
+                         PAGE_NON_PRIVILEGED | PAGE_WRITE_THROUGH);
+                    if (return_value != STORM_RETURN_SUCCESS)
+                    {
+                        debug_print ("Failed to map memory");
+                        return return_value;
+                    }
                 }
 
                 /* Copy this page from the image. Another way to do
