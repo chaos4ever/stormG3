@@ -1,4 +1,4 @@
-/* $chaos: gdt.h,v 1.7 2002/10/08 20:16:14 per Exp $ */
+/* $chaos: gdt.h,v 1.8 2002/10/10 14:36:01 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -19,6 +19,12 @@
  * @brief               A GDT selector. 
  */
 #define GDT(number,privilege)           (((number) << 3) + privilege)
+
+
+/**
+ * @brief               The GDT entry of a selector.
+ */
+#define GDT_ENTRY(selector)             ((selector) >> 3)
 
 /**
  * @brief               The location of the exceptions in the GDT. 
