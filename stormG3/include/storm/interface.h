@@ -1,4 +1,4 @@
-/* $chaos: interface.h,v 1.1 2002/10/22 20:59:24 per Exp $ */
+/* $chaos: interface.h,v 1.2 2002/10/22 21:03:31 per Exp $ */
 /* Abstract: stormG3 kernel interface. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -48,6 +48,12 @@ extern void debug_print (const char *format_string, ...);
  */
 extern return_t dma_register (unsigned int dma_channel, void **dma_buffer);
 
+/**
+ * @brief               Halt the machine. 
+ * @param type          The halt type we want.
+ * @return              It won't return. :-)
+ */
+extern return_t halt (enum halt_t type);
 
 /**
  * @brief               Register an IRQ for use by a module. 
@@ -86,9 +92,36 @@ extern return_t memory_global_deallocate (void *pointer);
  *                      process gets killed in a weird way).
  * @return              STORM_RETURN_SUCCESS if successful.
  */
-return_t memory_physical_allocate (void **pointer, unsigned int pages,
-                                   process_id_t process_id);
+extern return_t memory_physical_allocate (void **pointer, unsigned int pages,
+                                          process_id_t process_id);
 
+/**
+ * @brief               Deallocate a page.
+ * @param pointer       A pointer to the page.
+ * @return              STORM_RETURN_SUCCESS if successful.
+ *
+ * Yes, only one page. If you allocated multiple
+ * pages, you need to call this function for each page. I will not
+ * keep track of the number of pages you have allocated for you, you
+ * will need to do it yourself. 
+ */
+return_t memory_physical_deallocate (void *pointer);
+
+/**
+ * @brief               Map memory into the given page directory. 
+ * @param page_directory
+ *                      The page directory in which to map.
+ * @param virtual_page  The virtual page base.
+ * @param physical_page The physical page base.
+ * @param pages         The number of pages to map.
+ * @param flags         The page flags to use.
+ * @return              STORM_RETURN_SUCCESS if successful.
+ */
+extern return_t memory_virtual_map (void *page_directory,
+                                    page_number_t virtual_page, 
+                                    page_number_t physical_page,
+                                    unsigned int pages,
+                                    uint32_t flags);
 
 /**
  * @brief               Register a port range. 
@@ -106,6 +139,34 @@ extern return_t port_range_register (unsigned int base, size_t ports,
  * @return              STORM_RETURN_SUCCESS if successful.
  */
 extern return_t port_range_unregister (unsigned int base);
+
+/**
+ * @brief               Pre-create a process.
+ * @param process_id    A pointer to the process ID where this function
+ *                      will store the process ID generated.
+ * @param page_directory
+ *                      A pointer to where this function will store
+ *                      a pointer to the new process' page directory.
+ * @return              STORM_RETURN_SUCCESS if successful.
+ *
+ * Allocate a process ID and page directory for it, so we can start
+ * mapping memory and set things up.
+ */
+extern return_t process_precreate (process_id_t *process_id, 
+                                   void **page_directory);
+
+/**
+ * @brief               Create a process that's previously been pre-created.
+ * @param process_id    The process ID.
+ * @param entry_point   The process entry point.
+ * @return              STORM_RETURN_SUCCESS if successful.
+ *
+ * This function adds the process to the system list of processes and
+ * includes it in the list of tasks to run. It is run at the very end
+ * of a program (ELF or otherwise) loader.
+ */
+extern return_t process_create (process_id_t process_id,
+                                address_t entry_point);
 
 /** 
  * @brief               Lookup a service. 
