@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.23 2002/10/10 20:44:34 per Exp $ */
+/* $chaos: memory_physical.c,v 1.24 2002/10/10 20:48:13 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -110,6 +110,15 @@ void memory_physical_init ()
 
     /* Store the number of physical pages (used later). */
     physical_pages = (1024 + multiboot_info.memory_upper) / 4;
+
+    /* We only support 2 GiB of physical memory because of the way our
+       virtual memroy map is laid out. (all physical memory is mapped
+       everywhere) This may be a bit bad, but it makes everything
+       EXTREMELY simplified. */
+    if (physical_pages > MAX_MEMORY / PAGE_SIZE)
+    {
+        physical_pages = MAX_MEMORY / PAGE_SIZE;
+    }
 
     /* If we have a Multiboot memory map, we can use it to avoid using
        any registered memory areas (used for hardware devices etc). */
