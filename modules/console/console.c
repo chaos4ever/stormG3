@@ -1,4 +1,4 @@
-/* $chaos: console.c,v 1.8 2002/07/21 12:39:09 per Exp $ */
+/* $chaos: console.c,v 1.9 2002/08/03 11:19:32 per Exp $ */
 /* Abstract: Console module. Will eventually be 100% ANSI escape
              sequence compatible. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
@@ -127,18 +127,7 @@ static void console_flip (console_t *console)
         }
         
         /* Move the cursor. */
-        /* FIXME: library_video should have a function for this. */
-#if FALSE
-        video_cursor.x = console->cursor_x;
-        video_cursor.y = console->cursor_y;
-        message_parameter.data = &video_cursor;
-        message_parameter.block = FALSE;
-        message_parameter.length = sizeof (video_cursor_type);
-        message_parameter.protocol = IPC_PROTOCOL_VIDEO;
-        message_parameter.message_class = IPC_VIDEO_CURSOR_PLACE;
-        
-        ipc_send (video_structure.output_mailbox_id, &message_parameter);
-#endif
+        video.cursor_place (console->cursor_x, console->cursor_y);
     }
     
     if (console->type == CONSOLE_MODE_TEXT)
@@ -230,8 +219,17 @@ static return_t console_handle_key_event (keyboard_packet_t *keyboard_packet)
         // debug_print ("stdin data received.\n");
     }        
 
-    // debug_print ("%s: We got an event.\n", __FILE__);
-    
+#if FALSE
+    debug_print ("%s: We got an event: %u %u %u %u %u %u %s.\n", __FILE__,
+                 keyboard_packet->has_character_code,
+                 keyboard_packet->has_special_key,
+                 keyboard_packet->left_alt_down,
+                 keyboard_packet->right_alt_down,
+                 keyboard_packet->key_pressed,
+                 keyboard_packet->special_key,
+                 keyboard_packet->character_code);
+#endif    
+
     return STORM_RETURN_SUCCESS;
 }
 
