@@ -13,7 +13,7 @@
 #include <kernel/kernel.h>
 
 /* Print a log message. */
-static return_t kernel_log (const char *string)
+static return_t kernel_log (service_id_t service_id UNUSED, const char *string)
 {
     debug_print (string);
     return STORM_RETURN_SUCCESS;
@@ -31,5 +31,19 @@ static return_t kernel_info (void *kernel_void)
 /* The module entry point. */
 return_t module_start (void)
 {
-    return kernel_register ("chaos development", "Kernel", "1", &kernel_info);
+    service_register_t service_register_info;
+    service_register_info.vendor = "chaos development";
+    service_register_info.model = "Kernel";
+    service_register_info.device_id = "1";
+    service_register_info.info_handler = &kernel_info;
+
+    service_method_t service_method[] = 
+        {
+            { KERNEL_FUNCTION_LOG, (service_function_t) &kernel_log },
+            { -1, NULL }
+        };
+
+    debug_print ("kernel_log: %x\n", kernel_log);
+
+    return kernel_register (&service_register_info, service_method);
 }
