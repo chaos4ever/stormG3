@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.h,v 1.12 2002/10/20 19:32:43 per Exp $ */
+/* $chaos: memory_physical.h,v 1.13 2002/10/22 19:42:20 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -95,18 +95,6 @@ void memory_physical_init (void);
  * @brief               Free pages that was used during startup. 
  */
 void memory_physical_done (void);
-
-/**
- * @brief               Deallocate a page.
- * @param pointer       A pointer to the page.
- * @return              STORM_RETURN_SUCCESS if successful.
- *
- * Yes, only one page. If you allocated multiple
- * pages, you need to call this function for each page. I will not
- * keep track of the number of pages you have allocated for you, you
- * will need to do it yourself. 
- */
-return_t memory_physical_deallocate (void *pointer);
 
 /** 
  * @brief               Free all pages that belongs to the given process. 
