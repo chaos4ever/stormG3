@@ -1,4 +1,4 @@
-/* $chaos: capability.c,v 1.4 2002/10/24 20:50:25 per Exp $ */
+/* $chaos: capability.c,v 1.5 2002/10/24 21:14:49 per Exp $ */
 /* Abstract: Capabilities support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -156,4 +156,44 @@ return_t capability_add (process_id_t process_id,
     spin_unlock (&process->lock);
 
     return STORM_RETURN_NOT_IMPLEMENTED;
+}
+
+/* Clone a capability list. */
+return_t capability_clone (capability_t **target,
+                           capability_t *source)
+{
+    if (target == NULL || 
+        source == NULL)
+    {
+        return STORM_RETURN_INVALID_ARGUMENT;
+    }
+
+    capability_t *list = source;
+    capability_t *capability;
+    while (list != NULL)
+    {
+        return_t return_value = memory_global_allocate ((void **) &capability,sizeof (capability_t));
+        if (return_value != STORM_RETURN_SUCCESS)
+        {
+            // FIXME: This is very bad, we will break in the
+            // middle. We should go through the list of what we've
+            // done so far and undo it.
+            return return_value;
+        }
+        
+        if (*target != NULL)
+        {
+            (*target)->next = (struct capability_t *) capability;
+        }
+
+        capability->previous = (struct capability_t *) *target;
+        capability->next = NULL;
+        string_copy (capability->class, list->class);
+        string_copy (capability->name, list->name);
+        *target = capability;
+
+        list = (capability_t *) list->next;
+    }
+
+    return STORM_RETURN_SUCCESS;
 }
