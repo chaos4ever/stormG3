@@ -1,4 +1,4 @@
-/* $chaos: keyboard.c,v 1.2 2002/08/19 20:39:07 per Exp $ */
+/* $chaos: keyboard.c,v 1.3 2002/08/20 06:36:24 per Exp $ */
 /* Abstract: Keyboard module for chaos. */
 /* Authors: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
@@ -39,6 +39,7 @@ static const char **keyboard_map_altgr = swedish_keyboard_map_altgr;
 static volatile uint8_t keyboard_pressed_keys[16];
 
 /* State of the *lock-keys. */
+// FIXME: Use bool instead, what is this craziness??
 static volatile uint8_t keyboard_state_scroll = 0x0F;
 static volatile uint8_t keyboard_state_num = 0x0F;
 static volatile uint8_t keyboard_state_caps = 0x0F;
@@ -56,6 +57,9 @@ static volatile int resend = 0;
 
 /* The keyboard packet that we are sending. */
 static keyboard_packet_t keyboard_packet;
+
+/* The translated key (used for returning Num Lock keys). */
+static char keyboard_translated_key[2];
 
 /* Conversion table from keyboard scan codes to the standardised
    'special key' codes, which are generic between all platforms. */
@@ -232,7 +236,7 @@ const char *keyboard_set_repeat_rate (void)
 }
 
 /* Update the keyboard LEDs. */
-/* FIXME: Defines!!! */
+// FIXME: Defines!!!
 void keyboard_update_leds (void)
 {
     uint8_t output = 0;
@@ -292,6 +296,42 @@ static const char *translate_key (uint8_t scancode)
     }
     else
     {
+        /* If a numeric key and num lock is down, return the
+           number. */        
+        if (keyboard_state_num == 0xF0)
+        {
+            if (scancode >= SCAN_CODE_NUMERIC_7 && 
+                scancode <= SCAN_CODE_NUMERIC_9)
+            {
+                keyboard_translated_key[0] = '0' + (scancode - SCAN_CODE_NUMERIC_7);
+                keyboard_translated_key[1] = '\0';
+                return keyboard_translated_key;
+            }
+
+            if (scancode >= SCAN_CODE_NUMERIC_4 &&
+                scancode <= SCAN_CODE_NUMERIC_6)
+            {
+                keyboard_translated_key[0] = '0' + (scancode - SCAN_CODE_NUMERIC_4);
+                keyboard_translated_key[1] = '\0';
+                return keyboard_translated_key;
+            }
+
+            if (scancode >= SCAN_CODE_NUMERIC_1 &&
+                scancode <= SCAN_CODE_NUMERIC_3)
+            {
+                keyboard_translated_key[0] = '0' + (scancode - SCAN_CODE_NUMERIC_1);
+                keyboard_translated_key[1] = '\0';
+                return keyboard_translated_key;
+            }
+
+            if (scancode == SCAN_CODE_NUMERIC_0)
+            {
+                keyboard_translated_key[0] = '0';
+                keyboard_translated_key[1] = '\0';
+                return keyboard_translated_key;
+            }
+        }
+
         return keyboard_map[scancode];
     }
 }
