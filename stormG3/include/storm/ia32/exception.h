@@ -1,9 +1,13 @@
-/* $chaos: exception.h,v 1.4 2002/06/14 22:47:29 per Exp $ */
-/* Abstract: Exception handling. */
+/* $chaos: exception.h,v 1.5 2002/10/04 19:01:20 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
+
+/** 
+ * @file exception.h
+ * @brief Exception handling. 
+ */
 
 #ifndef __STORM_IA32_EXCEPTION_H__
 #define __STORM_IA32_EXCEPTION_H__
@@ -11,12 +15,13 @@
 #include <storm/ia32/cpu.h>
 
 /* Types. */
+/** \brief An exception handler. */
 typedef struct
 {
     void *function;
 } exception_handler_t;
 
-/* Initialize exception handling. */
+/** \brief Initialize exception handling. */
 extern void exception_init (void);
 
 /* Exception handlers prototypes. Low-level first: */

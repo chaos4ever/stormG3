@@ -1,10 +1,12 @@
-/* $chaos: bit.h,v 1.5 2002/06/18 19:32:26 per Exp $ */
-/* Abstract: Bit manipulation macros. */
+/* $chaos: bit.h,v 1.6 2002/10/04 19:01:20 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
+
+/** @file bit.h
+    @brief Bit manipulation macros. */
 
 #ifndef __STORM_IA32_BIT_H__
 #define __STORM_IA32_BIT_H__

@@ -1,10 +1,14 @@
-/* $chaos: multiboot.h,v 1.6 2002/08/11 17:15:29 per Exp $ */
-/* Abstract: Multiboot stuff. */
+/* $chaos: multiboot.h,v 1.7 2002/10/04 19:01:20 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
+
+/** 
+ * @file multiboot.h
+ * @brief Multiboot stuff.
+ */
 
 #ifndef __STORM_IA32_MULTIBOOT_H__
 #define __STORM_IA32_MULTIBOOT_H__
@@ -39,6 +43,8 @@ enum
    GRUB documentation available on
    http://www.gnu.org/software/grub/. */
 /* Type definitions. */
+/** \brief A structure with information about what were provided by
+    the Multiboot oader. */
 typedef struct
 {
     /* The following flags tells if the rest of the fields are
@@ -84,37 +90,37 @@ typedef struct
     uint32_t config_table;
     
     /* Pointer to the boot loader name. */
-    
     uint32_t boot_loader_name;
 #endif
     
     /* Likewise... */
 #if FALSE
     /* Video mode information. */
-
     uint32_t mode_type;
     uint32_t width;
     uint32_t height;
     uint32_t depth;
     uint32_t frame_buffer_address;
 #endif
-} __attribute__ ((packed)) multiboot_info_t;
+} multiboot_info_t __attribute__ ((packed));
 
+/** \brief Information about a Multiboot module. */
 typedef struct
 {
     uint32_t start;
     uint32_t end;
     char *name;
     uint32_t reserved;
-} __attribute__ ((packed)) multiboot_module_info_t;
+} multiboot_module_info_t __attribute__ ((packed));
 
+/** \brief Information about the memory in the system. */
 typedef struct
 {
     uint32_t size;
     uint64_t base_address;
     uint64_t length;
     uint32_t type;
-} __attribute__ ((packed)) multiboot_memory_map_t;
+} multiboot_memory_map_t __attribute__ ((packed)) ;
 
 /* External variables. */
 extern multiboot_info_t multiboot_info;

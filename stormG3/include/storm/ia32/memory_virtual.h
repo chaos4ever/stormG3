@@ -1,9 +1,13 @@
-/* $chaos: memory_virtual.h,v 1.1 2002/06/09 15:04:52 per Exp $ */
-/* Abstract: Virtual memory prototypes and data structures. */
+/* $chaos: memory_virtual.h,v 1.2 2002/10/04 19:01:20 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
+
+/**
+ * @file memory_virtual.h
+ * @brief Virtual memory prototypes and data structures. 
+ */
 
 #ifndef __STORM_IA32_MEMORY_VIRTUAL_H__
 #define __STORM_IA32_MEMORY_VIRTUAL_H__
@@ -26,6 +30,7 @@
 #define PAGE_DIRECTORY_FLAGS     (PAGE_WRITABLE | PAGE_NON_PRIVILEGED)
 
 /* Structures. */
+/** @brief A page directory entry (PDE) when using 4MiB pages. */
 typedef struct
 {
   uint32_t present              : 1;
@@ -43,37 +48,39 @@ typedef struct
   uint32_t page_base            : 10;
 } page_directory_4mb_t;
 
+/** \brief A page directory entry (PDE). */
 typedef struct
 {
-  uint32_t present              : 1;
-  uint32_t flags                : 4;
-  uint32_t accessed             : 1;
-  uint32_t zero                 : 1;
-
-  /* Should always be zero. */
-  uint32_t page_size            : 1;
-  uint32_t global               : 1;
-  uint32_t available            : 3;
-  uint32_t page_table_base      : 20;
+    uint32_t present              : 1;
+    uint32_t flags                : 4;
+    uint32_t accessed             : 1;
+    uint32_t zero                 : 1;
+    
+    /** Should always be zero. */
+    uint32_t page_size            : 1;
+    uint32_t global               : 1;
+    uint32_t available            : 3;
+    uint32_t page_table_base      : 20;
 } page_directory_t;
 
+/** \brief A page table entry (PTE). */
 typedef struct
 {
-  uint32_t present              : 1;
-  uint32_t flags                : 4;
-  uint32_t accessed             : 1;
-  uint32_t dirty                : 1;
-  uint32_t zero                 : 1;
-  uint32_t global               : 1;
-  uint32_t available            : 3;
-  uint32_t page_base            : 20;
+    uint32_t present              : 1;
+    uint32_t flags                : 4;
+    uint32_t accessed             : 1;
+    uint32_t dirty                : 1;
+    uint32_t zero                 : 1;
+    uint32_t global               : 1;
+    uint32_t available            : 3;
+    uint32_t page_base            : 20;
 } page_table_t;
 
 /* Prototypes. */
-/* Initialize the virtual memory system. */
+/** \brief Initialize the virtual memory system. */
 extern void memory_virtual_init (void);
 
-/* Map memory. */
+/* \brief Map memory into the given page directory. */
 extern void memory_virtual_map (page_directory_t *page_directory,
                                 uint32_t virtual_page, 
                                 uint32_t physical_page, unsigned int pages,

@@ -1,9 +1,13 @@
-/* $chaos: return_value.h,v 1.5 2002/06/20 21:12:57 per Exp $ */
-/* Abstract: Return values. */
+/* $chaos: return_value.h,v 1.6 2002/10/04 19:01:19 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
+
+/**
+ * @file return_value.h
+ * @brief Return values.
+ */
 
 #ifndef __STORM_RETURN_VALUES_H__
 #define __STORM_RETURN_VALUES_H__

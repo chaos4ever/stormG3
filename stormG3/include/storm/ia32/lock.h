@@ -1,12 +1,16 @@
-/* $chaos: lock.h,v 1.1 2002/06/24 20:00:26 per Exp $ */
-/* Abstract: Locking functions. */
+/* $chaos: lock.h,v 1.2 2002/10/04 19:01:20 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
 
+/**
+ * @file lock.h
+ * @brief Locking functions. 
+ */
+
 /* Type definitions. */
-/* A lock. */
+/** @brief A lock. */
 typedef unsigned int lock_t;
 
 /* Defines. */
@@ -14,7 +18,7 @@ typedef unsigned int lock_t;
 #define LOCK_LOCKED                     0
 
 /* Inline functions. */
-/* Get the lock. */
+/** Get the lock. */
 static inline void lock (lock_t *locker)
 {
     unsigned int eax;
@@ -33,8 +37,8 @@ static inline void lock (lock_t *locker)
                   "bcdDS" (*locker));
 }
 
-/* Get the look, from code that MAY BE run from an interrupt
-   handler. */
+/** Get the look, from code that MAY BE run from an interrupt
+    handler. */
 static inline void lock_interrupt (lock_t *locker)
 {
     unsigned int eax;
@@ -50,6 +54,7 @@ static inline void lock_interrupt (lock_t *locker)
                   "bcdDS" (*locker));
 }
 
+/** Free the lock. */
 static inline void unlock (lock_t *locker)
 {
     (*locker) = LOCK_UNLOCKED;

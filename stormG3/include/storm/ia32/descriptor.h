@@ -1,9 +1,11 @@
-/* $chaos: descriptor.h,v 1.2 2002/08/11 17:16:49 per Exp $ */
-/* Abstract: The descriptor structure. */
+/* $chaos: descriptor.h,v 1.3 2002/10/04 19:01:20 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
+
+/** @file descriptor.h
+    @brief The descriptor structure. */
 
 #ifndef __STORM_IA32_DESCRIPTOR_H__
 #define __STORM_IA32_DESCRIPTOR_H__
@@ -19,6 +21,7 @@ enum
     DESCRIPTOR_TYPE_TRAP_GATE_32 = 15,
 };
 
+/** @brief A descriptor. */
 typedef struct
 {
     uint16_t limit_lo;                  /* Low 16 bits of segment limit. */
@@ -35,8 +38,9 @@ typedef struct
     uint8_t granularity : 1;            /* If 1, segment limit is multiplied
                                           by 4096. */
     uint8_t base_hi2;                   /* Bits 24-31 of base address. */
-} __attribute__ ((packed)) descriptor_t;
+} descriptor_t __attribute__ ((packed));
 
+/** @brief A gate descriptor. */
 typedef struct
 {
     uint16_t offset_lo;                 /* Low 16 bits of offset. */
@@ -48,6 +52,6 @@ typedef struct
     uint8_t present : 1;                /* If zero, this descriptor isn't
                                              used. */
     uint16_t offset_hi;                 /* High 16 bits of offset. */
-} __attribute__ ((packed)) gate_descriptor_t;
+} gate_descriptor_t __attribute__ ((packed));
 
 #endif /* !__STORM_IA32_DESCRIPTOR_H__ */

@@ -1,9 +1,13 @@
-/* $chaos: gdb.h,v 1.1 2002/06/15 11:42:01 per Exp $ */
-/* Abstract: GDB support. */
+/* $chaos: gdb.h,v 1.2 2002/10/04 19:01:20 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
+
+/** 
+ * @file gdb.h
+ * @brief GDB support. 
+ */
 
 #ifndef __STORM_IA32_GDB_H__
 #define __STORM_IA32_GDB_H__

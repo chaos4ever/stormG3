@@ -1,13 +1,15 @@
-/* $chaos: elf.h,v 1.9 2002/10/04 19:01:20 per Exp $ */
-/* Abstract: ELF file format. */
+/* $chaos: elf.h,v 1.10 2002/10/04 21:27:02 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
 
-/* More information about the ELF format can be found in the ELF
-   specification, as published by the Tool Interface Standards (TIS):
-   http://x86.ddj.com/ftp/manuals/tools/elf.pdf */
+/** @file elf.h 
+    @brief Structures and functions used for decoding ELF images.
+
+    More information about the ELF format can be found in the ELF
+    specification, as published by the Tool Interface Standards (TIS):
+    http://x86.ddj.com/ftp/manuals/tools/elf.pdf */
 
 #ifndef __STORM_IA32_ELF_H__
 #define __STORM_IA32_ELF_H__
@@ -243,91 +245,93 @@ enum
 };
 
 /* Type definitions. */
-/* An ELF (Executable and linkable format) header. */
+/** @brief An ELF (Executable and linkable format) header. */
 typedef struct 
 {
-    /* Must be 0x7F, 'E, 'L', 'F' in this order. */
+    /** Must be 0x7F, 'E, 'L', 'F' in this order. */
     uint8_t identification[4]; 
 
-    /* The class of this executable. ELF_CLASS_*. */
+    /** The class of this executable. ELF_CLASS_*. */
     uint8_t class;
 
-    /* The endianess of the data in this file. ELF_ENDIAN_* */
+    /** The endianess of the data in this file. ELF_ENDIAN_* */
     uint8_t endian;
 
-    /* Current version is ELF_VERSION_CURRENT. */
+    /** Current version is ELF_VERSION_CURRENT. */
     uint8_t version;
 
-    /* Should be zero. FreeBSD uses those to put 'FreeBSD' in the ELF
-       header. We could do the same... */
+    /** Should be zero. FreeBSD uses those to put 'FreeBSD' in the ELF
+        header. We could do the same... */
     uint8_t pad[9];
 
-    /* The type of ELF. ELF_TYPE_*. */
+    /** The type of ELF. ELF_TYPE_*. */
     uint16_t type;   
 
-    /* The machine type this ELF is designed to run
-       on. ELF_MACHINE_WHATEVER. */
+    /** The machine type this ELF is designed to run
+        on. ELF_MACHINE_WHATEVER. */
     uint16_t machine;
 
-    /* Current version is still ELF_VERSION_CURRENT. (Don't ask me why
-       they put the version ID in two places...) */
+    /** Current version is still ELF_VERSION_CURRENT. (Don't ask me
+        why they put the version ID in two places...) */
     uint32_t version2;
 
-    /* The location of the program entry point. */
+    /** The location of the program entry point. */
     uint32_t entry_point;
 
-    /* Offset of program header table. */
+    /** Offset of program header table. */
     uint32_t program_header_offset;
 
-    /* Offset of section header table. */
+    /** Offset of section header table. */
     uint32_t section_header_offset;
+
+    /** FIXME: Document this. */
     uint32_t flags;   
 
-    /* The size of the ELF header. */
+    /** The size of the ELF header. */
     uint16_t elf_header_size;
 
-    /* The size of a program header table entry. */
+    /** The size of a program header table entry. */
     uint16_t program_header_entry_size;
 
-    /* The number of program header entries. */
+    /** The number of program header entries. */
     uint16_t program_header_entries;
 
-    /* The size of a section header table entry. */
+    /** The size of a section header table entry. */
     uint16_t section_header_entry_size;
 
-    /* The number of section header entries. */
+    /** The number of section header entries. */
     uint16_t section_header_entries;
 
-    /* The section header table index of the section name string
+    /** The section header table index of the section name string
        table. */
     uint16_t section_string_index;
-} __attribute__ ((packed)) elf_header_t;
+} elf_header_t __attribute__ ((packed));
 
-/* A section header entry. */
+/** @brief An ELF section header entry. */
 typedef struct
 {
-    /* The name of the section (index of the string table). */
+    /** The name of the section (index of the string table). */
     uint32_t name;
     uint32_t type;
     uint32_t flags;     
 
-    /* The start of the section in memory. */
+    /** The start of the section in memory. */
     uint32_t address;
   
-    /* The start of the section in the file. */
+    /** The start of the section in the file. */
     uint32_t offset;
 
-    /* The size of the section. */
+    /** The size of the section. */
     uint32_t size;
     uint32_t link;     
     uint32_t info;
     uint32_t address_align;
 
-    /* The size of each section entry. */
+    /** The size of each section entry. */
     uint32_t entry_size;
 } elf_section_header_t;
 
-/* A program header entry. */
+/** @brief An ELF program header entry. */
 typedef struct
 {    
     /* The type of this program header, ELF_PROGRAM_TYPE_*. */
@@ -355,7 +359,7 @@ typedef struct
     uint32_t align;
 } elf_program_header_t;
 
-/* A symbol table entry. */
+/** @brief A symbol table entry. */
 typedef struct
 {
     /* An index into the symbol string table, containing the name of
@@ -378,9 +382,9 @@ typedef struct
     /* The index of the section header that this symbol is defined in
        relation to. */
     uint16_t section_header;
-} __attribute__ ((packed)) elf_symbol_t;
+} elf_symbol_t __attribute__ ((packed));
 
-/* A relocation table entry. */
+/** @brief A relocation table entry. */
 typedef struct
 {
     /* The offset in the file that is affected by this relocation. */
@@ -393,7 +397,7 @@ typedef struct
     uint32_t symbol_index : 24;
 } elf_relocation_t;
 
-/* Our parsed ELF, with some important sections picked out. */
+/** @brief Our parsed ELF, with some important sections picked out. */
 typedef struct
 {
     /* The ELF header itself. */
@@ -415,25 +419,30 @@ typedef struct
 } elf_parsed_t;
 
 /* Function prototypes. */
-/* Make sure the given ELF is identified properly. */
+/** @brief Make sure the given ELF is identified properly. */
 extern return_t elf_identify (elf_header_t *elf_header);
 
-/* Parse the given ELF header. */
+/** @brief Parse the given ELF header. */
 extern return_t elf_parse (elf_header_t *elf_header, elf_parsed_t *elf_parsed);
 
-/* Resolve unresolved symbols in the given symbol table. */
+/** @brief Resolve unresolved symbols in the given symbol table. */
 extern return_t elf_resolve (elf_parsed_t *elf_parsed, module_function_t *function);
 
-/* Relocate relocatable symbols. */
+/** @brief Relocate relocatable symbols. */
 extern return_t elf_relocate (elf_parsed_t *elf_parsed);
 
-/* Find the given symbol. */
-extern return_t elf_symbol_find_by_index (elf_parsed_t *elf_parsed, unsigned int index, address_t *address);
+/** @brief Find the given symbol by index. */
+extern return_t elf_symbol_find_by_index (elf_parsed_t *elf_parsed,
+                                          unsigned int index, address_t *address);
+
+/** @brief Find the given symbol by name. */
 extern return_t elf_symbol_find_by_name (elf_parsed_t *elf_parsed,
                                          char *name, address_t *address);
 
-/* Load an ELF. Allocate memory for it, and copy the data from the
-   different sections there. */
+/** @brief Load an ELF.
+
+    Allocate memory for it, and copy the data from the different
+    sections there. */
 extern return_t elf_load (elf_parsed_t *elf_parsed);
 
 #endif /* !__STORM_IA32_ELF_H__ */

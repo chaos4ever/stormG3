@@ -1,9 +1,13 @@
-/* $chaos: spinlock.h,v 1.1 2002/06/15 07:32:01 per Exp $ */
-/* Abstract: Kernel locking. */
+/* $chaos: spinlock.h,v 1.2 2002/10/04 19:01:20 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
+
+/**
+ * @file spinlock.h
+ * @brief Kernel locking. 
+ */
 
 #ifndef __STORM_IA32_SPINLOCK_H__
 #define __STORM_IA32_SPINLOCK_H__

@@ -1,9 +1,11 @@
-/* $chaos: cpu.h,v 1.13 2002/06/18 20:52:20 per Exp $ */
-/* Abstract: CPU defines and functions. */
+/* $chaos: cpu.h,v 1.14 2002/10/04 19:01:20 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
+
+/** @file cpu.h
+    @brief CPU defines and functions. */
 
 #ifndef __STORM_IA32_CPU_H__
 #define __STORM_IA32_CPU_H__
@@ -71,13 +73,14 @@ static inline void cpu_interrupts_enable (void)
 }
 
 /* Function prototypes. */
+/** @brief Query information about the installed CPU. */
 extern void cpu_init (void);
 
 /* Type definitions. */
-/* What we get out of CPUID. */
+/** @brief Flags that we get out of CPUID. */
 typedef struct
 {
-    /* Feature flags. */
+    /** @brief Feature flags. */
     uint32_t fpu:       1;
     uint32_t vme:       1;
     uint32_t de:        1;
@@ -102,59 +105,62 @@ typedef struct
     uint32_t sse:       1;
     uint32_t ff_res2:   5;
     uint32_t amd_3dnow: 1;
-} __attribute__ ((packed)) cpuid_flags_t;
+} cpuid_flags_t __attribute__ ((packed));
 
-/* Information about a CPU. */
+/** @brief Information about a CPU. */
 typedef struct
 {
-  uint32_t cpuid;
-  
-  const char *name;
-  
-  /* Phony variable. Since C is so stupid it won't let me have union
-     elements accessed the same way as the rest of the structure, we
-     have to hack it a little.. */
-  uint32_t signature[0];
-
-  /* CPU signature. */
-  uint32_t stepping: 4;
-  uint32_t model:    4;
-  uint32_t family:   4;
-  uint32_t type:     2;
-  uint32_t s_res0:   18;
-
-  union
-  {
-    uint32_t real_flags;
-    cpuid_flags_t flags;
-  } flags;
+    uint32_t cpuid;
+    
+    const char *name;
+    
+    /* Phony variable. Since C is so stupid it won't let me have union
+       elements accessed the same way as the rest of the structure, we
+       have to hack it a little.. */
+    uint32_t signature[0];
+    
+    /* CPU signature. */
+    uint32_t stepping: 4;
+    uint32_t model:    4;
+    uint32_t family:   4;
+    uint32_t type:     2;
+    uint32_t s_res0:   18;
+    
+    /** @brief Easy access to the flags both as an uint32 and as the
+        broken-down cpuid_flags_t */
+    union
+    {
+        uint32_t real_flags;
+        cpuid_flags_t flags;
+    } flags;
  
-  /* CPU configuration. */
+    /** CPU configuration. */
   uint32_t configuration;
-} __attribute__ ((packed)) cpu_info_t;
+} cpu_info_t __attribute__ ((packed));
 
-/* The IA32 registers. In convenient order. */
+/** @brief The IA32 registers. In convenient order. */
 typedef struct
 {
-    /* These ones are pushed manually. */
+    /* @brief These ones are pushed manually. */
     uint32_t gs, fs, es, ds;
 
-    /* These are gently stored by a pusha. */
+    /* @brief These are gently stored by a pusha. */
     uint32_t edi, esi, ebp, esp;
     uint32_t ebx, edx, ecx, eax;
 
-    /* An error code (dummy for some exceptions). */
+    /* @brief An error code (dummy for some exceptions). */
     unsigned int error_code;
 
-    /* The current (or next) instruction. */
+    /* @brief The current (or next) instruction. */
     unsigned int eip;
     unsigned int cs;
 
-    /* EFLAGS get pushed first. */
+    /* @brief EFLAGS get pushed first. */
     uint32_t eflags;
 } cpu_register_t;
 
 /* External variables. */
+/** @brief Information about the CPU in the system. */
 extern cpu_info_t cpu_info;
 
 /* CPUID functions. */
@@ -165,20 +171,20 @@ enum
 };
 
 /* CR0 bits. */
-/* Paging enabled. */
+/** Paging enabled. */
 #define CPU_CR0_PG (BIT_VALUE (31))
 
-/* Protected mode flag. */
+/** Protected mode flag. */
 #define CPU_CR0_PE (BIT_VALUE (0))
 
-/* Extension type. */
+/** Extension type. */
 #define CPU_CR0_ET (BIT_VALUE (4))
 
-/* Write protect (486+). */
+/** Write protect (486+). */
 #define CPU_CR0_WP (BIT_VALUE (16))
 
-/* Flags in the EFLAGS register. See the Intel documentation for more
-   information about what those does. */
+/** Flags in the EFLAGS register. See the Intel documentation for more
+    information about what those does. */
 enum
 {
     CPU_FLAG_CARRY = (BIT_VALUE (0)),

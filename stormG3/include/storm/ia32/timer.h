@@ -1,9 +1,13 @@
-/* $chaos: timer.h,v 1.1 2002/06/18 22:16:40 per Exp $ */
-/* Abstract: Timer support. */
+/* $chaos: timer.h,v 1.2 2002/10/04 19:01:20 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
+
+/**
+ * @file timer.h
+ * @brief Timer support.
+ */
 
 #ifndef __STORM_IA32_TIMER_H__
 #define __STORM_IA32_TIMER_H__

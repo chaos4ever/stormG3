@@ -1,9 +1,13 @@
-/* $chaos: config.h,v 1.4 2002/08/06 18:57:31 per Exp $ */
-/* Abstract: Kernel configuration. */
+/* $chaos: config.h,v 1.5 2002/10/04 19:01:19 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
+
+/**
+ * @file config.h 
+ * @brief Kernel configuration. 
+ */
 
 #ifndef __STORM_CONFIG_H__
 #define __STORM_CONFIG_H__
