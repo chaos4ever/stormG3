@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.1 2002/06/24 21:36:43 per Exp $ */
+/* $chaos: defines.h,v 1.2 2002/07/10 21:55:18 per Exp $ */
 /* Abstract: Defines used by the console library. */
 /* Author: Per Lundberg <plundis@chaosdev.org> */
 
@@ -9,9 +9,11 @@
 #define __CONSOLE_DEFINES_H__
 
 /* Defines. */
-
 // FIXME: This should be unique.
 #define CONSOLE_COOKIE                  0x12345678
+
+/* The version of the console service that we are using. */
+#define CONSOLE_SERVICE_VERSION         1
 
 /* Welcome, to the Real World. In this, we use EGA colors in the year
    of 2KAD... */
