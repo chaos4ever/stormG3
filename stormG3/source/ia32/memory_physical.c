@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.10 2002/06/17 20:56:57 per Exp $ */
+/* $chaos: memory_physical.c,v 1.11 2002/06/17 21:23:22 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -221,7 +221,6 @@ return_t memory_physical_allocate (void **pointer, unsigned int pages)
                             }
                             
                             slab->next = block->next;
-                            debug_print ("unlink ");
                         }
 
                         slab = (memory_physical_slab_t *) slab->next;
