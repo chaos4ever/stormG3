@@ -1,4 +1,4 @@
-# $chaos: Conscript,v 1.2 2002/08/06 19:38:47 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.3 2002/08/08 20:00:07 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for stormG3
 # Author: Per Lundberg <per@chaosdev.org>
@@ -10,7 +10,7 @@ Import qw(cons kernel_directory);
 
 Program $cons 'stormG3', ( 'cpu.c', 'debug.c', 'dispatch.c', 'dma.c',
 			   'elf.c', 'exception.c', 'exception_lowlevel.S',
-			   'gdb.c', 'idt.c', 'init.c', 'irq.c',
+			   'gdb.c', 'halt.c', 'idt.c', 'init.c', 'irq.c',
 			   'irq_handlers.S', 'main.c', 'memory_global.c',
 			   'memory_physical.c', 'memory_virtual.c',
 			   'module.c', 'multiboot.c', 'port.c', 'timer.c',
