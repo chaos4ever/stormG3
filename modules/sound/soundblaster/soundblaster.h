@@ -1,4 +1,4 @@
-/* $chaos: soundblaster.h,v 1.1 2002/06/18 22:30:14 per Exp $ */
+/* $chaos: soundblaster.h,v 1.2 2002/06/19 07:57:40 per Exp $ */
 /* Authors: Per Lundberg <per@chaosdev.org>
             Erik Moren <nemo@chaosdev.org> */
 

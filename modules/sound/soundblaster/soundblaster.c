@@ -1,4 +1,4 @@
-/* $chaos: soundblaster.c,v 1.3 2002/06/23 20:40:08 per Exp $ */
+/* $chaos: soundblaster.c,v 1.4 2002/08/09 06:02:34 per Exp $ */
 /* Abstract: Sound Blaster server */
 
 /* Authors: Per Lundberg <per@chaosdev.org> 
