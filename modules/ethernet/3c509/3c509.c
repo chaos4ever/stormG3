@@ -1,4 +1,4 @@
-/* $chaos */
+/* $chaos$ */
 
 #include <storm/storm.h>
 
