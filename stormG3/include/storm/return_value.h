@@ -1,12 +1,12 @@
-/* $chaos: return_value.h,v 1.7 2002/10/08 20:16:14 per Exp $ */
+/* $chaos: return_value.h,v 1.8 2002/10/10 15:26:21 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
 
 /**
- * @file return_value.h
- * @brief Return values.
+ * @file                return_value.h
+ * @brief               Return values.
  */
 
 #ifndef __STORM_RETURN_VALUES_H__
@@ -15,7 +15,8 @@
 /**
  * @brief               A return value.
  */
-enum return_t {
+enum return_t 
+{
     /**
      * @brief           The call succeeded. 
      */
