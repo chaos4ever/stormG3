@@ -1,4 +1,4 @@
-/* $chaos: console.h,v 1.1 2002/12/03 14:11:59 johannes Exp $ */
+/* $chaos: console.h,v 1.2 2002/12/03 14:19:48 johannes Exp $ */
 /* Abstract: Definitions for the console protocol. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -15,7 +15,7 @@
 
 /* A magic cookie, to make sure this is really a console service
    provider. FIXME: Let this be truly unique. */
-#define CONSOLE_MAGIC_COOKIE              0x12345678
+#define CONSOLE_COOKIE              0x12345678
 
 /* The major version of the block service. Bump this one step when you
    make CHANGES to the block service API that will make it
