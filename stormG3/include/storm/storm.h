@@ -1,4 +1,4 @@
-/* $chaos: storm.h,v 1.7 2002/06/20 22:41:49 per Exp $ */
+/* $chaos: storm.h,v 1.8 2002/06/24 08:32:22 per Exp $ */
 /* Abstract: storm kernel API. This header file can be included by a
    kernel module that wants to have access to kernel functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
@@ -15,6 +15,7 @@
 #include <storm/types.h>
 #include <storm/ia32/memory.h>
 #include <storm/ia32/port.h>
+#include <storm/ia32/service.h>
 
 /* Type definitions. */
 typedef void (irq_handler_t)(unsigned int irq_level);
@@ -29,19 +30,6 @@ extern return_t dma_register (unsigned int dma_channel, void **dma_buffer);
 /* Register an IRQ for use by a module. */
 extern return_t irq_register (unsigned int irq_number, char *description,
                               irq_handler_t *function);
-
-/* Register a service provider. */
-extern return_t service_register (char *name, char *vendor, char *model, 
-                                  char *id, unsigned int version,
-                                  function_t handler);
-
-/* Unregister a service provider. */
-extern return_t service_unregister (char *service, function_t handler);
-
-/* Resolve a service. FIXME: Support multiple service providers. */
-extern return_t service_resolve (char *name, char *vendor, char *model,
-                                 char *id, unsigned int version, 
-                                 function_t *handler);
 
 /* Sleep for the given amount of milliseconds. */
 extern return_t timer_sleep_milli (unsigned int time);
