@@ -1,4 +1,4 @@
-/* $chaos: system_call.c,v 1.3 2002/10/27 20:30:24 per Exp $ */
+/* $chaos: system_call.c,v 1.4 2002/10/28 22:26:31 per Exp $ */
 /* Abstract: */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -32,7 +32,7 @@ return_t system_call (uint32_t *stack)
             {
                 service_lookup_t *lookup = (service_lookup_t *) SYSTEM_CALL_ARGUMENT_0;
                 service_lookup (lookup->name, lookup->vendor,
-                                lookup->model, lookup->id,
+                                lookup->model, lookup->device_id,
                                 lookup->major_version, lookup->minor_version,
                                 (size_t *) SYSTEM_CALL_ARGUMENT_1,
                                 (service_t **) SYSTEM_CALL_ARGUMENT_2);
