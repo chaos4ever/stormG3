@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: module.h,v 1.1 2002/06/17 18:55:15 per Exp $ */
 /* Abstract: Functions and variables defined by a module. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -8,9 +8,11 @@
 #ifndef __STORM_MODULE_H__
 #define __STORM_MODULE_H__
 
+#include <storm/types.h>
+
 #ifndef STORM /* Only when included by a module. */
 
-extern void module_start (void);
+extern return_t module_start (void);
 extern char module_name[];
 
 #endif /* !STORM */
