@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.17 2002/08/08 20:14:08 per Exp $ */
+/* $chaos: memory_physical.c,v 1.18 2002/08/08 23:17:33 hal Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -34,8 +34,9 @@ extern int _end;
 /* The size of physical blocks that we provide. */
 // static unsigned int physical_size = 512 * KIB;
 
-/* A bitmap of all the free pages. (Don't worry, this is not used on
-   ordinary memory allocation...) 
+/* A bitmap of all the free pages. Bit = 1 means the page is free, bit
+   = 0 means the page is allocated. (Don't worry, this is not used on
+   ordinary memory allocation...)
    
    FIXME: Only use the memory needed! Right now, it is always 64 KiB,
    which is what a 2 GiB system will need. */
@@ -88,7 +89,7 @@ static void check_and_add_page (unsigned int page)
     }
 
     /* Link this page into the SLAB list and mark it as free in the bitmap */
-    BIT_CLEAR (physical_page_bitmap[page / 32], page % 32);
+    BIT_SET (physical_page_bitmap[page / 32], page % 32);
     next = (memory_physical_slab_t *) (page * PAGE_SIZE);
     next->next = (struct memory_physical_slab_t *) first_free;
     first_free = next;
@@ -101,7 +102,7 @@ void memory_physical_init ()
     uint32_t start_end;
    
     /* Clear the page bitmap */
-    memory_set_uint32 (physical_page_bitmap, 0xffffffff, MAX_MEMORY / PAGE_SIZE / 32);
+    memory_set_uint32 (physical_page_bitmap, 0, MAX_MEMORY / PAGE_SIZE / 32);
 
     /* Store the number of physical pages (used later). */
     physical_pages = (1024 + multiboot_info.memory_upper) / 4;
@@ -209,7 +210,7 @@ return_t memory_physical_allocate (void **pointer, unsigned int pages)
                     /* Mark these pages as allocated in the bitmap */
                     for (unsigned int index = free_page; index < (free_page + pages); index++)
                     {
-                        BIT_SET (physical_page_bitmap[index / 32],
+                        BIT_CLEAR (physical_page_bitmap[index / 32],
                                  index % 32);
                     }
 
@@ -253,7 +254,7 @@ return_t memory_physical_allocate (void **pointer, unsigned int pages)
         *pointer = first_free;
         free_pages--;
         first_free = (memory_physical_slab_t *) first_free->next;
-        BIT_SET (physical_page_bitmap[page / 32], page % 32);
+        BIT_CLEAR (physical_page_bitmap[page / 32], page % 32);
     }
 
     return STORM_RETURN_SUCCESS;
@@ -270,6 +271,6 @@ return_t memory_physical_deallocate (void *pointer)
     first_free = pointer;
     first_free->next = next;
     free_pages++;
-    BIT_CLEAR (physical_page_bitmap[page / 32], page % 32);
+    BIT_SET (physical_page_bitmap[page / 32], page % 32);
     return STORM_RETURN_SUCCESS;
 }
