@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.6 2002/06/13 06:15:29 per Exp $ */
+/* $chaos: memory_physical.c,v 1.7 2002/06/15 14:34:38 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -24,8 +24,10 @@ extern int _end;
 void memory_physical_init () 
 {
     /* Mark all pages as free, except for the ones explicitly marked
-       as used by the kernel. */
-    //    uint32_t upper_pages = (multiboot_info.memory_upper * KIB) / PAGE_SIZE;
+       as used by the kernel. FIXME: Use the memory map that we got
+       from the Multiboot loader, it will make things work even better
+       on some computers. */
+
     uint32_t start_end;
     uint32_t page;
 
