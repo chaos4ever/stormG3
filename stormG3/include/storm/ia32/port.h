@@ -1,4 +1,4 @@
-/* $chaos: port.h,v 1.8 2002/10/22 19:37:41 per Exp $ */
+/* $chaos: port.h,v 1.9 2002/10/22 21:10:13 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -103,13 +103,8 @@ static inline void port_uint32_out_string (uint16_t port, uint32_t *data,
 /* The rest is only for the kernel and its modules. */
 #if (defined __STORM_KERNEL__) || (defined __STORM_KERNEL_MODULE__)
 
-#include <storm/return_value.h>
-#include <storm/ia32/defines.h>
-#include <storm/ia32/memory_global.h>
-#include <storm/ia32/string.h>
-
 /**
- * @brief The total number of ports in the system. 
+ * @brief               The total number of ports in the system. 
  */
 #define NUMBER_OF_PORTS                 65536
 
