@@ -1,4 +1,4 @@
-/* $chaos: irq.c,v 1.4 2002/06/17 07:27:00 per Exp $ */
+/* $chaos: irq.c,v 1.5 2002/06/18 22:15:09 per Exp $ */
 /* Abstract: IRQ handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -96,7 +96,7 @@ void irq_init ()
 
     /* Set up a handler for the task switcher. */
     idt_setup_interrupt_gate (IDT_ENTRY(0), KERNEL_CODE_SELECTOR,
-                              dispatch_task_switcher, 0);
+                              irq0_handler, 0);
     
     idt_setup_trap_gate (IDT_ENTRY(1), KERNEL_CODE_SELECTOR,
                          irq1_handler, 0);

@@ -1,4 +1,4 @@
-/* $chaos: irq_handlers.S,v 1.3 2002/06/16 22:04:46 per Exp $ */
+/* $chaos: irq_handlers.S,v 1.4 2002/06/23 12:09:48 per Exp $ */
 /* Abstract: IRQ management. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 	
@@ -7,6 +7,7 @@
 
 /* One interrupt handler for each interrupt, thank you verymuch. */
 
+.globl irq0_handler
 .globl irq1_handler
 .globl irq3_handler
 .globl irq4_handler
@@ -23,7 +24,8 @@
 .globl irq15_handler
 
 .extern irq_handler
-
+.extern dispatch_task_switcher
+	
 #define IRQ_HANDLER(x) \
    pushal ;\
    pushl $ x ;\
@@ -32,6 +34,15 @@
    popal ;\
    iret
 
+/* IRQ0 is special because it's used for dispatching. */
+irq0_handler:
+   pushal
+   call dispatch_task_switcher
+   movb $0x20, %al
+   outb %al, $0x20
+   popal
+   iret
+	
 irq1_handler:
    IRQ_HANDLER(1)
 
