@@ -1,9 +1,10 @@
-# $chaos: makefile,v 1.2 2002/06/15 10:56:18 per Exp $
+# $chaos: makefile,v 1.1 2002/06/16 21:07:58 per Exp $
 
 # Abstract: Modules makefile
 # Authors: Per Lundberg <per@chaosdev.org>
 
 # Copyright 2002 chaos development.
+# Use freely under the terms listed in the file COPYING.
 
 BUILD_ROOT = $(CURDIR)
 export BUILD_ROOT
