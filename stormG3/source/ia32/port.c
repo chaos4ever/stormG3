@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: port.c,v 1.1 2002/06/18 19:40:47 per Exp $ */
 /* Abstract: I/O port management. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -16,25 +16,17 @@ static bool port_range_link (unsigned int start, unsigned int ports,
 {
     port_range_t *node = port_list;
     port_range_t *new_node;
+    unsigned int end = start + ports;
 
-    /* Check if the port range is already allocated. We have two cases
-       when we have to deny the request. This is when the requested
-       range is inside another portrange, or another portrange starts or
-       ends inside the requested region. */
+    /* Check if the port range is already allocated. */
     while (node != NULL)
     {
-        /* The first case. */
-        if (start >= node->start && (start + ports) <=
-            (node->start + node->length))
-        {
-            return FALSE;
-        }
-
-        /* The other case. */
-        if ((node->start >= start &&
-             node->start <= (start + ports)) ||
-            ((node->start + node->length) >= start &&
-             (node->start + node->length) <= (start + ports)))
+        if ((start >= node->start &&
+             start < (node->start + node->length)) ||
+            (end >= node->start &&
+             end < (node->start + node->length)) ||
+            (start < node->start &&
+             end >= (node->start + node->length)))
         {
             return FALSE;
         }    
