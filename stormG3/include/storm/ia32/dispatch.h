@@ -30,39 +30,24 @@ typedef struct
     /**
      * @brief           The thread that this task represents.
      */
-    thread_t *thread;
+    thread_t            *thread;
 
     /**
      * @brief           The timeslices to let this run each time. (0-10 are
      *                  reasonable values. 
      */
-    size_t timeslices;
+    size_t              timeslices;
 
     /**
      * @brief           The previous task in the list.
      */
-    struct dispatch_t *previous;
+    struct dispatch_t   *previous;
 
     /**
      * @brief           The next task in the list.
      */
-    struct dispatch_t *next;
+    struct dispatch_t   *next;
 } dispatch_t;
-
-/**
- * @brief               The current thread.
- */
-extern thread_t         *current_thread;
-
-/**
- * @brief               The current process.
- */
-extern process_t        *current_process;
-
-/**
- * @brief               The kernel TSS.
- */
-extern tss_t            *kernel_tss;
 
 /**
  * @brief               The idle task. 
@@ -71,35 +56,51 @@ extern tss_t            *kernel_tss;
  * cycles. (It would be possible to add code here for APM sleep, GC or
  * whatever) 
  */
-extern void dispatch_idle (void) NORETURN;
+extern void             dispatch_idle (void) NORETURN;
 
 /**
  * @brief               Initialize the dispatcher. 
  */
-extern void dispatch_init (void);
+extern void             dispatch_init (void);
 
 /**
  * @brief               The task switcher -- IRQ0 handler. 
  */
-extern void dispatch_task_switcher (void);
+extern void             dispatch_task_switcher (void);
 
 /**
  * @brief               Block the given thread.
  * @param thread        The thread to block. 
  * @return              STORM_RETURN_SUCCESS if successful.
  */
-extern return_t dispatch_block (thread_t *thread);
+extern return_t         dispatch_block (thread_t *thread);
 
 /**
  * @brief               Unblock the given thread.
  * @param thread        The thread to unblock.
  * @return              STORM_RETURN_SUCCESS if successful.
  */
-extern return_t dispatch_unblock (thread_t *thread);
+extern return_t         dispatch_unblock (thread_t *thread);
 
 /**
- * @brief               The number of ticks. 
+ * @brief               The current thread.
  */
-extern volatile unsigned int ticks;
+extern thread_t         *dispatch_current_thread;
+
+/**
+ * @brief               The current process.
+ */
+extern process_t        *dispatch_current_process;
+
+/**
+ * @brief               The kernel TSS.
+ */
+extern tss_t            *dispatch_kernel_tss;
+
+/**
+ * @brief               The number of ticks since the system was booted. 
+ */
+extern volatile unsigned int 
+                        dispatch_ticks;
 
 #endif /* !__STORM_IA32_DISPATCH_H__ */

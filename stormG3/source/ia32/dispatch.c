@@ -17,27 +17,28 @@
 #include <storm/ia32/port.h>
 #include <storm/ia32/spinlock.h>
 
-// FIXME: We may be able to move some of these?
+/* Exported variables. */
 /* The number of ticks since IRQ0 was first enabled. */
-volatile unsigned int ticks = 0;
+volatile unsigned int dispatch_ticks = 0;
 
 /* The current thread. */
-thread_t *current_thread = NULL;
+thread_t *dispatch_current_thread = NULL;
 
 /* The current process. */
-process_t *current_process = NULL;
+process_t *dispatch_current_process = NULL;
 
 /* The kernel TSS. */
-tss_t *kernel_tss;
+tss_t *dispatch_kernel_tss;
 
+/* The current TSS. */
+tss_t *dispatch_current_tss;
+
+/* Internal variables. */
 /* The current entry in the dispatch list. Used for doing the dispatching. */
 static dispatch_t *dispatch_current = NULL;
 
 /* A lock is good for avoiding concurrency problems. */
 static spinlock_t dispatch_lock = SPIN_UNLOCKED;
-
-/* The current TSS. */
-static tss_t *current_tss;
 
 /* A flag selecting whether we should use TSS selector 1 or 2 (0 = 1,
    1 = 2). */
@@ -111,11 +112,11 @@ void dispatch_idle (void)
 void dispatch_init (void)
 {
     /* Fill in some important fields in this TSS. */
-    kernel_tss->cr3 = cpu_get_cr3 ();
+    dispatch_kernel_tss->cr3 = cpu_get_cr3 ();
 
     /* Set up the TSS descriptor, so the CPU will know where to store
        the registers etc. */
-    gdt_setup_tss_descriptor (GDT_ENTRY (TSS1_SELECTOR), kernel_tss, 0,
+    gdt_setup_tss_descriptor (GDT_ENTRY (TSS1_SELECTOR), dispatch_kernel_tss, 0,
                               sizeof (tss_t));
 
     /* Set the TR (Task Register). */
@@ -123,7 +124,7 @@ void dispatch_init (void)
 
     /* Make it the current so that the dispatcher know that the the
        idle thread is running. */
-    current_tss = kernel_tss;
+    dispatch_current_tss = dispatch_kernel_tss;
 
     /* Create the list of tasks. */
     dispatch_t *dispatch;
@@ -147,7 +148,7 @@ void dispatch_init (void)
    does the register preservation. */
 void dispatch_task_switcher (void)
 {
-    ticks++;
+    dispatch_ticks++;
     asm ("movl 0xB8000, %eax\n"
          "xorl $0x10001000, %eax\n"
          "movl %eax, 0xB8000\n");
@@ -160,20 +161,20 @@ void dispatch_task_switcher (void)
     spin_unlock (&dispatch_lock);
 
     /* Okay, if it's a new one, we might as well dispatch it. */
-    if (dispatch_current->thread->tss != current_tss)
+    if (dispatch_current->thread->tss != dispatch_current_tss)
     {
         /* Toggle it. */
         task_flag ^= 1;
 
         /* Set it. */
-        current_tss = dispatch_current->thread->tss;
+        dispatch_current_tss = dispatch_current->thread->tss;
 
         switch (task_flag)
         {
             case 0:
             {
                 gdt_setup_tss_descriptor (GDT_ENTRY (TSS1_SELECTOR),
-                                          current_tss, 3,
+                                          dispatch_current_tss, 3,
                                           sizeof (tss_t));
                 jump_data[1] = TSS1_SELECTOR;
                 break;
@@ -181,7 +182,7 @@ void dispatch_task_switcher (void)
             case 1:
             {
                 gdt_setup_tss_descriptor (GDT_ENTRY (TSS2_SELECTOR),
-                                          current_tss, 3,
+                                          dispatch_current_tss, 3,
                                           sizeof (tss_t) - 1);
                 jump_data[1] = TSS2_SELECTOR;
                 break;
@@ -189,8 +190,8 @@ void dispatch_task_switcher (void)
         }
 
         /* Set up the "current" pointers to be right. */
-        current_thread = dispatch_current->thread;
-        current_process = (process_t *) dispatch_current->thread->parent;
+        dispatch_current_thread = dispatch_current->thread;
+        dispatch_current_process = (process_t *) dispatch_current->thread->parent;
 
         /* Do the task switch. But first ACK the interrupt so we can
            get more interrupts on this interrupt controller. */
