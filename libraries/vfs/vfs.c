@@ -1,15 +1,15 @@
-/* $chaos: virtual_filesystem.c,v 1.2 2002/07/21 12:57:57 per Exp $ */
+/* $chaos: virtual_filesystem.c,v 1.1 2002/07/28 19:25:31 per Exp $ */
 /* Abstract: Virtual filesystem library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file COPYING. */
 
-#include <virtual_filesystem/virtual_filesystem.h>
+#include <vfs/vfs.h>
 
 /* Resolve the first virtual filesystem service provider. FIXME:
    Should be able to return a list. */
-return_t virtual_filesystem_resolve (virtual_filesystem_service_t *virtual_filesystem)
+return_t vfs_resolve (vfs_service_t *vfs)
 {
     size_t services;
     service_t *service;
@@ -21,9 +21,11 @@ return_t virtual_filesystem_resolve (virtual_filesystem_service_t *virtual_files
         return VIRTUAL_FILESYSTEM_RETURN_SERVICE_UNAVAILABLE;
     }
 
-    service[0].service_info (virtual_filesystem);
+    service[0].service_info (vfs);
 
     // FIXME: Free the memory allocated by service_resolve.
-
     return VIRTUAL_FILESYSTEM_RETURN_SUCCESS;
 }
+
+// TODO: Add a vfs_register function for registering a vfs service
+// provider.
