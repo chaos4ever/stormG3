@@ -1,4 +1,4 @@
-/* $chaos: interface.h,v 1.8 2002/10/28 21:45:27 per Exp $ */
+/* $chaos: interface.h,v 1.10 2002/11/15 19:51:27 per Exp $ */
 /* Abstract: stormG3 kernel interface. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -237,12 +237,7 @@ extern return_t process_create (process_id_t process_id,
  * Services with the same major version and at least the same minor
  * version will be returned.
  */
-// FIXME: USE A DATA STRUCTURE, you maniac!!! It's not sane to pass 8
-// parameters to a function... :)
-extern return_t service_lookup (const char *name, const char *vendor, 
-                                const char *model, const char *id,
-                                unsigned int major_version, 
-                                unsigned int minor_version,
+extern return_t service_lookup (service_lookup_t *service_lookup,
                                 size_t *services, service_t *service);
 
 /**
