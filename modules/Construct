@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.18 2002/12/08 20:04:31 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.19 2002/12/14 11:22:29 johannes Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the modules.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -49,7 +49,7 @@ $cons = new cons (
 		  '-O3 -ggdb -pipe -fno-builtin -funsigned-char ' .
 		  '-fomit-frame-pointer -ffreestanding -std=gnu99 ',
 		  LDFLAGS => "-nostdlib --shared -L$library_directory"
-		);	
+                 );	
 
 Default qw(.);
 Export qw( cons header_directory module_directory build_directory

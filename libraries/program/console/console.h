@@ -1,4 +1,4 @@
-/* $chaos: console.h,v 1.2 2002/12/12 22:06:23 per Exp $ */
+/* $chaos: console.h,v 1.1 2002/12/17 21:54:55 per Exp $ */
 /* Abstract: Function prototypes and structure definitions for the
    console library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
@@ -12,6 +12,7 @@
 #include <storm/storm.h>
 #include <protocol/console.h>
 #include <protocol/keyboard.h>
+#include <protocol/video.h>
 #include <console/defines.h>
 #include <console/return_values.h>
 #include <console/types.h>

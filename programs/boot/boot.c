@@ -1,4 +1,4 @@
-/* $chaos: boot.c,v 1.9 2002/12/02 20:53:13 per Exp $ */
+/* $chaos: boot.c,v 1.10 2002/12/03 18:15:35 johannes Exp $ */
 /* Abstract: Boot program (somewhat like init in Unix systems). */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -6,7 +6,7 @@
 /* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/storm.h>
-#include <kernel/kernel.h>
+//#include <kernel/kernel.h>
 
 void _start (void) NORETURN;
 int main (int argc UNUSED, char **argv UNUSED);
@@ -23,6 +23,7 @@ void _start (void)
 /* Main function. */
 int main (int argc UNUSED, char **argv UNUSED)
 {
+#if FALSE
     size_t services = 1;
     service_t service_list;
     service_lookup_t service_lookup = 
@@ -53,6 +54,7 @@ int main (int argc UNUSED, char **argv UNUSED)
     {
         return -1;
     }
+#endif
 
     /* All hail king Jesus. */
     return 0;

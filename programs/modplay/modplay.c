@@ -1,4 +1,4 @@
-/* $chaos$ */
+/* $chaos: modplay.c,v 1.4 2002/12/17 22:05:20 per Exp $ */
 /* Abstract: Module player. */
 /* Author: Erik Moren <nemo@chaosdev.org> */
 
@@ -9,6 +9,7 @@
 #include <console/console.h>
 #include <kernel/kernel.h>
 #include <log/log.h>
+#include <memory/memory.h>
 #include <sound/sound.h>
 
 #include "modfile.h"
@@ -57,8 +58,8 @@ int main (void)
     /*
      * Set the process and thread name.
      */
-    kernel->set_process_name (PROGRAM_NAME);
-    kernel->set_thread_name ("Playing module...");
+    kernel.set_process_name (PROGRAM_NAME);
+    kernel.set_thread_name ("Playing module...");
 
     /*
      * Get a connection with the console service.
