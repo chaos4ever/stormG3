@@ -1,4 +1,4 @@
-/* $chaos: halt.c,v 1.1 2002/08/11 18:39:02 per Exp $ */
+/* $chaos: halt.c,v 1.2 2002/10/04 19:01:21 per Exp $ */
 /* Abstract: Functions for halting the machine. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -9,7 +9,6 @@
 #include <storm/ia32/cpu.h>
 #include <storm/ia32/debug.h>
 #include <storm/ia32/defines.h>
-#include <storm/ia32/halt.h>
 #include <storm/ia32/types.h>
 
 /* Halt the computer. */
