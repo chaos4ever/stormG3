@@ -1,4 +1,4 @@
-/* $chaos: block.c,v 1.7 2002/11/20 20:03:44 per Exp $ */
+/* $chaos: block.c,v 1.8 2002/12/03 14:00:15 johannes Exp $ */
 /* Abstract: Block library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -14,14 +14,18 @@ return_t block_lookup (block_service_t *block)
     // FIXME: Support more than one block service. :-)
     size_t services = 1;
     service_t service;
-    service_lookup_t lookup;
-
+    service_lookup_t lookup = 
+        {
+            "block", 
+            NULL,
+            NULL, 
+            NULL,
+            NULL,
+            BLOCK_PROTOCOL_MAJOR_VERSION,
+            BLOCK_PROTOCOL_MINOR_VERSION
+        };
+    
     /* Find the block service. */
-
-    lookup.protocol_name = "block";
-    lookup.major_version = BLOCK_PROTOCOL_MAJOR_VERSION;
-    lookup.minor_version = BLOCK_PROTOCOL_MINOR_VERSION;
-
     if (service_lookup (&lookup, &services, &service) != STORM_RETURN_SUCCESS)
     {
         debug_print ("Failed to lookup block service provider.\n");
