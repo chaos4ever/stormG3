@@ -1,4 +1,4 @@
-/* $chaos: init.c,v 1.1 2002/05/25 20:09:40 per Exp $ */
+/* $chaos: init.c,v 1.2 2002/06/05 18:17:26 per Exp $ */
 /* Abstract: storm initialization. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -75,10 +75,6 @@ static void kernel_entry (void)
     
     //  main (((u32 *) arguments_kernel)[0], (char **) arguments_kernel + 1);
     main_bootup (0, NULL);
-
-    /* Get in line and float downstream. */
-    //  idle ();
-    
     while (TRUE);
 }
 
