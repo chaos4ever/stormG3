@@ -1,4 +1,4 @@
-/* $chaos: minix.c,v 1.5 2002/08/04 09:27:17 per Exp $ */
+/* $chaos: minix.c,v 1.6 2002/08/09 06:02:35 per Exp $ */
 /* Abstract: Implementation of the Minix file system. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -237,7 +237,8 @@ static return_t minix_close (vfs_file_handle_t handle)
 }
 
 /* Read from a previously opened file. */
-static return_t minix_read (vfs_file_handle_t handle, void *buffer, size_t count)
+static return_t minix_read (vfs_file_handle_t handle, void *buffer,
+                            size_t count)
 {
     // FIXME: Use a linked list.
     minix_fs_t *minix_fs = &fs;
@@ -253,7 +254,7 @@ static return_t minix_read (vfs_file_handle_t handle, void *buffer, size_t count
     // count % MINIX_BLOCK_SIZE for the last). For now, just take one
     // block.
 
-    debug_print ("%u\n", block);
+    debug_print ("block: %u\n", block);
     if (block < 7)
     {
         block = inode->zone[block];
@@ -278,6 +279,31 @@ static return_t minix_read (vfs_file_handle_t handle, void *buffer, size_t count
     return STORM_RETURN_SUCCESS;
 }
 
+/* Get information about a file. */
+static return_t minix_info (char *filename UNUSED, vfs_file_info_t *info)
+{
+    // FIXME: Use a linked list of mounted filesystems.
+    minix_fs_t *minix_fs = &fs;
+
+    /* Check if the file exists. */
+    minix2_inode_t *inode2;    
+
+    if (minix_fs->version == 2)
+    {
+        inode2 = minix2_find_file (minix_fs, filename);
+    }
+    else
+    {
+        // FIXME: Implement.
+        return STORM_RETURN_NOT_IMPLEMENTED;
+    }
+
+    // FIXME: Take the other fields as well. atime, mtime, ctime,
+    // mode, uid, gid etc...
+    info->size = inode2->size;
+    return STORM_RETURN_SUCCESS;
+}
+
 /* Return some information about the filesystem service (function pointers to
    our functionality). */
 static return_t service_info (void *filesystem_void)
@@ -289,6 +315,7 @@ static return_t service_info (void *filesystem_void)
     filesystem->close = &minix_close;
     filesystem->read = &minix_read;
     // filesystem->write = &minix_write;
+    filesystem->info = &minix_info;
     return STORM_RETURN_SUCCESS;
 }
 
