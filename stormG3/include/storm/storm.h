@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: storm.h,v 1.2 2002/06/17 18:51:23 per Exp $ */
 /* Abstract: storm kernel API. This header file can be included by a
    kernel module that wants to have access to kernel functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
@@ -9,6 +9,7 @@
 #ifndef __STORM_STORM_H__
 #define __STORM_STORM_H__
 
+#include <storm/module.h>
 #include <storm/types.h>
 
 /* Type definitions. */
