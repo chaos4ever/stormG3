@@ -1,4 +1,4 @@
-/* $chaos: return_value.h,v 1.3 2002/06/15 22:39:17 per Exp $ */
+/* $chaos: return_value.h,v 1.4 2002/06/17 06:44:26 per Exp $ */
 /* Abstract: Return values. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -28,7 +28,10 @@ enum {
     STORM_RETURN_BUSY,
 
     /* A kernel function was passed an invalid argument. */
-    STORM_RETURN_INVALID_ARGUMENT
+    STORM_RETURN_INVALID_ARGUMENT,
+
+    /* The requested entity was not found. */
+    STORM_RETURN_NOT_FOUND
 };
 
 #endif /* !__STORM_RETURN_VALUES_H__ */
