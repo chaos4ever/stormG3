@@ -1,4 +1,4 @@
-/* $chaos: cpu.h,v 1.4 2002/06/12 20:26:58 per Exp $ */
+/* $chaos: cpu.h,v 1.5 2002/06/13 07:02:07 per Exp $ */
 /* Abstract: CPU defines and functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -45,6 +45,9 @@ static inline uint32_t cpu_get_esp (void)
 
   return return_value;
 }
+
+/* Function prototypes. */
+extern void cpu_init (void);
 
 /* The IA32 registers. */
 typedef struct
