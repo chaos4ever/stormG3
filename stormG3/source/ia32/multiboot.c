@@ -1,4 +1,4 @@
-/* $chaos: multiboot.c,v 1.1 2002/05/25 20:09:40 per Exp $ */
+/* $chaos: multiboot.c,v 1.2 2002/06/05 18:17:26 per Exp $ */
 /* Abstract: Parse multiboot header. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -22,7 +22,13 @@ void multiboot_init (void)
 {
     char *target = (char *) MODULE_NAME_BASE;
     unsigned module;
-    
+
+    /* Make sure we don't get out of bounds. */
+    if (multiboot_info.number_of_modules > MAX_STARTUP_SERVERS)
+    {
+        multiboot_info.number_of_modules = MAX_STARTUP_SERVERS;
+    }
+
     /* Copy the module parameters. */
     memory_copy (multiboot_module_info, 
                  (multiboot_module_info_type *) multiboot_info.module_base,
