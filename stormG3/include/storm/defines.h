@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.12 2002/10/22 21:00:27 per Exp $ */
+/* $chaos: defines.h,v 1.13 2002/10/23 07:24:23 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -122,6 +122,35 @@
  */
 #define SERVICE_ID_LENGTH \
                         (16)
+
+/* Things not available to userspace. */
+#if (defined __STORM_KERNEL__) || (defined __STORM_KERNEL_MODULE__)
+
+/**
+ * @brief               The length of a process name.
+ */
+#define PROCESS_NAME_LENGTH \
+                        (32)
+
+/**
+ * @brief               The length of a capability ID.
+ */
+#define CAPABILITY_CLASS_LENGTH \
+                        (16)
+
+/**
+ * @brief               The length of a capability name.
+ */
+#define CAPABILITY_NAME_LENGTH \
+                        (32)
+
+/**
+ * @brief               The length of a thread name.
+ */
+#define THREAD_NAME_LENGTH \
+                        32
+
+#endif /* (defined __STORM_KERNEL__) || (defined __STORM_KERNEL_MODULE__) */
 
 /**
  * @brief               Different ways of halting.
