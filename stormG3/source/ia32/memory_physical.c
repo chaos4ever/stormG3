@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.25 2002/10/10 22:04:06 per Exp $ */
+/* $chaos: memory_physical.c,v 1.26 2002/10/15 18:15:49 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -206,6 +206,7 @@ return_t memory_physical_allocate_for_process (void **pointer,
     if (return_value != STORM_RETURN_SUCCESS)
     {
         /* Extra security precaution. */
+        *pointer = NULL;
         return return_value;
     }
 
