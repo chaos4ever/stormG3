@@ -1,4 +1,4 @@
-/* $chaos: return_value.h,v 1.8 2002/10/10 15:26:21 per Exp $ */
+/* $chaos: return_value.h,v 1.9 2002/10/24 20:29:19 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -57,7 +57,12 @@ enum return_t
     /**
      * @brief           The requested entity was not found. 
      */
-    STORM_RETURN_NOT_FOUND
+    STORM_RETURN_NOT_FOUND,
+
+    /**
+     * @brief           Access was denied.
+     */
+    STORM_RETURN_ACCESS_DENIED,
 };
 
 #endif /* !__STORM_RETURN_VALUES_H__ */
