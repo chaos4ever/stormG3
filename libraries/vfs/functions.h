@@ -12,4 +12,8 @@
 /* Lookup the first virtual filesystem service provider. */
 extern return_t vfs_lookup (vfs_service_t *vfs);
 
+/* Register a VFS service provider. */
+extern return_t vfs_register (service_register_t *service_register_info,
+                              service_method_t *service_method);
+
 #endif /* !__VFS_FUNCTIONS_H__ */

@@ -14,4 +14,8 @@
 /* Lookup the first console service provider. */
 extern return_t console_lookup (console_service_t *console);
 
+/* Register a console service provider. */
+extern return_t console_register (service_register_t *service_register_info,
+                                  service_method_t *service_method);
+
 #endif /* !__LIBRARY_CONSOLE_FUNCTIONS_H__ */

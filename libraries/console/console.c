@@ -31,3 +31,13 @@ return_t console_lookup (console_service_t *console)
     return CONSOLE_RETURN_SUCCESS;
 }
 
+/* Register a console service provider. */
+return_t console_register (service_register_t *service_register_info,
+                           service_method_t *service_method)
+{    
+    service_register_info->service_name = "console";
+    service_register_info->major_version = CONSOLE_SERVICE_MAJOR_VERSION;
+    service_register_info->minor_version = CONSOLE_SERVICE_MINOR_VERSION;
+
+    return service_register (service_register_info, service_method);
+}

@@ -11,4 +11,8 @@
 /* Lookup the first block service provider. */
 extern return_t block_lookup (block_service_t *block);
 
+/* Register a block service provider. */
+extern return_t block_register (service_register_t *service_register_info,
+                                service_method_t *service_method);
+
 #endif /* !__BLOCK_FUNCTIONS_H__ */

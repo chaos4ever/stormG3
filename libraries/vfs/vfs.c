@@ -27,5 +27,13 @@ return_t vfs_lookup (vfs_service_t *vfs)
     return VFS_RETURN_SUCCESS;
 }
 
-// TODO: Add a vfs_register function for registering a vfs service
-// provider.
+/* Register a VFS service provider. */
+return_t vfs_register (service_register_t *service_register_info,
+                       service_method_t *service_method)
+{    
+    service_register_info->service_name = "vfs";
+    service_register_info->major_version = VFS_SERVICE_MAJOR_VERSION;
+    service_register_info->minor_version = VFS_SERVICE_MINOR_VERSION;
+
+    return service_register (service_register_info, service_method);
+}

@@ -11,4 +11,8 @@
 /* Lookup the first log service provider. */
 extern return_t log_lookup (log_service_t *log);
 
+/* Register a log service provider. */
+extern return_t log_register (service_register_t *service_register_info,
+                              service_method_t *service_method);
+
 #endif /* !__LIBRARY_LOG_FUNCTIONS_H__ */

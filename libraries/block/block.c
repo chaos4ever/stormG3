@@ -31,3 +31,14 @@ return_t block_lookup (block_service_t *block)
 
     return BLOCK_RETURN_SUCCESS;
 }
+
+/* Register a block service provider. */
+return_t block_register (service_register_t *service_register_info,
+                         service_method_t *service_method)
+{    
+    service_register_info->service_name = "block";
+    service_register_info->major_version = BLOCK_SERVICE_MAJOR_VERSION;
+    service_register_info->minor_version = BLOCK_SERVICE_MINOR_VERSION;
+
+    return service_register (service_register_info, service_method);
+}

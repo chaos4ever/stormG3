@@ -26,3 +26,14 @@ return_t filesystem_lookup (filesystem_service_t *filesystem)
 
     return FILESYSTEM_RETURN_SUCCESS;
 }
+
+/* Register a filesystem service provider. */
+return_t filesystem_register (service_register_t *service_register_info,
+                         service_method_t *service_method)
+{    
+    service_register_info->service_name = "filesystem";
+    service_register_info->major_version = FILESYSTEM_SERVICE_MAJOR_VERSION;
+    service_register_info->minor_version = FILESYSTEM_SERVICE_MINOR_VERSION;
+
+    return service_register (service_register_info, service_method);
+}

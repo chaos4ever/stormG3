@@ -11,4 +11,8 @@
 /* Lookup the first filesystem service provider. */
 extern return_t filesystem_lookup (filesystem_service_t *filesystem);
 
+/* Register a filesystem service provider. */
+extern return_t filesystem_register (service_register_t *service_register_info,
+                                     service_method_t *service_method);
+
 #endif /* !__FILESYSTEM_FUNCTIONS_H__ */
