@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: keyboard.c,v 1.4 2002/06/17 22:53:47 per Exp $ */
 /* Abstract: Keyboard module for chaos. */
 /* Authors: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
@@ -375,7 +375,7 @@ void keyboard_handle_event (uint8_t scancode)
                             }
                             else
                             {
-                                debug_print ("%s\n", translated_key);
+                                debug_print ("%s", translated_key);
                             }
                             break;
                         }
