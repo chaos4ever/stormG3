@@ -1,4 +1,4 @@
-/* $chaos: console.c,v 1.6 2002/07/11 21:47:14 per Exp $ */
+/* $chaos: console.c,v 1.7 2002/07/21 11:27:18 per Exp $ */
 /* Abstract: Console module. Will eventually be 100% ANSI escape
              sequence compatible. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
@@ -15,7 +15,8 @@
 volatile unsigned int number_of_consoles = 0;
 volatile unsigned int highest_console_id = -1;
 // FIXME: If the user has a monochrome adapter, this won't work... The
-// video memory will be at another place.
+// video memory will be at another place. We need to detect what kind
+// of adapter the user has.
 character_t *screen = (character_t *) CONSOLE_VIDEO_MEMORY;
 volatile console_t *current_console = NULL;
 console_t *console_list = NULL;
@@ -371,5 +372,5 @@ return_t module_start (void)
     has_video = TRUE;
 
     return service_register ("console", "chaos development", "Console module",
-                             "1", 1, &service_info);
+                             "1", CONSOLE_SERVICE_VERSION, &service_info);
 }
