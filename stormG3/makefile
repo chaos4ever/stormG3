@@ -1,4 +1,4 @@
-# $chaos$
+# $chaos: makefile,v 1.1 2002/05/25 20:10:01 per Exp $
 
 # Abstract: storm G3 makefile
 # Authors: Henrik Hallin <hal@chaosdev.org>
@@ -18,5 +18,6 @@ clean::
 
 install:
 	$(MAKE) -C source install
+	$(MAKE) -C include install
 
 include $(BUILD_ROOT)/storm.make
