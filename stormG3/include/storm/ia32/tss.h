@@ -1,4 +1,4 @@
-/* $chaos: dotfile.emacs,v 1.35 2002/10/04 18:41:41 per Exp $ */
+/* $chaos: tss.h,v 1.1 2002/10/10 21:44:25 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -16,13 +16,15 @@
 #ifndef __STORM_IA32_TSS_H__
 #define __STORM_IA32_TSS_H__
 
-#include <storm/ia32/flags.h>
+#include <storm/ia32/cpu.h>
+#include <storm/ia32/defines.h>
+#include <storm/ia32/types.h>
 
 /**
  * @brief               The CPU flags to use when setting up a new TSS.
  */
-#define TSS_NEW_EFLAGS  (FLAG_INTERRUPT_ENABLE | FLAG_ADJUST | \
-                         FLAG_PARITY | FLAG_SET)
+#define TSS_NEW_EFLAGS  (CPU_FLAG_INTERRUPT_ENABLE | CPU_FLAG_ADJUST | \
+                         CPU_FLAG_PARITY | CPU_FLAG_SET)
 
 /**
  * @brief               A TSS.
