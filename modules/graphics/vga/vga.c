@@ -180,10 +180,20 @@ return_t module_start (void)
     };
 
     /* FIXME: Actually check if an adapter is present. How is this done? */
+
     /* Create the service. */
-    // FIXME: Use video_register (bug #54)
-    return service_register ("video", "IBM", "VGA", "1", VIDEO_SERVICE_MAJOR_VERSION, VIDEO_SERVICE_MINOR_VERSION, &service_info);
+    service_register_t service_register_info;
+    service_register_info.vendor = "chaos development";
+    service_register_info.model = "VGA";
+    service_register_info.device_id = "1";
+    service_register_info.info_handler = &service_info;
 
-
-    return 0;
+    // FIXME: Fill in this structure to let user-level programs access
+    // this service provider.
+    service_method_t service_method[] =
+        {
+            { -1, NULL }
+        };
+    
+    return video_register (&service_register_info, service_method);
 }

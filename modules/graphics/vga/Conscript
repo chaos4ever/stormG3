@@ -9,8 +9,11 @@
 $module_binary = 'vga.so';
 $module_path = 'graphics/vga';
 
-Import qw(cons module_directory install);
+Import qw( cons library_directory module_directory install );
+$cons = $cons->clone(LIBS => '-lvideo');
 Program $cons $module_binary, 'vga.c', 'vgamode.c';
+Depends $cons $module_binary,
+  "$library_directory/libvideo.a";
 $install_cmd = eval $install;
 Command $cons 'install', $module_binary, $install_cmd;
 
