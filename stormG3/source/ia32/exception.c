@@ -1,4 +1,4 @@
-/* $chaos: exception.c,v 1.3 2002/06/12 20:40:01 per Exp $ */
+/* $chaos: exception.c,v 1.4 2002/06/12 21:02:19 per Exp $ */
 /* Abstract: Exception handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -12,8 +12,30 @@
 #include <storm/ia32/gdt.h>
 #include <storm/ia32/idt.h>
 
-/* Register values, saved on exception entry. */
-cpu_register_t registers;
+/* Exception handlers. */
+exception_handler_t exception_handler[] =
+{
+    { &exception_divide_error_fault_lowlevel },
+    { &exception_debug_trap_lowlevel },
+    { &exception_nmi_lowlevel },
+    { &exception_breakpoint_trap_lowlevel },
+    { &exception_overflow_trap_lowlevel },
+    { &exception_bound_range_exceeded_fault_lowlevel },
+    { &exception_invalid_opcode_fault_lowlevel },
+    { &exception_device_not_available_fault_lowlevel },
+    { &exception_double_fault_lowlevel },
+    { &exception_coprocessor_segment_overrun_abort_lowlevel },
+    { &exception_invalid_tss_fault_lowlevel },
+    { &exception_segment_not_present_fault_lowlevel },
+    { &exception_stack_fault_lowlevel },
+    { &exception_general_protection_fault_lowlevel },
+    { &exception_page_fault_lowlevel },
+    { &exception_dummy_lowlevel }, /* Should never occur. */
+    { &exception_floating_point_error_fault_lowlevel },
+    { &exception_alignment_check_fault_lowlevel },
+    { &exception_machine_check_abort_lowlevel },
+    { NULL }
+};
 
 static inline void save_registers (void)
 {
@@ -114,14 +136,13 @@ static void exception_general_protection_fault (void)
     while (TRUE);
 }
 
-static void exception_page_fault (void)
+void exception_page_fault (cpu_register_t *registers)
 {
-    save_registers ();
     debug_print ("Page fault at %x.\n", cpu_get_cr2());
-    debug_print ("EAX: %x EBX: %x ECX: %x EDX: %x\n", registers.eax,
-                 registers.ebx, registers.ecx, registers.edx);
-    debug_print ("ESI: %x EDI: %x", registers.esi, 
-                 registers.edi);
+    debug_print ("EAX: %x EBX: %x ECX: %x EDX: %x\n", registers->eax,
+                 registers->ebx, registers->ecx, registers->edx);
+    debug_print ("ESI: %x EDI: %x", registers->esi, 
+                 registers->edi);
     while (TRUE);
 }  
 
@@ -144,32 +165,19 @@ static void exception_machine_check_abort (void)
 }
 
 /* Add an exception handler to the IDT. */
-static void setup_handler (int number, void *exception_handler)
+static void setup_handler (int number, void *handler)
 {
     idt_setup_trap_gate (number, KERNEL_CODE_SELECTOR,
-                         exception_handler, 0);
+                         handler, 0);
 }
 
 /* Initialize exceptions. */
 void exception_init () 
 {
     /* Setup exception handlers for all exceptions. */
-    setup_handler (0, exception_divide_error_fault);
-    setup_handler (1, exception_debug_trap);
-    setup_handler (2, exception_nmi);
-    setup_handler (3, exception_breakpoint_trap);
-    setup_handler (4, exception_overflow_trap);
-    setup_handler (5, exception_bound_range_exceeded_fault);
-    setup_handler (6, exception_invalid_opcode_fault);
-    setup_handler (7, exception_device_not_available_fault);
-    setup_handler (8, exception_double_fault);
-    setup_handler (9, exception_coprocessor_segment_overrun_abort);
-    setup_handler (10, exception_invalid_tss_fault);
-    setup_handler (11, exception_segment_not_present_fault);
-    setup_handler (12, exception_stack_fault);
-    setup_handler (13, exception_general_protection_fault);
-    setup_handler (14, exception_page_fault);
-    setup_handler (16, exception_floating_point_error_fault);
-    setup_handler (17, exception_alignment_check_fault);
-    setup_handler (18, exception_machine_check_abort);
+    int counter;
+    for (counter = 0; exception_handler[counter].function != NULL; counter++)
+    {
+        setup_handler (counter, exception_handler[counter].function);
+    }
 }
