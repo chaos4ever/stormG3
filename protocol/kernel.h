@@ -1,9 +1,14 @@
-/* $chaos: defines.h,v 1.3 2002/11/20 20:05:38 per Exp $ */
-/* Abstract: Definitions used by the kernel library. */
+/* $chaos: kernel.h,v 1.1 2002/12/02 20:47:32 per Exp $ */
+/* Abstract: Definition of the kernel protocol. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
+
+/**
+ * @file             kernel.h
+ * @brief            Definition of the kernel protocol.
+ */
 
 #ifndef __PROTOCOL_KERNEL_H__
 #define __PROTOCOL_KERNEL_H__
