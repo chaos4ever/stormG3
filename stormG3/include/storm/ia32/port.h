@@ -1,4 +1,4 @@
-/* $chaos: port.h,v 1.2 2002/06/18 19:36:57 per Exp $ */
+/* $chaos: port.h,v 1.3 2002/06/23 13:42:49 per Exp $ */
 /* Abstract: Port in/output. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -32,7 +32,7 @@ typedef struct
 
 
 /* Inline functions. */
-static inline void port_uint8_out (unsigned short port, unsigned char data)
+static inline void port_uint8_out (unsigned short port, uint8_t data)
 {
     asm ("outb	%1,%0"
          :
@@ -41,7 +41,7 @@ static inline void port_uint8_out (unsigned short port, unsigned char data)
          "a"(data));
 };
 
-static inline unsigned char port_uint8_in (unsigned short port)
+static inline uint8_t port_uint8_in (unsigned short port)
 {
     unsigned char data;
     asm volatile ("inb	%1,%0"
