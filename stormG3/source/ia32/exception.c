@@ -1,4 +1,4 @@
-/* $chaos: exception.c,v 1.17 2002/10/17 21:29:13 per Exp $ */
+/* $chaos: exception.c,v 1.18 2002/10/21 09:21:44 per Exp $ */
 /* Abstract: Exception handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -173,16 +173,14 @@ void exception_page_fault (cpu_register_t registers)
             DEBUG_HALT ("Failed to allocate stack memory");
         }
         
-        return_value = memory_virtual_map ((page_directory_t *) current_thread->tss->cr3, 
-                                           PAGE_NUMBER (cr2),
-                                           PAGE_NUMBER (pointer), 
-                                           1, PAGE_KERNEL);
+        
+        return_value = memory_virtual_map ((page_directory_t *) current_thread->tss->cr3, PAGE_NUMBER (cr2), PAGE_NUMBER (pointer), 1, PAGE_USER);
 
         if (return_value != STORM_RETURN_SUCCESS)
         {
             DEBUG_HALT ("Failed to map memory");
         }
-       
+        
         /* Over and out. */
         return;
     }
