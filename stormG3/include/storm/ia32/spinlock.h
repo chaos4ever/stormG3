@@ -1,4 +1,4 @@
-/* $chaos: spinlock.h,v 1.5 2002/10/23 20:32:40 per Exp $ */
+/* $chaos: spinlock.h,v 1.6 2002/10/23 20:45:04 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -33,6 +33,7 @@ enum spinlock_t
     SPIN_LOCKED
 };
 
+// FIXME: Don't hardcode $1 here, but use SPIN_LOCKED.
 /** 
  * @brief               Get the lock. 
  * @param lock          The lock to get.
@@ -41,9 +42,9 @@ static inline void spin_lock (spinlock_t *lock)
 {
     unsigned int eax;
     
-    asm volatile ("movl $0, %%eax\n"
+    asm volatile ("movl $1, %%eax\n"
                   "0:  xchgl %%eax, %0\n"
-                  "cmpl $0, %%eax\n"
+                  "cmpl $1, %%eax\n"
                   "jne 1f\n"
                   "hlt\n"               /* This one is the key. */
                   "jmp 0b\n"
@@ -65,9 +66,9 @@ static inline void spin_lock_interrupt (spinlock_t *lock)
 {
     unsigned int eax;
     
-    asm volatile ("movl $0, %%eax\n"
+    asm volatile ("movl $1, %%eax\n"
                   "0:  xchgl %%eax, %0\n"
-                  "cmpl $0, %%eax\n"
+                  "cmpl $1, %%eax\n"
                   "je 0b\n"
                   : 
                   "=g" (*lock),
