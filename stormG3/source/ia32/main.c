@@ -1,4 +1,4 @@
-/* $chaos: main.c,v 1.28 2002/10/10 20:34:50 per Exp $ */
+/* $chaos: main.c,v 1.29 2002/10/15 18:02:51 per Exp $ */
 /* Abstract: Main startup file. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -46,6 +46,9 @@ void main_bootup (int argument_count UNUSED, char *arguments[] UNUSED)
 
     /* Set up virtual memory. */
     memory_virtual_init ();
+
+    /* Set up process support. (Must be run before dispatch_init) */
+    process_init ();
 
     /* Set up the dispatcher. */
     dispatch_init ();
