@@ -1,4 +1,4 @@
-/* $chaos: module.h,v 1.3 2002/10/04 19:01:20 per Exp $ */
+/* $chaos: module.h,v 1.4 2002/10/08 20:16:14 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -16,7 +16,14 @@
 /** @brief A function provided to the kernel modules. */
 typedef struct
 {
-    char *name;
+    /**
+     * @brief
+     */
+    const char *name;
+
+    /**
+     * @brief
+     */
     function_t function;
 } module_function_t;
 

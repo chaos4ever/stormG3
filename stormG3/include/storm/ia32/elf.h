@@ -1,4 +1,4 @@
-/* $chaos: elf.h,v 1.11 2002/10/08 20:16:14 per Exp $ */
+/* $chaos: elf.h,v 1.12 2002/10/10 13:57:06 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -572,7 +572,7 @@ extern return_t elf_symbol_find_by_index (elf_parsed_t *elf_parsed,
  * @return              STORM_RETURN_SUCCESS if successful.
  */
 extern return_t elf_symbol_find_by_name (elf_parsed_t *elf_parsed,
-                                         char *name, address_t *address);
+                                         const char *name, address_t *address);
 
 /** 
  * @brief Load an ELF.

@@ -1,4 +1,4 @@
-/* $chaos: elf.c,v 1.9 2002/07/04 21:26:56 per Exp $ */
+/* $chaos: elf.c,v 1.10 2002/10/04 19:01:21 per Exp $ */
 /* Abstract: ELF functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -216,7 +216,7 @@ return_t elf_symbol_find_by_index (elf_parsed_t *elf_parsed,
 
 /* Find the given symbol in the symbol table. */
 return_t elf_symbol_find_by_name (elf_parsed_t *elf_parsed,
-                                  char *name, uint32_t *address)
+                                  const char *name, uint32_t *address)
 {
     elf_section_header_t *symbol_header = elf_parsed->symbol_header;
     char *string_table = (char *) (((address_t) elf_parsed->image) +
