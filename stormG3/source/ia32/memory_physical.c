@@ -161,6 +161,22 @@ void memory_physical_init ()
                  free_pages, free_pages * 4, free_pages / 256);
 }
 
+/* Free pages that was used during startup. */
+void memory_physical_done (void)
+{
+    for (unsigned int counter = 0; counter < multiboot_info.number_of_modules; 
+         counter++) 
+    {
+        address_t start = multiboot_module_info[counter].start;
+        address_t end = multiboot_module_info[counter].end;
+        for (address_t address = start; address < end; address += PAGE_SIZE)
+        {
+            debug_print ("deallocating %x\n", address);
+            memory_physical_deallocate ((void *) address);
+        }
+    }
+}
+
 /* Allocate a page for a process. */
 return_t memory_physical_allocate_for_process (void **pointer, 
                                                process_id_t process_id)
