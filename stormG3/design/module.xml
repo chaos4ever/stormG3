@@ -1,5 +1,5 @@
 <?xml version='1.0' ?> <!-- -*- xml -*- -->
-<!-- $chaos: module.xml,v 1.4 2002/05/27 21:29:29 per Exp $ -->
+<!-- $chaos: module.xml,v 1.5 2002/05/28 07:02:38 per Exp $ -->
 
 <chapter id="module">
   <?dbhtml filename="module.html"?>
@@ -46,17 +46,23 @@ typedef struct
     <title>Functions</title>
     <para>
       The following functions are defined by this module.
-
-      <programlisting>
+    </para>
+    
+    <para>
+      <literal>
 	return_t module_add (module_header_t *module_header);
-      </programlisting>
-      
+      </literal>
+    </para>      
+    <para>
       Install the given module in the kernel.
+    </para>
 
-      <programlisting>
+    <para>
+      <literal>
 	return_t module_remove (module_id_t module_id);
-      </programlisting>
-      
+      </literal>
+    </para>
+    <para>
       Uninstall the given module from the kernel.
     </para>
   </section>
