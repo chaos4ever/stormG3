@@ -1,4 +1,4 @@
-/* $chaos: cpu.h,v 1.15 2002/10/08 20:16:14 per Exp $ */
+/* $chaos: cpu.h,v 1.16 2002/10/13 13:55:36 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -41,10 +41,27 @@ static inline void cpu_set_cr0 (uint32_t new_cr0)
                   : "r" (new_cr0));
 }
 
+/**
+ * @brief               Get the value of the CR2 register.
+ * @return              The value of the CR2 register.
+ */
 static inline uint32_t cpu_get_cr2 (void)
 {			   
     uint32_t return_value;
     asm volatile ("movl %%cr2, %0"
+                  : "=r" (return_value) 
+                  :);
+    return return_value;
+}
+
+/**
+ * @brief               Get the value of the CR3 register.
+ * @return              The value of the CR3 register.
+ */
+static inline uint32_t cpu_get_cr3 (void)
+{
+    uint32_t return_value;
+    asm volatile ("movl %%cr3, %0"
                   : "=r" (return_value) 
                   :);
     return return_value;
