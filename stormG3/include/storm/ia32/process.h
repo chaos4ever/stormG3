@@ -1,4 +1,4 @@
-/* $chaos: process.h,v 1.3 2002/10/08 20:16:14 per Exp $ */
+/* $chaos: process.h,v 1.4 2002/10/09 09:20:00 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -12,13 +12,56 @@
 #ifndef __STORM_IA32_PROCESS_H__
 #define __STORM_IA32_PROCESS_H__
 
+#include <storm/ia32/defines.h>
+#include <storm/ia32/memory_virtual.h>
 #include <storm/ia32/types.h>
 
-/* The process ID of the kernel process (idle thread). */
+/**
+ * @brief The process ID of the kernel process (idle thread). 
+ */
 #define PROCESS_ID_KERNEL               0
 
-/* Type definitions. */
+/**
+ * @brief The length of a process name.
+ */
+#define PROCESS_NAME_LENGTH             32
+
+/**
+ * @brief A unique process ID.
+ */
 typedef unsigned int process_id_t;
+
+/**
+ * @brief A structure with information about process.
+ */
+typedef struct
+{
+    /**
+     * @brief The process ID.
+     */
+    process_id_t id;
+
+    /**
+     * @brief The name of the process.
+     */
+    char name[PROCESS_NAME_LENGTH];
+
+    /**
+     * @brief Is the process active? (as opposed to suspended for some
+     * reason)
+     */
+    bool active;
+
+    /**
+     * @brief Pointer to the previous process.
+     */
+    struct process_t *previous;
+
+    /**
+     * @brief Pointer to the next process.
+     */
+    struct process_t *next;
+} process_t;
 
 /**
  * @brief Pre-create a process.
