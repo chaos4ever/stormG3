@@ -1,9 +1,14 @@
-/* $chaos: defines.h,v 1.2 2002/10/04 19:00:50 per Exp $ */
+/* $chaos: block.h,v 1.1 2002/12/02 21:56:25 per Exp $ */
 /* Abstract: Block library defines. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
+
+/**
+ * @file             block.h
+ * @brief            Definition of the block protocol.
+ */
 
 #ifndef __PROTOCOL_BLOCK_H__
 #define __PROTOCOL_BLOCK_H__
