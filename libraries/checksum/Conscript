@@ -1,0 +1,18 @@
+# $chaos: Conscript,v 1.1 2002/06/23 20:35:34 per Exp $ -*- Perl -*-
+
+# Abstract: CONS script for the checksum library.
+# Author: Per Lundberg <per@chaosdev.org>
+
+# Copyright 2002 chaos development.
+# Use freely under the terms listed in the file COPYING.
+
+$library_binary = 'libchecksum.a';
+$library_directory = 'checksum';
+
+Import qw( cons library_static_directory install );
+Library $cons $library_binary, 'crc32.c', 'md5.c';
+
+$install_cmd = eval $install;
+Command $cons 'install', $library_binary, $install_cmd;
+
+# FIXME: Install headers also. We don't need it yet though.
