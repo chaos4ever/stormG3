@@ -1,4 +1,4 @@
-/* $chaos: elf.c,v 1.7 2002/06/20 20:40:17 per Exp $ */
+/* $chaos: elf.c,v 1.8 2002/06/22 19:22:49 per Exp $ */
 /* Abstract: ELF functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -105,7 +105,7 @@ return_t elf_resolve (elf_parsed_t *elf_parsed, module_function_t *function)
         else if (symbol->value == 0 && symbol->section_header == 0)
         {
             char *name = string_table + symbol->name;
-            bool match = FALSE;
+            volatile bool match = FALSE;
 
             for (int function_index = 0; 
                  function[function_index].name != NULL;
