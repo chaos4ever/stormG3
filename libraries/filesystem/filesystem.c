@@ -1,4 +1,4 @@
-/* $chaos: filesystem.c,v 1.7 2002/11/20 20:02:53 per Exp $ */
+/* $chaos: filesystem.c,v 1.8 2002/12/03 14:27:01 johannes Exp $ */
 /* Abstract: Filesystem library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -9,21 +9,23 @@
 
 /* Lookup the first filesystem service provider. FIXME: Should be
    able to return a list. */
+// FIXME: Take a service_lookup_t parameter (bug #60).
 return_t filesystem_lookup (filesystem_service_t *filesystem)
 {
     // FIXME: Lame.
     size_t services = 1;
     service_t service;
-    service_lookup_t lookup;
-
-    /* Find the filesystem service. */
-
-    lookup.protocol_name = "filesystem";
-    lookup.device_vendor = NULL;
-    lookup.service_vendor = NULL;
-    lookup.major_version = FILESYSTEM_PROTOCOL_MAJOR_VERSION;
-    lookup.minor_version = FILESYSTEM_PROTOCOL_MINOR_VERSION;
-
+    service_lookup_t lookup =
+        {
+            "filesystem",  /* protocol_name */
+            NULL,       /* service_vendor */
+            NULL,       /* device_vendor */
+            NULL,       /* model */
+            NULL,       /* device_id */
+            FILESYSTEM_PROTOCOL_MAJOR_VERSION,     /* major version */
+            FILESYSTEM_PROTOCOL_MINOR_VERSION,     /* minor version */
+        };
+    
     if (service_lookup (&lookup, &services, &service) != STORM_RETURN_SUCCESS)
     {
         debug_print ("Failed to lookup filesystem service provider.\n");
