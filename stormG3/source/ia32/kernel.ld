@@ -1,4 +1,4 @@
-/* $chaos: kernel.ld,v 1.1 2002/05/25 20:10:02 per Exp $ */
+/* $chaos: kernel.ld,v 1.2 2002/06/05 18:17:26 per Exp $ */
 /* Abstract: storm linker script. Heavily based on the elf_i386.xbn
    from GNU binutils. */
 /* Author: Per Lundberg <per@chaosdev.org> */
@@ -145,6 +145,14 @@ SECTIONS
     *(.data.init)
   }
 
+  /* We want the GDT and IDT to be page aligned. */
+  . = ALIGN (0x1000);
+  .special       :
+  {
+    *(.gdt)
+    *(.idt)
+  }
+  
   . = ALIGN (0x1000);
   _init_end = .;
 
