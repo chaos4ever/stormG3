@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.21 2002/10/06 09:12:30 per Exp $ */
+/* $chaos: memory_physical.c,v 1.23 2002/10/10 20:44:34 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -171,7 +171,6 @@ void memory_physical_done (void)
         address_t end = multiboot_module_info[counter].end;
         for (address_t address = start; address < end; address += PAGE_SIZE)
         {
-            debug_print ("deallocating %x\n", address);
             memory_physical_deallocate ((void *) address);
         }
     }
