@@ -1,4 +1,4 @@
-/* $chaos: log.c,v 1.4 2002/06/23 20:39:44 per Exp $ */
+/* $chaos: log.c,v 1.5 2002/06/24 21:40:30 per Exp $ */
 /* Abstract: Kernel log module. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
