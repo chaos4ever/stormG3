@@ -1,5 +1,5 @@
 <?xml version='1.0' ?> <!-- -*- xml -*- -->
-<!-- $chaos: memory_management.xml,v 1.4 2002/05/27 07:52:29 per Exp $ -->
+<!-- $chaos: memory_management.xml,v 1.5 2002/05/27 10:07:21 per Exp $ -->
 
 <chapter id="memory_management">
   <?dbhtml filename="memory_management.html"?>
@@ -27,14 +27,14 @@
   <section>
     <?dbhtml filename="virtual_memory_map.html"?>
     <title>Virtual memory map</title>
-    <para>
-      <inlinemediaobject>
-	<imageobject>
-	  <imagedata fileref="memory_map.png" format="PNG" align="center" />
-	</imageobject>
-      </inlinemediaobject>
-    </para>
-      
+    <figure id="memory_map">
+      <title>Virtual memory map</title>
+      <screenshot>
+	<screeninfo>Virtual memory map</screeninfo>
+	<graphic format="PNG"  fileref="memory_map.png" />
+      </screenshot>
+    </figure>
+    
     <para>
       We believe this design will be highly effective. In the previous
       storm generation, we did not map all of the physical memory in a
@@ -53,7 +53,7 @@
     </para>
     <para>
       You see also that we have only one fourth of the memory area
-      available for the process code &amp; data, that is: one full
+      available for the process code and data, that is: one full
       gigabyte. If your application needs more than this, you should
       probably not be using 32-bit architecture anyway, but rather try
       a 64-bit platform such as the Alpha, PowerPC, UltraSparc or
@@ -80,11 +80,12 @@
     <section>
       <title>The SLAB structure</title>
       <para>
-	  The SLAB algorithm is a popular algorithm, since it is
-	highly efficient (It stores its structure in the free blocks
-	itself, and makes allocation and deallocation both
-	O(1)). This is how the SLAB header looks. It is stored in
-	the beginning of every free block.
+	The SLAB algorithm is a popular algorithm, since it is highly
+	efficient (It stores its structure in the free blocks itself,
+	and makes allocation and deallocation both O(1)). This is how
+	the SLAB header looks. It is stored in the beginning of every
+	free block.
+
 	<programlisting id="slab_t">
 typedef struct
 {
@@ -133,6 +134,7 @@ typedef struct
     <link linkend="slab_t">slab_t</link> *free_global_2048;
 } memory_allocation_t;
 	</programlisting>
+	
 	Virtual memory allocation is not taken care of by this
 	structure, since it needs to be per-process (actually,
 	per-address space, but this is the same in this design).
@@ -149,6 +151,7 @@ typedef struct
 	virtual memory. However, some peripheral units need to have
 	blocks that are physically continous. There are two ways to
 	handle this:
+	
 	<orderedlist>
 	  <listitem>
 	    <para>
@@ -168,10 +171,10 @@ typedef struct
 	    </para>
 	  </listitem>
 	</orderedlist>
-	As one can clearly see, allocation of multiple pages that
-	have not been reserved will be much slower than getting one
-	free page, so please do not use it unless absolutely
-	neccessary.
+
+	As one can clearly see, allocation of multiple pages that have
+	not been reserved will be much slower than getting one free
+	page, so please do not use it unless absolutely neccessary.
       </para>
     </section>
     
@@ -180,6 +183,7 @@ typedef struct
       <para>
 	The global memory allocator is all-dependent on the physical
 	memory allocator. The algorithm used looks like this:
+
 	<orderedlist>
 	  <listitem>
 	    <para>
