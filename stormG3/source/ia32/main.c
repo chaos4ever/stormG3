@@ -1,4 +1,4 @@
-/* $chaos: main.c,v 1.10 2002/06/12 12:20:35 per Exp $ */
+/* $chaos: main.c,v 1.11 2002/06/12 20:40:46 per Exp $ */
 /* Abstract: This is the startup point of storm. It is executed right
    after the assembly language init code has set up the GDT, kernel
    stack, etc. Here, we initialise everything in the storm, like
@@ -15,6 +15,7 @@
 
 #include <storm/config.h>
 #include <storm/defines.h>
+#include <storm/ia32/cpu.h>
 #include <storm/ia32/debug.h>
 #include <storm/ia32/dma.h>
 #include <storm/ia32/exception.h>
@@ -27,6 +28,9 @@
 /* Do the bootup procedure. */
 void main_bootup (int argument_count UNUSED, char *arguments[] UNUSED)
 {
+    /* Set up the CPU. Detect family, model etc. */
+    cpu_init ();
+
     /* Set up debugging. */
     debug_init ();
     debug_print ("storm %s (compiled by %s on %s %s).\n", STORM_VERSION, CREATOR, __DATE__, __TIME__);
@@ -48,6 +52,8 @@ void main_bootup (int argument_count UNUSED, char *arguments[] UNUSED)
 
     /* Set up exception handlers. */
     exception_init ();
+
+    debug_print ("CPU vendor name: %s\n", cpu_info.name);
 
     *(int *)(NULL) = 0;
 
