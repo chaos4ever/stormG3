@@ -1,4 +1,4 @@
-/* $chaos: filesystem.c,v 1.5 2002/10/28 08:06:42 per Exp $ */
+/* $chaos: filesystem.c,v 1.7 2002/11/20 20:02:53 per Exp $ */
 /* Abstract: Filesystem library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -14,9 +14,17 @@ return_t filesystem_lookup (filesystem_service_t *filesystem)
     // FIXME: Lame.
     size_t services = 1;
     service_t service;
+    service_lookup_t lookup;
 
     /* Find the filesystem service. */
-    if (service_lookup ("filesystem", NULL, NULL, NULL, FILESYSTEM_SERVICE_MAJOR_VERSION, FILESYSTEM_SERVICE_MINOR_VERSION, &services, &service) != STORM_RETURN_SUCCESS)
+
+    lookup.protocol_name = "filesystem";
+    lookup.device_vendor = NULL;
+    lookup.service_vendor = NULL;
+    lookup.major_version = FILESYSTEM_PROTOCOL_MAJOR_VERSION;
+    lookup.minor_version = FILESYSTEM_PROTOCOL_MINOR_VERSION;
+
+    if (service_lookup (&lookup, &services, &service) != STORM_RETURN_SUCCESS)
     {
         debug_print ("Failed to lookup filesystem service provider.\n");
         return FILESYSTEM_RETURN_SERVICE_UNAVAILABLE;
@@ -31,9 +39,9 @@ return_t filesystem_lookup (filesystem_service_t *filesystem)
 return_t filesystem_register (service_register_t *service_register_info,
                          service_method_t *service_method)
 {    
-    service_register_info->service_name = "filesystem";
-    service_register_info->major_version = FILESYSTEM_SERVICE_MAJOR_VERSION;
-    service_register_info->minor_version = FILESYSTEM_SERVICE_MINOR_VERSION;
+    service_register_info->protocol_name = "filesystem";
+    service_register_info->major_version = FILESYSTEM_PROTOCOL_MAJOR_VERSION;
+    service_register_info->minor_version = FILESYSTEM_PROTOCOL_MINOR_VERSION;
 
     return service_register (service_register_info, service_method);
 }
