@@ -1,4 +1,4 @@
-/* $chaos: console_output.c,v 1.1 2002/06/22 22:54:35 per Exp $ */
+/* $chaos: console_output.c,v 1.2 2002/07/11 21:46:18 per Exp $ */
 /* Abstract: Functions for writing to the console. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
             Per Lundberg <per@chaosdev.org> */
@@ -6,9 +6,9 @@
 /* Copyright 2000-2002 chaos development. */
 /* Use freely under the terms listed in the file COPYING. */
 
+#include <console/console.h>
 #include <unicode/unicode.h>
 
-#include "console_output.h"
 #include "console.h"
 
 /* This header file defines a translation map, so we know how to map
@@ -274,7 +274,7 @@ static void console_n (console_t *console, int argument)
         case 6:
         {
             /* FIXME: What to do here? */
-            console_output (console,
+            console_output (console->id,
                             "\nchaos Console Server. Copyright chaos development 1999-2000.\nStatus: OK.\n");
         }
     }
@@ -290,12 +290,13 @@ static void console_n (console_t *console, int argument)
 
 /* FIXME: Write small inline functions for all escape sequences and
    call them, so code won't have to be duplicated. */
-void console_output (console_t *console, const char *string)
+return_t console_output (console_id_t console_id, const char *string)
 {
     unsigned int string_index = 0;
-    //  int old_cursor_x = console->cursor_x;
-    //  int old_cursor_y = console->cursor_y;
-  
+    console_t *console = console_find (console_id);  
+    int old_cursor_x = console->cursor_x;
+    int old_cursor_y = console->cursor_y;
+
     /* Modify the attribute according to the flags. */
     if (console->bold == TRUE)
     {
@@ -688,8 +689,8 @@ void console_output (console_t *console, const char *string)
                                     {
                                         console->bold = TRUE;
                                         console->modified_attribute =
-                                            (console->current_attribute & 0xf0) +
-                                            ((console->current_attribute & 0x0f) + 8);
+                                            (console->current_attribute & 0xF0) +
+                                            ((console->current_attribute & 0x0F) + 8);
                                     }
                                     break;
                                 }
@@ -748,24 +749,12 @@ void console_output (console_t *console, const char *string)
 
     /* Check if the cursor position was updated. If it was, move the
        physical cursor. */
-#if FALSE
-    if (has_video &&
-        current_console == console && 
+    if (console == current_console &&
         (old_cursor_x != console->cursor_x || 
          old_cursor_y != console->cursor_y))
     {
-        video_cursor_t video_cursor;
-        message_parameter_t message_parameter;
-
-        video_cursor.x = console->cursor_x;
-        video_cursor.y = console->cursor_y;
-        message_parameter.data = &video_cursor;
-        message_parameter.block = FALSE;
-        message_parameter.length = sizeof (video_cursor_t);
-        message_parameter.protocol = IPC_PROTOCOL_VIDEO;
-        message_parameter.message_class = IPC_VIDEO_CURSOR_PLACE;
-
-        ipc_send (video_structure.output_mailbox_id, &message_parameter);
+        video.cursor_place (console->cursor_x, console->cursor_y);
     }
-#endif
+
+    return STORM_RETURN_SUCCESS;
 }
