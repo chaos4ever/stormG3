@@ -1,4 +1,4 @@
-/* $chaos: multiboot.h,v 1.9 2002/10/09 12:54:44 per Exp $ */
+/* $chaos: multiboot.h,v 1.10 2002/10/09 13:07:36 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -6,9 +6,11 @@
 /* Use freely under the terms listed in the file LICENSE. */
 
 /** 
- * @file multiboot.h
- * @brief Multiboot stuff.
+ * @file                multiboot.h
+ * @brief               Multiboot stuff.
  */
+
+// FIXME: Go through the documentation in this file.
 
 #ifndef __STORM_IA32_MULTIBOOT_H__
 #define __STORM_IA32_MULTIBOOT_H__
@@ -108,7 +110,7 @@ typedef struct
     uint32_t depth;
     uint32_t frame_buffer_address;
 #endif
-} multiboot_info_t __attribute__ ((packed));
+} multiboot_info_t PACKED;
 
 /**
  * @brief Information about a Multiboot module. 
@@ -119,7 +121,7 @@ typedef struct
     uint32_t end;
     char *name;
     uint32_t reserved;
-} multiboot_module_info_t __attribute__ ((packed));
+} multiboot_module_info_t PACKED;
 
 /**
  * @brief Information about the memory in the system. 
@@ -130,7 +132,7 @@ typedef struct
     uint64_t base_address;
     uint64_t length;
     uint32_t type;
-} multiboot_memory_map_t __attribute__ ((packed)) ;
+} multiboot_memory_map_t PACKED;
 
 /* External variables. */
 extern multiboot_info_t multiboot_info;
