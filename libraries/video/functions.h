@@ -11,4 +11,8 @@
 /* Lookup the first video service provider. */
 extern return_t video_lookup (video_service_t *video);
 
+/* Register a video service provider. */
+extern return_t video_register (service_register_t *service_register_info,
+                                service_method_t *service_method);
+    
 #endif /* !__VIDEO_FUNCTIONS_H__ */

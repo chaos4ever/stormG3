@@ -26,3 +26,14 @@ return_t video_lookup (video_service_t *video)
 
     return VIDEO_RETURN_SUCCESS;
 }
+
+/* Register a video service provider. */
+return_t video_register (service_register_t *service_register_info,
+                         service_method_t *service_method)
+{    
+    service_register_info->service_name = "video";
+    service_register_info->major_version = VIDEO_SERVICE_MAJOR_VERSION;
+    service_register_info->minor_version = VIDEO_SERVICE_MINOR_VERSION;
+
+    return service_register (service_register_info, service_method);
+}
