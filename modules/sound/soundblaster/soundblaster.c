@@ -1,4 +1,4 @@
-/* $chaos: soundblaster.c,v 1.1 2002/08/13 19:17:27 per Exp $ */
+/* $chaos: soundblaster.c,v 1.3 2002/12/03 21:54:43 per Exp $ */
 /* Abstract: Sound Blaster server */
 
 /* Authors: Per Lundberg <per@chaosdev.org> 
@@ -11,8 +11,9 @@
    found in sblaster.doc, which can be found in the same directory as
    this source code. */
 
-#include <log/log.h>
 #include <storm/storm.h>
+#include <log/log.h>
+#include <sound/sound.h>
 
 #include "soundblaster.h"
 
@@ -233,8 +234,7 @@ return_t module_start (void)
             { -1, NULL }
         };
 
-    return STORM_RETURN_NOT_IMPLEMENTED;
-    //return sound_register (&service_register_info, service_method);
+    return sound_register (&service_register_info, service_method);
 }
  
 /* Handle interrupts. */
