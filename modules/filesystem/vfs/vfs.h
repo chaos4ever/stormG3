@@ -1,4 +1,4 @@
-/* $chaos: vfs.h,v 1.1 2002/08/03 12:05:23 per Exp $ */
+/* $chaos: vfs.h,v 1.2 2002/08/04 09:27:19 per Exp $ */
 /* Abstract: Virtual file system provider, header file. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -22,7 +22,7 @@
 extern mount_t *first_mount;
 extern assign_t *first_assign;
 extern file_t *first_file;
-extern block_info_t info;
+extern block_info_t block_info;
 extern vfs_file_handle_t free_handle;
 
 #endif /* !__VFS_H__ */
