@@ -1,4 +1,4 @@
-/* $chaos: cpu.h,v 1.17 2002/10/14 21:29:31 per Exp $ */
+/* $chaos: cpu.h,v 1.18 2002/10/15 18:01:35 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -195,7 +195,7 @@ typedef struct
     {
         uint32_t real_flags;
         cpuid_flags_t flags;
-    } flags;
+    };
  
     /**
      * @brief           CPU configuration. 
