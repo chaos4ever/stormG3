@@ -1,0 +1,40 @@
+<?xml version='1.0' ?> <!-- -*- xml -*- -->
+
+<!-- $chaos: process.xml,v 1.1 2002/05/27 07:52:29 per Exp $ -->
+
+<appendix id="stdint">
+  <?dbhtml filename="stdint.html"?>
+  <title>The stdint.h file</title>
+  <para>
+    We use the stdint.h header file to provide us with data types that
+    we need, like unsigned 32-bit integer and so on. It is included in
+    the ISO C99 standard and should be provided with a new
+    compiler. If it is not, you can take this file here and put it in
+    a place of your choice.
+  </para>
+  <programlisting><![CDATA[
+/*
+ *	ISO C99: 7.18 Integer types <stdint.h>
+ */
+
+#ifndef _STDINT_H
+#define _STDINT_H	1
+
+/* Exact integral types.  */
+/* Signed.  */
+
+typedef signed char		int8_t;
+typedef short int		int16_t;
+typedef int			int32_t;
+typedef long long int		int64_t;
+
+/* Unsigned.  */
+typedef unsigned char		uint8_t;
+typedef unsigned short int	uint16_t;
+typedef unsigned int		uint32_t;
+typedef unsigned long long int	uint64_t;
+
+#endif /* stdint.h */
+]]>
+  </programlisting>
+</appendix>
