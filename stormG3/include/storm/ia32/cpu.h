@@ -1,4 +1,4 @@
-/* $chaos: cpu.h,v 1.6 2002/06/13 19:10:17 per Exp $ */
+/* $chaos: cpu.h,v 1.7 2002/06/13 20:07:38 per Exp $ */
 /* Abstract: CPU defines and functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -24,7 +24,7 @@ static inline uint32_t cpu_get_cr2 (void)
 {			   
     uint32_t return_value;
     asm volatile ("movl %%cr2, %0"
-                  : "=a" (return_value) 
+                  : "=r" (return_value) 
                   :);
     return return_value;
 }
@@ -41,7 +41,7 @@ static inline uint32_t cpu_get_esp (void)
   uint32_t return_value;
 
   asm volatile ("movl %%esp, %0"
-		: "=a" (return_value)
+		: "=r" (return_value)
 		:);
 
   return return_value;
@@ -110,27 +110,15 @@ typedef struct
   uint32_t configuration;
 } __attribute__ ((packed)) cpu_info_t;
 
-/* The IA32 registers. */
+/* The IA32 registers. In convenient order. */
 typedef struct
 {
-    /* General-purpose. */
-    uint32_t eax;
-    uint32_t ebx;
-    uint32_t ecx;
-    uint32_t edx;
+    /* These ones are pushed manually. */
+    uint32_t ds, es, fs, gs;
 
-    /* Index registers. */
-    uint32_t esi;
-    uint32_t edi;
-
-    /* Flags. */
-    uint32_t eflags;
-
-    /* Segment registers. */
-    uint32_t cs;
-    uint32_t ds;
-    uint32_t es;
-    uint32_t fs;
+    /* These are gently stored by a pusha. */
+    uint32_t edi, esi, ebp, esp;
+    uint32_t ebx, edx, ecx, eax;
 } cpu_register_t;
 
 /* External variables. */
