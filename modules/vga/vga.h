@@ -1,4 +1,4 @@
-/* $chaos: vga.h,v 1.2 2002/05/23 11:24:03 per Exp $ */
+/* $chaos: vga.h,v 1.1 2002/06/23 12:09:07 per Exp $ */
 /* Abstract: VGA header file. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -8,6 +8,7 @@
 #ifndef __VGA_H__
 #define __VGA_H__
 
+/* Defines. */
 #define VGA_PORT_BASE           0x3C0
 #define VGA_PORTS               32
 #define VGA_PALETTE_READ        (VGA_PORT_BASE + 7)
@@ -20,5 +21,23 @@
 
 #define VGA_MEMORY              0xA0000
 #define VGA_MEMORY_SIZE         (64 * KB)
+
+/* Types. */
+typedef struct
+{
+    unsigned int mode;
+    unsigned int width;
+    unsigned int height;
+    unsigned int bpp;
+    unsigned int type;
+} vga_mode_type;
+
+typedef struct
+{
+    uint8_t red, green, blue;
+} __attribute__ ((packed)) vga_palette_entry_type;
+
+/* Function protoypes. */
+extern void vga_set_mode (uint32_t mode);
 
 #endif /* !__VGA_H__ */
