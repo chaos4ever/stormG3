@@ -1,4 +1,4 @@
-/* $chaos: elf.c,v 1.2 2002/06/17 07:23:15 per Exp $ */
+/* $chaos: elf.c,v 1.3 2002/06/17 22:57:15 per Exp $ */
 /* Abstract: ELF functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -84,20 +84,25 @@ return_t elf_parse (elf_header_t *elf_header, elf_parsed_t *elf_parsed)
 return_t elf_resolve (elf_parsed_t *elf_parsed, module_function_t *function)
 {
     elf_symbol_t *symbol;
-    elf_header_t *elf_header = elf_parsed->elf_header;
     elf_section_header_t *symbol_header = elf_parsed->symbol_header;
-    char *string_table = (char *) (((uint32_t) elf_header) +
+    char *string_table = (char *) (((address_t) elf_parsed->image) +
                                    elf_parsed->string_header->offset);
 
     /* Work out all unresolved symbols. Symbol index 0 is not used. */
     for (int symbol_index = 1; symbol_index * sizeof (elf_symbol_t) <
              symbol_header->size; symbol_index++)
     {
-        symbol = (elf_symbol_t *) (((uint32_t) elf_header) + symbol_header->offset + symbol_index * sizeof (elf_symbol_t));
+        symbol = (elf_symbol_t *) (((address_t) elf_parsed->image) + symbol_header->offset + symbol_index * sizeof (elf_symbol_t));
 
+        /* Non-empty value and a section header means we should just
+           do simple address translation to our new offset. */
+        if (symbol->value != 0 && symbol->section_header != 0)
+        {
+            symbol->value += (address_t) elf_parsed->image;
+        }
         /* Empty value and no section header means unresolved
            symbol. */
-        if (symbol->value == 0 && symbol->section_header == 0)
+        else if (symbol->value == 0 && symbol->section_header == 0)
         {
             char *name = string_table + symbol->name;
             bool match = FALSE;
@@ -145,7 +150,7 @@ return_t elf_relocate (elf_parsed_t *elf_parsed)
     for (int index = 0; index * sizeof (elf_relocation_t) <
              relocation_header->size; index++)
     {
-        uint32_t symbol_address;
+        address_t symbol_address;
         address_t *relocation_address;
         return_t return_value = elf_symbol_find_by_index (elf_parsed, relocation[index].symbol_index, &symbol_address);
         if (return_value != STORM_RETURN_SUCCESS)
@@ -156,14 +161,26 @@ return_t elf_relocate (elf_parsed_t *elf_parsed)
         /* Perform this relocation. */
         relocation_address = (address_t *) (((address_t) elf_parsed->image) + relocation[index].offset);
         
-        if (relocation[index].symbol_type == 2)
+        if (relocation[index].symbol_index == 25) /* keyboard_irq_handler. */
+        {
+            debug_print ("%x %u %u\n",
+                         relocation[index].offset,
+                         relocation[index].symbol_type,
+                         relocation[index].symbol_index);
+        }
+
+        // FIXME: Use defines for these types.
+        if (relocation[index].symbol_type == 1)
+        {
+            *relocation_address = *relocation_address + symbol_address;
+        }
+        else if (relocation[index].symbol_type == 2)
         {
           
             /* Are you confused yet? :-) */
             *relocation_address = (address_t) (symbol_address - (address_t) relocation_address + *relocation_address);
         }
-        else if (relocation[index].symbol_type == 8 ||
-                 relocation[index].symbol_type == 1)
+        else if (relocation[index].symbol_type == 8)
         {
             *relocation_address = *relocation_address + (address_t) elf_parsed->image;
         }
@@ -196,7 +213,7 @@ return_t elf_symbol_find_by_index (elf_parsed_t *elf_parsed,
         return STORM_RETURN_MODULE_INVALID;
     }
 
-    symbol = (elf_symbol_t *) (((uint32_t) elf_parsed->elf_header) + symbol_header->offset + index * sizeof (elf_symbol_t));
+    symbol = (elf_symbol_t *) (((address_t) elf_parsed->image) + symbol_header->offset + index * sizeof (elf_symbol_t));
     *address = symbol->value;
     return STORM_RETURN_SUCCESS;
 }
@@ -206,14 +223,13 @@ return_t elf_symbol_find_by_name (elf_parsed_t *elf_parsed,
                                   char *name, uint32_t *address)
 {
     elf_section_header_t *symbol_header = elf_parsed->symbol_header;
-    elf_header_t *elf_header = elf_parsed->elf_header;
-    char *string_table = (char *) (((uint32_t) elf_header) +
+    char *string_table = (char *) (((address_t) elf_parsed->image) +
                                    elf_parsed->string_header->offset);
 
     for (int symbol_index = 1; symbol_index * sizeof (elf_symbol_t) <
              symbol_header->size; symbol_index++)
     {
-        elf_symbol_t *symbol = (elf_symbol_t *) (((uint32_t) elf_header) + symbol_header->offset + symbol_index * sizeof (elf_symbol_t));
+        elf_symbol_t *symbol = (elf_symbol_t *) (((address_t) elf_parsed->image) + symbol_header->offset + symbol_index * sizeof (elf_symbol_t));
         char *symbol_name = string_table + symbol->name;
 
         if (string_compare (symbol_name, name) == 0)
