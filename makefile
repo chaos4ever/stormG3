@@ -21,7 +21,7 @@ configure:
 	cd storm && ./configure --install-prefix $$CHAOS_INSTALL_PATH
 	$(MAKE) -C libraries configure
 	$(MAKE) -C servers configure
-	$(MAKE) -C program configure
+	$(MAKE) -C programs configure
 
 # This one is used for building a fresh source tree.
 
