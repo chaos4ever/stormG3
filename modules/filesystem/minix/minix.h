@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: minix.h,v 1.1 2002/07/09 08:37:37 per Exp $ */
 /* Abstract: Minix file system data types. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -8,7 +8,7 @@
 #ifndef __MINIX_H__
 #define __MINIX_H__
 
-//#include <storm/storm.h>
+#include <storm/storm.h>
 
 /* The size of a Minix block. */
 #define MINIX_BLOCK_SIZE                1024
@@ -112,8 +112,8 @@ typedef struct
 /* A structure we use to keep track of a Minix file system. */
 typedef struct
 {
-    // FIXME: Remove when we can.
-    FILE *file;
+    /* The block service provider we are using. */
+    block_service_t block;
 
     /* The size of blocks on the volume this filesystem is on. */
     size_t block_size;

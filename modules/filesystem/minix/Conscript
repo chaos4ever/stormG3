@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.5 2002/06/26 06:40:38 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.1 2002/07/09 08:37:37 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the MINIX file system service provider.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -9,9 +9,11 @@
 $module_binary = 'minix.so';
 
 Import qw( cons module_directory library_directory );
-$cons = $cons->clone( LDFLAGS => '' );
+$cons = $cons->clone(LIBS => '-lblock -llog');
+Depends $cons $module_binary, "$library_directory/libblock.a",
+  "$library_directory/liblog.a";
 Program $cons $module_binary, 'minix.c';
-Command $cons 'install', $module_binary, 
+Command $cons 'install', $module_binary,
   qq(mkdir -p $module_directory
      install filesystem/minix/$module_binary $module_directory
      gzip -9f $module_directory/$module_binary);
