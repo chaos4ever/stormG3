@@ -1,4 +1,4 @@
-MILESTONES ($chaos: MILESTONES,v 1.4 2002/06/11 16:48:49 per Exp $)
+MILESTONES ($chaos: MILESTONES,v 1.5 2002/06/11 21:29:55 per Exp $)
 ==========
 
 This is something like a road map for chaos as I see it:
@@ -6,9 +6,10 @@ This is something like a road map for chaos as I see it:
 M1
 --
 Finish memory allocation (physical, global and virtual) AND
-deallocation. Physical allocation and deallocation works, global
-allocation is done but global deallocation and virtual allocation and
-deallocation remains to be done.
+deallocation. Physical and global allocation and deallocation works,
+virtual allocation and deallocation remains to be done. Also, support
+physical allocation of more than 1 page through sweep-and-scan
+technique.
 
 M2
 --
@@ -32,5 +33,4 @@ daily Unix programs, like bash, Apache, MySQL, gcc. This will provide
 a good base for writing the "real" chaos applications like tornado,
 cAPS and so on.
 
--- Per Lundberg <per@chaosdev.org>  Tue, 11 Jun 2002 16:01:51 +0200
-
+-- Per Lundberg <per@chaosdev.org>  Wed, 12 Jun 2002 08:55:54 +0200
