@@ -1,4 +1,4 @@
-/* $chaos: init.c,v 1.6 2002/06/15 15:11:51 per Exp $ */
+/* $chaos: init.c,v 1.7 2002/06/16 21:48:03 per Exp $ */
 /* Abstract: storm initialization. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -74,6 +74,13 @@ static uint16_t gdtr[] UNUSED =
    almost. _start () sets up some stuff first...) */
 static void kernel_entry (void)
 {
+#ifdef GDB
+    gdb_serial_init (GDB_PORT, GDB_SPEED);
+    gdb_set_debug_traps ();
+
+    BREAKPOINT ();
+#endif
+
     multiboot_init ();
     main_bootup (0, NULL);
 

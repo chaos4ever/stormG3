@@ -1,4 +1,4 @@
-/* $chaos: main.c,v 1.17 2002/06/18 19:41:50 per Exp $ */
+/* $chaos: main.c,v 1.18 2002/08/06 19:39:15 per Exp $ */
 /* Abstract: This is the startup point of storm. It is executed right
    after the assembly language init code has set up the GDT, kernel
    stack, etc. Here, we initialise everything in the storm, like
@@ -67,12 +67,6 @@ void main_bootup (int argument_count UNUSED, char *arguments[] UNUSED)
 
     /* Set up module support. */
     module_init ();
-
-#ifdef GDB
-    gdb_serial_init (GDB_PORT, GDB_SPEED);
-    gdb_set_debug_traps ();
-    BREAKPOINT ();
-#endif
 
     /* We are finished. Pass on to the idle task. */
 }
