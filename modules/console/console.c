@@ -1,4 +1,4 @@
-/* $chaos: console.c,v 1.4 2002/06/24 21:40:30 per Exp $ */
+/* $chaos: console.c,v 1.5 2002/07/10 21:55:20 per Exp $ */
 /* Abstract: Console module. Will eventually be 100% ANSI escape
              sequence compatible. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
@@ -8,15 +8,21 @@
 /* Use freely under the terms listed in the file COPYING. */
 
 #include <console/console.h>
+#include <video/video.h>
 
 #include "console.h"
 #include "console_output.h"
 
 volatile unsigned int number_of_consoles = 0;
-character_t *screen = (character_t *) NULL;
+// FIXME: If the user has a monochrome adapter, this won't work... The
+// video memory will be at another place.
+character_t *screen = (character_t *) CONSOLE_VIDEO_MEMORY;
 volatile console_t *current_console = NULL;
 console_t *console_list = NULL;
 volatile bool has_video = FALSE;
+
+/* The video service provider we are using. */
+video_service_t video;
 volatile console_t *console_shortcut[12] =
 {
     NULL,
@@ -65,7 +71,7 @@ void console_flip (console_t *console)
     console->output = screen;
     current_console->output = current_console->buffer;
 
-    if (current_console->type == CONSOLE_TYPE_TEXT)
+    if (current_console->type == CONSOLE_MODE_TEXT)
     {
         memory_copy (current_console->buffer, screen,
                      current_console->width * current_console->height *
@@ -109,7 +115,7 @@ void console_flip (console_t *console)
 #endif
     }
     
-    if (console->type == CONSOLE_TYPE_TEXT)
+    if (console->type == CONSOLE_MODE_TEXT)
     {
         memory_copy (console->output, console->buffer,
                      console->width * console->height *
@@ -194,22 +200,11 @@ static return_t console_handle_key_event (keyboard_packet_t *keyboard_packet)
             }
         }
         
-        /* Send on... If we are allowed to. */
-        if (current_console->active_application != NULL)
-        {
-            if (current_console->active_application->wants_keyboard)
-            {
-                // FIXME: Put it in her stdin.
-            }
-        }
-        else if (current_console->active_application == NULL)
-        {
-            debug_print ("No active application.");
-            // system_call_debug_print_simple ("console: Something is broken. A mutex will fix this!\n");
-        }
+        // FIXME: Put it in someone's stdin.
+        debug_print ("stdin data received.\n");
     }        
 
-    debug_print ("%s: We got an event. ", __FILE__);
+    debug_print ("%s: We got an event.\n", __FILE__);
     
     return STORM_RETURN_SUCCESS;
 }
@@ -218,9 +213,95 @@ static return_t console_handle_key_event (keyboard_packet_t *keyboard_packet)
 static return_t console_open (console_id_t *console_id, size_t width,
                               size_t height, size_t depth, int mode_type)
 {
-    width = height = depth = mode_type;
-    *console_id = 1;
-    return STORM_RETURN_NOT_IMPLEMENTED;
+    console_t *our_console;
+    return_t return_value;
+    return_value = memory_global_allocate ((void **) &our_console, sizeof (console_t));
+    if (return_value != STORM_RETURN_SUCCESS)
+    {
+        return return_value;
+    }
+
+    if (width == 0)
+    {
+        width = CONSOLE_DEFAULT_WIDTH;
+    }
+
+    if (height == 0)
+    {
+        height = CONSOLE_DEFAULT_HEIGHT;
+    }
+
+    if (depth == 0)
+    {
+        depth = CONSOLE_DEFAULT_DEPTH;
+    }
+
+    /* Fill in some required stuff. */
+    our_console->width = width;
+    our_console->height = height;
+    our_console->depth = depth;
+    our_console->type = mode_type;
+        
+    our_console->cursor_x = 0;
+    our_console->cursor_y = 0;
+        
+    our_console->cursor_saved_x = -1;
+    our_console->cursor_saved_y = -1;
+        
+    our_console->state = CONSOLE_STATE_CHARACTER;
+    our_console->numeric_argument_index = 0;
+        
+    our_console->current_attribute = CONSOLE_DEFAULT_ATTRIBUTE;
+        
+    /* Allocate memory for a buffer for this console. */
+    if (our_console->type == CONSOLE_MODE_TEXT)
+    {
+        return_value = memory_global_allocate ((void **) &our_console->buffer, our_console->width * our_console->height * sizeof (character_t));
+    }
+    else
+    {
+        /* This won't work now, because we can't allocate this
+           much memory... */
+#if FALSE
+        memory_allocate ((void **) &((*our_console)->buffer),
+                         (*our_console)->width *
+                         (*our_console)->height *
+                         (*our_console)->depth);
+#endif
+    }
+        
+    our_console->output = our_console->buffer;
+    our_console->lock = FALSE;
+    
+    /* Is this the first console? If so, activate it. */
+    if (current_console == NULL)
+    {
+        current_console = our_console;
+        our_console->output = screen;
+    }
+    else
+    {
+        our_console->lock = TRUE;
+        console_flip (our_console);
+        our_console->lock = FALSE;
+    }
+    
+    /* Make sure we are blank. */
+    console_kill_screen (our_console, 2);
+
+    /* ...and in the upper left. */
+    console_cursor_move (our_console, 1, 1);
+    console_link (our_console);
+    timer_sleep_milli (3000);
+
+    // FIXME: This will break if someone removes a console that's not
+    // the last console...
+    *console_id = number_of_consoles;
+    
+    /* We have added a new console. */
+    number_of_consoles++;
+
+    return STORM_RETURN_SUCCESS;
 }
 
 /* Close a previously opened console. */
@@ -244,6 +325,14 @@ static return_t service_info (void *console_void)
 
 return_t module_start (void)
 {
+    return_t return_value = video_init (&video);
+    if (return_value != STORM_RETURN_SUCCESS)
+    {
+        return return_value;
+    }
+
+    has_video = TRUE;
+
     return service_register ("console", "chaos development", "Console module",
                              "1", 1, &service_info);
 }
