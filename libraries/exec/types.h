@@ -1,4 +1,4 @@
-/* $chaos: types.h,v 1.1 2002/10/04 20:53:22 per Exp $ */
+/* $chaos: types.h,v 1.2 2002/10/04 21:24:19 per Exp $ */
 /* Abstract: Exec library types. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -10,6 +10,8 @@
 
 /* Run the given program. */
 typedef return_t (*exec_run_t)(void *program);
+
+// TODO: typedef return_t (*exec_load_library_t)(void *library);
 
 typedef struct
 {
