@@ -1,4 +1,4 @@
-# $chaos: doxygen,v 1.5 2002/10/10 15:29:20 per Exp $
+# $chaos: doxygen,v 1.6 2002/10/22 21:00:40 per Exp $
 # Doxyfile 1.2.18
 
 # This file describes the settings to be used by the documentation system
@@ -363,7 +363,7 @@ EXCLUDE                =
 # The EXCLUDE_SYMLINKS tag can be used select whether or not files or directories 
 # that are symbolic links (a Unix filesystem feature) are excluded from the input.
 
-EXCLUDE_SYMLINKS       = NO
+EXCLUDE_SYMLINKS       = YES
 
 # If the value of the INPUT tag contains directories, you can use the 
 # EXCLUDE_PATTERNS tag to specify one or more wildcard patterns to exclude 
