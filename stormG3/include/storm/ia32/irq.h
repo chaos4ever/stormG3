@@ -1,4 +1,4 @@
-/* $chaos: irq.h,v 1.4 2002/06/17 18:51:22 per Exp $ */
+/* $chaos: irq.h,v 1.5 2002/06/18 21:58:04 per Exp $ */
 /* Abstract: IRQ handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -48,6 +48,7 @@ typedef struct
 extern void irq_init (void);
 
 /* Low-level interrupt handlers. */
+extern void irq0_handler (void);
 extern void irq1_handler (void);
 extern void irq3_handler (void);
 extern void irq4_handler (void);
