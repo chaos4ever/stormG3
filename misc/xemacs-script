@@ -1,6 +1,6 @@
 ;; -*- Mode: Emacs-Lisp -*-
 
-;; $chaos: xemacs-script,v 1.4 2002/05/23 11:16:44 per Exp $
+;; $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $
 
 ;; Abstract: Personal settings which aren't to be overwritten by M-x
 ;; customize or whatever.
@@ -90,20 +90,16 @@
   )
 
 (defun insert-cpl ()
-  "Insert the copying information from the CPL at the start of the file"
+  "Insert the copying information at the start of the file"
   (interactive)
   (goto-line 1)
 
-  (insert "/* $chaos: xemacs-script,v 1.4 2002/05/23 11:16:44 per Exp $ */\n")
+  (insert "/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */\n")
   (insert "/* Abstract: */\n")
   (insert "/* Author: " chaos-developer " <" chaos-mail-address "> */\n\n")
 
-  (insert "/* Copyright " (get-year) " " copyright-holder ". */\n\n")
-
-  (insert "/* This  program is licensed under  the CPL. Basically, this means you\n")
-  (insert "   can do  most anything you like, as  long  as you give  credit where\n")
-  (insert "   due. Consult the file CPL (included with this package) for the\n")
-  (insert "   full conditions. */\n\n")
+  (insert "/* Copyright " (get-year) " " copyright-holder ". */\n")
+  (insert "/* Use freely under the terms listed in the file COPYING. */\n\n")
 
   (goto-line 2)
   (move-to-column 13)
