@@ -5,7 +5,7 @@
 # Copyright 1998-2000 chaos development.
 
 PREFIX=/mnt/chaos
-DIRECTORES=data data/programming data/programming/c data/programming/c/headers
+DIRECTORES=data data/programming data/programming/c data/programming/c/headers system system/kernel system/servers
 
 .PHONY:	all install clean snapshot autochaos configure
 
