@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.2 2002/06/22 19:28:29 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.3 2002/06/22 20:21:24 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for stormG3
 # Author: Per Lundberg <per@chaosdev.org>
@@ -11,7 +11,7 @@ use POSIX; # for getcwd.
 Conscript_chdir 0;
 
 # Change this to wherever your chaos installation root may be.
-$root = '/tftpboot';
+$root = ($ARG{'root'} || '/tftpboot');
 $header_directory = "$root/data/programming/c/headers";
 $kernel_directory = "$root/system/kernel";
 $build_directory = getcwd();
