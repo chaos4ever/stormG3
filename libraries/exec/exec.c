@@ -1,4 +1,4 @@
-/* $chaos: exec.c,v 1.1 2002/10/04 20:53:22 per Exp $ */
+/* $chaos: exec.c,v 1.2 2002/10/04 21:23:44 per Exp $ */
 /* Abstract: Exec library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -15,8 +15,7 @@ return_t exec_lookup (exec_service_t *exec)
     service_t *service;
 
     /* Find the exec service. */
-    if (service_lookup ("exec", NULL, NULL, NULL, 1, &services, 
-                        &service) != STORM_RETURN_SUCCESS)
+    if (service_lookup ("exec", NULL, NULL, NULL, EXEC_SERVICE_MAJOR_VERSION, EXEC_SERVICE_MINOR_VERSION, &services, &service) != STORM_RETURN_SUCCESS)
     {
         debug_print ("Failed to lookup exec service provider.\n");
         return EXEC_RETURN_SERVICE_UNAVAILABLE;
@@ -32,6 +31,5 @@ return_t exec_lookup (exec_service_t *exec)
 return_t exec_register (char *vendor, char *model, char *id,
                         service_info_t service_info)
 {    
-    return service_register ("exec", vendor, model, id, EXEC_SERVICE_VERSION,
-                             service_info);
+    return service_register ("exec", vendor, model, id, EXEC_SERVICE_MAJOR_VERSION, EXEC_SERVICE_MINOR_VERSION, service_info);
 }

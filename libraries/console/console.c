@@ -1,4 +1,4 @@
-/* $chaos: console.c,v 1.4 2002/08/09 05:59:39 per Exp $ */
+/* $chaos: console.c,v 1.5 2002/10/04 19:00:51 per Exp $ */
 /* Abstract: Console library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -17,7 +17,7 @@ return_t console_lookup (console_service_t *console)
     service_t *service;
 
     /* Find the console service. */
-    if (service_lookup ("console", NULL, NULL, NULL, 1, &services, &service) != STORM_RETURN_SUCCESS)
+    if (service_lookup ("console", NULL, NULL, NULL, CONSOLE_SERVICE_MAJOR_VERSION, CONSOLE_SERVICE_MINOR_VERSION, &services, &service) != STORM_RETURN_SUCCESS)
     {
         debug_print ("Failed to lookup console service provider.\n");
         return CONSOLE_RETURN_SERVICE_UNAVAILABLE;
