@@ -1,5 +1,5 @@
 
-	      The Chaos Public Licence (CPL), version 1
+	      The Chaos Public License (CPL), version 1
    Copyright (c) 2000-2002 chaos development. All rights reserved.
 
 Redistribution  and use in  source and  binary forms,  with or without
@@ -48,13 +48,13 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 Appendix A: How to apply these terms to your program
 ====================================================
 
-To show that your source file is licenced under this licence, either
-put the complete licence in each file OR, preferrably, this short
+To show that your source file is licensed under this license, either
+put the complete license in each file OR, preferrably, this short
 reference:
 
 /* Copyright (c) YYYY nameOfYourCompany. All rights reserved. */
 
-/* This  program is licenced under  the CPL. Basically, this means you
+/* This  program is licensed under  the CPL. Basically, this means you
    can do  most anything you like, as  long  as you give  credit where
    due. Consult the file XXXXXXXX (included with this package) for the
    full conditions. */
