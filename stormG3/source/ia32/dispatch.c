@@ -1,4 +1,4 @@
-/* $chaos: dispatch.c,v 1.7 2002/10/17 21:28:58 per Exp $ */
+/* $chaos: dispatch.c,v 1.9 2002/11/30 11:43:35 per Exp $ */
 /* Abstract: Dispatcher. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -142,6 +142,10 @@ void dispatch_init (void)
 
     /* Set the current and last task to this task. */
     dispatch_current = dispatch;
+
+    /* Set the current thread to the kernel thread (the only one in
+       the thread list). */
+    dispatch_current_thread = process_list->thread_list;
 }
 
 /* The task switcher -- IRQ0 handler (called from irq_handlers.S that
