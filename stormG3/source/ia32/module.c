@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.18 2002/07/21 10:21:52 per Exp $ */
+/* $chaos: module.c,v 1.19 2002/08/08 20:08:43 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -31,7 +31,7 @@ static module_function_t function[] =
     { "port_range_register", (function_t) &port_range_register },
     { "port_range_unregister", (function_t) &port_range_unregister },
     { "service_register", (function_t) &service_register },
-    { "service_resolve", (function_t) &service_resolve },
+    { "service_lookup", (function_t) &service_lookup },
     { "timer_sleep_milli", (function_t) &timer_sleep_milli },
     { NULL, (function_t) NULL }
 };

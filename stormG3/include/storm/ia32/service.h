@@ -1,4 +1,4 @@
-/* $chaos: service.h,v 1.3 2002/06/24 21:10:00 per Exp $ */
+/* $chaos: service.h,v 1.4 2002/06/24 21:35:40 per Exp $ */
 /* Abstract: Service support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -83,9 +83,9 @@ extern return_t service_register (char *name, char *vendor, char *model,
 /* Unregister a service provider. */
 extern return_t service_unregister (char *service, function_t handler);
 
-/* Resolve a service. */
-extern return_t service_resolve (char *name, char *vendor, char *model,
-                                 char *id, unsigned int version, 
-                                 size_t *services, service_t **service);
+/* Lookup a service. */
+extern return_t service_lookup (char *name, char *vendor, char *model,
+                                char *id, unsigned int version, 
+                                size_t *services, service_t **service);
 
 #endif /* !__STORM_IA32_SERVICE_H__ */

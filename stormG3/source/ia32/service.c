@@ -1,4 +1,4 @@
-/* $chaos: service.c,v 1.6 2002/06/24 21:35:54 per Exp $ */
+/* $chaos: service.c,v 1.7 2002/07/04 21:26:38 per Exp $ */
 /* Abstract: Service support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -65,10 +65,10 @@ return_t service_unregister (char *service __attribute__ ((unused)),
     return STORM_RETURN_SUCCESS;
 }
 
-/* Resolve a service. */
-return_t service_resolve (char *name, char *vendor, char *model, char *id,
-                          unsigned int version, size_t *services,
-                          service_t **out_service)
+/* Lookup a service. */
+return_t service_lookup (char *name, char *vendor, char *model, char *id,
+                         unsigned int version, size_t *services,
+                         service_t **out_service)
 {
     service_data_t *service;
     unsigned int counter = 0;
