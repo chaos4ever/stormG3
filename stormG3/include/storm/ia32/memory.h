@@ -1,4 +1,4 @@
-/* $chaos: memory.h,v 1.1 2002/05/25 20:09:39 per Exp $ */
+/* $chaos: memory.h,v 1.2 2002/06/05 18:17:43 per Exp $ */
 /* Abstract: Memory operations. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -67,6 +67,25 @@ static inline void memory_set_uint16 (uint16_t *addr, uint16_t c,
     asm volatile  ("cld\n"
                    "rep\n"
                    "stosw"
+                   : 
+                   "=&c" (d0),
+                   "=&D" (d1)
+                   : 
+                   "a" (c),
+                   "1" (addr),
+                   "0" (size)
+                   :
+                   "memory");
+}
+
+static inline void memory_set_uint32 (uint32_t *addr, uint32_t c,
+                                      unsigned int size)
+{
+    int d0, d1;
+
+    asm volatile  ("cld\n"
+                   "rep\n"
+                   "stosl"
                    : 
                    "=&c" (d0),
                    "=&D" (d1)

@@ -1,4 +1,4 @@
-/* $chaos: main.c,v 1.5 2002/05/27 06:22:50 per Exp $ */
+/* $chaos: main.c,v 1.6 2002/06/05 19:56:07 per Exp $ */
 /* Abstract: This is the startup point of storm. It is executed right
    after the assembly language init code has set up the GDT, kernel
    stack, etc. Here, we initialise everything in the storm, like
@@ -18,6 +18,7 @@
 #include <storm/ia32/debug.h>
 #include <storm/ia32/main.h>
 #include <storm/ia32/memory_physical.h>
+#include <storm/ia32/memory_virtual.h>
 #include <storm/ia32/multiboot.h>
 
 /* Do the bootup procedure. */
@@ -34,6 +35,9 @@ void main_bootup (int argument_count UNUSED, char *arguments[] UNUSED)
     
     /* Set up physical memory allocation. */
     memory_physical_init ();
+
+    /* Set up virtual memory. */
+    memory_virtual_init ();
 
     /* Test the allocation. */
     debug_print ("Return value: %d", memory_physical_allocate(&pointer1, 1));

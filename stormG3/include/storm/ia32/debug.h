@@ -1,4 +1,4 @@
-/* $chaos: debug.h,v 1.1 2002/05/25 20:09:39 per Exp $ */
+/* $chaos: debug.h,v 1.2 2002/06/05 18:17:42 per Exp $ */
 /* Abstract: Debug declarations. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -9,6 +9,7 @@
 #ifndef __STORM_IA32_DEBUG_H__
 #define __STORM_IA32_DEBUG_H__
 
+#include <storm/defines.h>
 #include <storm/types.h>
 
 /* OpenBSD rules. */
@@ -26,7 +27,16 @@ typedef struct
   uint8_t attribute;
 } __attribute__ ((packed)) debug_screen_type;
 
+/* Initialize debugging code. */
 extern void debug_init (void);
+
+/* Print a debug message. */
 extern void debug_print (const char *format_string, ...);
+
+/* Macros. */
+#define DEBUG_HALT(message...) \
+  debug_print (## message); \
+  debug_print ("(%s:%s)\n", __FILE__, __LINE__); \
+  while (TRUE);
 
 #endif /* !__STORM_IA32_DEBUG_H__ */
