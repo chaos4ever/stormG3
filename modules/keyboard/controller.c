@@ -1,4 +1,4 @@
-/* $chaos: controller.c,v 1.2 2002/06/18 09:22:35 per Exp $ */
+/* $chaos: controller.c,v 1.3 2002/06/18 22:18:17 per Exp $ */
 /* Abstract: Common code for the keyboard server. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -16,107 +16,106 @@
 
 uint8_t handle_event (void)
 {
-  uint8_t status = controller_read_status ();
-  unsigned int work;
+    uint8_t status = controller_read_status ();
+    unsigned int work;
   
-  for (work = 0;
-       (work < 10000) && ((status & CONTROLLER_STATUS_OUTPUT_BUFFER_FULL) != 0);
-       work++) 
-  {
-    uint8_t scancode;
+    for (work = 0;
+         (work < 10000) && ((status & CONTROLLER_STATUS_OUTPUT_BUFFER_FULL) != 0);
+         work++) 
+    {
+        uint8_t scancode;
     
-    scancode = controller_read_input ();
+        scancode = controller_read_input ();
  
 #if FALSE
-    /* Ignore error bytes. */
+        /* Ignore error bytes. */
 
-    if ((status & (CONTROLLER_STATUS_GENERAL_TIMEOUT |
-                   CONTROLLER_STATUS_PARITY_ERROR)) == 0)
+        if ((status & (CONTROLLER_STATUS_GENERAL_TIMEOUT |
+                       CONTROLLER_STATUS_PARITY_ERROR)) == 0)
 #endif
-    {
-      if ((status & CONTROLLER_STATUS_MOUSE_OUTPUT_BUFFER_FULL) != 0)
-      {
-        mouse_handle_event (scancode);
-      }
-      else
-      {
-        keyboard_handle_event (scancode);
-      }
+        {
+            if ((status & CONTROLLER_STATUS_MOUSE_OUTPUT_BUFFER_FULL) != 0)
+            {
+                mouse_handle_event (scancode);
+            }
+            else
+            {
+                keyboard_handle_event (scancode);
+            }
+        }
+    
+        status = controller_read_status ();
+    
     }
-    
-    status = controller_read_status ();
-    
-  }
 
-  if (work == 10000)
-  {
-    //    log_print (&log_structure, LOG_URGENCY_ERROR,
-    //          "Keyboard controller jammed.");
-  }
+    if (work == 10000)
+    {
+        log.print (LOG_URGENCY_ERROR,  "Keyboard controller jammed.");
+    }
   
-  return status;
+    return status;
 }
 
 /* Wait for keyboard controller input buffer to drain.
  
-   Quote from PS/2 System Reference Manual:
+Quote from PS/2 System Reference Manual:
    
-     "Address hex 0060 and address hex 0064 should be written only
-     when the input-buffer-full bit and output-buffer-full bit in the
-     Controller Status register are set 0."  */
+"Address hex 0060 and address hex 0064 should be written only
+when the input-buffer-full bit and output-buffer-full bit in the
+Controller Status register are set 0."  */
 void controller_wait (void)
 {
-  unsigned long timeout;
+    unsigned long timeout;
   
-  for (timeout = 0; timeout < CONTROLLER_TIMEOUT; timeout++)
-  {
-    /* handle_event () will handle any incoming events while we wait
-       -- keypresses or mouse movement. */
-    unsigned char status = handle_event ();
-                
-    if ((status & CONTROLLER_STATUS_INPUT_BUFFER_FULL) == 0)
+    for (timeout = 0; timeout < CONTROLLER_TIMEOUT; timeout++)
     {
-      return;
-    }
+        /* handle_event () will handle any incoming events while we wait
+           -- keypresses or mouse movement. */
+        unsigned char status = handle_event ();
+                
+        if ((status & CONTROLLER_STATUS_INPUT_BUFFER_FULL) == 0)
+        {
+            return;
+        }
     
-    /* Sleep for one millisecond. */
-    timer_sleep_milli (1);
-  }
+        /* Sleep for one millisecond. */
+        timer_sleep_milli (1);
+    }
   
-  //  log_print (&log_structure, LOG_URGENCY_ERROR, "Keyboard timed out[1]");
+    log.print (LOG_URGENCY_ERROR, "Keyboard timed out[1]");
 }
 
 /* Wait for input from the keyboard controller. */
 int controller_wait_for_input (void)
 {
-  int timeout;
+    int timeout;
 
-  for (timeout = 0; timeout < KEYBOARD_INIT_TIMEOUT; timeout++)
-  {
-    int return_value = controller_read_data ();
-
-    if (return_value >= 0)
+    for (timeout = 0; timeout < KEYBOARD_INIT_TIMEOUT; timeout++)
     {
-      return return_value;
-    }
+        int return_value = controller_read_data ();
 
-    timer_sleep_milli (1);
-  }
-  return -1;
+        if (return_value >= 0)
+        {
+            return return_value;
+        }
+
+        timer_sleep_milli (1);
+    }
+    return -1;
 }
 
 /* Write a command word to the keyboard controller. */
 void controller_write_command_word (uint8_t data)
 {
-  controller_wait ();
-  controller_write_command (data);
+    controller_wait ();
+    controller_write_command (data);
 }
 
 /* Write an output word to the keyboard controller. */
 void controller_write_output_word (uint8_t data)
 {
-  controller_wait ();
-  controller_write_output (data);
+    controller_wait ();
+    controller_write_output (data);
 }
 
 /* Empty the keyboard input buffer. */

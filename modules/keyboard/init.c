@@ -1,4 +1,4 @@
-/* $chaos: init.c,v 1.4 2002/06/19 07:57:52 per Exp $ */
+/* $chaos: init.c,v 1.5 2002/06/20 22:42:25 per Exp $ */
 /* Abstract: Keyboard initialization code. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -10,21 +10,25 @@
 #include "keyboard.h"
 #include "mouse.h"
 
+#include <log/log.h>
 #include <storm/storm.h>
+
+/* The log service provider that we are using. */
+log_service_t log;
 
 /* Initialise the server. */
 bool init (void)
 {
     const char *message;
-    function_t handler;
+    log_init_t handler;
 
     /* Find the log service. */
-    if (service_resolve ("log", 1, &handler) != STORM_RETURN_SUCCESS)
+    if (service_resolve ("log", 1, (function_t *) &handler) != STORM_RETURN_SUCCESS)
     {
-        debug_print ("he gick int");
+        debug_print ("Failed to resolved log service provider.\n");
         return FALSE;
     }
-    handler ();
+    handler (&log);
 
     /* Try to allocate the keyboard controller's ports. */
     if (port_range_register (CONTROLLER_PORT_BASE,
@@ -32,8 +36,8 @@ bool init (void)
                              "Keyboard controller") !=
         STORM_RETURN_SUCCESS)
     {
-        //    log_print (&log_structure, LOG_URGENCY_EMERGENCY,
-        //               "Could not allocate portrange 0x60 - 0x6F.");
+        log.print (LOG_URGENCY_EMERGENCY,
+                   "Could not allocate portrange 0x60 - 0x6F.");
         return FALSE;
     }
     
@@ -43,8 +47,7 @@ bool init (void)
     message = keyboard_init ();
     if (message != NULL)
     {
-        debug_print ("%s\n", message);
-        //log_print (&log_structure, LOG_URGENCY_ERROR, message);
+        log.print (LOG_URGENCY_ERROR, (char *) message);
     }
     
     /* Initialise a PS/2 mouse port, if found. */
@@ -59,23 +62,22 @@ return_t module_start (void)
        them into a usable state. */
     if (!init ())
     {
-        //    log_print (&log_structure, LOG_URGENCY_EMERGENCY,
-        //               "Failed initialisation.");
+        log.print (LOG_URGENCY_EMERGENCY,
+                   "Failed initialisation.");
         return STORM_RETURN_NOT_FOUND; // FIXME: Use another return value.;
     }
 
-    //  log_print (&log_structure, LOG_URGENCY_INFORMATIVE,
-    //             "Keyboard found at I/O 0x60-0x6F, IRQ 1.");
+    log.print (LOG_URGENCY_INFORMATIVE,
+               "Keyboard found at I/O 0x60-0x6F, IRQ 1.");
 
     if (has_mouse)
     {
-        //    log_print (&log_structure, LOG_URGENCY_INFORMATIVE,
-        //               "Mouse found at IRQ 12.");
+        log.print (LOG_URGENCY_INFORMATIVE, "Mouse found at IRQ 12.");
     }
 
     if (irq_register (KEYBOARD_IRQ, "Keyboard", &keyboard_irq_handler) != STORM_RETURN_SUCCESS)
     {
-        debug_print ("Failed to register keyboard IRQ.\n");
+        log.print (LOG_URGENCY_EMERGENCY, "Failed to register keyboard IRQ.");
         return -1;
     }
         
@@ -83,7 +85,7 @@ return_t module_start (void)
     {
         if (irq_register (MOUSE_IRQ, "Mouse", &mouse_irq_handler) != STORM_RETURN_SUCCESS)
         {
-            debug_print ("Failed to register mouse IRQ.\n");
+            log.print (LOG_URGENCY_EMERGENCY, "Failed to register mouse IRQ.");
             return -1;
         }
     }

@@ -1,4 +1,4 @@
-/* $chaos: keyboard.c,v 1.6 2002/06/18 14:34:20 per Exp $ */
+/* $chaos: keyboard.c,v 1.7 2002/06/18 22:18:17 per Exp $ */
 /* Abstract: Keyboard module for chaos. */
 /* Authors: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
@@ -188,15 +188,14 @@ static bool send_data (unsigned char data)
       
             if (timeout == 0)
             {
-                //log_print (&log_structure, LOG_URGENCY_ERROR,
-                //                   "Timeout - AT keyboard not present?");
+                log.print (LOG_URGENCY_ERROR,
+                           "Timeout - AT keyboard not present?");
                 return FALSE;
             }
         }
     } while (retries-- > 0);
     
-    //log_print (&log_structure, LOG_URGENCY_ERROR,
-    //             "Too many NACKs -- noisy keyboard cable?");
+    log.print (LOG_URGENCY_ERROR, "Too many NACKs -- noisy keyboard cable?");
     return FALSE;
 }
 
