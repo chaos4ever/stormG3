@@ -1,4 +1,4 @@
-# $chaos: Conscript,v 1.2 2002/07/31 21:19:30 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.3 2002/08/04 09:27:18 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the virtual file system (VFS) service
 # provider.
@@ -12,11 +12,11 @@ $module_path = 'filesystem/vfs';
 
 Import qw( cons module_directory library_directory install );
 $cons = $cons->clone(LIBS => '-lblock -lfilesystem -llog');
-Depends $cons $module_binary, 
+Depends $cons $module_binary,
   "$library_directory/libblock.a",
   "$library_directory/libfilesystem.a",
   "$library_directory/liblog.a";
-Program $cons $module_binary, 'assign.c', 'close.c', 'common.c', 'mount.c',
-  'open.c', 'read.c', 'vfs.c';
+Program $cons $module_binary, 'assign.c', 'close.c', 'common.c', 'info.c',
+  'mount.c', 'open.c', 'read.c', 'vfs.c';
 $install_cmd = eval $install;
 Command $cons 'install', $module_binary, $install_cmd;
