@@ -1,4 +1,4 @@
-/* $chaos: port.c,v 1.4 2002/10/15 09:55:12 per Exp $ */
+/* $chaos: port.c,v 1.5 2002/10/22 19:40:37 per Exp $ */
 /* Abstract: I/O port management. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -7,6 +7,7 @@
 
 #include <storm/storm.h>
 #include <storm/ia32/port.h>
+#include <storm/ia32/string.h>
 
 /* Linked list over allocated I/O regions. */
 port_range_t *port_list = NULL;
