@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.24 2002/10/10 20:48:13 per Exp $ */
+/* $chaos: memory_physical.c,v 1.25 2002/10/10 22:04:06 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -48,6 +48,8 @@ static uint32_t physical_page_bitmap[MAX_MEMORY / PAGE_SIZE / 32];
 
 /* The number of physical pages in the system. */
 page_number_t physical_pages;
+
+// FIXME: Add spinlocks.
 
 /* Add the given page to the SLAB, if it is not used by a kernel
    module, DMA buffers or something like that. */
