@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.16 2002/08/08 19:57:52 per Exp $ */
+/* $chaos: memory_physical.c,v 1.17 2002/08/08 20:14:08 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -87,6 +87,8 @@ static void check_and_add_page (unsigned int page)
         }
     }
 
+    /* Link this page into the SLAB list and mark it as free in the bitmap */
+    BIT_CLEAR (physical_page_bitmap[page / 32], page % 32);
     next = (memory_physical_slab_t *) (page * PAGE_SIZE);
     next->next = (struct memory_physical_slab_t *) first_free;
     first_free = next;
@@ -98,6 +100,9 @@ void memory_physical_init ()
 {
     uint32_t start_end;
    
+    /* Clear the page bitmap */
+    memory_set_uint32 (physical_page_bitmap, 0xffffffff, MAX_MEMORY / PAGE_SIZE / 32);
+
     /* Store the number of physical pages (used later). */
     physical_pages = (1024 + multiboot_info.memory_upper) / 4;
 
@@ -164,6 +169,10 @@ return_t memory_physical_allocate (void **pointer, unsigned int pages)
 
     if (pages != 1) 
     {
+        memory_physical_slab_t *slab;
+        page_number_t free_page = 0;
+        unsigned int has_free = 0;
+
         /* The algorithm for allocating multiple pages is not very
            fast, and uses quite a lot of memory. This, however, should
            not really be a problem since linear physical pages is
@@ -179,23 +188,6 @@ return_t memory_physical_allocate (void **pointer, unsigned int pages)
            allocate two pages than to allocate one, that should not
            affect the system performance. */
 
-        memory_physical_slab_t *slab;
-        page_number_t free_page = 0;
-        unsigned int has_free = 0;
-
-        /* Build up the bitmap. */
-        memory_set_uint32 ((uint32_t *) &physical_page_bitmap, 0, 
-                           physical_pages / 32);
-        
-        slab  = first_free;
-        while (slab != NULL)
-        {
-            page_number_t page_number = ((address_t) slab) / PAGE_SIZE;
-            BIT_SET (physical_page_bitmap[page_number / 32],
-                    page_number % 32);
-            slab = (memory_physical_slab_t *) slab->next;
-        }
-
         /* Now, iterate through this bitmap to see whether we have a
            contigous block of the right size. */
         for (page_number_t page_number = 0; page_number < 
@@ -208,14 +200,20 @@ return_t memory_physical_allocate (void **pointer, unsigned int pages)
                 {
                     free_page = page_number;
                 }
-
                 has_free++;
 
                 /* Do we have an area? If so, free these pages from
                    the slab structure and pass them on! */
                 if (has_free == pages)
                 {
-                    slab  = first_free;
+                    /* Mark these pages as allocated in the bitmap */
+                    for (unsigned int index = free_page; index < (free_page + pages); index++)
+                    {
+                        BIT_SET (physical_page_bitmap[index / 32],
+                                 index % 32);
+                    }
+
+                    slab = first_free;
                     while (slab != NULL)
                     {
                         volatile address_t next = (address_t) slab->next;
@@ -251,9 +249,11 @@ return_t memory_physical_allocate (void **pointer, unsigned int pages)
     }
     else
     {
+        uint32_t page = ((address_t) first_free) / PAGE_SIZE;
         *pointer = first_free;
         free_pages--;
         first_free = (memory_physical_slab_t *) first_free->next;
+        BIT_SET (physical_page_bitmap[page / 32], page % 32);
     }
 
     return STORM_RETURN_SUCCESS;
@@ -266,8 +266,10 @@ return_t memory_physical_allocate (void **pointer, unsigned int pages)
 return_t memory_physical_deallocate (void *pointer) 
 {
     void *next = first_free;
+    uint32_t page = ((address_t) pointer) / PAGE_SIZE;
     first_free = pointer;
     first_free->next = next;
     free_pages++;
+    BIT_CLEAR (physical_page_bitmap[page / 32], page % 32);
     return STORM_RETURN_SUCCESS;
 }
