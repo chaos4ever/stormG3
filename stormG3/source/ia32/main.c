@@ -1,4 +1,4 @@
-/* $chaos: main.c,v 1.18 2002/08/06 19:39:15 per Exp $ */
+/* $chaos: main.c,v 1.19 2002/08/07 18:21:17 per Exp $ */
 /* Abstract: This is the startup point of storm. It is executed right
    after the assembly language init code has set up the GDT, kernel
    stack, etc. Here, we initialise everything in the storm, like
@@ -19,7 +19,6 @@
 #include <storm/ia32/debug.h>
 #include <storm/ia32/dma.h>
 #include <storm/ia32/exception.h>
-#include <storm/ia32/gdb.h>
 #include <storm/ia32/irq.h>
 #include <storm/ia32/main.h>
 #include <storm/ia32/memory_global.h>

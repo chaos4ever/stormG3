@@ -1,4 +1,4 @@
-/* $chaos: init.c,v 1.7 2002/06/16 21:48:03 per Exp $ */
+/* $chaos: init.c,v 1.8 2002/08/07 18:21:17 per Exp $ */
 /* Abstract: storm initialization. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -9,6 +9,7 @@
 
 #include <storm/types.h>
 #include <storm/ia32/defines.h>
+#include <storm/ia32/gdb.h>
 #include <storm/ia32/gdt.h>
 #include <storm/ia32/idt.h>
 #include <storm/ia32/main.h>
