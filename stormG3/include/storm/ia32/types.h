@@ -1,4 +1,4 @@
-/* $chaos: types.h,v 1.5 2002/10/10 20:35:11 per Exp $ */
+/* $chaos: types.h,v 1.6 2002/10/15 18:06:30 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -17,6 +17,16 @@
 /**
  * @brief               A linear/physical address. 
  */
-typedef uint32_t address_t;
+typedef                 uint32_t address_t;
+
+/**
+ * @brief               A user ID.
+ */
+typedef                 uint32_t user_id_t;
+
+/**
+ * @brief               A group ID.
+ */
+typedef                 uint32_t group_id_t;
 
 #endif /* !__STORM_IA32_TYPES_H__ */
