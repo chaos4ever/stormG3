@@ -1,4 +1,4 @@
-/* $chaos: keyboard.c,v 1.4 2002/08/20 11:53:47 per Exp $ */
+/* $chaos: keyboard.c,v 1.5 2002/08/20 18:22:41 per Exp $ */
 /* Abstract: Keyboard module for chaos. */
 /* Authors: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
@@ -566,7 +566,6 @@ void keyboard_handle_event (uint8_t scancode)
             
             if (translated_key == NULL)
             {
-                debug_print ("Translating %u\n", scancode);
                 keyboard_packet.has_special_key = 1;
                 keyboard_packet.special_key = special_key_conversion[scancode];
             }
