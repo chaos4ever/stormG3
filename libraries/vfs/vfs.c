@@ -1,4 +1,4 @@
-/* $chaos: vfs.c,v 1.4 2002/08/09 05:59:42 per Exp $ */
+/* $chaos: vfs.c,v 1.5 2002/10/04 19:00:57 per Exp $ */
 /* Abstract: Virtual filesystem library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -15,7 +15,7 @@ return_t vfs_lookup (vfs_service_t *vfs)
     service_t *service;
 
     /* Find the virtual filesystem service. */
-    if (service_lookup ("vfs", NULL, NULL, NULL, 1, &services, &service) != STORM_RETURN_SUCCESS)
+    if (service_lookup ("vfs", NULL, NULL, NULL, VFS_SERVICE_MAJOR_VERSION, VFS_SERVICE_MINOR_VERSION, &services, &service) != STORM_RETURN_SUCCESS)
     {
         debug_print ("Failed to lookup virtual filesystem service provider.\n");
         return VFS_RETURN_SERVICE_UNAVAILABLE;

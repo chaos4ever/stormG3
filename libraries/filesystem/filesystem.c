@@ -1,4 +1,4 @@
-/* $chaos: filesystem.c,v 1.3 2002/08/09 05:59:40 per Exp $ */
+/* $chaos: filesystem.c,v 1.4 2002/10/04 19:00:52 per Exp $ */
 /* Abstract: Filesystem library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -15,7 +15,7 @@ return_t filesystem_lookup (filesystem_service_t *filesystem)
     service_t *service;
 
     /* Find the filesystem service. */
-    if (service_lookup ("filesystem", NULL, NULL, NULL, 1, &services, &service) != STORM_RETURN_SUCCESS)
+    if (service_lookup ("filesystem", NULL, NULL, NULL, FILESYSTEM_SERVICE_MAJOR_VERSION, FILESYSTEM_SERVICE_MINOR_VERSION, &services, &service) != STORM_RETURN_SUCCESS)
     {
         debug_print ("Failed to lookup filesystem service provider.\n");
         return FILESYSTEM_RETURN_SERVICE_UNAVAILABLE;
