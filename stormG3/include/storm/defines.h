@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.9 2002/10/15 10:03:51 per Exp $ */
+/* $chaos: defines.h,v 1.10 2002/10/15 19:15:21 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -6,8 +6,8 @@
 /* Use freely under the terms listed in the file LICENSE. */
 
 /**
- * @file storm/defines.h
- * @brief Generic storm defines. 
+ * @file                storm/defines.h
+ * @brief               Generic storm defines. 
  */
 
 #ifndef __STORM_DEFINES_H__
@@ -46,17 +46,22 @@
 /**
  * @brief               A kibibyte.
  */
-#define KIB             (1024)
+#define KIB             (1024U)
 
 /**
  * @brief               A mibibyte.
  */
-#define MIB             (1024 * KIB)
+#define MIB             (1024U * KIB)
 
 /**
  * @brief               A gibibyte.
  */
-#define GIB             (1024 * MIB)
+#define GIB             (1024U * MIB)
+
+/**
+ * @brief               The stack base for the process.
+ */
+#define STACK_BASE      0
 
 /**
  * @brief               Use this define to attribute that the function
