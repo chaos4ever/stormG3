@@ -11,6 +11,7 @@
 /* The version of log service that we provide. */
 #define LOG_SERVICE_VERSION             1
 
+/* Log urgency names. */
 static char *log_urgency[] =
 {
     "Emergency",
@@ -48,6 +49,17 @@ static return_t service_info (void *log_void)
 
 return_t module_start (void)
 {
-    // FIXME: Use log_register (bug #54)
-    return service_register ("log", "chaos development", "Log module", "1", LOG_SERVICE_MAJOR_VERSION, LOG_SERVICE_MINOR_VERSION, &service_info);
+    service_register_t service_register_info;
+    service_register_info.vendor = "chaos development";
+    service_register_info.model = "Log module";
+    service_register_info.device_id = "1";
+    service_register_info.info_handler = &service_info;
+
+    // FIXME: Fill in this structure.
+    service_method_t service_method[] = 
+        {
+            { -1, NULL }
+        };
+
+    return log_register (&service_register_info, service_method);
 }
