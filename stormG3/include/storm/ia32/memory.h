@@ -1,4 +1,4 @@
-/* $chaos: memory.h,v 1.7 2002/10/04 19:01:20 per Exp $ */
+/* $chaos: memory.h,v 1.8 2002/10/08 20:16:14 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -13,8 +13,14 @@
 #define __STORM_IA32_MEMORY_H__
 
 #include <storm/types.h>
+#include <storm/ia32/defines.h>
 
-/* Inlines. */
+/**
+ * @brief               Copy between memory areas.
+ * @param to            The source.
+ * @param from          The destination.
+ * @param size          The number of bytes to copy. 
+ */
 static inline void *memory_copy (void *to, const void *from, unsigned int size)
 {
     int ecx, edi, esi;
@@ -43,8 +49,15 @@ static inline void *memory_copy (void *to, const void *from, unsigned int size)
     return (to);
 }
 
-static inline void memory_set_uint8 (uint8_t *address, uint8_t c,
-                                     unsigned int size)
+/**
+ * @brief               Set memory to the given uint8.
+ * @param address       The address of the memory to set.
+ * @param value         The value to set.
+ * @param count         The number of uint8s to set. 
+ */
+
+static inline void memory_set_uint8 (uint8_t *address, uint8_t value,
+                                     unsigned int count)
 {
     int ecx, edi;
     
@@ -55,34 +68,46 @@ static inline void memory_set_uint8 (uint8_t *address, uint8_t c,
                   "=&c" (ecx),
                   "=&D" (edi)
                   : 
-                  "a" (c),
+                  "a" (value),
                   "1" (address),
-                  "0" (size)
+                  "0" (count)
                   : 
                   "memory");
 }
 
-static inline void memory_set_uint16 (uint16_t *address, uint16_t c,
-                                      unsigned int size)
+/**
+ * @brief               Set memory to the given uint16.
+ * @param address       The address of the memory to set.
+ * @param value         The value to set.
+ * @param count         The number of uint16s to set. 
+ */
+static inline void memory_set_uint16 (uint16_t *address, uint16_t value,
+                                      unsigned int count)
 {
     int ecx, edi;
 
-    asm volatile  ("cld\n"
-                   "rep\n"
-                   "stosw"
-                   : 
-                   "=&c" (ecx),
-                   "=&D" (edi)
-                   : 
-                   "a" (c),
-                   "1" (address),
-                   "0" (size)
-                   :
-                   "memory");
+    asm volatile ("cld\n"
+                  "rep\n"
+                  "stosw"
+                  : 
+                  "=&c" (ecx),
+                  "=&D" (edi)
+                  : 
+                  "a" (value),
+                  "1" (address),
+                  "0" (count)
+                  :
+                  "memory");
 }
 
-static inline void memory_set_uint32 (uint32_t *address, uint32_t c,
-                                      unsigned int size)
+/**
+ * @brief               Set memory to the given uint32.
+ * @param address       The address of the memory to set.
+ * @param value         The value to set.
+ * @param count         The number of uint32s to set. 
+ */
+static inline void memory_set_uint32 (uint32_t *address, uint32_t value,
+                                      unsigned int count)
 {
     int ecx, edi;
 
@@ -93,11 +118,20 @@ static inline void memory_set_uint32 (uint32_t *address, uint32_t c,
                    "=&c" (ecx),
                    "=&D" (edi)
                    : 
-                   "a" (c),
+                   "a" (value),
                    "1" (address),
-                   "0" (size)
+                   "0" (count)
                    :
                    "memory");
+}
+
+/**
+ * @brief               Clear (zero out) a page.
+ * @param address       The base address of the page to clear.
+ */
+static inline void memory_clear_page (void *address)
+{
+    memory_set_uint32 ((uint32_t *) address, 0, PAGE_SIZE / 4);
 }
 
 #endif /* !__STORM_IA32_MEMORY_H__ */
