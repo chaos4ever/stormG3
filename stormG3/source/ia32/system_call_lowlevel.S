@@ -1,4 +1,4 @@
-/* $chaos: dotfile.emacs,v 1.37 2002/10/14 16:03:33 per Exp $ */
+/* $chaos: system_call_lowlevel.S,v 1.1 2002/10/24 21:31:10 per Exp $ */
 /* Abstract: Low-level system call. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -9,19 +9,21 @@
 
 /* This function is called whenever a system call is being done. */
 system_call_lowlevel:
-        pushal
+        /* Preserve the registers. */
+        pushal 
         call system_call
 
-        /* Simulate a pop of %EAX; it contains a return value that we
-           don't wanna mess with. */
-        addl    $4 * 0, %esp
         popl    %edi
         popl    %esi
         popl    %ebp
 
-        /* ESP can't be popped for obvious reasons. */
+        /* %esp can't be popped for obvious reasons. */
         addl    $4, %esp
+
         popl    %ebx
         popl    %edx
         popl    %ecx
+
+        /* Preserve %eax; gcc uses it for return values. */
+        addl    $4, %esp
         iret
