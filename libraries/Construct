@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.11 2002/10/23 07:28:22 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.13 2002/12/02 20:38:14 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the libraries.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -18,7 +18,7 @@ $header_directory = "$root/data/programming/c/headers";
 $module_directory = "$root/system/modules";
 $library_static_directory = "$root/data/programming/libraries/static";
 
-$include = "$build_directory:$build_directory/..:$header_directory";
+$include = "$build_directory:$build_directory/module:$build_directory/..:$header_directory";
 $hostname = `hostname`;
 chop($hostname);
 $warnings = '-Wall -W -Wshadow -Wpointer-arith -Waggregate-return ' .
@@ -54,14 +54,17 @@ $cons = new cons (
 Default qw(.);
 Export qw( cons header_directory library_static_directory build_directory
 	   install );
+# FIXME: Move to the module directory
 Build qw( block/Conscript
 	  checksum/Conscript
 	  filesystem/Conscript
 	  console/Conscript
           exec/Conscript
-          kernel/Conscript
 	  log/Conscript
 	  unicode/Conscript
 	  vfs/Conscript
 	  video/Conscript
+
+          module/kernel/Conscript
+          module/sound/Conscript
 	);
