@@ -1,27 +1,29 @@
-MILESTONES ($chaos: MILESTONES,v 1.6 2002/06/12 06:56:11 per Exp $)
+MILESTONES ($chaos: MILESTONES,v 1.7 2002/06/14 13:17:58 per Exp $)
 ==========
 
 This is something like a road map for chaos as I see it:
 
 M1
 --
-Finish memory allocation (physical, global and virtual) AND
-deallocation. Physical and global allocation and deallocation works,
-virtual allocation and deallocation remains to be done. Also, support
-physical allocation of more than 1 page through sweep-and-scan
-technique.
+Finish module support, with services.
 
 M2
+--
+Implement virtual memory allocation and deallocation and use it for
+process creation. Support physical allocation of more than 1 page
+through sweep-and-scan technique.
+
+M3
 --
 stormG3 should be ready for development. Support processes and
 threads, multi-tasking, IRQ:s, DMA and modules (with services).
 
-M3
+M4
 --
 Play a .MOD file in chaos, running stormG3. This involves porting the
 old Sound Blaster code and adapt it to the new architecture.
 
-M4
+M5
 --
 Porting all existing chaos code to the new stormG3 system, doing the
 neccessary adaptions.
