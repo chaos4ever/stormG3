@@ -1,4 +1,4 @@
-/* $chaos: thread.h,v 1.4 2002/10/10 21:39:38 per Exp $ */
+/* $chaos: thread.h,v 1.5 2002/10/15 18:04:05 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -19,7 +19,14 @@
  * @brief               The thread ID of the kernel thread. (idle 
  *                      thread) 
  */
-#define THREAD_ID_KERNEL                0
+#define THREAD_ID_KERNEL \
+                        0
+
+/**
+ * @brief               The length of a thread name.
+ */
+#define THREAD_NAME_LENGTH \
+                        32
 
 /**
  * @brief               Type definitions. 
@@ -34,7 +41,12 @@ typedef struct
     /**
      * @brief           The thread ID.
      */
-    thread_id_t thread_id;
+    thread_id_t         id;
+
+    /**
+     * @brief           The name of the thread.
+     */
+    char                name[THREAD_NAME_LENGTH];
 
     /**
      * @brief           The parent process to which this thread belongs.
