@@ -1,4 +1,4 @@
-/* $chaos: elf.h,v 1.4 2002/06/15 23:07:25 per Exp $ */
+/* $chaos: elf.h,v 1.5 2002/06/16 21:49:43 per Exp $ */
 /* Abstract: ELF file format. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -389,6 +389,9 @@ typedef struct
     /* The section containing where in the ELF image the unresolved
        symbols are so we can resolve them. */
     elf_section_header_t *relocation_header;
+
+    /* The image, freshly allocated. */
+    void *image;
 } elf_parsed_t;
 
 /* Function prototypes. */
@@ -408,5 +411,9 @@ extern return_t elf_relocate (elf_parsed_t *elf_parsed);
 extern return_t elf_symbol_find_by_index (elf_parsed_t *elf_parsed, unsigned int index, address_t *address);
 extern return_t elf_symbol_find_by_name (elf_parsed_t *elf_parsed,
                                          char *name, address_t *address);
+
+/* Load an ELF. Allocate memory for it, and copy the data from the
+   different sections there. */
+extern return_t elf_load (elf_parsed_t *elf_parsed);
 
 #endif /* !__STORM_IA32_ELF_H__ */
