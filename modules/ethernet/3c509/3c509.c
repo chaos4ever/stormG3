@@ -1,11 +1,10 @@
-/* $chaos$ */
+/* $chaos: 3c509.c,v 1.3 2002/07/12 09:19:07 johannes Exp $ */
 /* Abstract: 3Com Etherlink III module (3c509) */
 /* Author: Johannes Lundberg <jojo@chaosdev.org>
            Håkan Larsson     <trc@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file COPYING. */
-=======
 
 #include <storm/storm.h>
 
