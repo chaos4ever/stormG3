@@ -1,4 +1,4 @@
-/* $chaos: dispatch.h,v 1.6 2002/10/15 18:03:36 per Exp $ */
+/* $chaos: dispatch.h,v 1.8 2002/11/30 11:43:35 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -96,6 +96,11 @@ extern process_t        *dispatch_current_process;
  * @brief               The kernel TSS.
  */
 extern tss_t            *dispatch_kernel_tss;
+
+/**
+ * @brief               The current TSS. 
+ */
+extern tss_t            *dispatch_current_tss;
 
 /**
  * @brief               The number of ticks since the system was booted. 
