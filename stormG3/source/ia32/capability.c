@@ -1,4 +1,4 @@
-/* $chaos: capability.c,v 1.5 2002/10/24 21:14:49 per Exp $ */
+/* $chaos: capability.c,v 1.6 2002/10/24 21:52:22 per Exp $ */
 /* Abstract: Capabilities support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -162,7 +162,7 @@ return_t capability_add (process_id_t process_id,
 return_t capability_clone (capability_t **target,
                            capability_t *source)
 {
-    if (target == NULL || 
+    if (target == NULL ||
         source == NULL)
     {
         return STORM_RETURN_INVALID_ARGUMENT;
