@@ -1,4 +1,4 @@
-TODO ($chaos$)
+TODO ($chaos: TODO,v 1.4 2002/05/23 11:13:51 per Exp $)
 ====
 
 This list features only non-kernel issues. The file storm/TODO lists
@@ -7,7 +7,7 @@ the kernel stuff, etc.
 chaos 0.0.5
 -----------
 
-  * Check out that everything works (more or less).
+  * Finish stormG3.
 
 Further away (chaos 0.1.0, ...)
 -------------------------------
