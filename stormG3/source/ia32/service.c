@@ -1,4 +1,4 @@
-/* $chaos: service.c,v 1.1 2002/06/20 22:40:57 per Exp $ */
+/* $chaos: service.c,v 1.2 2002/06/21 07:24:58 per Exp $ */
 /* Abstract: Service support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -29,6 +29,7 @@ return_t service_register (char *name, unsigned int version,
     return_value = memory_global_allocate ((void **) &service->name, string_length (name) + 1);
     if (return_value != STORM_RETURN_SUCCESS)
     {
+        memory_global_deallocate (service);
         return return_value;
     }
 
@@ -36,6 +37,8 @@ return_t service_register (char *name, unsigned int version,
 
     service->version = version;
     service->handler = handler;
+
+    // FIXME: Use a lock here.
     service->next = (struct service_t *) first_service;
     first_service = service;
     return STORM_RETURN_SUCCESS;
