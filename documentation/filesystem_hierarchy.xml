@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?> <!-- -*- xml -*- -->
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+ "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"[]>
+
+<!-- $chaos $ -->
+
+<book>
+  <?dbhtml filename="filesystem_hierarchy.html"?>
+  <bookinfo>
+    <title>chaos Filesystem Hierarchy Standard (chaos FHS)</title>
+
+    <authorgroup>
+      <author>
+        <firstname>Johannes</firstname>
+        <surname>Lundberg</surname>
+        <affiliation>
+          <orgname>chaos development</orgname>
+          <address>
+            <email>jojo@chaosdev.org</email>
+          </address>
+        </affiliation>
+      </author>
+    </authorgroup>
+
+    <copyright>
+      <year>2002</year>
+      <holder>chaos development</holder>
+    </copyright>
+
+    <legalnotice>
+      <para>
+	Permission is granted to copy, distribute and/or modify this
+	document under the terms of the BSD License (without advertising
+	clause).
+      </para>
+    </legalnotice>
+  </bookinfo>
+
+  <!-- Omvandling till korrekt XML sker senare -->
+
+  Introduction
+  
+  As computers became more advanced, the need to structure data arise, files 
+  were invented. A file was, and still is, a sequence of data (bits/bytes)
+  associated with a name (the filename). But people soon realised that
+  wasn't enough, and the concept of directories were added. Instead of
+  storing all files on the same place, files were grouped up together in
+  directories. It was also possible to store directories in directories
+  (often called sub-directories), making the possibilities virtually
+  endless.
+
+  The concepts with files and directories is used in almost all computer
+  systems today, and chaos will use a similiar system. This document defines
+  how files and directories should be structured in chaos.
+
+  Basics
+
+  (Alla användare har en hemkatalog, och lite annat. Sedan ska alla
+  kataloger i / beskrivas. )
+
+</book>
