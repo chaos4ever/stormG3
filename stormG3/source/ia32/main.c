@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: main.c,v 1.1 2002/05/25 20:09:40 per Exp $ */
 /* Abstract: This is the startup point of storm. It is executed right
    after the assembly language init code has set up the GDT, kernel
    stack, etc. Here, we initialise everything in the storm, like
@@ -23,6 +23,6 @@ void main_bootup (int argument_count UNUSED, char *arguments[] UNUSED)
     /* Set up debugging. */
     debug_init();
     
-    debug_print("Hej svejs! chaos är i Sverige.");
+    debug_print ("storm %s (compiled by %s on %s %s).\n", STORM_VERSION, CREATOR, __DATE__, __TIME__);
     while (TRUE);
 }
