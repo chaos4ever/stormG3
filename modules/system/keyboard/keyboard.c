@@ -1,4 +1,4 @@
-/* $chaos: keyboard.c,v 1.3 2002/08/20 06:36:24 per Exp $ */
+/* $chaos: keyboard.c,v 1.4 2002/08/20 11:53:47 per Exp $ */
 /* Abstract: Keyboard module for chaos. */
 /* Authors: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
@@ -303,7 +303,7 @@ static const char *translate_key (uint8_t scancode)
             if (scancode >= SCAN_CODE_NUMERIC_7 && 
                 scancode <= SCAN_CODE_NUMERIC_9)
             {
-                keyboard_translated_key[0] = '0' + (scancode - SCAN_CODE_NUMERIC_7);
+                keyboard_translated_key[0] = '7' + (scancode - SCAN_CODE_NUMERIC_7);
                 keyboard_translated_key[1] = '\0';
                 return keyboard_translated_key;
             }
@@ -311,7 +311,7 @@ static const char *translate_key (uint8_t scancode)
             if (scancode >= SCAN_CODE_NUMERIC_4 &&
                 scancode <= SCAN_CODE_NUMERIC_6)
             {
-                keyboard_translated_key[0] = '0' + (scancode - SCAN_CODE_NUMERIC_4);
+                keyboard_translated_key[0] = '4' + (scancode - SCAN_CODE_NUMERIC_4);
                 keyboard_translated_key[1] = '\0';
                 return keyboard_translated_key;
             }
@@ -319,7 +319,7 @@ static const char *translate_key (uint8_t scancode)
             if (scancode >= SCAN_CODE_NUMERIC_1 &&
                 scancode <= SCAN_CODE_NUMERIC_3)
             {
-                keyboard_translated_key[0] = '0' + (scancode - SCAN_CODE_NUMERIC_1);
+                keyboard_translated_key[0] = '1' + (scancode - SCAN_CODE_NUMERIC_1);
                 keyboard_translated_key[1] = '\0';
                 return keyboard_translated_key;
             }
@@ -555,35 +555,25 @@ void keyboard_handle_event (uint8_t scancode)
                            somehow. */
                         halt (HALT_REBOOT);
                     }
-
-                    /* Fall through if not Alt+Control pressed, so we
-                       can use Delete in other applications. */
-                }
-                
-                /* Other key. */
-                default:
-                {
-                    keyboard_packet.key_pressed = TRUE;
-                                
-                    /* Convert it to the chaos format. */
-                    translated_key = translate_key (scancode);
-                            
-                    if (translated_key == NULL)
-                    {
-                        debug_print ("Translating %u\n", scancode);
-                        keyboard_packet.has_special_key = 1;
-                        keyboard_packet.special_key = special_key_conversion[scancode];
-                    }
-                    else
-                    {
-                        keyboard_packet.has_character_code = 1;
-                        string_copy (keyboard_packet.character_code, translated_key);
-                    }
-
                     break;
                 }
-                
-                break;
+            }
+
+            keyboard_packet.key_pressed = TRUE;
+            
+            /* Convert it to the chaos format. */
+            translated_key = translate_key (scancode);
+            
+            if (translated_key == NULL)
+            {
+                debug_print ("Translating %u\n", scancode);
+                keyboard_packet.has_special_key = 1;
+                keyboard_packet.special_key = special_key_conversion[scancode];
+            }
+            else
+            {
+                keyboard_packet.has_character_code = 1;
+                string_copy (keyboard_packet.character_code, translated_key);
             }
         }
         else
