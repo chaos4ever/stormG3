@@ -1,0 +1,18 @@
+# $chaos: Conscript,v 1.4 2002/10/04 20:19:23 per Exp $ -*- Perl -*-
+
+# Abstract: CONS script for the exec library.
+# Author: Per Lundberg <per@chaosdev.org>
+
+# Copyright 2002 chaos development.
+# Use freely under the terms listed in the file LICENSE.
+
+$library_binary = 'libexec.a';
+$library_directory = 'exec';
+
+Import qw( cons library_static_directory install );
+Library $cons $library_binary, 'exec.c';
+
+$install_cmd = eval $install;
+Command $cons 'install', $library_binary, $install_cmd;
+
+# FIXME: Install headers also. We don't need it yet though.
