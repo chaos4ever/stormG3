@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.9 2002/06/12 12:04:44 per Exp $ */
+/* $chaos: defines.h,v 1.10 2002/06/13 06:15:30 per Exp $ */
 /* Abstract: Generic storm defines. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -20,17 +20,17 @@
 
 /* Size of some reserved regions. These can take a maximum of 64k, 16
    full pages, because at that address the DMA buffers are put. */
+#define KERNEL_STACK_SIZE               (4 * KIB)
 #define GDT_SIZE                        (2 * KIB)
 #define IDT_SIZE                        (2 * KIB)
-#define KERNEL_STACK_SIZE               (4 * KIB)
 #define MODULE_NAME_SIZE                (2 * KIB)
 #define MEMORY_MAP_SIZE                 (2 * KIB)
 
 /* Physical base addresses. */
-#define GDT_BASE                        (4 * KIB)
+#define KERNEL_STACK_BASE               (4 * KIB)
+#define GDT_BASE                        (KERNEL_STACK_BASE + KERNEL_STACK_SIZE)
 #define IDT_BASE                        (GDT_BASE + GDT_SIZE)
-#define KERNEL_STACK_BASE               (IDT_BASE + IDT_SIZE)
-#define MODULE_NAME_BASE                (KERNEL_STACK_BASE + KERNEL_STACK_SIZE)
+#define MODULE_NAME_BASE                (IDT_BASE + IDT_SIZE)
 #define MEMORY_MAP_BASE                 (MODULE_NAME_BASE + MODULE_NAME_SIZE)
 
 /* We reserve 3 8-bit DMA buffers (64 KiB each) and 3 16-bit DMA
