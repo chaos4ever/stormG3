@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.26 2002/10/15 18:15:49 per Exp $ */
+/* $chaos: memory_physical.c,v 1.27 2002/10/20 16:36:57 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -187,48 +187,9 @@ void memory_physical_done (void)
     }
 }
 
-/* Allocate a page for a process. */
-return_t memory_physical_allocate_for_process (void **pointer, 
-                                               process_id_t process_id)
-{
-    /* Get the page. */
-    return_t return_value = memory_physical_allocate (pointer, 1);
-    if (return_value != STORM_RETURN_SUCCESS)
-    {
-        /* Extra security precaution. */
-        *pointer = NULL;
-        return return_value;
-    }
-
-    /* Register it in our structure. */
-    memory_physical_process_page_t *page;
-    return_value = memory_global_allocate ((void **) &page, sizeof (memory_physical_process_page_t));
-    if (return_value != STORM_RETURN_SUCCESS)
-    {
-        /* Extra security precaution. */
-        *pointer = NULL;
-        return return_value;
-    }
-
-    /* Set up the data about the page. */
-    page->process_id = process_id;
-    page->page_address = *pointer;
-
-    /* Link it in. */
-    if (process_page != NULL)
-    {
-        process_page->next = (struct memory_physical_process_page_t *) page;
-    }
-
-    page->previous = (struct memory_physical_process_page_t *) process_page;
-    page->next = (struct memory_physical_process_page_t *) NULL;
-    process_page = page;
-
-    return STORM_RETURN_SUCCESS;
-}
-
 /* Allocate a number of pages. */
-return_t memory_physical_allocate (void **pointer, unsigned int pages) 
+return_t memory_physical_allocate (void **pointer, unsigned int pages,
+                                   process_id_t process_id)
 {
     if (first_free == NULL) 
     {
@@ -327,29 +288,57 @@ return_t memory_physical_allocate (void **pointer, unsigned int pages)
         BIT_CLEAR (physical_page_bitmap[page / 32], page % 32);
     }
 
+    /* We use a trick to get rid of the "chicken and egg" problem. */
+    if (process_id != PROCESS_ID_NONE) {
+        /* Register it in our structure, both for statistics and for
+           GC:ing of evil run-away processes. */
+        memory_physical_process_page_t *page;
+        return_t return_value = memory_global_allocate ((void **) &page, sizeof (memory_physical_process_page_t));
+        if (return_value != STORM_RETURN_SUCCESS)
+        {
+            /* Extra security precaution. */
+            *pointer = NULL;
+            return return_value;
+        }
+        
+        /* Set up the data about the page. */
+        page->process_id = process_id;
+        page->page_address = *pointer;
+        page->pages = pages;
+    
+        /* Link it in. */
+        if (process_page != NULL)
+        {
+            process_page->next = (struct memory_physical_process_page_t *) page;
+        }
+        
+        page->previous = (struct memory_physical_process_page_t *) process_page;
+        page->next = (struct memory_physical_process_page_t *) NULL;
+        process_page = page;
+    }
+
     return STORM_RETURN_SUCCESS;
 }
 
 /* Deallocate a page. Yes, only one page. If you allocated multiple
    pages, you need to call this function for each page. I will not
    keep track of the number of pages you have allocated for you, you
-   will need to do it yourself. */
+   will need to do it yourself. 
+
+   FIXME: Since we now have the process_page list, we could in fact do
+   this for the caller... */
 return_t memory_physical_deallocate (void *pointer) 
 {
+    // FIXME: Use the process_page() list and remove the page from
+    // there if it is listed.
     void *next = first_free;
     uint32_t page = ((address_t) pointer) / PAGE_SIZE;
     first_free = pointer;
     first_free->next = next;
     free_pages++;
     BIT_SET (physical_page_bitmap[page / 32], page % 32);
-    return STORM_RETURN_SUCCESS;
-}
 
-/* Deallocate a page for a process. */
-return_t memory_physical_deallocate_for_process (void *pointer UNUSED)
-{
-    // FIXME: Implement this.
-    return STORM_RETURN_NOT_IMPLEMENTED;
+    return STORM_RETURN_SUCCESS;
 }
 
 /* Free all pages that belongs to the given process. */
