@@ -1,4 +1,4 @@
-/* $chaos: main.c,v 1.19 2002/08/07 18:21:17 per Exp $ */
+/* $chaos: main.c,v 1.20 2002/08/07 18:24:10 per Exp $ */
 /* Abstract: This is the startup point of storm. It is executed right
    after the assembly language init code has set up the GDT, kernel
    stack, etc. Here, we initialise everything in the storm, like
@@ -67,5 +67,6 @@ void main_bootup (int argument_count UNUSED, char *arguments[] UNUSED)
     /* Set up module support. */
     module_init ();
 
+    debug_print ("Free memory system startup: %u pages\n", free_pages);
     /* We are finished. Pass on to the idle task. */
 }
