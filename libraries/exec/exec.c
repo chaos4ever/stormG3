@@ -1,4 +1,4 @@
-/* $chaos: exec.c,v 1.3 2002/10/28 07:59:43 per Exp $ */
+/* $chaos: exec.c,v 1.5 2002/11/15 19:34:56 per Exp $ */
 /* Abstract: Exec library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -14,9 +14,17 @@ return_t exec_lookup (exec_service_t *exec)
     // FIXME: lame
     size_t services = 1;
     service_t service;
+    service_lookup_t lookup;
 
     /* Find the exec service. */
-    if (service_lookup ("exec", NULL, NULL, NULL, EXEC_SERVICE_MAJOR_VERSION, EXEC_SERVICE_MINOR_VERSION, &services, &service) != STORM_RETURN_SUCCESS)
+
+    lookup.protocol_name = "exec";
+    lookup.device_vendor = NULL;
+    lookup.service_vendor = NULL;
+    lookup.major_version = EXEC_PROTOCOL_MAJOR_VERSION;
+    lookup.minor_version = EXEC_PROTOCOL_MINOR_VERSION;
+
+    if (service_lookup (&lookup, &services, &service) != STORM_RETURN_SUCCESS)
     {
         debug_print ("Failed to lookup exec service provider.\n");
         return EXEC_RETURN_SERVICE_UNAVAILABLE;
@@ -31,7 +39,7 @@ return_t exec_lookup (exec_service_t *exec)
 return_t exec_register (service_register_t *service_register_info,
                         service_method_t *service_method)
 {    
-    service_register_info->service_name = "exec";
+    service_register_info->protocol_name = "exec";
     service_register_info->major_version = EXEC_SERVICE_MAJOR_VERSION;
     service_register_info->minor_version = EXEC_SERVICE_MINOR_VERSION;
 
