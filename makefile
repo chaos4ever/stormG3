@@ -16,7 +16,7 @@ all:
 	$(MAKE) -C programs
 
 install-storm: configure-storm
-	$(MAKE) -C storm install
+	$(MAKE) -C storm current-arch install
 
 install-libraries: configure-libraries
 	$(MAKE) -C libraries install
