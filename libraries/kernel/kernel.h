@@ -1,5 +1,5 @@
 /* $chaos: dotfile.emacs,v 1.37 2002/10/14 16:03:33 per Exp $ */
-/* Abstract: */
+/* Abstract: Kernel library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -14,7 +14,7 @@
 #define __KERNEL_KERNEL_H__
 
 #include <storm/storm.h>
-#include <kernel/defines.h>
+#include <protocol/kernel.h>
 #include <kernel/return_values.h>
 #include <kernel/types.h>
 #include <kernel/functions.h>
