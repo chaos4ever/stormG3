@@ -1,4 +1,4 @@
-/* $chaos: bit.h,v 1.9 2002/10/09 18:22:23 per Exp $ */
+/* $chaos: bit.h,v 1.10 2002/10/09 18:28:16 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -6,8 +6,8 @@
 /* Use freely under the terms listed in the file LICENSE. */
 
 /** 
- * @file bit.h
- * @brief Bit manipulation macros. 
+ * @file                bit.h
+ * @brief               Bit manipulation macros. 
  *
  * This file is endian-specific and needs to be rewritten for
  * big-endian when we port to such a CPU. It provides very convenient
