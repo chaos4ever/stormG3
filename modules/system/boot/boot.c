@@ -1,4 +1,4 @@
-/* $chaos: boot.c,v 1.4 2002/10/04 19:01:10 per Exp $ */
+/* $chaos: boot.c,v 1.5 2002/10/04 20:23:23 per Exp $ */
 /* Abstract: Boot module. The boot module takes care of setting up the
    system (opening virtual consoles, launching programs, etc). */
 /* Author: Per Lundberg <per@chaosdev.org> */
@@ -10,6 +10,7 @@
 #include <block/block.h>
 #include <checksum/checksum.h>
 #include <console/console.h>
+#include <exec/exec.h>
 #include <log/log.h>
 #include <vfs/vfs.h>
 
@@ -33,7 +34,7 @@ block_service_t block;
 vfs_service_t vfs;
 
 /* The exec service provider we are using. */
-//exec_service_t exec;
+exec_service_t exec;
 
 /* Entry point. */
 return_t module_start (void)
@@ -68,14 +69,12 @@ return_t module_start (void)
         return STORM_RETURN_NOT_FOUND;
     }
 
-#if FALSE
     /* Make sure we have an exec service provider. */
     if (exec_lookup (&exec) != EXEC_RETURN_SUCCESS)
     {
         log.print (LOG_URGENCY_EMERGENCY, "No exec service found. Aborting.");
         return STORM_RETURN_NOT_FOUND;
     }
-#endif
     
     /* Mount the root file system. */
     return_value = vfs.mount ("//", &block);
@@ -139,6 +138,7 @@ return_t module_start (void)
 
 #endif
 
+#if FALSE
     checksum_md5_digest_type digest;
     memory_set_uint8 ((uint8_t *) &digest, 0, 16);
     return_value = checksum_md5 (buffer, file_info.size,
@@ -149,6 +149,7 @@ return_t module_start (void)
         debug_print ("%x ", digest[c]);
     }
     debug_print ("\n");
+#endif
 
     /* Close the file. */
     return_value = vfs.close (handle);
@@ -159,7 +160,12 @@ return_t module_start (void)
     }
 
     /* Run this program. */
-    //exec.run (buffer);
+    return_value = exec.run (buffer);
+    if (return_value != STORM_RETURN_SUCCESS)
+    {
+        log.print (LOG_URGENCY_EMERGENCY, "Failed to run boot sequence.");
+        return return_value;
+    }
 
     // TODO:
     /* Open virtual consoles. FIXME: Read a list from somewhere to
