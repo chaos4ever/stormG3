@@ -39,10 +39,11 @@ return_t timer_sleep_milli (unsigned int time)
 {
     /* The multiplication factor that we need to do when checking ticks. */
     unsigned int factor = 1000 / hz;
-    unsigned int start = ticks * factor;
+    unsigned int start = dispatch_ticks * factor;
 
-    // FIXME: Do a hlt if IF is set. int $0x20 will ruin the timekeeping...
-    while (ticks * factor < start + time);
+    // FIXME: Do a hlt if IF is set. int $0x20 will ruin the
+    // timekeeping...
+    while (dispatch_ticks * factor < start + time);
 
     return STORM_RETURN_SUCCESS;
 }
