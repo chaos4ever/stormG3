@@ -1,4 +1,4 @@
-/* $chaos: memory_virtual.h,v 1.2 2002/10/04 19:01:20 per Exp $ */
+/* $chaos: memory_virtual.h,v 1.3 2002/10/08 20:16:14 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -30,7 +30,9 @@
 #define PAGE_DIRECTORY_FLAGS     (PAGE_WRITABLE | PAGE_NON_PRIVILEGED)
 
 /* Structures. */
-/** @brief A page directory entry (PDE) when using 4MiB pages. */
+/**
+ * @brief A page directory entry (PDE) when using 4MiB pages. 
+ */
 typedef struct
 {
   uint32_t present              : 1;
@@ -48,7 +50,9 @@ typedef struct
   uint32_t page_base            : 10;
 } page_directory_4mb_t;
 
-/** \brief A page directory entry (PDE). */
+/**
+ * @brief A page directory entry (PDE).
+ */
 typedef struct
 {
     uint32_t present              : 1;
@@ -63,7 +67,9 @@ typedef struct
     uint32_t page_table_base      : 20;
 } page_directory_t;
 
-/** \brief A page table entry (PTE). */
+/**
+ * @brief A page table entry (PTE). 
+ */
 typedef struct
 {
     uint32_t present              : 1;
@@ -77,10 +83,14 @@ typedef struct
 } page_table_t;
 
 /* Prototypes. */
-/** \brief Initialize the virtual memory system. */
+/** 
+ * @brief Initialize the virtual memory system. 
+ */
 extern void memory_virtual_init (void);
 
-/* \brief Map memory into the given page directory. */
+/**
+ * @brief Map memory into the given page directory. 
+ */
 extern void memory_virtual_map (page_directory_t *page_directory,
                                 uint32_t virtual_page, 
                                 uint32_t physical_page, unsigned int pages,
