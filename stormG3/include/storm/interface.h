@@ -237,6 +237,8 @@ extern return_t process_create (process_id_t process_id,
  * Services with the same major version and at least the same minor
  * version will be returned.
  */
+// FIXME: USE A DATA STRUCTURE, you maniac!!! It's not sane to pass 8
+// parameters to a function... :)
 extern return_t service_lookup (const char *name, const char *vendor, 
                                 const char *model, const char *id,
                                 unsigned int major_version, 
@@ -245,29 +247,19 @@ extern return_t service_lookup (const char *name, const char *vendor,
 
 /**
  * @brief               Register a service provider. 
- * @param name          The service name.
- * @param vendor        The vendor of the service provider, i.e. 3Com.
- * @param model         The model of the service provider.
- * @param id            A unique ID for this service provider (to distinguish
- *                      if the vendor and model is the same).
- * @param major_version The major version of the service.
- * @param minor_version The minor version of the service.
- * @param service_info  A function pointer to a function that returns
- *                      information about the service.
+ * @param register_info A data structure with information about the 
+ * @param method        An array of method handlers.
  * @return              STORM_RETURN_SUCCESS if successful.
  */
-extern return_t service_register (char *name, char *vendor, char *model, 
-                                  char *id, unsigned int major_version,
-                                  unsigned int minor_version, 
-                                  service_info_t service_info);
+extern return_t service_register (service_register_t *register_info,
+                                  service_method_t *method);
 
 /**
  * @brief               Unregister a service provider.
- * @param service       The service name.
- * @param handler       Function pointer to the service handler.
+ * @param service_id    The service provider ID.
  * @return              STORM_RETURN_SUCCESS if successful.
  */
-extern return_t service_unregister (char *service, function_t handler);
+extern return_t service_unregister (service_id_t service_id);
 
 /**
  * @brief               Sleep for the given amount of milliseconds. 
