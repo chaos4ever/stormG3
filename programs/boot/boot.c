@@ -1,4 +1,4 @@
-/* $chaos: dotfile.emacs,v 1.34 2002/09/30 13:33:00 per Exp $ */
+/* $chaos: boot.c,v 1.1 2002/10/06 09:43:04 per Exp $ */
 /* Abstract: Boot program (somewhat like init in Unix systems). */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -7,17 +7,35 @@
 
 #include <storm/storm.h>
 
-void _start (void);
+void _start (void) NORETURN;
 int main (int argc UNUSED, char **argv UNUSED);
 
 void _start (void)
 {
-    main (0, NULL);
-    //    exit ();
+   main (0, NULL);
+   // syscall_exit (0);
+   while (TRUE);
 }
+
+float q (float p);
+float q (float p)
+{
+    p += 20;
+    return p;
+}
+
+char *test = "spam spam spam!";
 
 /* Main function. */
 int main (int argc UNUSED, char **argv UNUSED)
 {
-    while (TRUE);
+    float p = 0;
+
+    //    p = 1.5000902;
+    //    p += 8.983293;
+    q(p);
+    asm("push test\n"
+        "int $0x88");
+    // while (TRUE);
+    return 0;
 }
