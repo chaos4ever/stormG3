@@ -1,4 +1,4 @@
-/* $chaos: minix.h,v 1.1 2002/07/09 08:37:37 per Exp $ */
+/* $chaos: minix.h,v 1.2 2002/07/10 21:23:33 per Exp $ */
 /* Abstract: Minix file system data types. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -34,6 +34,10 @@
 
 /* Minix V2 file system, 30 character names. */
 #define MINIX2_MAGIC_EXTENDED           0x2478
+
+/* The file name lengths. */
+#define MINIX_FILE_NAME_LENGTH          14
+#define MINIX_EXTENDED_FILE_NAME_LENGTH 30
 
 /* Special file modes. */
 #define MINIX_MODE_DIRECTORY            0040000
