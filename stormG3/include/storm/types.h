@@ -1,4 +1,4 @@
-/* $chaos: types.h,v 1.11 2002/10/22 19:42:45 per Exp $ */
+/* $chaos: types.h,v 1.12 2002/10/22 20:58:07 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -39,6 +39,11 @@ typedef void (irq_handler_t)(unsigned int irq_level);
  * @brief               A unique process ID.
  */
 typedef unsigned int    process_id_t;
+
+/**
+ * @brief               Type definitions. 
+ */
+typedef unsigned int    thread_id_t;
 
 /**
  * @brief               A boolean value.
