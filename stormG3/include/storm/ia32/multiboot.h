@@ -1,4 +1,4 @@
-/* $chaos: multiboot.h,v 1.7 2002/10/04 19:01:20 per Exp $ */
+/* $chaos: multiboot.h,v 1.8 2002/10/08 20:16:14 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -43,8 +43,10 @@ enum
    GRUB documentation available on
    http://www.gnu.org/software/grub/. */
 /* Type definitions. */
-/** \brief A structure with information about what were provided by
-    the Multiboot oader. */
+/**
+ * @brief A structure with information about what were provided by the
+ * Multiboot oader. 
+ */
 typedef struct
 {
     /* The following flags tells if the rest of the fields are
@@ -104,7 +106,9 @@ typedef struct
 #endif
 } multiboot_info_t __attribute__ ((packed));
 
-/** \brief Information about a Multiboot module. */
+/**
+ * @brief Information about a Multiboot module. 
+ */
 typedef struct
 {
     uint32_t start;
@@ -113,7 +117,9 @@ typedef struct
     uint32_t reserved;
 } multiboot_module_info_t __attribute__ ((packed));
 
-/** \brief Information about the memory in the system. */
+/**
+ * @brief Information about the memory in the system. 
+ */
 typedef struct
 {
     uint32_t size;
@@ -128,6 +134,9 @@ extern multiboot_module_info_t multiboot_module_info[];
 extern multiboot_memory_map_t multiboot_memory_map[];
 
 /* Function prototypes. */
+/**
+ * @brief Initalize the multiboot support.
+ */
 extern void multiboot_init (void);
 
 #endif /* !__STORM_IA32_MULTIBOOT_H__ */

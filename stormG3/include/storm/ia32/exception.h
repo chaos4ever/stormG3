@@ -1,4 +1,4 @@
-/* $chaos: exception.h,v 1.5 2002/10/04 19:01:20 per Exp $ */
+/* $chaos: exception.h,v 1.6 2002/10/08 20:16:14 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -15,13 +15,17 @@
 #include <storm/ia32/cpu.h>
 
 /* Types. */
-/** \brief An exception handler. */
+/** 
+ * @brief An exception handler. 
+ */
 typedef struct
 {
     void *function;
 } exception_handler_t;
 
-/** \brief Initialize exception handling. */
+/**
+ * @brief Initialize exception handling. 
+ */
 extern void exception_init (void);
 
 /* Exception handlers prototypes. Low-level first: */
