@@ -1,4 +1,4 @@
-/* $chaos: virtual.c,v 1.1 2002/07/24 08:10:31 per Exp $ */
+/* $chaos: virtual.c,v 1.1 2002/07/28 19:23:43 per Exp $ */
 /* Abstract: Virtual file system provider. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -9,7 +9,7 @@
 #include <block/block.h>
 #include <filesystem/filesystem.h>
 #include <string/string.h>
-#include <virtual_filesystem/virtual_filesystem.h>
+#include <vfs/vfs.h>
 
 #include "virtual.h"
 
@@ -123,14 +123,14 @@ static return_t assign(char *virtual, char *logical)
 }
 
 /* Open a file. */
-static return_t open (char *filename, virtual_filesystem_file_handle_t *handle) {
+static return_t open (char *filename, vfs_file_handle_t *handle) {
     filename = NULL;
     *handle = -1;
     return STORM_RETURN_NOT_IMPLEMENTED;
 }
 
 /* Close a file. */
-static return_t close (virtual_filesystem_file_handle_t handle)
+static return_t close (vfs_file_handle_t handle)
 {
     handle = -1;
     return STORM_RETURN_NOT_IMPLEMENTED;
@@ -138,22 +138,22 @@ static return_t close (virtual_filesystem_file_handle_t handle)
 
 /* Return some information about the filesystem service (function pointers to
    our functionality). */
-static return_t service_info (void *virtual_filesystem_void)
+static return_t service_info (void *vfs_void)
 {
-    virtual_filesystem_service_t *virtual_filesystem = (virtual_filesystem_service_t *) virtual_filesystem_void;
-    virtual_filesystem->magic_cookie = VIRTUAL_FILESYSTEM_COOKIE;
-    virtual_filesystem->mount = mount;
-    virtual_filesystem->assign = assign;
-    virtual_filesystem->open = open;
-    virtual_filesystem->close = close;
+    vfs_service_t *vfs = (vfs_service_t *) vfs_void;
+    vfs->magic_cookie = VFS_COOKIE;
+    vfs->mount = mount;
+    vfs->assign = assign;
+    vfs->open = open;
+    vfs->close = close;
     return STORM_RETURN_SUCCESS;
 }
 
 
 int module_start (void)
 {
-    return service_register ("virtual_filesystem", "chaos development",
+    return service_register ("vfs", "chaos development",
                              "VFS module", "1",
-                             VIRTUAL_FILESYSTEM_SERVICE_VERSION,
+                             VFS_SERVICE_VERSION,
                              &service_info);
 }
