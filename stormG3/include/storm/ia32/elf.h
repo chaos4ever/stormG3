@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: elf.h,v 1.1 2002/06/15 16:20:27 per Exp $ */
 /* Abstract: ELF file format. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -160,7 +160,7 @@ typedef struct
     /* Must be 0x7F, 'E, 'L', 'F' in this order. */
     uint8_t identification[4]; 
 
-    /* The class of this executable. ELF_CLASS_. */
+    /* The class of this executable. ELF_CLASS_*. */
     uint8_t class;
 
     /* The endianess of the data in this file. ELF_ENDIAN_* */
@@ -173,7 +173,7 @@ typedef struct
        header. We could do the same... */
     uint8_t pad[9];
 
-    /* The type of ELF. ELF_TYPE_WHATEVER. */
+    /* The type of ELF. ELF_TYPE_*. */
     uint16_t type;   
 
     /* The machine type this ELF is designed to run
