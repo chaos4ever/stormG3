@@ -1,4 +1,4 @@
-/* $chaos: elf.h,v 1.5 2002/06/16 21:49:43 per Exp $ */
+/* $chaos: elf.h,v 1.6 2002/06/17 22:56:43 per Exp $ */
 /* Abstract: ELF file format. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -220,6 +220,18 @@ enum
 
     /* A file symbol. */
     ELF_SYMBOL_FILE
+};
+
+/* Relocation types. */
+enum
+{
+    /*    ELF_RELOCATION_ = 1,
+          ELF_RELOCATION_ = 2, */
+    /* The contents of the relocated place plus the base of the image
+       in memory. */
+    ELF_RELOCATION_RELATIVE = 8,
+    /*    ELF_RELOCATION_ = 32, */
+    
 };
 
 /* Type definitions. */
