@@ -1,4 +1,4 @@
-/* $chaos: irq.c,v 1.3 2002/06/15 22:40:33 per Exp $ */
+/* $chaos: irq.c,v 1.4 2002/06/17 07:27:00 per Exp $ */
 /* Abstract: IRQ handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -98,37 +98,37 @@ void irq_init ()
     idt_setup_interrupt_gate (IDT_ENTRY(0), KERNEL_CODE_SELECTOR,
                               dispatch_task_switcher, 0);
     
-    idt_setup_interrupt_gate (IDT_ENTRY(1), KERNEL_CODE_SELECTOR,
-                              irq1_handler, 0);
+    idt_setup_trap_gate (IDT_ENTRY(1), KERNEL_CODE_SELECTOR,
+                         irq1_handler, 0);
     
     /* IRQ 2 is used to connect the two interrupt controllers and can
        not be used as an ordinary IRQ. */
-    idt_setup_interrupt_gate (IDT_ENTRY(3), KERNEL_CODE_SELECTOR,
-                              irq3_handler, 0);
-    idt_setup_interrupt_gate (IDT_ENTRY(4), KERNEL_CODE_SELECTOR,
-                              irq4_handler, 0);
-    idt_setup_interrupt_gate (IDT_ENTRY(5), KERNEL_CODE_SELECTOR,
-                              irq5_handler, 0);
-    idt_setup_interrupt_gate (IDT_ENTRY(6), KERNEL_CODE_SELECTOR,
-                              irq6_handler, 0);
-    idt_setup_interrupt_gate (IDT_ENTRY(7), KERNEL_CODE_SELECTOR,
-                              irq7_handler, 0);
-    idt_setup_interrupt_gate (IDT_ENTRY(8), KERNEL_CODE_SELECTOR,
-                              irq8_handler, 0);
-    idt_setup_interrupt_gate (IDT_ENTRY(9), KERNEL_CODE_SELECTOR,
-                              irq9_handler, 0);
-    idt_setup_interrupt_gate (IDT_ENTRY(10), KERNEL_CODE_SELECTOR,
-                              irq10_handler, 0);
-    idt_setup_interrupt_gate (IDT_ENTRY(11), KERNEL_CODE_SELECTOR,
-                              irq11_handler, 0);
-    idt_setup_interrupt_gate (IDT_ENTRY(12), KERNEL_CODE_SELECTOR,
-                              irq12_handler, 0);
-    idt_setup_interrupt_gate (IDT_ENTRY(13), KERNEL_CODE_SELECTOR,
-                              irq13_handler, 0);
-    idt_setup_interrupt_gate (IDT_ENTRY(14), KERNEL_CODE_SELECTOR,
-                              irq14_handler, 0);
-    idt_setup_interrupt_gate (IDT_ENTRY(15), KERNEL_CODE_SELECTOR,
-                              irq15_handler, 0);
+    idt_setup_trap_gate (IDT_ENTRY(3), KERNEL_CODE_SELECTOR,
+                         irq3_handler, 0);
+    idt_setup_trap_gate (IDT_ENTRY(4), KERNEL_CODE_SELECTOR,
+                         irq4_handler, 0);
+    idt_setup_trap_gate (IDT_ENTRY(5), KERNEL_CODE_SELECTOR,
+                         irq5_handler, 0);
+    idt_setup_trap_gate (IDT_ENTRY(6), KERNEL_CODE_SELECTOR,
+                         irq6_handler, 0);
+    idt_setup_trap_gate (IDT_ENTRY(7), KERNEL_CODE_SELECTOR,
+                         irq7_handler, 0);
+    idt_setup_trap_gate (IDT_ENTRY(8), KERNEL_CODE_SELECTOR,
+                         irq8_handler, 0);
+    idt_setup_trap_gate (IDT_ENTRY(9), KERNEL_CODE_SELECTOR,
+                         irq9_handler, 0);
+    idt_setup_trap_gate (IDT_ENTRY(10), KERNEL_CODE_SELECTOR,
+                         irq10_handler, 0);
+    idt_setup_trap_gate (IDT_ENTRY(11), KERNEL_CODE_SELECTOR,
+                         irq11_handler, 0);
+    idt_setup_trap_gate (IDT_ENTRY(12), KERNEL_CODE_SELECTOR,
+                         irq12_handler, 0);
+    idt_setup_trap_gate (IDT_ENTRY(13), KERNEL_CODE_SELECTOR,
+                         irq13_handler, 0);
+    idt_setup_trap_gate (IDT_ENTRY(14), KERNEL_CODE_SELECTOR,
+                         irq14_handler, 0);
+    idt_setup_trap_gate (IDT_ENTRY(15), KERNEL_CODE_SELECTOR,
+                         irq15_handler, 0);
     
     /* Disable all IRQs. */
     port_uint8_out (INTERRUPT_CONTROLLER_MASTER + 1, 0xFF);
@@ -149,40 +149,59 @@ void irq_init ()
     cpu_interrupts_enable ();
 }
 
+/* ACK the given interrupt. */
+static inline void ack_interrupt (unsigned int irq_number)
+{
+    /* If this is a low interrupt, ACK:ing the low PIC is enough;
+       otherwise, we'll have to do the other one too. */
+    if (irq_number < 8)
+    {
+        port_uint8_out (INTERRUPT_CONTROLLER_MASTER, 0x20);
+    }
+    else
+    {
+        /* The order is important here. */
+        port_uint8_out (INTERRUPT_CONTROLLER_SLAVE, 0x20);
+        port_uint8_out (INTERRUPT_CONTROLLER_MASTER, 0x20);
+    }
+}
+
 /* This function handles all interrupts except for the timer
    interrupt. */
 void irq_handler (unsigned int irq_number)
 {
-  irq[irq_number].in_handler = TRUE;
-  irq[irq_number].occurred++;
+    irq[irq_number].interrupts_pending++;
 
-  if (!irq[irq_number].allocated)
-  {
-      debug_print ("Unexpected interrupt %u occured!", irq_number);
-  }
-  else
-  {
-      /* Call the IRQ handler for this device. */
-      if (irq[irq_number].handler != NULL)
-      {
-          irq[irq_number].handler (irq_number);
-      }
-  }
+    if (irq[irq_number].in_handler)
+    {
+        ack_interrupt (irq_number);
+        debug_print ("In handler");
+        return;
+    }
 
-  /* If this is a low interrupt, ACK:ing the low PIC is enough;
-     otherwise, we'll have to do the other one too. */
-  if (irq_number < 8)
-  {
-      port_uint8_out (INTERRUPT_CONTROLLER_MASTER, 0x20);
-  }
-  else
-  {
-      /* The order is important here. */
-      port_uint8_out (INTERRUPT_CONTROLLER_SLAVE, 0x20);
-      port_uint8_out (INTERRUPT_CONTROLLER_MASTER, 0x20);
-  }
+    irq[irq_number].in_handler = TRUE;
+    irq[irq_number].occurred++;
+    
+    if (!irq[irq_number].allocated)
+    {
+        debug_print ("Unexpected interrupt %u occured!", irq_number);
+    }
+    else
+    {
+        /* Call the IRQ handler for this device. */
+        if (irq[irq_number].handler != NULL)
+        {
+            do {
+                irq[irq_number].handler (irq_number);
+                // FIXME: These two need to be one atomic operation.
+                irq[irq_number].interrupts_pending--;
+            } while (irq[irq_number].interrupts_pending > 0);
+        }
+    }
 
-  irq[irq_number].in_handler = FALSE;
+    ack_interrupt (irq_number);
+    
+    irq[irq_number].in_handler = FALSE;
 }
 
 /* Register an IRQ for use by a module. */
