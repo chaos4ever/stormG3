@@ -107,6 +107,12 @@ static bool detect_sb (void)
     }
 }
 
+/* Get information about the soundblaster service. */
+static return_t soundblaster_info (void *info UNUSED)
+{
+    return STORM_RETURN_NOT_IMPLEMENTED;
+}
+
 /* Main function. */
 return_t module_start (void)
 {
@@ -212,11 +218,27 @@ return_t module_start (void)
         return -1;
     }
 
-    return 0;
+    /* Okay, all set. Now, go ahead and register the sound service. */
+    service_register_t service_register_info;
+    service_register_info.service_vendor = "chaos development";
+    service_register_info.device_vendor = "Creative";
+    // FIXME: Change this to the actual model. 
+    service_register_info.model = "Sound Blaster";
+    service_register_info.device_id = "1";
+    service_register_info.info_handler = &soundblaster_info;
+
+    // FIXME: Add our methods here.
+    service_method_t service_method[] UNUSED = 
+        {
+            { -1, NULL }
+        };
+
+    return STORM_RETURN_NOT_IMPLEMENTED;
+    //return sound_register (&service_register_info, service_method);
 }
  
 /* Handle interrupts. */
-void irq_handler (unsigned int irq_number __attribute__ ((unused)))
+void irq_handler (unsigned int irq_number UNUSED)
 {
     /* Clear the SB interrupt. */
     port_uint8_in (DSP_DATA_AVAILABLE);
