@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.25 2002/10/09 09:40:02 per Exp $ */
+/* $chaos: module.c,v 1.26 2002/10/10 21:38:50 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -12,6 +12,7 @@
 #include <storm/ia32/irq.h>
 #include <storm/ia32/memory.h>
 #include <storm/ia32/memory_physical.h>
+#include <storm/ia32/memory_virtual.h>
 #include <storm/ia32/module.h>
 #include <storm/ia32/multiboot.h>
 #include <storm/ia32/service.h>
@@ -36,6 +37,14 @@ static module_function_t function[] =
 
     { "memory_global_allocate", (function_t) &memory_global_allocate },
     { "memory_global_deallocate", (function_t) &memory_global_deallocate },
+
+    { "memory_physical_allocate_for_process",
+      (function_t) &memory_physical_allocate_for_process },
+    { "memory_physical_deallocate_for_process",
+      (function_t) &memory_physical_deallocate_for_process },
+
+    { "memory_virtual_map", (function_t) &memory_virtual_map },
+//  { "memory_virtual_unmap", (function_t) &memory_virtual_unmap },
 
     { "module_register", (function_t) &module_register },
 //  { "module_unregister", (function_t) &module_unregister },
