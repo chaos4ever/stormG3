@@ -1,4 +1,4 @@
-/* $chaos: service.c,v 1.14 2002/10/29 20:45:36 per Exp $ */
+/* $chaos: service.c,v 1.15 2002/10/29 22:36:39 per Exp $ */
 /* Abstract: Service support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -132,7 +132,7 @@ return_t service_lookup (const char *name, const char *vendor,
     if (services_found > *services)
     {
         spin_unlock (&service_lock);
-        return STORM_RETURN_INVALID_ARGUMENT;
+        return STORM_RETURN_OUT_OF_MEMORY;
     }
 
     *services = services_found;
