@@ -1,0 +1,17 @@
+README ($chaos: README,v 1.3 2002/05/23 11:23:40 per Exp $)
+======
+
+The initial ramdisk module is used to create a startup drive, on which
+the hard drive module and such things can be located. Also, it makes
+changing your root partition at run-time much easier -- just tell the
+system that //ramdisk should be mapped to /, and off you go.
+
+To get or put files to the ramdisk image, the best way is (IMO) to use
+mtools. It is readily available on most Linux distributions. Add a
+line like this to your mtools.conf:
+
+drive u: file="/home/per/chaos/modules/initial_ramdisk/ramdisk.image" tracks=80 sectors=18 heads=2 mformat_only
+
+...and you will be able to access this device as u: with all the mtools.
+
+-- Per Lundberg <per@chaosdev.org>  Wed, 26 Jun 2002 08:02:20 +0200
