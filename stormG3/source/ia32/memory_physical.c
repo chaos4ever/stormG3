@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.3 2002/06/09 15:10:43 per Exp $ */
+/* $chaos: memory_physical.c,v 1.4 2002/06/09 15:15:13 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -58,7 +58,7 @@ void memory_physical_init ()
 }
 
 /* Allocate a number of pages. */
-return_type memory_physical_allocate (void **pointer, unsigned int pages) 
+return_t memory_physical_allocate (void **pointer, unsigned int pages) 
 {
     if (pages != 1) 
     {
@@ -84,7 +84,7 @@ return_type memory_physical_allocate (void **pointer, unsigned int pages)
    pages, you need to call this function for each page. I will not
    keep track of the number of pages you have allocated for you, you
    will need to do it yourself. */
-return_type memory_physical_deallocate (void *pointer) 
+return_t memory_physical_deallocate (void *pointer) 
 {
     void *next = first_free;
     first_free = pointer;
