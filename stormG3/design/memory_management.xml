@@ -1,4 +1,6 @@
 <?xml version='1.0' ?> <!-- -*- xml -*- -->
+<!-- $chaos$ -->
+
   <chapter id="memory_management">
     <title>The Memory Management Subsystem</title>
     <section>
@@ -130,11 +132,11 @@ typedef struct
     <link linkend="slab_t">slab_t</link> *free_global_512;
     <link linkend="slab_t">slab_t</link> *free_global_1024;
     <link linkend="slab_t">slab_t</link> *free_global_2048;
-
-    /* The AVL header for the virtual memory. */
-    <link linkend="avl_header_t">avl_header_t</link> *virtual_header;
 } memory_allocation_t;
 	  </programlisting>
+	  Virtual memory allocation is not taken care of by this
+	  structure, since it needs to be per-process (actually,
+	  per-address space, but this is the same in this design).
 	</para>
       </section>
       

@@ -1,0 +1,32 @@
+<?xml version='1.0' ?> <!-- -*- xml -*- -->
+<!-- $chaos$ -->
+
+<chapter id="process">
+  <title>The Process Subsystem</title>
+  <section>
+    <title>
+      Overall design
+    </title>
+    <para>
+      storm G3 supports an infinite number of processes, up to the
+      amount of available system memory.
+    </para>
+  </section>
+
+  <section>
+    <title>
+      Processes
+    </title>
+    <para>
+    </para>
+  </section>
+
+  <section>
+    <title>
+      Threads
+    </title>
+    <para>
+      A thread is a 
+    </para>
+  </section>
+</chapter>

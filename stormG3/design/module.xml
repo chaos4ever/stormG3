@@ -1,0 +1,16 @@
+<?xml version='1.0' ?> <!-- -*- xml -*- -->
+<!-- $chaos$ -->
+
+<chapter id="module">
+  <title>The Module Subsystem</title>
+  <section>
+    <title>
+      Overall design
+    </title>
+    <para>
+      The module subsystem is one of the key features of storm G3. It
+      replaces the old server system that we used in older versions of
+      the system.
+    </para>
+  </section>
+</chapter>
