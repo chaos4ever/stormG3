@@ -1,4 +1,4 @@
-/* $chaos: multiboot.h,v 1.2 2002/06/05 18:17:43 per Exp $ */
+/* $chaos: multiboot.h,v 1.3 2002/06/15 14:36:58 per Exp $ */
 /* Abstract: Multiboot stuff. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -33,6 +33,7 @@ enum
 
 #define MODULE_NAME_SIZE        (2 * KIB)
 #define MEMORY_MAP_SIZE         (2 * KIB)
+#define COMMAND_LINE_SIZE       (256)
 
 /* More information about the multiboot format can be found in the GNU
    GRUB documentation available on
@@ -97,7 +98,7 @@ typedef struct
     uint32_t depth;
     uint32_t frame_buffer_address;
 #endif
-} __attribute__ ((packed)) multiboot_info_type;
+} __attribute__ ((packed)) multiboot_info_t;
 
 typedef struct
 {
@@ -105,7 +106,7 @@ typedef struct
     uint32_t end;
     char *name;
     uint32_t reserved;
-} __attribute__ ((packed)) multiboot_module_info_type;
+} __attribute__ ((packed)) multiboot_module_info_t;
 
 typedef struct
 {
@@ -113,12 +114,12 @@ typedef struct
     uint64_t base_address;
     uint64_t length;
     uint32_t type;
-} __attribute__ ((packed)) multiboot_memory_map_type;
+} __attribute__ ((packed)) multiboot_memory_map_t;
 
 /* External variables. */
-extern multiboot_info_type multiboot_info;
-extern multiboot_module_info_type multiboot_module_info[];
-//extern char *memory_map;
+extern multiboot_info_t multiboot_info;
+extern multiboot_module_info_t multiboot_module_info[];
+extern multiboot_memory_map_t multiboot_memory_map[];
 
 /* Function prototypes. */
 extern void multiboot_init (void);
