@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.6 2002/06/18 07:59:04 per Exp $ */
+/* $chaos: module.c,v 1.7 2002/06/18 19:40:32 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -12,6 +12,7 @@
 #include <storm/ia32/module.h>
 #include <storm/ia32/multiboot.h>
 #include <storm/ia32/string.h>
+#include <storm/ia32/timer.h>
 #include <storm/return_value.h>
 
 /* A list of functions provided through dynamic linking to kernel
@@ -26,6 +27,7 @@ static module_function_t function[] =
     { "module_register", (function_t) &module_register },
     { "port_range_register", (function_t) &port_range_register },
     { "port_range_unregister", (function_t) &port_range_unregister },
+    { "timer_sleep_milli", (function_t) &timer_sleep_milli },
     { NULL, (function_t) NULL }
 };
 
