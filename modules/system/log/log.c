@@ -1,4 +1,4 @@
-/* $chaos: log.c,v 1.4 2002/11/21 21:43:30 per Exp $ */
+/* $chaos: log.c,v 1.5 2002/12/03 18:10:56 johannes Exp $ */
 /* Abstract: Kernel log module. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -51,6 +51,7 @@ return_t module_start (void)
 {
     service_register_t service_register_info;
     service_register_info.service_vendor = "chaos development";
+    service_register_info.device_vendor = "N/A";
     service_register_info.model = "Log module";
     service_register_info.device_id = "1";
     service_register_info.info_handler = &service_info;
