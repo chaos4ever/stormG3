@@ -1,4 +1,4 @@
-/* $chaos: console.h,v 1.4 2002/07/11 21:46:42 per Exp $ */
+/* $chaos: console.h,v 1.5 2002/07/21 09:29:43 per Exp $ */
 /* Abstract: Console module header file. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
             Per Lundberg <per@chaosdev.org> */
@@ -27,6 +27,9 @@
 #define CONSOLE_DEFAULT_HEIGHT          25
 #define CONSOLE_DEFAULT_DEPTH           0
 
+/* The maximum number of virtual consoles in the system. */
+#define CONSOLE_MAX_NUMBER              12
+
 typedef struct
 {
     uint8_t character;
@@ -36,6 +39,9 @@ typedef struct
 /* A virtual console structure. */
 typedef struct
 {
+    /* The ID of this console (a unique identifier). */
+    console_id_t id;
+    
     /* Location of the cursor. */
     int cursor_x;
     int cursor_y;
@@ -44,7 +50,7 @@ typedef struct
     int cursor_saved_x;
     int cursor_saved_y;
 
-    /* If type is CONSOLE_TYPE_TEXT, characters. Otherwise, pixels. */
+    /* If type is CONSOLE_MODE_TEXT, characters. Otherwise, pixels. */
     int width;
     int height;  
     int depth;
@@ -105,10 +111,10 @@ extern volatile console_t *console_shortcut[];
 extern video_service_t video;
 
 /* External functions. */
-extern void console_link (console_t *console);
-extern void console_flip (console_t *console);
+extern console_t *console_find (console_id_t console_id);
 extern void console_kill_screen (console_t *console, int argument);
 extern void console_cursor_move (console_t *console, int x, int y);
-extern void console_output (console_t *console, const char *string);
+
+extern return_t console_output (console_id_t console_id, const char *string);
 
 #endif /* !__CONSOLE_H__ */
