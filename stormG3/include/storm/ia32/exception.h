@@ -1,4 +1,4 @@
-/* $chaos: exception.h,v 1.2 2002/06/13 07:02:30 per Exp $ */
+/* $chaos: exception.h,v 1.3 2002/06/13 22:11:03 per Exp $ */
 /* Abstract: Exception handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -41,8 +41,24 @@ extern void exception_alignment_check_fault_lowlevel (void);
 extern void exception_machine_check_abort_lowlevel (void);
 
 /* ...and the C functions. */
-extern void exception_page_fault (cpu_register_t registers, 
-                                  unsigned int error_code, unsigned int eip,
-                                  unsigned int cs, unsigned int eflags);
+extern void exception_divide_error_fault (cpu_register_t registers);
+extern void exception_debug_trap (cpu_register_t registers);
+extern void exception_nmi (cpu_register_t registers);
+extern void exception_breakpoint_trap (cpu_register_t registers);
+extern void exception_overflow_trap (cpu_register_t registers);
+extern void exception_bound_range_exceeded_fault (cpu_register_t registers);
+extern void exception_invalid_opcode_fault (cpu_register_t registers);
+extern void exception_device_not_available_fault (cpu_register_t registers);
+extern void exception_double_fault (cpu_register_t registers);
+extern void exception_coprocessor_segment_overrun_abort (cpu_register_t registers);
+extern void exception_invalid_tss_fault (cpu_register_t registers);
+extern void exception_segment_not_present_fault (cpu_register_t registers);
+extern void exception_stack_fault (cpu_register_t registers);
+extern void exception_general_protection_fault (cpu_register_t registers);
+extern void exception_page_fault (cpu_register_t registers);
+extern void exception_dummy (cpu_register_t registers);
+extern void exception_floating_point_error_fault (cpu_register_t registers);
+extern void exception_alignment_check_fault (cpu_register_t registers);
+extern void exception_machine_check_abort (cpu_register_t registers);
 
 #endif /* !__STORM_IA32_EXCEPTION_H__ */

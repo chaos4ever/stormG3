@@ -1,4 +1,4 @@
-/* $chaos: exception_lowlevel.S,v 1.2 2002/06/13 08:28:05 per Exp $ */
+/* $chaos: exception_lowlevel.S,v 1.3 2002/06/13 22:10:25 per Exp $ */
 /* Abstract: Low-level exception handlers. Push registers etc. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -25,21 +25,143 @@
 .globl exception_alignment_check_fault_lowlevel
 .globl exception_machine_check_abort_lowlevel
 
+/* This (code duplication) doesn't look extremely nice, but it gives
+   the best performance. The amount of instructions in an exception
+   handler must be kept down. */
 exception_divide_error_fault_lowlevel:	
-exception_debug_trap_lowlevel:	
+	pushl $-1 /* Error code. */
+	pusha
+	pushl %ds
+	pushl %es
+	pushl %fs
+	pushl %gs
+	pushl $exception_divide_error_fault
+	jmp save_registers
+
+exception_debug_trap_lowlevel:
+	pushl $-1 /* Error code. */
+	pusha
+	pushl %ds
+	pushl %es
+	pushl %fs
+	pushl %gs
+	pushl $exception_debug_trap
+	jmp save_registers
+
 exception_nmi_lowlevel:	
+	pushl $-1 /* Error code. */
+	pusha
+	pushl %ds
+	pushl %es
+	pushl %fs
+	pushl %gs
+	pushl $exception_nmi_lowlevel
+	jmp save_registers
+
 exception_breakpoint_trap_lowlevel:	
+	pushl $-1 /* Error code. */
+	pusha
+	pushl %ds
+	pushl %es
+	pushl %fs
+	pushl %gs
+	pushl $exception_breakpoint_trap
+	jmp save_registers
+
 exception_overflow_trap_lowlevel:	
+	pushl $-1 /* Error code. */
+	pusha
+	pushl %ds
+	pushl %es
+	pushl %fs
+	pushl %gs
+	pushl $exception_overflow_trap
+	jmp save_registers
+
 exception_bound_range_exceeded_fault_lowlevel:	
+	pushl $-1 /* Error code. */
+	pusha
+	pushl %ds
+	pushl %es
+	pushl %fs
+	pushl %gs
+	pushl $exception_bound_range_exceeded_fault
+	jmp save_registers
+
 exception_invalid_opcode_fault_lowlevel:	
+	pushl $-1 /* Error code. */
+	pusha
+	pushl %ds
+	pushl %es
+	pushl %fs
+	pushl %gs
+	pushl $exception_invalid_opcode_fault
+	jmp save_registers
+
 exception_device_not_available_fault_lowlevel:	
-exception_double_fault_lowlevel:	
+	pushl $-1 /* Error code. */
+	pusha
+	pushl %ds
+	pushl %es
+	pushl %fs
+	pushl %gs
+	pushl $exception_device_not_available_fault
+	jmp save_registers
+
+exception_double_fault_lowlevel:
+	pusha
+	pushl %ds
+	pushl %es
+	pushl %fs
+	pushl %gs
+	pushl $exception_double_fault
+	jmp save_registers
+		
 exception_coprocessor_segment_overrun_abort_lowlevel:	
+	pushl $-1 /* Error code. */
+	pusha
+	pushl %ds
+	pushl %es
+	pushl %fs
+	pushl %gs
+	pushl $exception_coprocessor_segment_overrun_abort
+	jmp save_registers
+
 exception_invalid_tss_fault_lowlevel:	
+	pusha
+	pushl %ds
+	pushl %es
+	pushl %fs
+	pushl %gs
+	pushl $exception_invalid_tss_fault
+	jmp save_registers
+	
 exception_segment_not_present_fault_lowlevel:	
+	pusha
+	pushl %ds
+	pushl %es
+	pushl %fs
+	pushl %gs
+	pushl $exception_segment_not_present_fault
+	jmp save_registers
+	
 exception_stack_fault_lowlevel:	
+	pusha
+	pushl %ds
+	pushl %es
+	pushl %fs
+	pushl %gs
+	pushl $exception_stack_fault
+	jmp save_registers
+
 exception_general_protection_fault_lowlevel:	
-	ret
+	pusha
+	pushl %ds
+	pushl %es
+	pushl %fs
+	pushl %gs
+	pushl $exception_general_protection_fault
+	jmp save_registers
 	
 exception_page_fault_lowlevel:
 	pusha
@@ -51,11 +173,46 @@ exception_page_fault_lowlevel:
 	jmp save_registers
 
 exception_dummy_lowlevel:	
-exception_floating_point_error_fault_lowlevel:	
-exception_alignment_check_fault_lowlevel:	
-exception_machine_check_abort_lowlevel:
-	ret
+	pushl $-1 /* Error code. */
+	pusha
+	pushl %ds
+	pushl %es
+	pushl %fs
+	pushl %gs
+	pushl $exception_dummy
+	jmp save_registers
 	
+exception_floating_point_error_fault_lowlevel:	
+	pushl $-1 /* Error code. */
+	pusha
+	pushl %ds
+	pushl %es
+	pushl %fs
+	pushl %gs
+	pushl $exception_floating_point_error_fault
+	jmp save_registers
+	
+exception_alignment_check_fault_lowlevel:	
+	pushl $-1 /* Error code. */
+	pusha
+	pushl %ds
+	pushl %es
+	pushl %fs
+	pushl %gs
+	pushl $exception_alignment_check_fault
+	jmp save_registers
+
+exception_machine_check_abort_lowlevel:
+	pushl $-1 /* Error code. */
+	pusha
+	pushl %ds
+	pushl %es
+	pushl %fs
+	pushl %gs
+	pushl $exception_machine_check_abort
+	jmp save_registers
+
+/* Call the C exception handler, pop registers and return. */
 save_registers:
 	popl %eax
 	call *%eax
@@ -64,5 +221,5 @@ save_registers:
 	popl %eax /* ES */
 	popl %eax /* DS */
 	popa
-	addl 4, %esp
+	addl $0x4, %esp
 	iret
