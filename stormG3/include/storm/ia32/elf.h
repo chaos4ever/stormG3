@@ -1,4 +1,4 @@
-/* $chaos: elf.h,v 1.3 2002/06/15 22:43:03 per Exp $ */
+/* $chaos: elf.h,v 1.4 2002/06/15 23:07:25 per Exp $ */
 /* Abstract: ELF file format. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -14,6 +14,8 @@
 
 #include <storm/types.h>
 #include <storm/ia32/bit.h>
+#include <storm/ia32/module.h>
+#include <storm/ia32/types.h>
 
 /* Enumerations. */
 /* File classes. */
@@ -347,8 +349,8 @@ typedef struct
     uint32_t size;
 
     /* The symbol's type and binding attributes. */
-    uint8_t bind : 4;
     uint8_t type : 4;
+    uint8_t bind : 4;
 
     /* This field is not used. Only for alignment. */
     uint8_t other;
@@ -364,11 +366,47 @@ typedef struct
     /* The offset in the file that is affected by this relocation. */
     uint32_t offset;
 
-    /* The index into the symbol table of this relocation. */
-    uint32_t symbol_index : 24;
-    
     /* The type of the symbol. */
     uint32_t symbol_type : 8;
+
+    /* The index into the symbol table of this relocation. */
+    uint32_t symbol_index : 24;
 } elf_relocation_t;
+
+/* Our parsed ELF, with some important sections picked out. */
+typedef struct
+{
+    /* The ELF header itself. */
+    elf_header_t *elf_header;
+
+    /* The section containing strings, used for dynamic linking. */
+    elf_section_header_t *string_header;
+
+    /* The section containing the symbol table, used for dynamic
+       linking. */
+    elf_section_header_t *symbol_header;
+
+    /* The section containing where in the ELF image the unresolved
+       symbols are so we can resolve them. */
+    elf_section_header_t *relocation_header;
+} elf_parsed_t;
+
+/* Function prototypes. */
+/* Make sure the given ELF is identified properly. */
+extern return_t elf_identify (elf_header_t *elf_header);
+
+/* Parse the given ELF header. */
+extern return_t elf_parse (elf_header_t *elf_header, elf_parsed_t *elf_parsed);
+
+/* Resolve unresolved symbols in the given symbol table. */
+extern return_t elf_resolve (elf_parsed_t *elf_parsed, module_function_t *function);
+
+/* Relocate relocatable symbols. */
+extern return_t elf_relocate (elf_parsed_t *elf_parsed);
+
+/* Find the given symbol. */
+extern return_t elf_symbol_find_by_index (elf_parsed_t *elf_parsed, unsigned int index, address_t *address);
+extern return_t elf_symbol_find_by_name (elf_parsed_t *elf_parsed,
+                                         char *name, address_t *address);
 
 #endif /* !__STORM_IA32_ELF_H__ */
