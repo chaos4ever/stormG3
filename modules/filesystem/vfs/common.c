@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: common.c,v 1.1 2002/08/04 09:27:18 per Exp $ */
 /* Abstract: Common helper functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -60,7 +60,9 @@ assign_t *find_filesystem (char *filename)
             continue;
         }
 
+#ifdef DEBUG
         debug_print ("%s %s\n", assign->logical_path, filename);
+#endif
         if (string_compare_max (assign->logical_path, filename, string_length (assign->logical_path)) == 0)
         {
             return assign;
@@ -72,7 +74,9 @@ assign_t *find_filesystem (char *filename)
     assign = first_assign;
     while (assign != NULL)
     {
+#ifdef DEBUG
         debug_print ("%s %s\n", assign->logical_path, filename);
+#endif
         if (string_compare_max (assign->logical_path, filename, string_length (assign->logical_path)) == 0)
         {
             return assign;
