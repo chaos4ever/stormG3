@@ -1,4 +1,4 @@
-/* $chaos: dotfile.emacs,v 1.37 2002/10/14 16:03:33 per Exp $ */
+/* $chaos: storm.h,v 1.1 2002/10/22 20:57:27 per Exp $ */
 /* Abstract: IA32-specific includes. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -14,5 +14,7 @@
 #define __STORM_IA32_STORM_H__
 
 #include <storm/ia32/types.h>
+#include <storm/ia32/bit.h>
+#include <storm/ia32/port.h>
 
 #endif /* !__STORM_IA32_STORM_H__ */
