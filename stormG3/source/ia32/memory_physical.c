@@ -175,16 +175,8 @@ void memory_physical_init ()
 /* Free pages that was used during startup. */
 void memory_physical_done (void)
 {
-    for (unsigned int counter = 0; counter < multiboot_info.number_of_modules; 
-         counter++) 
-    {
-        address_t start = multiboot_module_info[counter].start;
-        address_t end = multiboot_module_info[counter].end;
-        for (address_t address = start; address < end; address += PAGE_SIZE)
-        {
-            memory_physical_deallocate ((void *) address);
-        }
-    }
+    /* Modules have already been freed; we used to free them twice but
+       that didn't work so well. ;-) */
 }
 
 /* Allocate a number of pages. */
