@@ -1,4 +1,4 @@
-/* $chaos: exec.c,v 1.6 2002/12/03 14:21:31 johannes Exp $ */
+/* $chaos: exec.c,v 1.7 2002/12/03 14:22:31 johannes Exp $ */
 /* Abstract: Exec library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -7,23 +7,27 @@
 
 #include <exec/exec.h>
 
-/* Lookup the first exec service provider. FIXME: Should be able to
-   return a list. */
+/* Lookup the first exec service provider. */
+// FIXME: Should be able to return a list.
 return_t exec_lookup (exec_service_t *exec)
 {
     // FIXME: lame
     size_t services = 1;
     service_t service;
-    service_lookup_t lookup;
 
+    // FIXME: Take this as a function parameter (bug #60).
+    service_lookup_t lookup =
+        {
+            "exec",     /* protocol_name */
+            NULL,       /* service_vendor */
+            NULL,       /* device_vendor */
+            NULL,       /* model */
+            NULL,       /* device_id */
+            EXEC_PROTOCOL_MAJOR_VERSION,        /* major_version */
+            EXEC_PROTOCOL_MINOR_VERSION,        /* minor_version */
+        };
+    
     /* Find the exec service. */
-
-    lookup.protocol_name = "exec";
-    lookup.device_vendor = NULL;
-    lookup.service_vendor = NULL;
-    lookup.major_version = EXEC_PROTOCOL_MAJOR_VERSION;
-    lookup.minor_version = EXEC_PROTOCOL_MINOR_VERSION;
-
     if (service_lookup (&lookup, &services, &service) != STORM_RETURN_SUCCESS)
     {
         debug_print ("Failed to lookup exec service provider.\n");
