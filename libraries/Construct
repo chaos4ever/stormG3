@@ -1,0 +1,44 @@
+# $chaos: Construct,v 1.2 2002/06/22 22:55:08 per Exp $ -*- Perl -*-
+
+# Abstract: CONS script for the libraries
+# Author: Per Lundberg <per@chaosdev.org>
+
+# Copyright 2000 chaos development.
+# Use freely under the terms listed in the file COPYING.
+
+use POSIX; # for getcwd.
+
+Conscript_chdir 0;
+
+$build_directory = getcwd();
+
+# Change this to wherever your chaos installation root may be.
+$root = ($ARG{'root'} || '/tftpboot');
+$header_directory = "$root/data/programming/c/headers";
+$module_directory = "$root/system/modules";
+$library_static_directory = "$root/data/programming/libraries/static";
+
+$include = "$build_directory:$header_directory";
+$hostname = `hostname`;
+chop($hostname);
+$warnings = '-Wall -W -Wshadow -Wpointer-arith -Waggregate-return ' .
+  '-Wstrict-prototypes -Wredundant-decls -Winline -Wmissing-prototypes ' .
+  '-Werror -Wcast-align -Wbad-function-cast -Wsign-compare ' .
+  '-Wmissing-declarations -Wnested-externs ';
+
+$cons = new cons (
+		  CC => ($ENV{'CC'} || 'gcc'),
+		  CPPPATH => $include,
+		  CFLAGS => $warnings .
+		  '-O3 -g -pipe -fno-builtin -funsigned-char ' .
+		  '-fomit-frame-pointer -ffreestanding -std=gnu99 ',
+		  LDFLAGS => '-nostdlib'
+		);	
+
+Default qw(.);
+Export qw(cons header_directory library_static_directory build_directory);
+Build qw( console/Conscript
+	  log/Conscript
+	  unicode/Conscript );
+
+
