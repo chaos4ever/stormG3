@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.7 2002/06/04 22:24:43 per Exp $ */
+/* $chaos: memory_physical.h,v 1.1 2002/06/05 19:55:32 per Exp $ */
 /* Abstract: Physical memory allocation prototypes. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -9,7 +9,8 @@
 #define __STORM_IA32_MEMORY_PHYSICAL_H__
 
 /* The physical slab system. Awfully simple, isn't it? */
-typedef struct {
+typedef struct 
+{
     struct memory_physical_slab_t *next;
 } memory_physical_slab_t;
 
