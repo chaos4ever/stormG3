@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.9 2002/10/04 20:53:57 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.10 2002/10/15 20:52:39 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the libraries.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -26,6 +26,12 @@ $warnings = '-Wall -W -Wshadow -Wpointer-arith -Waggregate-return ' .
   '-Werror -Wcast-align -Wbad-function-cast -Wsign-compare ' .
   '-Wmissing-declarations -Wnested-externs ';
 
+# FIXME: We need to split the libraries into three subdirectories; one
+# that can be used in modules (static), one that can be used in
+# programs (dynamic) and one for stuff that can be used in both
+# (mostly inline functions)
+$defs = '-D__STORM_KERNEL_MODULE__ ';
+
 $install = <<EOF;
 return qq(
 mkdir -p \$library_static_directory
@@ -39,6 +45,7 @@ $cons = new cons (
 		  CC => ($ENV{'CC'} || 'gcc'),
 		  CPPPATH => $include,
 		  CFLAGS => $warnings .
+                  $defs .
 		  '-O3 -g -pipe -fno-builtin -funsigned-char ' .
 		  '-fomit-frame-pointer -ffreestanding -std=gnu99 ',
 		  LDFLAGS => '-nostdlib'
