@@ -1,0 +1,17 @@
+# $chaos: Construct,v 1.5 2002/06/26 06:40:38 per Exp $ -*- Perl -*-
+
+# Abstract: CONS script for the MINIX file system service provider.
+# Author: Per Lundberg <per@chaosdev.org>
+
+# Copyright 2000 chaos development.
+# Use freely under the terms listed in the file COPYING.
+
+$module_binary = 'minix.so';
+
+Import qw( cons module_directory library_directory );
+$cons = $cons->clone( LDFLAGS => '' );
+Program $cons $module_binary, 'minix.c';
+Command $cons 'install', $module_binary, 
+  qq(mkdir -p $module_directory
+     install filesystem/minix/$module_binary $module_directory
+     gzip -9f $module_directory/$module_binary);
