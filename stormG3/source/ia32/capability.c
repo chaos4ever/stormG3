@@ -1,4 +1,4 @@
-/* $chaos: capability.c,v 1.3 2002/10/24 20:48:57 per Exp $ */
+/* $chaos: capability.c,v 1.4 2002/10/24 20:50:25 per Exp $ */
 /* Abstract: Capabilities support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -16,8 +16,8 @@
 /* Find out whether the given capability is in the list. Inner
    function for capability_has. */
 static bool capability_find (capability_t *list,
-                      const char *capability_class,
-                      const char *capability_name)
+                             const char *capability_class,
+                             const char *capability_name)
 {
     while (list != NULL)
     {
@@ -35,10 +35,20 @@ static bool capability_find (capability_t *list,
 
 /* Has the current process the given capability. */
 return_t capability_has (process_id_t process_id,
+                         process_t *process_parameter,
                          const char *capability_class,
                          const char *capability_name, bool *result)
 {
-    process_t *process = process_find (process_id);
+    process_t *process;
+    
+    if (process_parameter == NULL)
+    {
+        process = process_find (process_id);
+    }
+    else
+    {
+        process = process_parameter;
+    }
 
     /* For bad code that doesn't check the return value, we start by
        making it FALSE. */
@@ -85,10 +95,21 @@ return_t capability_has (process_id_t process_id,
 }
 
 /* Add a capability to a process. */
-return_t capability_add (process_id_t process_id, const char *capability_class,
+return_t capability_add (process_id_t process_id,
+                         process_t *process_parameter,
+                         const char *capability_class,
                          const char *capability_name)
 {
-    process_t *process = process_find (process_id);
+    process_t *process;
+    
+    if (process_parameter == NULL)
+    {
+        process = process_find (process_id);
+    }
+    else
+    {
+        process = process_parameter;
+    }
 
     if (process == NULL)
     {
