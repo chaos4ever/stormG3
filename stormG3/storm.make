@@ -1,4 +1,4 @@
-# $chaos$
+# $chaos: storm.make,v 1.1 2002/05/25 20:08:27 per Exp $
 
 # Abstract: storm G3 makefile
 # Authors: Henrik Hallin <hal@chaosdev.org>
@@ -7,9 +7,9 @@
 # Copyright 2002 chaos development.
 
 # Settings.
-CC = i686-storm-chaos-gcc
+# CC = i686-storm-chaos-gcc
 INCLUDES = -I$(BUILD_ROOT)/include
-DEFINES = -DSTORM
+DEFINES = -DSTORM -DCREATOR=\"`whoami`@`hostname`\"
 CFLAGS = -Wall -W -Wshadow -Wpointer-arith -Waggregate-return \
 -Wstrict-prototypes -Wredundant-decls -Winline -Wmissing-prototypes \
 -Werror -Wcast-align -Wbad-function-cast -Wsign-compare \

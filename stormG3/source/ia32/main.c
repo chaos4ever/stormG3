@@ -1,4 +1,4 @@
-/* $chaos: main.c,v 1.2 2002/05/25 22:10:24 hal Exp $ */
+/* $chaos: main.c,v 1.3 2002/05/26 10:56:43 hal Exp $ */
 /* Abstract: This is the startup point of storm. It is executed right
    after the assembly language init code has set up the GDT, kernel
    stack, etc. Here, we initialise everything in the storm, like
@@ -24,6 +24,6 @@ void main_bootup (int argument_count UNUSED, char *arguments[] UNUSED)
     /* Set up debugging. */
     debug_init();
     
-    debug_print ("storm %s (compiled by %s on %s %s).\n", STORM_VERSION, "(not implemented)", __DATE__, __TIME__);
+    debug_print ("storm %s (compiled by %s on %s %s).\n", STORM_VERSION, CREATOR, __DATE__, __TIME__);
     while (TRUE);
 }
