@@ -1,7 +1,36 @@
-# $chaos: Construct,v 1.14 2002/12/08 19:59:48 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.1 2002/12/08 21:26:20 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the module libraries.
 # Author: Per Lundberg <per@chaosdev.org>
 
 # Copyright 2002 chaos development.
 # Use freely under the terms listed in the file LICENSE.
+
+Import qw( cons warnings library_static_directory build_directory 
+           header_directory );
+
+$defs = '-D__STORM_KERNEL_MODULE__ ';
+$include = "$build_directory/module:$build_directory/..:$header_directory";
+$install = <<EOF;
+return qq(
+mkdir -p \$library_static_directory
+install \$library_directory/\$library_binary \$library_static_directory
+touch %0:a
+	 );
+EOF
+
+$cons = $cons->clone( CPPPATH => $include,
+                      CFLAGS => $warnings .
+                      $defs .
+                      '-O3 -g -pipe -fno-builtin -funsigned-char ' .
+                      '-fomit-frame-pointer -ffreestanding -std=gnu99 ',
+                      LDFLAGS => '-nostdlib' );
+Export qw( cons install library_static_directory );
+Build qw( block/Conscript
+          checksum/Conscript
+          console/Conscript
+          exec/Conscript
+          filesystem/Conscript
+          kernel/Conscript
+          log/Conscript
+          sound/Conscript );
