@@ -1,4 +1,4 @@
-/* $chaos: service.c,v 1.16 2002/10/29 22:46:03 per Exp $ */
+/* $chaos: service.c,v 1.18 2002/10/30 22:43:41 per Exp $ */
 /* Abstract: Service support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -313,4 +313,13 @@ return_t service_close (service_connection_id_t connection_id UNUSED)
     spin_unlock (&connection_lock);
 
     return STORM_RETURN_SUCCESS;
+}
+
+/* Invoke a function in a service. */
+return_t service_invoke (service_connection_id_t connection_id, 
+                         unsigned int function_number, void *data)
+{
+    debug_print ("pip: %X %x %x\n", connection_id, function_number,
+                 data);
+    return STORM_RETURN_NOT_IMPLEMENTED;
 }
