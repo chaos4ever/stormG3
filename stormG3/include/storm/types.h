@@ -1,4 +1,4 @@
-/* $chaos: types.h,v 1.6 2002/06/16 16:37:11 per Exp $ */
+/* $chaos: types.h,v 1.7 2002/06/23 12:19:37 per Exp $ */
 /* Abstract: storm types. */
 /* Author: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
@@ -14,7 +14,7 @@
 /* Type definitions. */
 typedef int size_t;
 typedef int return_t;
-typedef void (*function_t)(void);       /* Can be used even if the
+typedef return_t (*function_t)(void);   /* Can be used even if the
                                            function uses arguments. */
 typedef int bool;                       /* no _t, since this should
                                            really have been a built-in
