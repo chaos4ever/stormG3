@@ -1,9 +1,9 @@
-# $chaos: Conscript,v 1.3 2002/10/04 19:01:19 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.4 2002/10/15 18:38:10 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for stormG3
 # Author: Per Lundberg <per@chaosdev.org>
 
-# Copyright 2000 chaos development.
+# Copyright 2002 chaos development.
 # Use freely under the terms listed in the file LICENSE.
 
 Import qw(cons header_directory build_directory);
@@ -11,6 +11,6 @@ Import qw(cons header_directory build_directory);
 $headers = "defines.h module.h return_value.h storm.h types.h";
 
 Command $cons 'install', $build_directory . "/source/ia32/stormG3", 
-  qq(mkdir -p $header_directory/storm 
-     for e in $headers ; do install include/storm/\$e $header_directory/storm || exit ; done
+  qq(mkdir -p $header_directory/storm
+     for e in $headers ; do cp -u include/storm/\$e $header_directory/storm || exit ; done
      touch %0:a);
