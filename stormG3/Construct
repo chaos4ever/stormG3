@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.14 2002/10/22 20:44:19 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.15 2002/11/14 12:24:18 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for stormG3
 # Author: Per Lundberg <per@chaosdev.org>
@@ -12,6 +12,7 @@ use POSIX; # for getcwd.
 
 Conscript_chdir 0;
 
+# Version number.
 $storm_version = "0.0.5";
 $storm_append = "G3";
 
@@ -68,13 +69,20 @@ $cons = new cons (
                   SUFEXE => ''
 		);	
 
-Default qw(.);
 Export qw(cons header_directory kernel_directory build_directory);
 Build qw(source/ia32/Conscript
          include/storm/Conscript
          include/storm/ia32/Conscript);
 
-Help 
+# Create a script for doing distributions.
+# FIXME: This gets called, always, if it is uncommented. That is not so good.. :)
+#Command $cons 'dist', 'Construct',
+#  qq(./dist.sh $storm_append $storm_version
+#     touch %0:a);
+
+Default qw(.);
+
+Help
   qq(Available options:
 
 color=netbsd			Use NetBSD colors for debug text.
