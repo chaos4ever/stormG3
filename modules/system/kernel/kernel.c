@@ -1,4 +1,4 @@
-/* $chaos: dotfile.emacs,v 1.37 2002/10/14 16:03:33 per Exp $ */
+/* $chaos: kernel.c,v 1.2 2002/11/21 21:46:26 per Exp $ */
 /* Abstract: Kernel module. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -42,8 +42,6 @@ return_t module_start (void)
             { KERNEL_FUNCTION_LOG, (service_function_t) &kernel_log },
             { -1, NULL }
         };
-
-    debug_print ("kernel_log: %x\n", kernel_log);
 
     return kernel_register (&service_register_info, service_method);
 }
