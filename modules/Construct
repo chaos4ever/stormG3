@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.5 2002/06/26 06:40:38 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.6 2002/07/09 08:38:20 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the modules.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -46,6 +46,7 @@ Build qw( boot/Conscript
 	  log/Conscript
 	  keyboard/Conscript
 	  soundblaster/Conscript
-	  vga/Conscript );
+	  vga/Conscript
+          ethernet/Conscript );
 
 

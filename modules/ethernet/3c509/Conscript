@@ -1,0 +1,17 @@
+# $chaos: Conscript,v 1.2 2002/06/23 20:38:59 per Exp $ -*- Perl -*-
+
+# Abstract: CONS script for the 3c509 module.
+# Author: Per Lundberg <per@chaosdev.org>
+
+# Copyright 2000 chaos development.
+# Use freely under the terms listed in the file COPYING.
+
+$module_binary = '3c509.so';
+
+Import qw(cons module_directory);
+Program $cons $module_binary, '3c509.c';
+Command $cons 'install', $module_binary, 
+  qq(mkdir -p $module_directory
+     install ethernet/3c509/$module_binary $module_directory
+     gzip -9f $module_directory/$module_binary);
+
