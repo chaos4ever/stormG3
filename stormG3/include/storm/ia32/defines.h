@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.4 2002/06/08 15:10:19 per Exp $ */
+/* $chaos: defines.h,v 1.5 2002/06/08 15:11:52 per Exp $ */
 /* Abstract: Generic storm defines. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -23,8 +23,8 @@
 
 /* Physical base addresses. */
 #define GDT_BASE                        (4 * KIB)
-#define IDT_BASE                        (GDT_BASE + GDT_BASE)
-#define KERNEL_STACK_BASE               (IDT_BASE + IDT_BASE)
+#define IDT_BASE                        (GDT_BASE + GDT_SIZE)
+#define KERNEL_STACK_BASE               (IDT_BASE + IDT_SIZE)
 #define MODULE_NAME_BASE                (KERNEL_STACK_BASE + KERNEL_STACK_SIZE)
 #define MEMORY_MAP_BASE                 (MODULE_NAME_BASE + MODULE_NAME_SIZE)
 
