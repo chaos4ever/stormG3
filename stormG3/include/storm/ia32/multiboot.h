@@ -1,4 +1,4 @@
-/* $chaos: multiboot.h,v 1.3 2002/06/15 14:36:58 per Exp $ */
+/* $chaos: multiboot.h,v 1.4 2002/06/15 15:39:46 per Exp $ */
 /* Abstract: Multiboot stuff. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -29,7 +29,7 @@ enum
 
 /* Defines. */
 #define MULTIBOOT_MAGIC         0x1BADB002
-#define MULTIBOOT_FLAGS         (MULTIBOOT_PAGE_ALIGN)
+#define MULTIBOOT_FLAGS         (MULTIBOOT_PAGE_ALIGN | MULTIBOOT_GET_MEMORY)
 
 #define MODULE_NAME_SIZE        (2 * KIB)
 #define MEMORY_MAP_SIZE         (2 * KIB)
