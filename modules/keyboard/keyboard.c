@@ -1,4 +1,4 @@
-/* $chaos: keyboard.c,v 1.8 2002/06/21 08:00:28 per Exp $ */
+/* $chaos: keyboard.c,v 1.9 2002/06/23 20:37:56 per Exp $ */
 /* Abstract: Keyboard module for chaos. */
 /* Authors: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
@@ -52,6 +52,9 @@ static bool keyboard_exists = TRUE;
 static volatile int reply_expected = 0;
 static volatile int acknowledge = 0;
 static volatile int resend = 0;
+
+/* The keyboard packet that we are sending. */
+static keyboard_packet_t keyboard_packet;
 
 /* Conversion table from keyboard scan codes to the standardised
    'special key' codes, which are generic between all platforms. */
@@ -286,9 +289,9 @@ static const char *translate_key (uint8_t scancode)
    handler. */
 void keyboard_handle_event (uint8_t scancode)
 {
-    keyboard_packet_t keyboard_packet;
     keyboard_exists = TRUE;
-    
+    memory_set_uint8 ((uint8_t *) &keyboard_packet, 0, sizeof (keyboard_packet_t));
+
     if (do_acknowledge (scancode))
     {
         const char *translated_key;
@@ -365,6 +368,8 @@ void keyboard_handle_event (uint8_t scancode)
                         default:
                         {
                             /* Seems to be a normal keypress. */
+                            keyboard_packet.key_pressed = TRUE;
+                
                             /* Convert it to the chaos format. */
                             translated_key = translate_key (scancode);
                 
@@ -442,6 +447,18 @@ void keyboard_handle_event (uint8_t scancode)
 
         if (key_event != NULL)
         {
+            keyboard_packet.left_shift_down = 
+                ((shift_state & KEYBOARD_LEFT_SHIFT) ==
+                 KEYBOARD_LEFT_SHIFT ? 1 : 0);
+            keyboard_packet.right_shift_down = 
+                ((shift_state & KEYBOARD_RIGHT_SHIFT) ==
+                 KEYBOARD_RIGHT_SHIFT ? 1 : 0);
+            keyboard_packet.right_alt_down = 
+                ((shift_state & KEYBOARD_RIGHT_ALT) ==
+                 KEYBOARD_RIGHT_ALT ? 1 : 0);
+            keyboard_packet.right_control_down = 
+                ((shift_state & KEYBOARD_RIGHT_CONTROL) ==
+                 KEYBOARD_RIGHT_CONTROL ? 1 : 0);
             key_event (&keyboard_packet);
         }
     }
