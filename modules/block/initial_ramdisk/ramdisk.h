@@ -1,4 +1,4 @@
-/* $chaos: ramdisk.h,v 1.3 2002/07/06 07:55:16 per Exp $ */
+/* $chaos: ramdisk.h,v 1.1 2002/07/06 09:09:35 per Exp $ */
 /* Abstract: Ramdisk header file. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -21,9 +21,5 @@ extern unsigned int ramdisk_block_count;
 
 /* The block size of the ramdisk. */
 #define RAMDISK_BLOCK_SIZE              512
-
-/* The version of the block protocol we are implement. FIXME: move to
-   the block library. */
-#define BLOCK_VERSION                   1
 
 #endif /* !__RAMDISK_H__ */

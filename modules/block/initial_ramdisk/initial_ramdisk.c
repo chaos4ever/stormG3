@@ -1,4 +1,4 @@
-/* $chaos: initial_ramdisk.c,v 1.2 2002/07/10 21:22:59 per Exp $ */
+/* $chaos: initial_ramdisk.c,v 1.3 2002/07/10 21:55:50 per Exp $ */
 /* Abstract: Initial ramdisk server. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
             Per Lundberg <per@chaosdev.org> */
@@ -66,5 +66,5 @@ return_t module_start (void)
   
     /* Create the service. */
     return service_register ("block", "chaos development", "Initial ramdisk",
-                             "1", BLOCK_VERSION, &service_info);
+                             "1", BLOCK_SERVICE_VERSION, &service_info);
 }
