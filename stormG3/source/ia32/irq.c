@@ -1,10 +1,11 @@
-/* $chaos: irq.c,v 1.2 2002/06/15 11:29:53 per Exp $ */
+/* $chaos: irq.c,v 1.3 2002/06/15 22:40:33 per Exp $ */
 /* Abstract: IRQ handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file COPYING. */
 
+#include <storm/return_value.h>
 #include <storm/types.h>
 #include <storm/ia32/bit.h>
 #include <storm/ia32/cpu.h>
@@ -15,8 +16,10 @@
 #include <storm/ia32/idt.h>
 #include <storm/ia32/irq.h>
 #include <storm/ia32/memory.h>
+#include <storm/ia32/memory_global.h>
 #include <storm/ia32/port.h>
 #include <storm/ia32/process.h>
+#include <storm/ia32/string.h>
 #include <storm/ia32/thread.h>
 
 static irq_t irq[IRQ_LEVELS];
@@ -180,4 +183,44 @@ void irq_handler (unsigned int irq_number)
   }
 
   irq[irq_number].in_handler = FALSE;
+}
+
+/* Register an IRQ for use by a module. */
+return_t irq_register (unsigned int irq_number, char *description,
+                       irq_handler_t *function)
+{
+    return_t return_value;
+
+    /* Make sure the input data is pure. */
+    if (irq_number >= IRQ_LEVELS)
+    {
+        return STORM_RETURN_INVALID_ARGUMENT;
+    }
+    
+    //mutex_kernel_wait (&tss_tree_mutex);
+
+    /* Make sure the IRQ level is free. */
+    if (irq[irq_number].allocated)
+    {
+        //mutex_kernel_signal (&tss_tree_mutex);
+        return STORM_RETURN_BUSY;
+    }
+    
+    /* Update the information in the IRQ structure. */
+    return_value = memory_global_allocate ((void **) &irq[irq_number].description,
+                                          string_length (description) + 1);
+    if (return_value != STORM_RETURN_SUCCESS)
+    {
+        return return_value;
+    }
+
+    string_copy (irq[irq_number].description, description);
+    
+    irq[irq_number].allocated = TRUE;
+    irq[irq_number].interrupts_pending = 0;
+    irq[irq_number].handler = function;
+    irq_enable (irq_number);
+
+    //mutex_kernel_signal (&tss_tree_mutex);
+    return STORM_RETURN_SUCCESS;
 }
