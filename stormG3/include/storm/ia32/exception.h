@@ -16,7 +16,7 @@
 
 /* Types. */
 /** 
- * @brief An exception handler. 
+ * @brief               An exception handler. 
  */
 typedef struct
 {
@@ -24,9 +24,16 @@ typedef struct
 } exception_handler_t;
 
 /**
- * @brief Initialize exception handling. 
+ * @brief               Initialize exception handling. 
  */
 extern void exception_init (void);
+
+// FIXME: Define the exception names.
+/**
+ * @brief               Page fault exception. 
+ */
+#define EXCEPTION_PAGE_FAULT \
+                        (14)
 
 /* Exception handlers prototypes. Low-level first: */
 extern void exception_divide_error_fault_lowlevel (void);
@@ -64,7 +71,7 @@ extern void exception_invalid_tss_fault (cpu_register_t registers);
 extern void exception_segment_not_present_fault (cpu_register_t registers);
 extern void exception_stack_fault (cpu_register_t registers);
 extern void exception_general_protection_fault (cpu_register_t registers);
-extern void exception_page_fault (cpu_register_t registers);
+extern return_t exception_page_fault (cpu_register_t registers);
 extern void exception_dummy (cpu_register_t registers);
 extern void exception_floating_point_error_fault (cpu_register_t registers);
 extern void exception_alignment_check_fault (cpu_register_t registers);
