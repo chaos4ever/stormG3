@@ -1,4 +1,4 @@
-/* $chaos: dispatch.c,v 1.6 2002/10/15 21:55:35 per Exp $ */
+/* $chaos: dispatch.c,v 1.7 2002/10/17 21:28:58 per Exp $ */
 /* Abstract: Dispatcher. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -14,6 +14,7 @@
 #include <storm/ia32/gdt.h>
 #include <storm/ia32/irq.h>
 #include <storm/ia32/memory_global.h>
+#include <storm/ia32/port.h>
 #include <storm/ia32/spinlock.h>
 
 // FIXME: We may be able to move some of these?
