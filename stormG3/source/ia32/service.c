@@ -1,4 +1,4 @@
-/* $chaos: service.c,v 1.5 2002/06/24 21:10:02 per Exp $ */
+/* $chaos: service.c,v 1.6 2002/06/24 21:35:54 per Exp $ */
 /* Abstract: Service support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -6,6 +6,7 @@
 /* Use freely under the terms listed in the file COPYING. */
 
 #include <storm/return_value.h>
+#include <storm/ia32/debug.h>
 #include <storm/ia32/defines.h>
 #include <storm/ia32/lock.h>
 #include <storm/ia32/memory_global.h>
@@ -28,6 +29,7 @@ return_t service_register (char *name, char *vendor, char *model, char *id,
     return_t return_value = memory_global_allocate ((void **) &service, sizeof (service_data_t));
     if (return_value != STORM_RETURN_SUCCESS)
     {
+        debug_print ("%s: Allocating memory failed.\n", __FUNCTION__);
         return return_value;
     }
 
@@ -37,6 +39,7 @@ return_t service_register (char *name, char *vendor, char *model, char *id,
         string_length (model) + 1 > SERVICE_MAX_MODEL_LENGTH ||
         string_length (id) + 1 > SERVICE_MAX_ID_LENGTH)
     {
+        debug_print ("%s: One of the fields were too long.\n", __FUNCTION__);
         return STORM_RETURN_INVALID_ARGUMENT; 
     }
 
