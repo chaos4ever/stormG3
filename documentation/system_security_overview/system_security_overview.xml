@@ -5,12 +5,14 @@
   <!ENTITY systems SYSTEM "systems.xml">
   <!ENTITY problem SYSTEM "problem.xml">
   <!ENTITY solution SYSTEM "solution.xml">
+  <!ENTITY implementation SYSTEM "implementation.xml">
   <!ENTITY license SYSTEM "license.xml">
 ]>
 
-<!-- $chaos: system_security_overview.xml,v 1.1 2002/10/21 21:34:46 per Exp $ -->
+<!-- $chaos: system_security_overview.xml,v 1.2 2002/10/21 21:41:16 per Exp $ -->
 
 <book>
+  <?dbhtml filename="index.html"?>
   <bookinfo>
     <title>System Security Overview</title>
 
@@ -25,7 +27,7 @@
           </address>
         </affiliation>
       </author>
-
+      
       <author>
 	<firstname>Per</firstname>
 	<surname>Lundberg</surname>
@@ -57,5 +59,6 @@
   &systems;
   &problem;
   &solution;
+  &implementation;
   &license;
 </book>
