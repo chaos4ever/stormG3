@@ -1,11 +1,13 @@
-/* $chaos: cpu.h,v 1.14 2002/10/04 19:01:20 per Exp $ */
+/* $chaos: cpu.h,v 1.15 2002/10/08 20:16:14 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
 
-/** @file cpu.h
-    @brief CPU defines and functions. */
+/**
+ * @file                cpu.h
+ * @brief               CPU defines and functions. 
+ */
 
 #ifndef __STORM_IA32_CPU_H__
 #define __STORM_IA32_CPU_H__
@@ -21,6 +23,10 @@ static inline void cpu_rdtsc (uint32_t *low, uint32_t *high)
   ("rdtsc": "=a" (*low), "=d" (*high));
 }
 
+/**
+ * @brief               Set the TR (Task Register)
+ * @param new_tr        The new value of the TR.
+ */
 static inline void cpu_set_tr (uint16_t new_tr)
 {
   asm volatile ("ltr %0"
@@ -73,14 +79,20 @@ static inline void cpu_interrupts_enable (void)
 }
 
 /* Function prototypes. */
-/** @brief Query information about the installed CPU. */
+/**
+ * @brief               Query information about the installed CPU. 
+ */
 extern void cpu_init (void);
 
 /* Type definitions. */
-/** @brief Flags that we get out of CPUID. */
+/**
+ * @brief               Flags that we get out of CPUID. 
+ */
 typedef struct
 {
-    /** @brief Feature flags. */
+    /**
+     * @brief           Feature flags. 
+     */
     uint32_t fpu:       1;
     uint32_t vme:       1;
     uint32_t de:        1;
@@ -107,7 +119,9 @@ typedef struct
     uint32_t amd_3dnow: 1;
 } cpuid_flags_t __attribute__ ((packed));
 
-/** @brief Information about a CPU. */
+/**
+ * @brief               Information about a CPU. 
+ */
 typedef struct
 {
     uint32_t cpuid;
