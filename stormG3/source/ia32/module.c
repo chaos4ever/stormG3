@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.3 2002/06/17 07:26:11 per Exp $ */
+/* $chaos: module.c,v 1.4 2002/06/17 22:57:35 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -41,15 +41,15 @@ static return_t module_link (elf_header_t *elf_header)
         return return_value;
     }
 
-    /* Try and resolve unresolved symbols */
-    return_value = elf_resolve (&elf_parsed, function);
+    /* Allocate pages and copy the sections to this space. */
+    return_value = elf_load (&elf_parsed);
     if (return_value != STORM_RETURN_SUCCESS)
     {
         return return_value;
     }
 
-    /* Allocate pages and copy the sections to this space. */
-    return_value = elf_load (&elf_parsed);
+    /* Try and resolve unresolved symbols */
+    return_value = elf_resolve (&elf_parsed, function);
     if (return_value != STORM_RETURN_SUCCESS)
     {
         return return_value;
@@ -63,9 +63,6 @@ static return_t module_link (elf_header_t *elf_header)
         return return_value;
     }
 
-    // FIXME: We should rewrite all entries in the symbol table, so we
-    // won't have to add elf_parsed.image here.
-
     /* Everything seems to be fine. Now, we call module_start. */
     return_value = elf_symbol_find_by_name (&elf_parsed, "module_start", (uint32_t *) &module_function);
     if (return_value != STORM_RETURN_SUCCESS)
@@ -73,12 +70,15 @@ static return_t module_link (elf_header_t *elf_header)
         return return_value;
     }
 
-    module_function = (function_t) (((uint32_t) module_function) + ((uint32_t) elf_parsed.image));
+    debug_print ("%x\n", module_function);
 
     /* Call the module entry point. */
     module_function ();
 
     debug_print ("Returned!\n");
+
+    // FIXME Deallocate memory used by the ELF image. A simple for
+    // loop really.
 
     return STORM_RETURN_SUCCESS;
 }
