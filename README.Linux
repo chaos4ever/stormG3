@@ -6,6 +6,7 @@ chaos has been successfully compiled on the following distributions:
 * Debian GNU/Linux 3.0 (woody).
 * Debian GNU/Linux 3.1 (sarge).
 * Debian GNU/Linux ?.? (sid)
+* Mandrake 9.0
 
--- Per Lundberg <per@chaosdev.org>  Sun, 28 Jul 2002 21:02:18 +0200
+-- Per Lundberg <per@chaosdev.org>  Sat, 23 Nov 2002 12:47:28 +0100
 
