@@ -1,10 +1,11 @@
-/* $chaos: dma.c,v 1.5 2002/10/15 18:14:04 per Exp $ */
+/* $chaos: dma.c,v 1.6 2002/10/20 19:33:02 per Exp $ */
 /* Abstract: DMA routines. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
 
+#include <storm/return_value.h>
 #include <storm/ia32/dma.h>
 #include <storm/ia32/memory_physical.h>
 #include <storm/ia32/process.h>
