@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.2 2002/06/22 22:55:08 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.3 2002/06/23 11:59:29 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the modules.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -16,9 +16,10 @@ $build_directory = getcwd();
 $root = ($ARG{'root'} || '/tftpboot');
 $header_directory = "$root/data/programming/c/headers";
 $module_directory = "$root/system/modules";
-$library_directory = "$build_directory/../libraries";
+$library_include_directory = "$build_directory/../libraries"; # FIXME: Replace twith the path under $root
+$library_directory = "$root/data/programming/libraries/static";
 
-$include = "$header_directory:$library_directory";
+$include = "$header_directory:$library_include_directory";
 $hostname = `hostname`;
 chop($hostname);
 $warnings = '-Wall -W -Wshadow -Wpointer-arith -Waggregate-return ' .
@@ -32,16 +33,17 @@ $cons = new cons (
 		  CFLAGS => $warnings .
 		  '-O3 -g -pipe -fno-builtin -funsigned-char ' .
 		  '-fomit-frame-pointer -ffreestanding -std=gnu99 ',
-		  LDFLAGS => '-nostdlib --shared'
+		  LDFLAGS => "-nostdlib --shared -L$library_directory"
 		);	
 
 Default qw(.);
-Export qw(cons header_directory module_directory build_directory);
-Build qw( console/Conscript
+Export qw( cons header_directory module_directory build_directory
+	   library_directory );
+Build qw( boot/Conscript
+	  console/Conscript
 	  log/Conscript
 	  keyboard/Conscript
 	  soundblaster/Conscript
-	  vga/Conscript
-	);
+	  vga/Conscript );
 
 
