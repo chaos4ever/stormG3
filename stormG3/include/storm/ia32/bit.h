@@ -1,4 +1,4 @@
-/* $chaos: bit.h,v 1.7 2002/10/08 20:16:14 per Exp $ */
+/* $chaos: bit.h,v 1.8 2002/10/09 13:07:13 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -18,6 +18,15 @@
 #ifndef __STORM_IA32_BIT_H__
 #define __STORM_IA32_BIT_H__
 
+/** 
+ * @brief Get the low 32 bits of a 64-bit integer variable. 
+ */
+#define LOW_32(x)                       ((x) & 0xFFFFFFFFUL)
+
+/** 
+ * @brief Get the high 32 bits of a 64-bit integer variable. 
+ */
+#define HIGH_32(x)                      ((x) >> 32)
 
 /** 
  * @brief Get the low 16 bits of a 32-bit integer variable. 
@@ -39,6 +48,7 @@
  */
 #define HIGH_8(x)                       ((x) >> 8)
 
+// FIXME: Document this.
 /* Bit manipulation macros. */
 #define BIT_SET(a,b)                    ((a) |= (1 << (b)))
 #define BIT_CLEAR(a,b)                  ((a) &= !(1 << (b)))
