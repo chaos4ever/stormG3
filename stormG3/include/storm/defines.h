@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.10 2002/10/15 19:15:21 per Exp $ */
+/* $chaos: defines.h,v 1.11 2002/10/17 21:25:47 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -98,6 +98,30 @@
  */
 #define MAX_STARTUP_SERVERS \
                         (32)
+
+/**
+ * @brief               The length of a service name.
+ */
+#define SERVICE_NAME_LENGTH \
+                        (32)
+
+/**
+ * @brief               The length of a vendor name.
+ */
+#define SERVICE_VENDOR_LENGTH \
+                        (32)
+
+/**
+ * @brief               The length of a model name.
+ */
+#define SERVICE_MODEL_LENGTH \
+                        (32)
+
+/**
+ * @brief               The length of a unique service ID.
+ */
+#define SERVICE_ID_LENGTH \
+                        (16)
 
 /* Stupid, but just to get the AVL code compiling. FIXME: Remove this
    ASAP. */
