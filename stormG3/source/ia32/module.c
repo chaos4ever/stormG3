@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.20 2002/08/08 23:14:18 hal Exp $ */
+/* $chaos: module.c,v 1.21 2002/08/09 06:33:54 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -8,6 +8,7 @@
 #include <storm/ia32/debug.h>
 #include <storm/ia32/dma.h>
 #include <storm/ia32/elf.h>
+#include <storm/ia32/halt.h>
 #include <storm/ia32/irq.h>
 #include <storm/ia32/memory.h>
 #include <storm/ia32/memory_physical.h>
@@ -25,6 +26,7 @@ static module_function_t function[] =
 {
     { "debug_print", (function_t) &debug_print },
     { "dma_register", (function_t) &dma_register },
+    { "halt", (function_t) &halt },
     { "irq_register", (function_t) &irq_register },
     { "memory_global_allocate", (function_t) &memory_global_allocate },
     { "module_register", (function_t) &module_register },
