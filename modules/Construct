@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.17 2002/12/02 20:38:14 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.18 2002/12/08 20:04:31 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the modules.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -19,7 +19,7 @@ $module_directory = "$root/system/modules";
 
 # FIXME: Replace with the path under $root. But first we need to start
 # installing the library headers.
-$library_include_directory = "$build_directory/../libraries:$build_directory/../libraries/module";
+$library_include_directory = "$build_directory/../libraries:$build_directory/../libraries/module:$build_directory/../libraries/common";
 $library_directory = "$root/data/programming/libraries/static";
 
 $include = "$build_directory/..:$header_directory:$library_include_directory";
