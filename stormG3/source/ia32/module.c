@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.9 2002/06/19 07:29:11 per Exp $ */
+/* $chaos: module.c,v 1.10 2002/06/19 07:36:06 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -12,6 +12,7 @@
 #include <storm/ia32/memory.h>
 #include <storm/ia32/module.h>
 #include <storm/ia32/multiboot.h>
+#include <storm/ia32/service.h>
 #include <storm/ia32/string.h>
 #include <storm/ia32/timer.h>
 #include <storm/return_value.h>
@@ -28,6 +29,8 @@ static module_function_t function[] =
     { "module_register", (function_t) &module_register },
     { "port_range_register", (function_t) &port_range_register },
     { "port_range_unregister", (function_t) &port_range_unregister },
+    { "service_register", (function_t) &service_register },
+    { "service_resolve", (function_t) &service_resolve },
     { "timer_sleep_milli", (function_t) &timer_sleep_milli },
     { NULL, (function_t) NULL }
 };
