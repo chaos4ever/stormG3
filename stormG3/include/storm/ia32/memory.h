@@ -1,4 +1,4 @@
-/* $chaos: memory.h,v 1.3 2002/06/09 15:04:52 per Exp $ */
+/* $chaos: memory.h,v 1.4 2002/06/12 06:48:01 per Exp $ */
 /* Abstract: Memory operations. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -29,8 +29,8 @@ static inline void *memory_copy (void *to, void *from, unsigned int size)
                   "=&D" (edi), 
                   "=&S" (esi)
                   :
-                  "0" (n / 4),
-                  "q" (n),
+                  "0" (size / 4),
+                  "q" (size),
                   "1" ((long) to),
                   "2" ((long) from)
                   : 
