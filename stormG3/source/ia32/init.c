@@ -1,4 +1,4 @@
-/* $chaos: init.c,v 1.11 2002/10/04 19:01:21 per Exp $ */
+/* $chaos: init.c,v 1.12 2002/10/10 14:09:01 per Exp $ */
 /* Abstract: storm initialization. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -9,6 +9,7 @@
 
 #include <storm/types.h>
 #include <storm/ia32/defines.h>
+#include <storm/ia32/dispatch.h>
 #include <storm/ia32/gdb.h>
 #include <storm/ia32/gdt.h>
 #include <storm/ia32/idt.h>
@@ -36,7 +37,10 @@ static uint16_t temporary_gdt[] =
     0x9800,
     0x00CF,
 
-    /* Process data segment (read/write). */
+    /* Kernel data segment (read/write). Only used for setting the SP0
+       in user processes; needed since SS.RPL == CS.DPL needs to be
+       true. If you don't understand this, nevermind. But do not try
+       to be "smart" and delete this; it will break the system. */
     0xFFFF,
     0x0000,
     0x9200,
@@ -85,13 +89,12 @@ static void kernel_entry (void)
 #endif
 
     multiboot_init ();
+
+    // FIXME: Pass the parameters.
     main_bootup (0, NULL);
 
-    /* Idle thread. :) */
-    while (TRUE)
-    {
-        asm ("hlt");
-    }
+    /* Put control over to the idle thread. */
+    dispatch_idle ();
 }
 
 /* Multiboot header. */
