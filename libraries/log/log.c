@@ -1,4 +1,4 @@
-/* $chaos: log.c,v 1.6 2002/10/04 19:00:55 per Exp $ */
+/* $chaos: log.c,v 1.7 2002/10/28 08:08:15 per Exp $ */
 /* Abstract: Log library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -10,8 +10,9 @@
 /* Get a connection to the log service provider. */
 return_t log_lookup (log_service_t *log)
 {
-    size_t services;
-    service_t *service;
+    // FIXME: Lame.
+    size_t services = 1;
+    service_t service;
 
     /* Find the log service. */
     if (service_lookup ("log", NULL, NULL, NULL, LOG_SERVICE_MAJOR_VERSION, LOG_SERVICE_MINOR_VERSION, &services, &service) != STORM_RETURN_SUCCESS)
@@ -20,9 +21,7 @@ return_t log_lookup (log_service_t *log)
         return LOG_RETURN_SERVICE_UNAVAILABLE;
     }
 
-    service[0].service_info (log);
-
-    // FIXME: Free the memory allocated by service_lookup.
+    service.service_info (log);
 
     return LOG_RETURN_SUCCESS;
 }

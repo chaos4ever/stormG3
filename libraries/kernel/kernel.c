@@ -1,4 +1,4 @@
-/* $chaos: dotfile.emacs,v 1.37 2002/10/14 16:03:33 per Exp $ */
+/* $chaos: kernel.c,v 1.1 2002/10/29 20:46:21 per Exp $ */
 /* Abstract: */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -16,8 +16,9 @@
    return a list. */
 return_t kernel_lookup (kernel_service_t *kernel)
 {
-    size_t services;
-    service_t *service;
+    // FIXME: Lame.
+    size_t services = 1;
+    service_t service;
 
     /* Find the exec service. */
     if (service_lookup ("kernel", NULL, NULL, NULL, KERNEL_SERVICE_MAJOR_VERSION, KERNEL_SERVICE_MINOR_VERSION, &services, &service) != STORM_RETURN_SUCCESS)
@@ -26,7 +27,7 @@ return_t kernel_lookup (kernel_service_t *kernel)
         return KERNEL_RETURN_SERVICE_UNAVAILABLE;
     }
 
-    service[0].service_info (kernel);
+    service.service_info (kernel);
 
     // FIXME: Free the memory allocated by service_lookup.
     return KERNEL_RETURN_SUCCESS;

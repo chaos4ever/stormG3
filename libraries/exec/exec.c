@@ -1,4 +1,4 @@
-/* $chaos: exec.c,v 1.2 2002/10/04 21:23:44 per Exp $ */
+/* $chaos: exec.c,v 1.3 2002/10/28 07:59:43 per Exp $ */
 /* Abstract: Exec library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -11,8 +11,9 @@
    return a list. */
 return_t exec_lookup (exec_service_t *exec)
 {
-    size_t services;
-    service_t *service;
+    // FIXME: lame
+    size_t services = 1;
+    service_t service;
 
     /* Find the exec service. */
     if (service_lookup ("exec", NULL, NULL, NULL, EXEC_SERVICE_MAJOR_VERSION, EXEC_SERVICE_MINOR_VERSION, &services, &service) != STORM_RETURN_SUCCESS)
@@ -21,9 +22,8 @@ return_t exec_lookup (exec_service_t *exec)
         return EXEC_RETURN_SERVICE_UNAVAILABLE;
     }
 
-    service[0].service_info (exec);
+    service.service_info (exec);
 
-    // FIXME: Free the memory allocated by service_lookup.
     return EXEC_RETURN_SUCCESS;
 }
 

@@ -1,4 +1,4 @@
-/* $chaos: video.c,v 1.3 2002/10/04 19:00:58 per Exp $ */
+/* $chaos: video.c,v 1.4 2002/10/28 08:11:15 per Exp $ */
 /* Abstract: Video library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -10,8 +10,8 @@
 /* Get a connection to the video service provider. */
 return_t video_lookup (video_service_t *video)
 {
-    size_t services;
-    service_t *service;
+    size_t services = 1;
+    service_t service;
 
     /* Find the log service. */
     if (service_lookup ("video", NULL, NULL, NULL, VIDEO_SERVICE_MAJOR_VERSION, VIDEO_SERVICE_MINOR_VERSION, &services, &service) != STORM_RETURN_SUCCESS)
@@ -20,7 +20,7 @@ return_t video_lookup (video_service_t *video)
         return VIDEO_RETURN_SERVICE_UNAVAILABLE;
     }
 
-    service[0].service_info (video);
+    service.service_info (video);
 
     // FIXME: Free the memory allocated by service_lookup.
 
