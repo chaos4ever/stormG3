@@ -1,14 +1,15 @@
-README ($chaos: README,v 1.6 2002/07/28 19:04:09 per Exp $)
+README ($chaos: README,v 1.7 2002/10/27 14:49:54 johannes Exp $)
 ======
 
-This is chaos, a free (licensed under the BSD license) operating
-system. It implements advanced featuressuch as virtual memory,
-interrupt/exception management, memoryprotection, I/O protection,
-preemptive multitasking, ELF support, andmuch, much more. It is a
-work in progress, and thus some parts might be unfinished. If you
-are a programmer and would like to help us, please contact us and
-we can see what you can help us with. Our contact information can
-be found on the web page -- http://web.chaosdev.org/
+This is chaos, a free (licensed under the BSD license, without
+advertisment clause) operating system. It implements advanced
+featuressuch as virtual memory, interrupt/exception management,
+memoryprotection, I/O protection, preemptive multitasking, ELF
+support, andmuch, much more. It is a work in progress, and thus some
+parts might be unfinished. If you are a programmer and would like to
+help us, please contact us and we can see what you can help us
+with. Our contact information can be found on the web page --
+http://web.chaosdev.org/
 
 The following programs are required to compile:
 
