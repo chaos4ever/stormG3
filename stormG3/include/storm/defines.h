@@ -100,13 +100,19 @@
                         (32)
 
 /**
- * @brief               The length of a service name.
+ * @brief               The length of a protocol name.
  */
-#define SERVICE_NAME_LENGTH \
+#define SERVICE_PROTOCOL_NAME_LENGTH \
                         (32)
 
 /**
- * @brief               The length of a vendor name.
+ * @brief               The length of a device vendor name.
+ */
+#define SERVICE_DEVICE_VENDOR_LENGTH \
+                        (32)
+
+/**
+ * @brief               The length of a service vendor name.
  */
 #define SERVICE_VENDOR_LENGTH \
                         (32)
