@@ -1,4 +1,4 @@
-/* $chaos: bit.h,v 1.3 2002/06/08 15:12:34 per Exp $ */
+/* $chaos: bit.h,v 1.4 2002/06/18 19:29:19 per Exp $ */
 /* Abstract: Bit manipulation macros. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -17,7 +17,7 @@
 #define HIGH_16(x)                      ((x) >> 16)
 
 /* Get the low or high 8 bits of a 16-bit integer variable. */
-#define LOW_8(x)                        ((x) & 0x00FF)
+#define LOW_8(x)                        ((x) & 0xFF)
 #define HIGH_8(x)                       ((x) >> 8)
 
 /* Bit manipulation macros. */
