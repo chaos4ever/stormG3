@@ -1,0 +1,18 @@
+# $chaos: Conscript,v 1.5 2002/10/04 20:53:59 per Exp $ -*- Perl -*-
+
+# Abstract: CONS script for the sound library.
+# Author: Per Lundberg <per@chaosdev.org>
+
+# Copyright 2002 chaos development.
+# Use freely under the terms listed in the file LICENSE.
+
+$library_binary = 'libsound.a';
+$library_directory = 'module/sound';
+
+Import qw( cons library_static_directory install );
+Library $cons $library_binary, 'sound.c';
+
+$install_cmd = eval $install;
+Command $cons 'install', $library_binary, $install_cmd;
+
+# FIXME: Install headers also. We don't need it yet though.
