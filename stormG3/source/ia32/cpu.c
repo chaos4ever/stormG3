@@ -1,10 +1,11 @@
-/* $chaos: cpu.c,v 1.3 2002/10/04 19:01:21 per Exp $ */
+/* $chaos: cpu.c,v 1.4 2002/10/08 20:17:43 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/ia32/cpu.h>
+#include <storm/ia32/debug.h>
 #include <storm/ia32/memory.h>
 
 cpu_info_t cpu_info;
@@ -122,7 +123,7 @@ void cpu_init (void)
         
         /* Get model type and flags. */
         cpuid (CPUID_GET_CPU_INFO, (uint32_t *) &cpu_info.signature, &dummy,
-               &dummy, (uint32_t *) &cpu_info.flags.flags);
+               &dummy, (uint32_t *) &cpu_info.flags);
     }
     else
     {
@@ -142,4 +143,11 @@ void cpu_init (void)
     
     /* We don't resolve model/family/stepping into CPU names; that is
        done on library level to keep the kernel bloat down. */
+
+    /* If we have an FPU, initialize it. */
+    if (cpu_info.flags.fpu == 1)
+    {
+        asm ("finit");
+        debug_print ("FPU detected and initialized.\n");
+    }
 }
