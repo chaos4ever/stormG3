@@ -8,6 +8,7 @@
    reference documentation. */
 
 #include <storm/types.h>
+#include <storm/ia32/debug.h>
 #include <storm/ia32/defines.h>
 #include <storm/ia32/dispatch.h>
 #include <storm/ia32/gdb.h>
@@ -85,7 +86,7 @@ static void kernel_entry (void)
     gdb_serial_init (GDB_PORT, GDB_SPEED);
     gdb_set_debug_traps ();
 
-    BREAKPOINT ();
+    DEBUG_BREAKPOINT ();
 #endif
 
     multiboot_init ();
