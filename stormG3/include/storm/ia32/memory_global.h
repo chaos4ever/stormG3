@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: memory_global.h,v 1.1 2002/06/11 21:25:51 per Exp $ */
 /* Abstract: Global memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -15,6 +15,8 @@
 typedef struct 
 {
     uint32_t magic_cookie;
+
+    /* Pointer to the next free slab. */
     struct memory_global_slab_t *next;
 } memory_global_slab_t;
 
@@ -25,6 +27,9 @@ typedef struct
     /* How many used blocks do we have in this page. If this gets down
        to zero, free the page. */
     unsigned int used_blocks;
+
+    /* The address of our SLAB header _pointer_, used for deallocation. */
+    memory_global_slab_t **slab_header;
     
     /* Here comes the slabs. Don't use this as an indexed array -- it
        won't work with slabs bigger than 8 bytes. */
