@@ -1,4 +1,4 @@
-/* $chaos: main.c,v 1.26 2002/10/08 20:17:30 per Exp $ */
+/* $chaos: main.c,v 1.27 2002/10/09 09:21:27 per Exp $ */
 /* Abstract: Main startup file. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -60,6 +60,9 @@ void main_bootup (int argument_count UNUSED, char *arguments[] UNUSED)
 
     /* Set up module support. */
     module_init ();
+
+    /* Free memory that was used in the startup. */
+    memory_physical_done ();
 
     /* Print a final line of debug information. */
     debug_print ("Free memory after system startup: %u pages\n", free_pages);
