@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.19 2002/08/08 20:08:43 per Exp $ */
+/* $chaos: module.c,v 1.20 2002/08/08 23:14:18 hal Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -57,6 +57,7 @@ static return_t module_link (elf_header_t *elf_header)
     return_value = elf_load (&elf_parsed);
     if (return_value != STORM_RETURN_SUCCESS)
     {
+        debug_print ("Failed loading ELF.\n");
         return return_value;
     }
 
@@ -64,6 +65,7 @@ static return_t module_link (elf_header_t *elf_header)
     return_value = elf_resolve (&elf_parsed, function);
     if (return_value != STORM_RETURN_SUCCESS)
     {
+        debug_print ("Failed resolving unresolved symbols.\n");
         return return_value;
     }
 
@@ -72,6 +74,7 @@ static return_t module_link (elf_header_t *elf_header)
     return_value = elf_relocate (&elf_parsed);
     if (return_value != STORM_RETURN_SUCCESS)
     {
+        debug_print ("Failed relocating ELF.\n");
         return return_value;
     }
 
@@ -82,6 +85,7 @@ static return_t module_link (elf_header_t *elf_header)
     return_value = elf_symbol_find_by_name (&elf_parsed, "module_start", (address_t *) &module_start);
     if (return_value != STORM_RETURN_SUCCESS)
     {
+        debug_print ("Failed to find the module_start symbol.\n");
         return return_value;
     }
 
