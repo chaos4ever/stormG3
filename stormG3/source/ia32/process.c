@@ -1,4 +1,4 @@
-/* $chaos: process.c,v 1.9 2002/10/24 21:28:37 per Exp $ */
+/* $chaos: process.c,v 1.11 2002/11/28 20:42:17 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 /* Abstract: Process support. */
 
@@ -46,7 +46,8 @@ void process_init (void)
     }
 
     /* Allocate memory for kernel TSS. */
-    return_value = memory_global_allocate ((void **) &kernel_tss, sizeof (tss_t));
+    return_value = memory_global_allocate ((void **) &dispatch_kernel_tss,
+                                           sizeof (tss_t));
     if (return_value != STORM_RETURN_SUCCESS)
     {
         DEBUG_HALT ("Failed to allocate memory for kernel TSS.");
@@ -57,7 +58,7 @@ void process_init (void)
     string_copy_max (thread->name, "Idle thread", THREAD_NAME_LENGTH);
     thread->parent = (struct process_t *) process;
     thread->lock = SPIN_UNLOCKED;
-    thread->tss = kernel_tss;
+    thread->tss = dispatch_kernel_tss;
     thread->previous = thread->next = NULL;
 
     memory_set_uint8 ((void *) process, 0, sizeof (process_t));
@@ -67,7 +68,7 @@ void process_init (void)
     process->thread_list = thread;
     process->lock = SPIN_UNLOCKED;
     process_list = process;
-    current_process = process;
+    dispatch_current_process = process;
 
     /* The kernel process gets the super_user privilege. That way, the
        first process (usually the boot program) will inherit these
@@ -153,7 +154,7 @@ return_t process_precreate (process_id_t *process_id,
                                 and try to run it. */
     process->next = NULL;
     return_value = capability_clone (&process->capability_list, 
-                                     current_process->capability_list);
+                                     dispatch_current_process->capability_list);
     if (return_value != STORM_RETURN_SUCCESS)
     {
         return return_value;
