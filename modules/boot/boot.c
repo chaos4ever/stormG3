@@ -1,4 +1,4 @@
-/* $chaos: boot.c,v 1.5 2002/08/04 09:27:19 per Exp $ */
+/* $chaos: boot.c,v 1.6 2002/08/09 06:02:37 per Exp $ */
 /* Abstract: Boot module. The boot module takes care of setting up the
    system (opening virtual consoles, launching programs, etc). */
 /* Author: Per Lundberg <per@chaosdev.org> */
@@ -88,6 +88,18 @@ return_t module_start (void)
         log.print (LOG_URGENCY_EMERGENCY, "Opening file failed.");
         return return_value;
     }
+
+    /* Get the size of the file. */
+    vfs_file_info_t file_info;
+    return_value = vfs.info ("/AreYouExcited.mod", &file_info);
+
+    if (return_value != STORM_RETURN_SUCCESS)
+    {
+        log.print (LOG_URGENCY_EMERGENCY, "Getting information about file failed.");
+        return return_value;
+    }
+   
+    debug_print ("File size: %u\n", file_info.size);
 
     /* Read the first 16 bytes from the file. */
     uint8_t buffer[16];
