@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: cpu.c,v 1.1 2002/06/13 20:07:26 per Exp $ */
 /* Abstract: CPU initialization code. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -78,28 +78,28 @@ static int is_486 (void)
 {
     int return_value;
     
-    asm ("pushl   %%ecx\n"
-    
-         "pushfl\n"
-         "popl    %%eax\n"
-         "movl    %%eax, %%ecx\n"
-         "xorl    $0x40000, %%eax\n"
-         "pushl   %%eax\n"
-         "popf\n"
+    asm volatile ("pushl   %%ecx\n"
                   
-         "pushf\n"
-         "popl    %%eax\n"
-         "xorl    %%ecx, %%eax\n"
-         "and     $0x40000, %%eax\n"
-         "je      1f\n"
-  
-         /* 486 was detected. */
-         "movl   $1, %%eax\n"
-         "jmp    2f\n"
-                
-         "1:  movl $0, %%eax\n"
-         "2:  popl   %%ecx"
-         : "=&a" (return_value));
+                  "pushfl\n"
+                  "popl    %%eax\n"
+                  "movl    %%eax, %%ecx\n"
+                  "xorl    $0x40000, %%eax\n"
+                  "pushl   %%eax\n"
+                  "popf\n"
+                  
+                  "pushf\n"
+                  "popl    %%eax\n"
+                  "xorl    %%ecx, %%eax\n"
+                  "and     $0x40000, %%eax\n"
+                  "je      1f\n"
+                  
+                  /* 486 was detected. */
+                  "movl   $1, %%eax\n"
+                  "jmp    2f\n"
+                  
+                  "1:  movl $0, %%eax\n"
+                  "2:  popl   %%ecx"
+                  : "=&a" (return_value));
     
     return return_value;
 }
@@ -108,6 +108,7 @@ static int is_486 (void)
 void cpu_init (void)
 {
     memory_set_uint8 ((uint8_t *) &cpu_info, 0, sizeof (cpu_info_t));
+
     /* If CPUID is available, use it. */
     if (has_cpuid ())
     {
@@ -139,8 +140,7 @@ void cpu_init (void)
             cpu_info.family = 3;
         }
     }
-
+    
     /* We don't resolve model/family/stepping into CPU names; that is
        done on library level to keep the kernel bloat down. */
 }
-

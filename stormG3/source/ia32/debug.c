@@ -1,4 +1,4 @@
-/* $chaos: debug.c,v 1.5 2002/06/22 19:22:49 per Exp $ */
+/* $chaos: debug.c,v 1.6 2002/06/23 13:30:38 per Exp $ */
 /* Abstract: Code used for debugging the kernel. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -21,7 +21,7 @@ debug_screen_type *screen = (debug_screen_type *) BASE_SCREEN;
 void debug_init (void)
 {
   /* Clear the screen. */
-    memory_set_uint16 ((uint16_t *) screen, background_attribute * 256 + ' ',
+    memory_set_uint16 ((uint16_t *) screen, (background_attribute << 8) | ' ',
                        DEBUG_SCREEN_WIDTH * DEBUG_SCREEN_HEIGHT *
                        sizeof (debug_screen_type));
 }
@@ -39,7 +39,7 @@ static inline void put_character (int x, int y, char character,
 /* Basic printing function. */
 static int print_simple (const char *string)
 {
-    uint32_t index;
+    int index;
     
     /* Handle the NULL string. */
     if (string == NULL)
@@ -66,9 +66,8 @@ static int print_simple (const char *string)
                 y_position = DEBUG_SCREEN_HEIGHT - 1;
                 memory_copy ((void *) screen, (void *) &screen[DEBUG_SCREEN_WIDTH],
                              (DEBUG_SCREEN_WIDTH * (DEBUG_SCREEN_HEIGHT - 1)) * 2);
-                memory_set_uint16 ((void *) &screen[DEBUG_SCREEN_WIDTH *
-                                                    (DEBUG_SCREEN_HEIGHT - 1)],
-                                   background_attribute * 256 + ' ', DEBUG_SCREEN_WIDTH);
+                memory_set_uint16 ((void *) &screen[DEBUG_SCREEN_WIDTH * (DEBUG_SCREEN_HEIGHT - 1)],
+                                   (background_attribute << 8) | ' ', DEBUG_SCREEN_WIDTH);
             }
         }
     }
@@ -117,8 +116,7 @@ static void hex_string (char *string, unsigned int number)
     
     for (index = 0; index < 8; index++)
     {
-        /* Ugly solution? I don't know. Rewrite it cleaner if you can. */
-        string[index] = hex_character[(number >> (4 * (7 - index))) % 16];
+        string[index] = hex_character[(number >> (4 * (7 - index))) & 0xf];
     }
     string[8] = 0;
 }
@@ -126,19 +124,22 @@ static void hex_string (char *string, unsigned int number)
 /* Dump some contents of memory. */
 void debug_memory_dump (uint32_t *memory, unsigned int length)
 {
-  unsigned int index;
-
-  for (index = 0; index < length; index++)
-  {
-    if ((index % 7) == 0)
+    unsigned int index;
+    
+    for (index = 0; index < length; index++)
     {
-      debug_print ("\n%x ", &memory[index]);
+        if ((index % 8) == 0 && index > 0)
+        {
+            debug_print ("\n");
+        }
+
+        debug_print ("%x ", memory[index]);
     }
-
-    debug_print ("%x ", memory[index]);
-  }
-
-  debug_print ("\n");
+    
+    if ((length % 8) != 0)
+    {
+        debug_print ("\n");
+    }
 }
 
 /* Print a formatted string to screen. Only used for debugging. This
@@ -152,7 +153,7 @@ void debug_print (const char *format_string, ...)
     
     if (format_string == NULL)
     {
-        print_simple ("debug_print: format_string == NULL.\n");
+        debug_print ("%s: format_string == NULL.\n", __FUNCTION__);
         return;
     }
 
@@ -299,9 +300,8 @@ void debug_print (const char *format_string, ...)
             y_position--;
             memory_copy ((void *) screen, (void *) &screen[DEBUG_SCREEN_WIDTH],
                          (DEBUG_SCREEN_WIDTH * (DEBUG_SCREEN_HEIGHT - 1)) * 2);
-            memory_set_uint16 ((void *) &screen[DEBUG_SCREEN_WIDTH *
-                                                (DEBUG_SCREEN_HEIGHT - 1)],
-                               background_attribute * 256 + ' ', 
+            memory_set_uint16 ((void *) &screen[DEBUG_SCREEN_WIDTH * (DEBUG_SCREEN_HEIGHT - 1)],
+                               (background_attribute << 8) | ' ', 
                                DEBUG_SCREEN_WIDTH);
         }
         

@@ -1,4 +1,4 @@
-/* $chaos: exception.c,v 1.11 2002/08/08 10:51:42 per Exp $ */
+/* $chaos: exception.c,v 1.12 2002/08/08 19:59:33 per Exp $ */
 /* Abstract: Exception handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -62,7 +62,7 @@ void exception_divide_error_fault (cpu_register_t registers)
 
 /* The debug trap is a software-generated exception; therefore we
    don't need t halt for it. */
-void exception_debug_trap (cpu_register_t registers __attribute__ ((unused)))
+void exception_debug_trap (cpu_register_t registers UNUSED)
 {
     debug_print ("Debug trap.\n");
 }
@@ -76,7 +76,7 @@ void exception_nmi (cpu_register_t registers)
 
 /* The breakpoint trap is a software-generated exception; therefore we
    don't need t halt for it. */
-void exception_breakpoint_trap (cpu_register_t registers __attribute__ ((unused)))
+void exception_breakpoint_trap (cpu_register_t registers UNUSED)
 {
     debug_print ("Breakpoint trap.\n");
 }
@@ -187,22 +187,15 @@ void exception_machine_check_abort (cpu_register_t registers)
     while (TRUE);
 }
 
-/* Add an exception handler to the IDT. */
-static void setup_handler (int number, void *handler)
-{
-    idt_setup_interrupt_gate (number, KERNEL_CODE_SELECTOR,
-                              handler, 0);
-}
-
 /* Initialize exceptions. */
 void exception_init () 
 {
-#ifndef GDB /* The GDB code provides exception handlers of it own. */
+#ifndef GDB /* The GDB stuff provides its own exception handlers. */
     /* Setup exception handlers for all exceptions. */
-    for (int counter = 0; exception_handler[counter].function != NULL;
-         counter++)
+    for (int index = 0; exception_handler[index].function != NULL; index++)
     {
-        setup_handler (counter, exception_handler[counter].function);
+        idt_setup_interrupt_gate (index, KERNEL_CODE_SELECTOR,
+                                  exception_handler[index].function, 0);
     }
 #endif
 }
