@@ -1,4 +1,4 @@
-/* $chaos: process.h,v 1.11 2002/10/23 07:23:16 per Exp $ */
+/* $chaos: process.h,v 1.12 2002/10/23 21:06:58 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -34,76 +34,6 @@
  */
 #define PROCESS_ID_NONE \
                         ((process_id_t) -1)
-
-/**
- * @brief               The length of a process name.
- */
-#define PROCESS_NAME_LENGTH \
-                        32
-
-/**
- * @brief               A structure with information about process.
- */
-typedef struct
-{
-    /**
-     * @brief           The process ID.
-     */
-    process_id_t        id;
-
-    /**
-     * @brief           The name of the process.
-     */
-    char                name[PROCESS_NAME_LENGTH];
-
-    /**
-     * @brief           The owner user of this process.
-     */
-    user_id_t           user_id;
-
-    /**
-     * @brief           The active group ID for this process.
-     */
-    group_id_t          active_group_id;
-
-    /**
-     * @brief           A linked list of capbilities.
-     */
-    capability_t        *capability_list;
-
-    /**
-     * @brief           A lock for this structure.
-     */
-    spinlock_t          lock;
-
-    /**
-     * @brief           Is the process active? (as opposed to suspended 
-     *                  for some reason)
-     */
-    bool                active;
-
-    /**
-     * @brief           The address to the first page directory in this
-     *                  process; used for communication between
-     *                  process_precreate and process_create.
-     */
-    address_t           first_page_directory;
-
-    /**
-     * @brief           A list of threads belonging to this process.
-     */
-    thread_t            *thread_list;
-
-    /**
-     * @brief           Pointer to the previous process.
-     */
-    struct process_t    *previous;
-
-    /**
-     * @brief           Pointer to the next process.
-     */
-    struct process_t    *next;
-} process_t;
 
 /**
  * @brief               A list of the processes in the system.
