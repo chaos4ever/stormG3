@@ -1,4 +1,4 @@
-/* $chaos: elf.h,v 1.2 2002/06/15 16:21:58 per Exp $ */
+/* $chaos: elf.h,v 1.3 2002/06/15 22:43:03 per Exp $ */
 /* Abstract: ELF file format. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -357,5 +357,18 @@ typedef struct
        relation to. */
     uint16_t section_header;
 } __attribute__ ((packed)) elf_symbol_t;
+
+/* A relocation table entry. */
+typedef struct
+{
+    /* The offset in the file that is affected by this relocation. */
+    uint32_t offset;
+
+    /* The index into the symbol table of this relocation. */
+    uint32_t symbol_index : 24;
+    
+    /* The type of the symbol. */
+    uint32_t symbol_type : 8;
+} elf_relocation_t;
 
 #endif /* !__STORM_IA32_ELF_H__ */
