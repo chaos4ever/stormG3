@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.14 2002/06/25 20:06:05 per Exp $ */
+/* $chaos: memory_physical.c,v 1.15 2002/08/07 12:31:33 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -29,6 +29,10 @@ extern int _end;
 // static memory_physical_slab_t *first_free_32k = NULL;
 // static memory_physical_slab_t *first_free_64k = NULL;
 // static memory_physical_slab_t *first_free_128k = NULL;
+// static memory_physical_slab_t *first_free_256k = NULL;
+// static memory_physical_slab_t *first_free_512k = NULL;
+/* The size of physical blocks that we provide. */
+// static unsigned int physical_size = 512 * KIB;
 
 /* A bitmap of all the free pages. (Don't worry, this is not used on
    ordinary memory allocation...) 
@@ -38,7 +42,7 @@ extern int _end;
 static uint32_t physical_page_bitmap[MAX_MEMORY / PAGE_SIZE / 32];
 
 /* The number of physical pages in the system. */
-static page_number_t physical_pages;
+page_number_t physical_pages;
 
 /* Add the given page to the SLAB, if it is not used by a kernel
    module, DMA buffers or something like that. */
