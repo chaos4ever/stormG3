@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: irq.h,v 1.1 2002/06/15 10:57:14 per Exp $ */
 /* Abstract: IRQ handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -31,8 +31,8 @@ typedef struct
     bool allocated;
     
     /* A function pointer to the handler. */
-    //    (void *handler)(unsigned int irq_level);
-  
+    void (*handler)(unsigned int irq_level);
+    
     /* A short description of the IRQ. */
     char *description;
 

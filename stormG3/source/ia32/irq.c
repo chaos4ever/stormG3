@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: irq.c,v 1.1 2002/06/15 10:57:13 per Exp $ */
 /* Abstract: IRQ handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -129,10 +129,12 @@ void irq_init ()
 
     /* Allocate IRQ 0 and 2 for the system. */
     irq[0].allocated = TRUE;
+    irq[0].handler = NULL;
     irq[0].description = "System timer";
     irq_enable (0);
 
     irq[2].allocated = TRUE;
+    irq[2].handler = NULL;
     irq[2].description = "Cascade IRQ";
     irq_enable (2);
 
@@ -154,7 +156,10 @@ void irq_handler (unsigned int irq_number)
   else
   {
       /* Call the IRQ handler for this device. */
-      // FIXME.
+      if (irq[irq_number].handler != NULL)
+      {
+          irq[irq_number].handler (irq_number);
+      }
   }
 
   /* If this is a low interrupt, ACK:ing the low PIC is enough;
