@@ -1,6 +1,6 @@
 ;; -*- Mode: Emacs-Lisp -*-
 
-;; $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $
+;; $chaos: xemacs-script,v 1.6 2002/05/24 17:34:57 per Exp $
 
 ;; Abstract: Personal settings which aren't to be overwritten by M-x
 ;; customize or whatever.
@@ -13,7 +13,7 @@
 
 (defconst chaos-c-style 
   '(
-    (c-basic-offset . 2)
+    (c-basic-offset . 4)
     (c-comment-only-line-offset . (0 . 0))
     (c-comment-continuation-stars . "")
     (c-hanging-comment-ender-p . t)
@@ -23,7 +23,7 @@
 			(substatement-open . 0)
 			(label . 0)
 			(statement-cont . +)
-			(case-label . 2)
+			(case-label . 4)
 			)
 		     )
     )
@@ -94,7 +94,7 @@
   (interactive)
   (goto-line 1)
 
-  (insert "/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */\n")
+  (insert "/* $chaos: xemacs-script,v 1.6 2002/05/24 17:34:57 per Exp $ */\n")
   (insert "/* Abstract: */\n")
   (insert "/* Author: " chaos-developer " <" chaos-mail-address "> */\n\n")
 
