@@ -1,4 +1,4 @@
-/* $chaos: vfs.c,v 1.1 2002/07/28 19:30:54 per Exp $ */
+/* $chaos: vfs.c,v 1.2 2002/07/28 19:33:57 per Exp $ */
 /* Abstract: Virtual filesystem library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -15,7 +15,7 @@ return_t vfs_resolve (vfs_service_t *vfs)
     service_t *service;
 
     /* Find the virtual filesystem service. */
-    if (service_resolve ("virtual_filesystem", NULL, NULL, NULL, 1, &services, &service) != STORM_RETURN_SUCCESS)
+    if (service_resolve ("vfs", NULL, NULL, NULL, 1, &services, &service) != STORM_RETURN_SUCCESS)
     {
         debug_print ("Failed to resolve virtual filesystem service provider.\n");
         return VFS_RETURN_SERVICE_UNAVAILABLE;
