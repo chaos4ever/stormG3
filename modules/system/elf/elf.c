@@ -257,7 +257,7 @@ static return_t elf_run (void *buffer)
 }
 
 /* Return some information about the exec service. */
-static return_t exec_info (void *exec_void)
+static return_t service_info (void *exec_void)
 {
     exec_service_t *exec = (exec_service_t *) exec_void;
 
@@ -268,5 +268,18 @@ static return_t exec_info (void *exec_void)
 /* The module entry point. */
 return_t module_start (void)
 {
-    return exec_register ("chaos development", "ELF loader", "1", &exec_info);
+    /* Create the service. */    
+    service_register_t service_register_info;
+    service_register_info.vendor = "chaos development";
+    service_register_info.model = "ELF loader";
+    service_register_info.device_id = "1";
+    service_register_info.info_handler = &service_info;
+
+    // FIXME: Fill in this structure.
+    service_method_t service_method[] =
+        {
+            { -1, NULL }
+        };
+
+    return exec_register (&service_register_info, service_method);
 }
