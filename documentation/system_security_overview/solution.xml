@@ -1,31 +1,26 @@
 <?xml version='1.0' ?> <!-- -*- xml -*- -->
-<!-- $chaos: solution.xml,v 1.1 2002/10/21 21:34:46 per Exp $ -->
+<!-- $chaos: solution.xml,v 1.2 2002/10/21 21:47:55 per Exp $ -->
 
   <chapter id="solution">
   <?dbhtml filename="solution.html"?>
   <title>The Solution</title>
-  <section>
-    <title>The Solution</title>
-    <para>
-      The solution is called
-      <emphasis>Capabilities</emphasis>. Instead of mapping user ID 0
-      to the super user, and letting that user do all the fun stuff,
-      the idea is to map this into a set of capabilities, like
-      <literal>kernel::set_user_id</literal>,
-      <literal>vfs::adopt_file</literal>,
-      <literal>ipv4::bind_low_port</literal>, and so on. This list of
-      capabilities is not hard-wired into the kernel, but is an
-      extensible list of strings so it is easy to add a new capability
-      that we need without having to recompile (and restart) the
-      kernel.
-    </para>
-    <para>
-      For compatibility with legacy (GNU and other Unix) systems, we
-      will also have a <literal>kernel::super_user</literal>
-      capability that is set on a certain user. That capability is the
-      <emphasis>root</emphasis> of other capabilities and thus, a user
-      with the <literal>kernel::super_user</literal> capability will
-      automatically inherit all other capabilities as well.
-    </para>
-  </section>
+  <para>
+    The solution is called <emphasis>Capabilities</emphasis>. Instead
+    of mapping user ID 0 to the super user, and letting that user do
+    all the fun stuff, the idea is to map this into a set of
+    capabilities, like <literal>kernel::set_user_id</literal>,
+    <literal>vfs::adopt_file</literal>,
+    <literal>ipv4::bind_low_port</literal>, and so on. This list of
+    capabilities is not hard-wired into the kernel, but is an
+    extensible list of strings so it is easy to add a new capability
+    that we need without having to recompile (and restart) the kernel.
+  </para>
+  <para>
+    For compatibility with legacy (GNU and other Unix) systems, we
+    will also have a <literal>kernel::super_user</literal> capability
+    that is set on a certain user. That capability is the
+    <emphasis>root</emphasis> of other capabilities and thus, a user
+    with the <literal>kernel::super_user</literal> capability will
+    automatically inherit all other capabilities as well.
+  </para>
 </chapter>
