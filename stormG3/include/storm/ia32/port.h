@@ -1,4 +1,4 @@
-/* $chaos: port.h,v 1.5 2002/10/04 19:01:20 per Exp $ */
+/* $chaos: port.h,v 1.6 2002/10/08 20:16:14 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -24,7 +24,9 @@
 #define NUMBER_OF_PORTS                 65536
 
 /* Type definitions. */
-/** \brief A port range. */
+/** 
+ * @brief A port range. 
+ */
 typedef struct
 {
     unsigned int start;
@@ -122,16 +124,22 @@ static inline void port_uint32_out_string (uint16_t port, uint32_t *data,
                   "d" (port));
 }
 
-/** Register a port range. */
+/**
+ * @brief Register a port range. 
+ */
 extern return_t port_range_register (unsigned int base, unsigned int ports,
                                      char *description);
 
-/** Unregister a port range. */
+/**
+ * @brief Unregister a port range. 
+ */
 extern return_t port_range_unregister (unsigned int start);
 
 #ifdef STORM
 
-/* Initialize port allocation. */
+/**
+ * @brief Initialize port allocation. 
+ */
 extern void port_init (void);
 
 #endif /* STORM */
