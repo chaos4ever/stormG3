@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.13 2002/10/23 07:24:23 per Exp $ */
+/* $chaos: defines.h,v 1.14 2002/10/24 21:35:39 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -155,7 +155,8 @@
 /**
  * @brief               Different ways of halting.
  */
-enum halt_t {
+enum halt_t 
+{
     /**
      * @brief           Reboot the machine. 
      */
@@ -165,6 +166,22 @@ enum halt_t {
      * @brief           Shut it down (with possible power-down as well). 
      */
     HALT_SHUTDOWN
+};
+
+/* System call numbers. */
+enum system_call_t
+{
+    /* Lookup the providers for a service. */
+    SYSTEM_CALL_SERVICE_LOOKUP,
+
+    /* Connect to a service provider. */
+    SYSTEM_CALL_SERVICE_CONNECT,
+
+    /* Close a connection to a service. */
+    SYSTEM_CALL_SERVICE_CLOSE,
+
+    /* Invoke a function call to a service. */
+    SYSTEM_CALL_SERVICE_INVOKE
 };
 
 /* Stupid, but just to get the AVL code compiling. FIXME: Remove this
