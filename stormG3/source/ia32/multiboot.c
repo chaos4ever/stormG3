@@ -1,4 +1,4 @@
-/* $chaos: multiboot.c,v 1.3 2002/06/15 12:09:15 per Exp $ */
+/* $chaos: multiboot.c,v 1.4 2002/06/15 14:36:12 per Exp $ */
 /* Abstract: Parse multiboot header. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -13,10 +13,11 @@
 #include <storm/ia32/multiboot.h>
 #include <storm/ia32/string.h>
 
-multiboot_info_type multiboot_info;
-multiboot_module_info_type multiboot_module_info[MAX_STARTUP_SERVERS];
-static uint8_t memory_map[MEMORY_MAP_SIZE];
+multiboot_info_t multiboot_info;
+multiboot_module_info_t multiboot_module_info[MAX_STARTUP_SERVERS];
+multiboot_memory_map_t multiboot_memory_map[MEMORY_MAP_SIZE];
 static char module_name[MODULE_NAME_SIZE];
+static char command_line[COMMAND_LINE_SIZE];
 
 /* Copy off some of the Multiboot data we need, so it won't be
    overwritten. */
@@ -32,9 +33,9 @@ void multiboot_init (void)
 
     /* Copy the module parameters. */
     memory_copy (multiboot_module_info, 
-                 (multiboot_module_info_type *) multiboot_info.module_base,
+                 (multiboot_module_info_t *) multiboot_info.module_base,
                  multiboot_info.number_of_modules *
-                 sizeof (multiboot_module_info_type));
+                 sizeof (multiboot_module_info_t));
 
     /* First of all, make sure module names and parameters are stored
        in a safe place. Otherwise, we may overwrite them later on in
@@ -55,9 +56,13 @@ void multiboot_init (void)
     }
     
     /* Now, save the memory map. */
-    memory_copy (&memory_map, (void *) multiboot_info.memory_map_address, 
+    memory_copy ((void *) &multiboot_memory_map,
+                 (void *) multiboot_info.memory_map_address, 
                  multiboot_info.memory_map_length);
     
-    /* Now, lets parse the kernel command line. */
-    //  arguments_parse ((u8 *) multiboot_info.command_line, arguments_kernel, 0);
+    /* Save the kernel arguments so that we can parse them later
+       on. FIXME: Implement this parsing. */
+    string_copy_max (command_line, (void *) multiboot_info.command_line, 
+                     COMMAND_LINE_SIZE - 1);
+
 }
