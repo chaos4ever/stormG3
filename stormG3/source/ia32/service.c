@@ -1,4 +1,4 @@
-/* $chaos: service.c,v 1.9 2002/10/04 19:01:21 per Exp $ */
+/* $chaos: service.c,v 1.10 2002/10/09 19:03:10 per Exp $ */
 /* Abstract: Service support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -8,7 +8,7 @@
 #include <storm/return_value.h>
 #include <storm/ia32/debug.h>
 #include <storm/ia32/defines.h>
-#include <storm/ia32/lock.h>
+#include <storm/ia32/spinlock.h>
 #include <storm/ia32/memory_global.h>
 #include <storm/ia32/service.h>
 #include <storm/ia32/string.h>
@@ -17,7 +17,7 @@
 static service_data_t *first_service = NULL;
 
 /* Lock used to protect the service data structure. */
-lock_t service_lock = LOCK_UNLOCKED;
+static spinlock_t service_lock = SPIN_UNLOCKED;
 
 /* Register a service provider. */
 return_t service_register (char *name, char *vendor, char *model, char *id,
@@ -50,10 +50,10 @@ return_t service_register (char *name, char *vendor, char *model, char *id,
     service->version = version;
     service->service_info = service_info;
 
-    lock (&service_lock);
+    spin_lock (&service_lock);
     service->next = (struct service_data_t *) first_service;
     first_service = service;
-    unlock (&service_lock);
+    spin_unlock (&service_lock);
     return STORM_RETURN_SUCCESS;
 }
 
@@ -73,7 +73,7 @@ return_t service_lookup (char *name, char *vendor, char *model, char *id,
     service_data_t *service;
     unsigned int counter = 0;
 
-    lock (&service_lock);
+    spin_lock (&service_lock);
 
     (*services) = 0;
     
@@ -97,7 +97,7 @@ return_t service_lookup (char *name, char *vendor, char *model, char *id,
     /* Any matches? */
     if ((*services) == 0)
     {
-        unlock (&service_lock);
+        spin_unlock (&service_lock);
         return STORM_RETURN_NOT_FOUND;
     }
 
@@ -108,7 +108,7 @@ return_t service_lookup (char *name, char *vendor, char *model, char *id,
        anyway.. (at least for proceses) */
     if (memory_global_allocate ((void **) out_service, (*services) * sizeof (service_t)) != STORM_RETURN_SUCCESS)
     {
-        unlock (&service_lock);
+        spin_unlock (&service_lock);
         return STORM_RETURN_OUT_OF_MEMORY;
     }
 
@@ -134,6 +134,6 @@ return_t service_lookup (char *name, char *vendor, char *model, char *id,
         service = (service_data_t *) service->next;
     }
 
-    unlock (&service_lock);
+    spin_unlock (&service_lock);
     return STORM_RETURN_SUCCESS;
 }
