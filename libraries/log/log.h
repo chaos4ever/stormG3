@@ -1,4 +1,4 @@
-/* $chaos: log.h,v 1.2 2002/06/23 20:33:44 per Exp $ */
+/* $chaos: log.h,v 1.3 2002/10/04 19:00:55 per Exp $ */
 /* Abstract: Definition of the log protocol. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -9,7 +9,7 @@
 #define __LOG_LOG_H__
 
 #include <storm/storm.h>
-#include <log/defines.h>
+#include <protocol/log.h>
 #include <log/return_values.h>
 #include <log/types.h>
 #include <log/functions.h>
