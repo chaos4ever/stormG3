@@ -1,4 +1,4 @@
-/* $chaos: interface.h,v 1.4 2002/10/23 21:03:51 per Exp $ */
+/* $chaos: interface.h,v 1.5 2002/10/24 20:42:05 per Exp $ */
 /* Abstract: stormG3 kernel interface. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -25,7 +25,9 @@
 
 /**
  * @brief               Add the given capability to the given process.
- * @param process_id    The process to modify.
+ * @param process_id    The ID of the process to check.
+ * @param process       The process to check. If this is set, it takes
+ *                      precedence over the process ID.
  * @param capability_class
  *                      The class of the capability (for example "kernel").
  * @param capability_name
@@ -34,12 +36,15 @@
  * @return              STORM_RETURN_SUCCESS if successful.
  */
 extern return_t capability_add (process_id_t process_id,
+                                process_t *process,
                                 const char *capability_class,
                                 const char *capability_name);
     
 /**
  * @brief               Has the given process the given capability. 
- * @param process_id    The process to check.
+ * @param process_id    The ID of the process to check.
+ * @param process       The process to check. If this is set, it takes
+ *                      precedence over the process ID.
  * @param capability_class
  *                      The class of the capability (for example "kernel").
  * @param capability_name 
@@ -49,6 +54,7 @@ extern return_t capability_add (process_id_t process_id,
  *                      of the check.
  */
 extern return_t capability_has (process_id_t process_id, 
+                                process_t *process,
                                 const char *capability_class,
                                 const char *capability_name,
                                 bool *result);
