@@ -1,22 +1,22 @@
-README ($chaos: chaos/README,v 1.3 2002/05/21 13:23:35 per Exp $)
+README ($chaos: README,v 1.4 2002/05/21 13:24:35 per Exp $)
 ======
 
-This is chaos, a free (GPL:ed, some parts LGPL:ed) operating
-system. It implements advanced features such as virtual memory,
-interrupt/exception management, memory protection, I/O protection,
-preemptive multitasking, ELF support, and much, much more. It is a
-work in progress, and thus some parts might be unfinished. If you are
-a programmer and would like to help us, please contact us and we can
-see what you can help us with. Our contact information can be found on
-the web page -- http://www.chaosdev.org/
+This is chaos, a free (licensed under the BSD license without
+advertisment clause) operating system. It implements advanced features
+such as virtual memory, interrupt/exception management, memory
+protection, I/O protection, preemptive multitasking, ELF support, and
+much, much more. It is a work in progress, and thus some parts might
+be unfinished. If you are a programmer and would like to help us,
+please contact us and we can see what you can help us with. Our
+contact information can be found on the web page --
+http://www.chaosdev.org/
 
 The following programs are required to compile:
 
-* gcc (2.95 is *required*)
-* GNU make. BSD make will *not* work.
-* GNU binutils (fairly new. 2.9.5 tested)
-* Perl. If you change the autochaos scripts, you will need to have some
-  additional modules. They can all be found on CPAN.
+* gcc (http://gcc.gnu.org, 3.0 or better is *required*)
+* GNU CONS. (http://www.gnu.org/software/cons)
+* GNU binutils.
+* Perl.
 
 Please consult README.Linux or README.FreeBSD for some (possibly
 outdated) help about building the system under your specific
@@ -42,4 +42,4 @@ If you successfully compile/run it on another platform, with or
 without patches, please tell us! Any experiences are welcome. Check
 out http://www.chaosdev.org/
 
--- Per Lundberg <plundis@chaosdev.org>  Tue,  4 Jul 2000 15:12:56 +0200
+-- Per Lundberg <per@chaosdev.org>  Sat, 22 Jun 2002 22:13:18 +0200
