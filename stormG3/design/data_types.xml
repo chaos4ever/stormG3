@@ -1,0 +1,28 @@
+<?xml version='1.0' ?> <!-- -*- xml -*- -->
+<!-- $chaos: module.xml,v 1.3 2002/05/27 10:16:56 per Exp $ -->
+
+<appendix id="data_types">
+  <?dbhtml filename="data_types.html"?>
+  <title>Primitive Data Types</title>
+  <para>
+    These primitive data types are used by stormG3. (Complex data
+    types that clearly belong to a given module are defined in their
+    respective chapters)
+    <programlisting>
+/* A process ID. */
+typedef unsigned int process_id_t;
+
+/* A thread ID. */
+typedef unsigned int thread_id_t;
+
+/* A module ID. */
+typedef unsigned int mid_t;
+
+/* A counter. */
+typedef int count_t;
+
+/* A return type. */
+typedef unsigned int return_t;
+    </programlisting>
+  </para>
+</appendix>
