@@ -1,4 +1,4 @@
-/* $chaos: filesystem.h,v 1.2 2002/10/04 19:00:52 per Exp $ */
+/* $chaos: filesystem.h,v 1.3 2002/12/03 14:27:12 johannes Exp $ */
 /* Abstract: Function prototypes and structure definitions for the
    filesystem library. */
 /* Author: Per Lundberg <per@chaosdev.org> */

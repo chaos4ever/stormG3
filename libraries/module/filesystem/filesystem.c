@@ -1,4 +1,4 @@
-/* $chaos: filesystem.c,v 1.8 2002/12/03 14:27:01 johannes Exp $ */
+/* $chaos: filesystem.c,v 1.9 2002/12/04 22:15:33 per Exp $ */
 /* Abstract: Filesystem library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 

@@ -1,4 +1,4 @@
-/* $chaos: functions.h,v 1.2 2002/08/09 05:59:40 per Exp $ */
+/* $chaos: functions.h,v 1.4 2002/11/20 20:02:53 per Exp $ */
 /* Abstract: Function definitions used by the filesystem library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
