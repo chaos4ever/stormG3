@@ -1,4 +1,4 @@
-/* $chaos: multiboot.c,v 1.5 2002/06/15 15:38:55 per Exp $ */
+/* $chaos: multiboot.c,v 1.6 2002/06/16 19:19:41 per Exp $ */
 /* Abstract: Parse multiboot header. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -21,8 +21,6 @@ static char command_line[COMMAND_LINE_SIZE];
 
 /* Copy off some of the Multiboot data we need, so it won't be
    overwritten. */
-/* FIXME: This function fails for some really weird reason if the
-   machine has less than 32 megabyte of RAM. */
 void multiboot_init (void)
 {
     char *target = (char *) &module_name;
