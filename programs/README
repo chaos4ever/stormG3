@@ -1,0 +1,10 @@
+README ($Id$)
+======
+
+Here, all programs included with chaos are put. Right now all of them
+are installed into /system/programs so we put everything in this
+directory, but eventually we may think about having a "foreign"
+directory for example (for stuff supplied by third parties like GNU or
+BSD or Microsoft... :-)
+
+-- Per Lundberg <per@chaosdev.org>  Fri,  4 Oct 2002 23:20:20 +0200
