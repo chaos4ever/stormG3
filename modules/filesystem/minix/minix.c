@@ -1,4 +1,4 @@
-/* $chaos: minix.c,v 1.2 2002/07/10 21:23:33 per Exp $ */
+/* $chaos: minix.c,v 1.3 2002/07/21 13:02:18 per Exp $ */
 /* Abstract: Implementation of the Minix file system. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -155,21 +155,38 @@ static minix2_inode_t *minix2_find_file (minix_fs_t *minix_fs, char *filename)
     return NULL;
 }
 
+/* Mount a volume. */
+static return_t minix_mount (block_service_t *block)
+{
+    minix_fs_t *minix_fs = &fs;
+    block_info_t info;
+
+    memory_copy (&minix_fs->block, block, sizeof (block_service_t));
+    minix_fs->block.info(&info);
+    minix_fs->block_size = info.block_size;
+
+    if (!minix_init (minix_fs))
+    {
+        log.print (LOG_URGENCY_ERROR, "Not a valid Minix file system.");
+        return STORM_RETURN_INVALID_ARGUMENT;
+    }
+
+    return STORM_RETURN_SUCCESS;
+}
+
 /* Return some information about the filesystem service (function pointers to
    our functionality). */
 static return_t service_info (void *filesystem_void)
 {
     filesystem_service_t *filesystem = (filesystem_service_t *) filesystem_void;
     filesystem->magic_cookie = FILESYSTEM_COOKIE;
-    // filesystem->mount = &minix_mount;
+    filesystem->mount = &minix_mount;
     // filesystem->read = &minix_read;
     return STORM_RETURN_SUCCESS;
 }
 
 int module_start (void)
 {
-    minix_fs_t *minix_fs = &fs;
-    block_info_t info;
     //    minix2_inode_t *inode2;
 
     /* Contact the log service provider. */
@@ -178,23 +195,6 @@ int module_start (void)
         return STORM_RETURN_NOT_FOUND;
     }
 
-    /* Resolve a block device. FIXME: Remove this code and replace it
-       with VFS mounting. */
-    if (block_resolve (&minix_fs->block) != BLOCK_RETURN_SUCCESS)
-    {
-        log.print (LOG_URGENCY_EMERGENCY,
-                   "No block device found.");
-        return -1;
-    }
-
-    minix_fs->block.info(&info);
-    minix_fs->block_size = info.block_size;
-
-    if (!minix_init (minix_fs))
-    {
-        log.print (LOG_URGENCY_EMERGENCY, "Not a valid Minix file system.");
-        return -1;
-    }
 
     //    inode2 = minix2_find_file (minix_fs, "razor_1911_cracks.mod");
     //    debug_print ("%s %x %u %u\n", "razor_1911_cracks.mod",
