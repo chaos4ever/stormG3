@@ -1,4 +1,4 @@
-README ($chaos: README,v 1.4 2002/05/21 13:24:35 per Exp $)
+README ($chaos: README,v 1.5 2002/06/22 20:13:32 per Exp $)
 ======
 
 This is chaos, a free (licensed under the BSD license without
@@ -16,30 +16,19 @@ The following programs are required to compile:
 * gcc (http://gcc.gnu.org, 3.0 or better is *required*)
 * GNU CONS. (http://www.gnu.org/software/cons)
 * GNU binutils.
-* Perl.
 
-Please consult README.Linux or README.FreeBSD for some (possibly
-outdated) help about building the system under your specific
-system. If you're running anything else, you're totally on yourself.
+Please consult README.Linux for some (possibly outdated) help about
+building the system under your specific system. If you're running
+anything else, you're totally on yourself.
 
 chaos is known to run correctly on the following computers (at some
 time):
 
-* AMD 386 SX-16, 8 meg RAM.
-* 486 DX-2/66, 8 meg RAM.
-* 486 DX/4-100, 16 meg RAM.
-* P133, 20 meg RAM.
-* P133, 64 meg ram.
-* P233 w/ MMX, 64 meg RAM.
-* K6-2/300, 128 meg RAM.
-* K6-2/450, 128 meg RAM.
-* Compaq Presario 5670 (P2, 450 MHz, 128 meg RAM)
-* Toshiba 550 (P266MMX, 90 meg RAM)
-* Compaq ProSignia 3080 (486DX, 33 MHz, 8 meg RAM)
-* IBM Aptiva 330 (P75, 40 meg RAM)
+* No-name Pentium 133 MHz (32 MiB RAM)
 
 If you successfully compile/run it on another platform, with or
 without patches, please tell us! Any experiences are welcome. Check
 out http://www.chaosdev.org/
 
--- Per Lundberg <per@chaosdev.org>  Sat, 22 Jun 2002 22:13:18 +0200
+-- Per Lundberg <per@chaosdev.org>  Sun, 28 Jul 2002 21:03:26 +0200
+
