@@ -1,4 +1,4 @@
-/* $chaos: memory.h,v 1.8 2002/10/08 20:16:14 per Exp $ */
+/* $chaos: memory.h,v 1.9 2002/10/09 19:16:02 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -7,6 +7,9 @@
 /**
  * @file memory.h
  * @brief Memory operations. 
+ *
+ * Inlined functions for simple and small (but very useful) memory
+ * operations.
  */
 
 #ifndef __STORM_IA32_MEMORY_H__
