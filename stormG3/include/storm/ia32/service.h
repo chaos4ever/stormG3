@@ -112,6 +112,18 @@ typedef struct
 typedef struct
 {
     /**
+     * @brief           A pointer to the previous connection.
+     */
+    struct service_connection_t
+                        *previous;
+
+    /**
+     * @brief           A pointer to the next connection.
+     */
+    struct service_connection_t
+                        *next;
+    
+    /**
      * @brief           A connection ID.
      */
     service_connection_id_t
@@ -126,19 +138,42 @@ typedef struct
      * @brief           A pointer to the service we are connected to.
      */
     service_data_t      *service;
-    
+   
+} service_connection_t;
+
+/**
+ * @brief               A method handler in a service provider.
+ */
+typedef struct
+{
     /**
-     * @brief           A pointer to the previous connection.
+     * @brief           Pointer to the previous service method.
      */
-    struct service_connection_t
+    struct service_method_data_t 
                         *previous;
 
     /**
-     * @brief           A pointer to the next connection.
+     * @brief           Pointer to the next service method.
      */
-    struct service_connection_t
+    struct service_method_data_t
                         *next;
-    
-} service_connection_t;
+
+    /**
+     * @brief           The ID of the service provider providing this
+     *                  method.
+     */
+    service_id_t        service_id;
+
+    /**
+     * @brief           The method ID (unique within the protocol) of the
+     *                  method handler.
+     */
+    service_method_id_t method_id;
+
+    /**
+     * @brief           The method handler.
+     */
+    function_t          method;
+} service_method_data_t;
 
 #endif /* !__STORM_IA32_SERVICE_H__ */
