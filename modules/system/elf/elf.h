@@ -1,4 +1,4 @@
-/* $chaos: dotfile.emacs,v 1.34 2002/09/30 13:33:00 per Exp $ */
+/* $chaos: elf.h,v 1.1 2002/10/04 21:26:50 per Exp $ */
 /* Abstract: ELF module header. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -147,6 +147,46 @@ enum
     ELF_SECTION_TYPE_DYNAMIC_SYMBOL_TABLE,
 };
 
+/* Program types. */
+enum
+{
+    /* A NULL program header means that this segment is unused. */
+    ELF_PROGRAM_TYPE_NULL,
+
+    /* A loadable segment. */
+    ELF_PROGRAM_TYPE_LOAD,
+
+    /* A segment containing dynamic linking information. */
+    ELF_PROGRAM_TYPE_DYNAMIC,
+
+    /* A segment containing a NULL-terminated path to the interpreter
+       needed to run this segment. */
+    ELF_PROGRAM_TYPE_INTERPRETER,
+
+    /* A segment containig auxiliary information. */
+    ELF_PROGRAM_TYPE_NOTE,
+
+    /* A segment with "unspecified semantics". */
+    ELF_PROGRAM_TYPE_SHARED_LIBRARY,
+
+    /* A segment containing the program header. */
+    ELF_PROGRAM_TYPE_PROGRAM_HEADER,
+};
+
+/* Section flags. */
+enum
+{
+    /* This section contains data that should be writable during process
+       execution. */
+    ELF_SECTION_FLAG_WRITE = BIT_VALUE (0),
+
+    /* This section occupies memory during process execution. */
+    ELF_SECTION_FLAG_ALLOCATE = BIT_VALUE (1),
+
+    /* This section contains code that should be executable. */
+    ELF_SECTION_FLAG_EXECUTE = BIT_VALUE (2),
+};
+
 /* Type definitions. */
 /* An ELF (Executable and linkable format) header. */
 typedef struct 
@@ -207,5 +247,29 @@ typedef struct
        table. */
     uint16_t section_string_index;
 } __attribute__ ((packed)) elf_header_t;
+
+/* A section header entry. */
+typedef struct
+{
+    /* The name of the section (index of the string table). */
+    uint32_t name;
+    uint32_t type;
+    uint32_t flags;     
+
+    /* The start of the section in memory. */
+    uint32_t address;
+  
+    /* The start of the section in the file. */
+    uint32_t offset;
+
+    /* The size of the section. */
+    uint32_t size;
+    uint32_t link;     
+    uint32_t info;
+    uint32_t address_align;
+
+    /* The size of each section entry. */
+    uint32_t entry_size;
+} elf_section_header_t;
 
 #endif /* !__ELF_H__ */
