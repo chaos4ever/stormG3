@@ -1,4 +1,4 @@
-/* $chaos: console.h,v 1.2 2002/06/23 12:09:05 per Exp $ */
+/* $chaos: console.h,v 1.3 2002/06/23 20:37:02 per Exp $ */
 /* Abstract: Console module header file. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
             Per Lundberg <per@chaosdev.org> */
@@ -10,9 +10,7 @@
 #define __CONSOLE_H__
 
 #include <storm/storm.h>
-
-/* The size of all mailboxes created by the console server. */
-#define CONSOLE_MAILBOX_SIZE            1024
+#include <video/video.h>
 
 /* The default attribute to use for newly created consoles. */
 #define CONSOLE_DEFAULT_ATTRIBUTE       0x07
@@ -24,36 +22,16 @@
 /* Maximum number of numeric arguments per escape sequence. */
 #define MAX_NUMBER_OF_NUMERIC_PARAMETERS 10
 
-/* Different types of consoles. */
-enum
-{
-    CONSOLE_TYPE_TEXT,
-    CONSOLE_TYPE_GRAPHIC
-};
+/* Default width/height/depth. */
+#define CONSOLE_DEFAULT_WIDTH           80
+#define CONSOLE_DEFAULT_HEIGHT          25
+#define CONSOLE_DEFAULT_DEPTH           0
 
 typedef struct
 {
     uint8_t character;
     uint8_t attribute;
 } __attribute__ ((packed)) character_t;
-
-/* A console application structure. */
-typedef struct
-{
-    /* Is this application listening for keyboard events? And how
-       verbose should we be? */
-    bool wants_keyboard;
-    int keyboard_type;
-
-    /* And/Or mouse? */
-    bool wants_mouse;
-
-    /* So we know where to send our stuff. */
-    //    ipc_structure_type ipc_structure;
-
-    /* Next application on this console. */
-    struct console_application_t *next;
-} console_application_t;
 
 /* A virtual console structure. */
 typedef struct
@@ -100,14 +78,6 @@ typedef struct
     bool blink;
     bool inverse;
 
-    /* The current application receives input events. (keyboard and
-       mouse). */
-    console_application_t *active_application;
-
-    /* This linked list holds information about all the applications
-       connected to this specific console. */
-    console_application_t *application_list;
-
     /* Is this console locked? */
     /* FIXME: Real mutexing is needed. */
     bool lock;
@@ -128,15 +98,16 @@ enum
 /* Global variables. */
 extern character_t *screen;
 extern volatile bool has_video;
-//extern ipc_structure_type video_structure;
 extern volatile console_t *current_console;
 extern volatile unsigned int number_of_consoles;
 extern console_t *console_list;
 extern volatile console_t *console_shortcut[];
+extern video_service_t video;
 
 /* External functions. */
-//extern void handle_connection (mailbox_id_type reply_mailbox_id);
 extern void console_link (console_t *console);
 extern void console_flip (console_t *console);
+extern void console_kill_screen (console_t *console, int argument);
+extern void console_cursor_move (console_t *console, int x, int y);
 
 #endif /* !__CONSOLE_H__ */
