@@ -1,4 +1,4 @@
-/* $chaos: service.h,v 1.7 2002/10/08 20:16:14 per Exp $ */
+/* $chaos: service.h,v 1.8 2002/10/09 12:50:50 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -21,11 +21,15 @@
 #define SERVICE_MAX_ID_LENGTH           16
 
 /* Type definitions. */
-/** @brief A function that provides info about this service provider. The data
-    returned is protocol specific. */
+/**
+ * @brief A function that provides info about this service
+ * provider. The data returned is protocol specific. 
+ */
 typedef return_t (*service_info_t)(void *);
 
-/** @brief Information about a service provider. */
+/**
+ * @brief Information about a service provider. 
+ */
 typedef struct
 {
     /**

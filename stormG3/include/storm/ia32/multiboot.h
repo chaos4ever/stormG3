@@ -1,4 +1,4 @@
-/* $chaos: multiboot.h,v 1.8 2002/10/08 20:16:14 per Exp $ */
+/* $chaos: multiboot.h,v 1.9 2002/10/09 12:54:44 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -22,16 +22,20 @@ enum
     /* Indicates that the boot loader should page align modules. */
     MULTIBOOT_PAGE_ALIGN = BIT_VALUE (0),
     
-    /* Indicate that the boot loader should put information about
+    /* Indicates that the boot loader should put information about
        available memory in the Multiboot info structure. */
     MULTIBOOT_GET_MEMORY = BIT_VALUE (1),
     
-    /* Indicate that the boot loader should put information about the
+    /* Indicates that the boot loader should put information about the
        current video mode in the Multiboot info structure. */
     MULTIBOOT_GET_VIDEO_MODE = BIT_VALUE (2),
 };
 
 /* Defines. */
+/** 
+ * @brief Magic Multiboot flag that we put in the beginning of our
+ * kernel so that the loader will know this is a multiboot binary. 
+ */
 #define MULTIBOOT_MAGIC         0x1BADB002
 #define MULTIBOOT_FLAGS         (MULTIBOOT_PAGE_ALIGN | MULTIBOOT_GET_MEMORY)
 
@@ -45,7 +49,7 @@ enum
 /* Type definitions. */
 /**
  * @brief A structure with information about what were provided by the
- * Multiboot oader. 
+ * Multiboot loader. 
  */
 typedef struct
 {
