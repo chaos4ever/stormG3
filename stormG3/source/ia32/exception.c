@@ -1,4 +1,4 @@
-/* $chaos: exception.c,v 1.4 2002/06/12 21:02:19 per Exp $ */
+/* $chaos: exception.c,v 1.5 2002/06/13 07:01:38 per Exp $ */
 /* Abstract: Exception handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -136,13 +136,19 @@ static void exception_general_protection_fault (void)
     while (TRUE);
 }
 
-void exception_page_fault (cpu_register_t *registers)
+void exception_page_fault (cpu_register_t registers, 
+                           unsigned int error_code, unsigned int eip,
+                           unsigned int cs, unsigned int eflags)
 {
-    debug_print ("Page fault at %x.\n", cpu_get_cr2());
-    debug_print ("EAX: %x EBX: %x ECX: %x EDX: %x\n", registers->eax,
-                 registers->ebx, registers->ecx, registers->edx);
-    debug_print ("ESI: %x EDI: %x", registers->esi, 
-                 registers->edi);
+    debug_print ("Page fault at %x, error code: %x.\n", cpu_get_cr2(), 
+                 error_code);
+    debug_print ("CS: %x EIP: %x EFLAGS: %x\n", cs, eip, eflags);
+    debug_print ("DS:  %x ES:  %x FS:  %x GS:  %x\n",
+                 registers.ds, registers.es, registers.fs, registers.gs);
+    debug_print ("EAX: %x EBX: %x ECX: %x EDX: %x\n",
+                 registers.eax, registers.ebx, registers.ecx, registers.edx);
+    debug_print ("ESI: %x EDI: %x EBP: %x ESP: %x\n",
+                 registers.esi, registers.edi, registers.ebp, registers.esp);
     while (TRUE);
 }  
 

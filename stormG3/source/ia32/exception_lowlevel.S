@@ -1,4 +1,4 @@
-/* $chaos: exception_lowlevel.S,v 1.1 2002/06/13 07:01:13 per Exp $ */
+/* $chaos: exception_lowlevel.S,v 1.2 2002/06/13 08:28:05 per Exp $ */
 /* Abstract: Low-level exception handlers. Push registers etc. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -42,7 +42,11 @@ exception_general_protection_fault_lowlevel:
 	ret
 	
 exception_page_fault_lowlevel:
-	pushl %eax
+	pusha
+	pushl %ds
+	pushl %es
+	pushl %fs
+	pushl %gs
 	pushl $exception_page_fault
 	jmp save_registers
 
@@ -53,8 +57,12 @@ exception_machine_check_abort_lowlevel:
 	ret
 	
 save_registers:
-	movl 0(%esp), %eax
+	popl %eax
 	call *%eax
-	popl %eax
-	popl %eax
-	ret
+	popl %eax /* GS */
+	popl %eax /* FS */
+	popl %eax /* ES */
+	popl %eax /* DS */
+	popa
+	addl 4, %esp
+	iret
