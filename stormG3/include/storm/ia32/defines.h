@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.8 2002/06/12 06:54:00 per Exp $ */
+/* $chaos: defines.h,v 1.9 2002/06/12 12:04:44 per Exp $ */
 /* Abstract: Generic storm defines. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -35,7 +35,7 @@
 
 /* We reserve 3 8-bit DMA buffers (64 KiB each) and 3 16-bit DMA
    buffers (128 KiB each). */
-#define DMA_BASE                        (64 * KiB)
+#define DMA_BASE                        (64 * KIB)
 
 /* The end of the fixed-address kernel memory regions. */
 #define KERNEL_FIXED_END                (MEMORY_MAP_BASE + MEMORY_MAP_SIZE)

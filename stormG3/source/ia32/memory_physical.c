@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.4 2002/06/09 15:15:13 per Exp $ */
+/* $chaos: memory_physical.c,v 1.5 2002/06/11 20:57:31 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -31,7 +31,7 @@ void memory_physical_init ()
 
     /* Map the low pages we have into our slab structure. */
     for (page = KERNEL_FIXED_END / PAGE_SIZE; 
-         page < (multiboot_info.memory_lower * KIB) / PAGE_SIZE;
+         page < DMA_BASE / PAGE_SIZE;
          page++) 
     {
         memory_physical_slab_t *next = (memory_physical_slab_t *) (page * PAGE_SIZE);
