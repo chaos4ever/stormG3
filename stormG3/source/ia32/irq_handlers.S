@@ -36,11 +36,13 @@
 
 /* IRQ0 is special because it's used for dispatching. */
 irq0_handler:
-   pushal
+   cli                  /* Disable interrupts. */
+   pushal               /* Preserve registers. */
    call dispatch_task_switcher
-   movb $0x20, %al
+   movb $0x20, %al      /* Signal EOI. */
    outb %al, $0x20
-   popal
+   popal                /* Restore registers. */
+                        /* No sti, since iret does a popf. */
    iret
 	
 irq1_handler:
