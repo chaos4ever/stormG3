@@ -1,4 +1,4 @@
-/* $chaos: process.h,v 1.7 2002/10/10 21:47:10 per Exp $ */
+/* $chaos: process.h,v 1.8 2002/10/17 21:27:52 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -24,6 +24,15 @@
  */
 #define PROCESS_ID_KERNEL \
                         0
+
+/**
+ * @brief               A process ID indicating 'no process'.
+ *
+ * Used in memory_allocate() in the beginning when we allocate memory
+ * that's not registered in the process-page list.
+ */
+#define PROCESS_ID_NONE \
+                        ((process_id_t) -1)
 
 /**
  * @brief               The length of a process name.
