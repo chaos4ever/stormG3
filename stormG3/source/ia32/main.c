@@ -1,4 +1,4 @@
-/* $chaos: main.c,v 1.9 2002/06/12 06:53:01 per Exp $ */
+/* $chaos: main.c,v 1.10 2002/06/12 12:20:35 per Exp $ */
 /* Abstract: This is the startup point of storm. It is executed right
    after the assembly language init code has set up the GDT, kernel
    stack, etc. Here, we initialise everything in the storm, like
@@ -48,6 +48,8 @@ void main_bootup (int argument_count UNUSED, char *arguments[] UNUSED)
 
     /* Set up exception handlers. */
     exception_init ();
+
+    *(int *)(NULL) = 0;
 
     /* Test the allocation. */
     {
