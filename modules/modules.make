@@ -1,4 +1,4 @@
-# $chaos: storm.make,v 1.4 2002/06/13 07:01:52 per Exp $
+# $chaos: modules.make,v 1.1 2002/06/16 21:07:58 per Exp $
 
 # Abstract: Modules makefile
 # Authors: Per Lundberg <per@chaosdev.org>
@@ -8,7 +8,6 @@
 # Settings.
 # CC = i686-storm-chaos-gcc
 INCLUDES = -I$(INSTALL_PATH)/data/programming/c/headers
-DEFINES = -DSTORM -DCREATOR=\"`whoami`@`hostname`\"
 EXTRA_CLFAGS = -fPIC # Position-independant code.
 CFLAGS = -Wall -W -Wshadow -Wpointer-arith -Waggregate-return \
 -Wstrict-prototypes -Wredundant-decls -Winline -Wmissing-prototypes \
