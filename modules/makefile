@@ -1,4 +1,4 @@
-# $chaos: makefile,v 1.1 2002/06/16 21:07:58 per Exp $
+# $chaos: makefile,v 1.2 2002/06/18 22:19:17 per Exp $
 
 # Abstract: Modules makefile
 # Authors: Per Lundberg <per@chaosdev.org>
@@ -8,7 +8,7 @@
 
 BUILD_ROOT = $(CURDIR)
 export BUILD_ROOT
-SUBDIRS = keyboard
+SUBDIRS = keyboard soundblaster
 
 all:
 	for e in $(SUBDIRS) ; do \
