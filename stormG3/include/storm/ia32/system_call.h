@@ -1,4 +1,4 @@
-/* $chaos: system_call.h,v 1.6 2002/10/29 20:47:37 per Exp $ */
+/* $chaos: system_call.h,v 1.7 2002/10/29 22:37:46 per Exp $ */
 /* Abstract: System call prototypes etc. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -60,14 +60,17 @@ extern return_t system_call (uint32_t *stack);
 #define SYSTEM_CALL_ARGUMENT_3 \
                         stack[5]
 
+#define SYSTEM_CALL_ARGUMENT_4 \
+                        stack[5]
+
 #endif /* __STORM_KERNEL__ */
 
 #if (! defined __STORM_KERNEL__ ) && (! defined __STORM_KERNEL_MODULE__)
 
 /* Lookup a service by name, vendor, model and ID. */
-static inline unsigned int system_call_service_lookup (service_lookup_t *service_lookup, size_t *services, service_t *out_service)
+static inline return_t system_call_service_lookup (service_lookup_t *service_lookup, size_t *services, service_t *out_service)
 {
-    unsigned int return_value;
+    return_t return_value;
 
     asm volatile ("pushl        %1\n"   /* out_service */
                   "pushl        %2\n"   /* services */
@@ -89,9 +92,9 @@ static inline unsigned int system_call_service_lookup (service_lookup_t *service
 }
 
 /* Connect to a service that has been looked up. */
-static inline unsigned int system_call_service_connect (service_id_t service_id, service_connection_id_t *connection_id)
+static inline return_t system_call_service_connect (service_id_t service_id, service_connection_id_t *connection_id)
 {
-    unsigned int return_value;
+    return_t return_value;
 
     asm volatile ("pushl        %1\n"   /* connection_id */
                   "pushl        %2\n"   /* service_id */
@@ -110,10 +113,35 @@ static inline unsigned int system_call_service_connect (service_id_t service_id,
     return return_value;
 }
 
-/* Close a connection to a service provider. */
-static inline unsigned int system_call_service_close (service_connection_id_t connection_id)
+/* Invoke a function within a service provider. */
+static inline return_t system_call_service_invoke (service_connection_id_t connection_id, unsigned int function_number, void *data)
 {
-    unsigned int return_value;
+    return_t return_value;
+    
+    asm volatile ("pushl        %1\n"   /* data */
+                  "pushl        %2\n"   /* function number */
+                  "pushl        %3\n"   /* connection ID */
+                  
+                  "pushl        %4\n"   /* number of arguments. */
+                  "pushl        %5\n"   /* system call number. */
+                  "int          %6"
+                  : 
+                  "=a" (return_value)
+                  :
+                  "g" (data),
+                  "g" (function_number),
+                  "g" (connection_id),
+                  "g" (3),              /* number of arguments. */
+                  "g" (SYSTEM_CALL_SERVICE_INVOKE),
+                  "N" (SYSTEM_CALL_IDT_ENTRY));
+
+    return return_value;
+}
+
+/* Close a connection to a service provider. */
+static inline return_t system_call_service_close (service_connection_id_t connection_id)
+{
+    return_t return_value;
 
     asm volatile ("pushl        %1\n"   /* connection_id */
 

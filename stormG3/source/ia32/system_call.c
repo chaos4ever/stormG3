@@ -1,4 +1,4 @@
-/* $chaos: system_call.c,v 1.5 2002/10/29 20:44:56 per Exp $ */
+/* $chaos: system_call.c,v 1.6 2002/10/29 22:37:48 per Exp $ */
 /* Abstract: System call implementation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -73,7 +73,7 @@ return_t system_call (uint32_t *stack)
 
             if (SYSTEM_CALL_ARGUMENTS == 2)
             {
-                return_t return_value = service_connect (SYSTEM_CALL_ARGUMENT_1, (service_connection_id_t *) SYSTEM_CALL_ARGUMENT_2);
+                return_t return_value = service_connect (SYSTEM_CALL_ARGUMENT_0, (service_connection_id_t *) SYSTEM_CALL_ARGUMENT_1);
                 
                 return return_value;
             }
@@ -91,7 +91,7 @@ return_t system_call (uint32_t *stack)
         {
             if (SYSTEM_CALL_ARGUMENTS == 1)
             {
-                return_t return_value = service_close (SYSTEM_CALL_ARGUMENT_1);
+                return_t return_value = service_close (SYSTEM_CALL_ARGUMENT_0);
                 return return_value;
             }
             else
@@ -104,14 +104,22 @@ return_t system_call (uint32_t *stack)
         /* Invoke a function in a service provider. */
         case SYSTEM_CALL_SERVICE_INVOKE:
         {
-            return STORM_RETURN_NOT_IMPLEMENTED;
+            if (SYSTEM_CALL_ARGUMENTS == 3)
+            {
+                return_t return_value = service_invoke (SYSTEM_CALL_ARGUMENT_0, SYSTEM_CALL_ARGUMENT_1, (void *) SYSTEM_CALL_ARGUMENT_2);
+                return return_value;
+            }
+            else
+            {
+                return STORM_RETURN_INVALID_ARGUMENT;
+            }
             break;
         }
 
         /* An unsupported system call. */
         default:
         {
-            debug_print ("Invalid system call executed: %u\n", stack[0]);
+            debug_print ("Invalid system call executed: %u\n", SYSTEM_CALL_NUMBER);
             return STORM_RETURN_INVALID_ARGUMENT;
             break;
         }
