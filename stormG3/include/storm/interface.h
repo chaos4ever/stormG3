@@ -1,4 +1,4 @@
-/* $chaos: interface.h,v 1.5 2002/10/24 20:42:05 per Exp $ */
+/* $chaos: interface.h,v 1.6 2002/10/24 21:36:12 per Exp $ */
 /* Abstract: stormG3 kernel interface. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -227,14 +227,19 @@ extern return_t process_create (process_id_t process_id,
  * @param model         The model of the service provider.
  * @param id            A unique ID for this service provider (to distinguish
  *                      if the vendor and model is the same).
- * @param version       The version of the service.
+ * @param major_version The major version of the service we require.
+ * @param minor_version The minor version of the service we require.
  * @param services      A pointer to where the number of services found will 
  *                      be put.
  * @param service       An array of services.
  * @return              STORM_RETURN_SUCCESS if successful.
+ *
+ * Services with the same major version and at least the same minor
+ * version will be returned.
  */
 extern return_t service_lookup (char *name, char *vendor, char *model,
-                                char *id, unsigned int version, 
+                                char *id, unsigned int major_version, 
+                                unsigned int minor_version,
                                 size_t *services, service_t **service);
 
 /**
@@ -244,13 +249,15 @@ extern return_t service_lookup (char *name, char *vendor, char *model,
  * @param model         The model of the service provider.
  * @param id            A unique ID for this service provider (to distinguish
  *                      if the vendor and model is the same).
- * @param version       The version of the service.
+ * @param major_version The major version of the service.
+ * @param minor_version The minor version of the service.
  * @param service_info  A function pointer to a function that returns
  *                      information about the service.
  * @return              STORM_RETURN_SUCCESS if successful.
  */
 extern return_t service_register (char *name, char *vendor, char *model, 
-                                  char *id, unsigned int version,
+                                  char *id, unsigned int major_version,
+                                  unsigned int minor_version, 
                                   service_info_t service_info);
 
 /**
