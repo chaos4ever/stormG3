@@ -1,4 +1,4 @@
-/* $chaos: multiboot.h,v 1.1 2002/05/25 20:09:39 per Exp $ */
+/* $chaos: multiboot.h,v 1.2 2002/06/05 18:17:43 per Exp $ */
 /* Abstract: Multiboot stuff. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -30,6 +30,9 @@ enum
 /* Defines. */
 #define MULTIBOOT_MAGIC         0x1BADB002
 #define MULTIBOOT_FLAGS         (MULTIBOOT_PAGE_ALIGN)
+
+#define MODULE_NAME_SIZE        (2 * KIB)
+#define MEMORY_MAP_SIZE         (2 * KIB)
 
 /* More information about the multiboot format can be found in the GNU
    GRUB documentation available on
