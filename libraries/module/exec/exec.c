@@ -1,4 +1,4 @@
-/* $chaos: exec.c,v 1.7 2002/12/03 14:22:31 johannes Exp $ */
+/* $chaos: exec.c,v 1.8 2002/12/08 20:00:11 per Exp $ */
 /* Abstract: Exec library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 

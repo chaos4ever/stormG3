@@ -1,4 +1,4 @@
-/* $chaos: exec.h,v 1.1 2002/10/04 20:53:22 per Exp $ */
+/* $chaos: exec.h,v 1.2 2002/12/03 14:21:11 johannes Exp $ */
 /* Abstract: Function prototypes and structure definitions for the
    exec library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
