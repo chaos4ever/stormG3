@@ -1,4 +1,4 @@
-/* $chaos: functions.h,v 1.3 2002/05/23 11:14:26 per Exp $ */
+/* $chaos: functions.h,v 1.1 2002/06/24 21:36:43 per Exp $ */
 /* Abstract: Function definitions for the console library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -11,6 +11,7 @@
 #include <storm/storm.h>
 #include <console/console.h>
 
-extern return_t console_init (console_service_t *console);
+/* Lookup the first console service provider. */
+extern return_t console_lookup (console_service_t *console);
 
 #endif /* !__LIBRARY_CONSOLE_FUNCTIONS_H__ */

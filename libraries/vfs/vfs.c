@@ -1,4 +1,4 @@
-/* $chaos: vfs.c,v 1.2 2002/07/28 19:33:57 per Exp $ */
+/* $chaos: vfs.c,v 1.3 2002/07/31 21:18:55 per Exp $ */
 /* Abstract: Virtual filesystem library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -7,23 +7,23 @@
 
 #include <vfs/vfs.h>
 
-/* Resolve the first virtual filesystem service provider. FIXME:
+/* Lookup the first virtual filesystem service provider. FIXME:
    Should be able to return a list. */
-return_t vfs_resolve (vfs_service_t *vfs)
+return_t vfs_lookup (vfs_service_t *vfs)
 {
     size_t services;
     service_t *service;
 
     /* Find the virtual filesystem service. */
-    if (service_resolve ("vfs", NULL, NULL, NULL, 1, &services, &service) != STORM_RETURN_SUCCESS)
+    if (service_lookup ("vfs", NULL, NULL, NULL, 1, &services, &service) != STORM_RETURN_SUCCESS)
     {
-        debug_print ("Failed to resolve virtual filesystem service provider.\n");
+        debug_print ("Failed to lookup virtual filesystem service provider.\n");
         return VFS_RETURN_SERVICE_UNAVAILABLE;
     }
 
     service[0].service_info (vfs);
 
-    // FIXME: Free the memory allocated by service_resolve.
+    // FIXME: Free the memory allocated by service_lookup.
     return VFS_RETURN_SUCCESS;
 }
 

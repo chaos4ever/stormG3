@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: functions.h,v 1.1 2002/07/11 21:43:44 per Exp $ */
 /* Abstract: Video library functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -8,6 +8,7 @@
 #ifndef __VIDEO_FUNCTIONS_H__
 #define __VIDEO_FUNCTIONS_H__
 
-extern return_t video_init (video_service_t *video);
+/* Lookup the first video service provider. */
+extern return_t video_lookup (video_service_t *video);
 
 #endif /* !__VIDEO_FUNCTIONS_H__ */

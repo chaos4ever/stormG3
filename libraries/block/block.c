@@ -1,4 +1,4 @@
-/* $chaos: block.c,v 1.1 2002/07/06 08:29:07 per Exp $ */
+/* $chaos: block.c,v 1.2 2002/07/21 12:35:30 per Exp $ */
 /* Abstract: Block library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -7,17 +7,17 @@
 
 #include <block/block.h>
 
-/* Resolve the first block service provider. FIXME: Should be able to
+/* Lookup the first block service provider. FIXME: Should be able to
    return a list. */
-return_t block_resolve (block_service_t *block)
+return_t block_lookup (block_service_t *block)
 {
     size_t services;
     service_t *service;
 
     /* Find the block service. */
-    if (service_resolve ("block", NULL, NULL, NULL, 1, &services, &service) != STORM_RETURN_SUCCESS)
+    if (service_lookup ("block", NULL, NULL, NULL, 1, &services, &service) != STORM_RETURN_SUCCESS)
     {
-        debug_print ("Failed to resolve block service provider.\n");
+        debug_print ("Failed to lookup block service provider.\n");
         return BLOCK_RETURN_SERVICE_UNAVAILABLE;
     }
 

@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: functions.h,v 1.1 2002/06/23 20:34:44 per Exp $ */
 /* Abstract: Log library functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -8,6 +8,7 @@
 #ifndef __LIBRARY_LOG_FUNCTIONS_H__
 #define __LIBRARY_LOG_FUNCTIONS_H__
 
-extern return_t log_init (log_service_t *log);
+/* Lookup the first log service provider. */
+extern return_t log_lookup (log_service_t *log);
 
 #endif /* !__LIBRARY_LOG_FUNCTIONS_H__ */
