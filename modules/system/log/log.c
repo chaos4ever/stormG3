@@ -1,4 +1,4 @@
-/* $chaos: log.c,v 1.1 2002/08/13 19:02:06 per Exp $ */
+/* $chaos: log.c,v 1.2 2002/10/04 19:01:17 per Exp $ */
 /* Abstract: Kernel log module. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -48,6 +48,6 @@ static return_t service_info (void *log_void)
 
 return_t module_start (void)
 {
-    return service_register ("log", "chaos development", "Log module",
-                             "1", LOG_SERVICE_VERSION, &service_info);
+    // FIXME: Use log_register (bug #54)
+    return service_register ("log", "chaos development", "Log module", "1", LOG_SERVICE_MAJOR_VERSION, LOG_SERVICE_MINOR_VERSION, &service_info);
 }

@@ -1,4 +1,4 @@
-/* $chaos: console.c,v 1.3 2002/10/16 20:33:37 per Exp $ */
+/* $chaos: console.c,v 1.4 2002/10/23 07:30:09 per Exp $ */
 /* Abstract: Console module. Will eventually be 100% ANSI escape
              sequence compatible. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
@@ -385,6 +385,5 @@ return_t module_start (void)
 
     has_video = TRUE;
 
-    return service_register ("console", "chaos development", "Console module",
-                             "1", CONSOLE_SERVICE_VERSION, &service_info);
+    return service_register ("console", "chaos development", "Console module", "1", CONSOLE_SERVICE_MAJOR_VERSION, CONSOLE_SERVICE_MINOR_VERSION ,&service_info);
 }

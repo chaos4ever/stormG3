@@ -1,4 +1,4 @@
-/* $chaos: vga.c,v 1.2 2002/10/04 19:01:07 per Exp $ */
+/* $chaos: vga.c,v 1.3 2002/10/23 07:29:47 per Exp $ */
 /* Abstract: VGA server for chaos. */
 /* Authors: Per Lundberg <per@chaosdev.org>
             Henrik Hallin <hal@chaosdev.org> */
@@ -181,8 +181,8 @@ return_t module_start (void)
 
     /* FIXME: Actually check if an adapter is present. How is this done? */
     /* Create the service. */
-    return service_register ("video", "IBM", "VGA",
-                             "1", VIDEO_VERSION, &service_info);
+    // FIXME: Use video_register (bug #54)
+    return service_register ("video", "IBM", "VGA", "1", VIDEO_SERVICE_MAJOR_VERSION, VIDEO_SERVICE_MINOR_VERSION, &service_info);
 
 
     return 0;

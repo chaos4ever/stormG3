@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.1 2002/06/23 20:34:44 per Exp $ */
+/* $chaos: defines.h,v 1.2 2002/10/04 19:00:55 per Exp $ */
 /* Abstract: Log library defines. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -11,7 +11,15 @@
 // FIXME: Have this be unique.
 #define LOG_COOKIE                      0x12345678
 
-enum
+/* Major log service version. */
+#define LOG_SERVICE_MAJOR_VERSION \
+                        (0)
+
+/* Minor log service version. */
+#define LOG_SERVICE_MINOR_VERSION \
+                        (1)
+
+enum log_urgency_t
 {
     /* Emergency messages are to be printed when the program has
        encountered a serious error which forces termination. */

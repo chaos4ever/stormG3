@@ -1,4 +1,4 @@
-/* $chaos: minix.c,v 1.10 2002/10/04 19:01:03 per Exp $ */
+/* $chaos: minix.c,v 1.11 2002/10/23 07:29:25 per Exp $ */
 /* Abstract: Implementation of the Minix file system. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -419,7 +419,9 @@ int module_start (void)
     //    inode2 = minix2_find_file (minix_fs, "razor_1911_cracks.mod");
     //    debug_print ("%s %x %u %u\n", "razor_1911_cracks.mod",
     //                 inode2->mode, inode2->uid, inode2->gid);
-
+    
+    // FIXME: Create and use the filesystem_register function (bug #54)
     return service_register ("filesystem", "chaos development", "Minix module",
-                             "1", FILESYSTEM_SERVICE_VERSION, &service_info);
+                             "1", FILESYSTEM_SERVICE_MAJOR_VERSION,
+                             FILESYSTEM_SERVICE_MINOR_VERSION, &service_info);
 }

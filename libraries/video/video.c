@@ -1,4 +1,4 @@
-/* $chaos: video.c,v 1.2 2002/08/09 05:59:42 per Exp $ */
+/* $chaos: video.c,v 1.3 2002/10/04 19:00:58 per Exp $ */
 /* Abstract: Video library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -14,7 +14,7 @@ return_t video_lookup (video_service_t *video)
     service_t *service;
 
     /* Find the log service. */
-    if (service_lookup ("video", NULL, NULL, NULL, 1, &services, &service) != STORM_RETURN_SUCCESS)
+    if (service_lookup ("video", NULL, NULL, NULL, VIDEO_SERVICE_MAJOR_VERSION, VIDEO_SERVICE_MINOR_VERSION, &services, &service) != STORM_RETURN_SUCCESS)
     {
         debug_print ("Failed to lookup video service provider.\n");
         return VIDEO_RETURN_SERVICE_UNAVAILABLE;

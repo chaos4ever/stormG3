@@ -1,4 +1,4 @@
-/* $chaos: vfs.c,v 1.3 2002/08/11 18:33:08 per Exp $ */
+/* $chaos: vfs.c,v 1.4 2002/10/04 19:01:05 per Exp $ */
 /* Abstract: Virtual file system provider. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -40,9 +40,10 @@ static return_t service_info (void *vfs_void)
 
 int module_start (void)
 {
-    // FIXME: Use vfs_register
+    // FIXME: Use vfs_register (bug #54)
     return service_register ("vfs", "chaos development",
                              "VFS module", "1",
-                             VFS_SERVICE_VERSION,
+                             VFS_SERVICE_MAJOR_VERSION,
+                             VFS_SERVICE_MINOR_VERSION,
                              &service_info);
 }
