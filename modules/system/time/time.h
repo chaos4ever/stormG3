@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: time.h,v 1.1 2002/08/15 20:59:40 per Exp $ */
 /* Abstract: Time module header file. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -30,5 +30,13 @@
 #define RTC_REGISTER_A                  0x0A
 #define RTC_REGISTER_B                  0x0B
 #define RTC_REGISTER_C                  0x0C
+#define RTC_REGISTER_CENTURY            0x32
+
+// FIXME: Move to a library. (libbcd?)
+#define BCD_TO_DECIMAL(a)               ((((a) & 0xF0) >> 4) * 10 + \
+                                         ((a) & 0x0F))
+
+// FIXME: Move to time library.
+typedef uint64_t time_t;
 
 #endif /* !__TIME_H__ */

@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: time.c,v 1.1 2002/08/15 20:59:40 per Exp $ */
 /* Abstract: Time module. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -10,38 +10,56 @@
 /* The log service provider that we are using. */
 log_service_t log;
 
+/* 'chaos time' -- similar to UNIX time, but with a 64-bit time_t. */
+time_t time = 0;
+
 /* The current time & date. */
-volatile unsigned int second, minute, hour, date, month, year;
+volatile unsigned int second, minute, hour, date, month, year, century;
+
+extern void irq_handler (unsigned int irq UNUSED);
 
 /* The IRQ handler. */
-static void irq_handler (unsigned int irq UNUSED)
+void irq_handler (unsigned int irq UNUSED)
 {
-    /* Read the time and date. */
+    /* Read the time and date. We don't set binary mode, since it's
+       broken or buggy on many machines. */
     port_uint8_out_pause (RTC_COMMAND, RTC_REGISTER_SECOND);
+    // FIXME: This should not be needed.
     second = port_uint8_in (RTC_DATA);
+    second = BCD_TO_DECIMAL (second);
 
     port_uint8_out_pause (RTC_COMMAND, RTC_REGISTER_MINUTE);
     minute = port_uint8_in (RTC_DATA);
+    minute = BCD_TO_DECIMAL (minute);
 
     port_uint8_out_pause (RTC_COMMAND, RTC_REGISTER_HOUR);
     hour = port_uint8_in (RTC_DATA);
+    hour = BCD_TO_DECIMAL (hour);
 
     port_uint8_out_pause (RTC_COMMAND, RTC_REGISTER_DATE);
     date = port_uint8_in (RTC_DATA);
+    date = BCD_TO_DECIMAL (date);
 
     port_uint8_out_pause (RTC_COMMAND, RTC_REGISTER_MONTH);
     month = port_uint8_in (RTC_DATA);
+    month = BCD_TO_DECIMAL (month);
 
+    /* Weird, but the year is not BCD-coded... Blame Intel, IBM or
+       whoever. */
     port_uint8_out_pause (RTC_COMMAND, RTC_REGISTER_YEAR);
     year = port_uint8_in (RTC_DATA);
-    year += 2000;
+
+    /* We could skip this and just add 2000, but it would be lame and
+       would break at next century change. :-) */
+    port_uint8_out_pause (RTC_COMMAND, RTC_REGISTER_CENTURY);
+    century = port_uint8_in (RTC_DATA);
+    century = BCD_TO_DECIMAL (century);
+
+    year += century * 100;
 
     /* Read the C register. */
     port_uint8_out_pause (RTC_COMMAND, RTC_REGISTER_C);
     port_uint8_in (RTC_DATA);
-
-    debug_print ("%u-%u-%u %u:%u:%u\n", year, month, date, hour, minute,
-                 second);
 }
 
 /* The entry point of the module. */
@@ -61,6 +79,8 @@ return_t module_start ()
         return STORM_RETURN_BUSY;
     }
 
+    /* Do this before we enable the interrupt so we won't miss any
+       interrupts. */
     if (irq_register (RTC_IRQ, "RTC", &irq_handler) != STORM_RETURN_SUCCESS)
     {
         log.print (LOG_URGENCY_EMERGENCY, "Could not allocate IRQ.");
@@ -69,11 +89,12 @@ return_t module_start ()
 
     /* Enable the 1 Hz clock. */
     port_uint8_out_pause (RTC_COMMAND, RTC_REGISTER_B);
-    uint8_t b = port_uint8_in (RTC_DATA);
-    BIT_SET(b, 4);
-    debug_print ("%x\n", b);
+    uint8_t b = 0;
+    BIT_SET(b, 4); /* One interrupt each second. */
+    BIT_SET(b, 1); /* 24hr format (otherwise we can't distinguish). */
     port_uint8_out_pause (RTC_COMMAND, RTC_REGISTER_B);
     port_uint8_out_pause (RTC_DATA, b);
-    
+
+    // FIXME: Register a service as well. (bug #24)    
     return STORM_RETURN_SUCCESS;
 }
