@@ -1,4 +1,4 @@
-/* $chaos: dma.h,v 1.5 2002/10/08 20:16:14 per Exp $ */
+/* $chaos: dma.h,v 1.6 2002/10/10 12:20:01 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -30,7 +30,7 @@
 #define NUMBER_OF_CHANNELS                 (NUMBER_OF_CONTROLLERS * \
                                            NUMBER_OF_CHANNELS_PER_CONTROLLER)
 
-/*
+/**
  * @brief       Initialize DMA support. 
  */
 extern void dma_init (void);
