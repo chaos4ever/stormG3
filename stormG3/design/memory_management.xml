@@ -1,14 +1,25 @@
 <?xml version='1.0' ?> <!-- -*- xml -*- -->
 <chapter id="memory_management">
   <title>The Memory Management Subsystem</title>
+  <para>
+    The memory management subsystem is probably one of the most
+    important systems in the kernel, if not <emphasis>the</emphasis>
+    most important. Practically everything is dependent upon it. If it
+    is bad, the operating system will never be very good. But if it is
+    well-though out and well-implemented, it can be a very good base
+    for a solid and robust system that can serve the users for many
+    days, months and even years, without a hassle.
+  </para>
   
   <section>
     <title>Virtual memory map</title>
-    <mediaobject>
-      <imageobject>
-	<imagedata fileref="memory_map.png" format="PNG" align="center" />
-      </imageobject>
-    </mediaobject>
+    <para>
+      <inlinemediaobject>
+	<imageobject>
+	  <imagedata fileref="memory_map.png" format="PNG" align="center" />
+	</imageobject>
+      </inlinemediaobject>
+    </para>
 
     <para>
       We believe this design will be highly effective. In the previous
@@ -47,6 +58,26 @@
       speed decrease, and we have set one of the design goals for
       storm G3 to be speed. Therefore, we will do it this way.      
     </para>
+  </section>
+
+  <section>
+    <title>Memory allocation</title>
+    <section>
+      <title>Physical memory allocation</title>
+      <para>
+	Blah.
+      </para>
+    </section>
+    <section>
+      <title>Global memory allocation</title>
+      <para>
+      </para>
+    </section>
+    <section>
+      <title>Virtual memory allocation</title>
+      <para>
+      </para>
+    </section>
   </section>
   
   <section>
