@@ -32,7 +32,8 @@ void main_bootup (int argument_count UNUSED, char *arguments[] UNUSED)
 
     /* Set up debugging. */
     debug_init ();
-    debug_print ("storm %s (compiled by %s on %s %s).\n", STORM_VERSION, CREATOR,
+    debug_print ("storm %s (compiled by %s on %s %s).\n",
+                 STORM_VERSION_STRING, CREATOR,
                  __DATE__, __TIME__);
 
     /* Set up exception handlers. */
