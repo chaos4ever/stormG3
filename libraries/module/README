@@ -1,0 +1,6 @@
+README ($Id$)
+======
+
+Here we store libraries that can be used from kernel modules.
+
+-- Per Lundberg <per@chaosdev.org>  Sun,  8 Dec 2002 20:42:04 +0100
