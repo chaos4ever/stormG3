@@ -1,4 +1,4 @@
-/* $chaos: swedish.h,v 1.2 2002/08/19 20:38:32 per Exp $ */
+/* $chaos: swedish.h,v 1.3 2002/08/20 06:36:25 per Exp $ */
 /* Abstract: A swedish keyboard translation map for chaos. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -61,12 +61,12 @@ const char *swedish_keyboard_map_shift[] =
 
 const char *swedish_keyboard_map_altgr[] =
 {
-  NULL, NULL, NULL, "@",  NULL, "$", NULL,  NULL,
+  NULL, NULL, NULL, "@",  NULL, "$",  NULL, NULL,
   "{",  "[",  "]",  "}",  "\\", NULL, NULL, NULL,
   NULL, NULL, "�",  NULL, NULL, NULL, NULL, NULL,
   NULL, NULL, NULL, "~",  NULL, NULL, NULL, NULL,
   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+  NULL, NULL, NULL, NULL, NULL, NULL, "¢",  NULL,
   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
   NULL, " ",  NULL, NULL, NULL, NULL, NULL, NULL,
   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
