@@ -7,6 +7,10 @@
 /* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/storm.h>
+#include <console/console.h>
+#include <kernel/kernel.h>
+#include <log/log.h>
+#include <sound/sound.h>
 
 #include "modfile.h"
 
@@ -18,15 +22,6 @@
                         ROWS*CHANNELS*4
 //#define PAL 3546894
 #define PAL             0x361F0E00     /* 3546894 << 2 */
-
-ipc_structure_type ipc_structure;
-log_structure_type log_structure;
-console_structure_type console_structure;
-
-tag_type empty_tag =
-{
-    0, 0, ""
-};
 
 /* Erik: Please put these in a header file, will you? /Hal */
 
@@ -92,34 +87,39 @@ void fill_buffer (uint8_t *buffer);
 void load_module (void);
 void do_note (note_type *work_note, channel_type *work_channel);
 
+log_service_t log;
+console_service_t console;
+sound_service_t sound;
+
 int main (void)
 {
-    //  unsigned int i;
-    //  note_type *note;
-    sound_message_type *sound_message;
-
-    log_init (&log_structure, PACKAGE_NAME, &empty_tag);
+    if (log_init (&log) != LOG_RETURN_SUCCESS)
+    {
+        return -1;
+    }
 
     system_call_process_name_set (PACKAGE_NAME);
     system_call_thread_name_set ("Playing module...");
 
-    console_init (&console_structure, &empty_tag, 
-                  IPC_CONSOLE_CONNECTION_CLASS_CLIENT);
-    console_open (&console_structure, 80, 50, 4, VIDEO_MODE_TYPE_TEXT);
-    console_use_keyboard (&console_structure, TRUE, CONSOLE_KEYBOARD_NORMAL);
-    console_clear (&console_structure);
-    console_print (&console_structure,
-                   "Module player\n");
-
-    if (sound_init (&ipc_structure, &empty_tag) != SOUND_RETURN_SUCCESS)
+    if (console_init (&console) != CONSOLE_RETURN_SUCCESS)
     {
-        log_print (&log_structure, LOG_URGENCY_EMERGENCY,
-                   "Could not establish connection to a sound service.");
         return -1;
     }
 
-    log_print (&log_structure, LOG_URGENCY_EMERGENCY,
-               "Found sound service and established connection.");
+    console.open (80, 50, 4, VIDEO_MODE_TYPE_TEXT);
+    console.use_keyboard (TRUE, CONSOLE_KEYBOARD_NORMAL);
+    console.clear ();
+    console.print ("Module player\n");
+
+    if (sound_init (&sound) != SOUND_RETURN_SUCCESS)
+    {
+        log.print (LOG_URGENCY_EMERGENCY,
+                    "Could not establish connection to a sound service.");
+        return -1;
+    }
+
+    log.print (LOG_URGENCY_EMERGENCY,
+                "Found sound service and established connection.");
 
     load_module ();
     memory_allocate ((void **) &sound_message,
@@ -161,36 +161,31 @@ int main (void)
     }
 #endif
 
-    system_call_process_parent_unblock ();
-
     while (TRUE)
     {
         fill_buffer (sound_message->data);
 
-        if (sound_play_stream (&ipc_structure, sound_message) !=
-            SOUND_RETURN_SUCCESS)
+        if (sound.play_stream (sound_message) != SOUND_RETURN_SUCCESS)
         {
-            log_print (&log_structure, LOG_URGENCY_EMERGENCY,
+            log.print (LOG_URGENCY_EMERGENCY,
                        "Could not play the sample as wanted.");
             return -1;
         }
-
-        console_cursor_move (&console_structure, 0, 5);
-        console_print_formatted (&console_structure,
-                                 "Current Pattern: %x  "
+        
+        console.cursor_move (0, 5);
+        console.print_formatted ("Current Pattern: %x  "
                                  "\nCurrent Row: %x  ",
                                  current_pattern, current_row);
-        console_print_formatted (&console_structure,
-                                 "Speed: %x  "
+        console.print_formatted ("Speed: %x  "
                                  "\nBPM: %x  ",
                                  speed, bpm);
-
+        
         /*    console_print_formatted (&console_structure, "\n%x %x %x   %x",
               current_row, channel[0].sample_number,
               channel[0].period_frequency,
               channel[0].scaling_factor); */
     }
-
+    
     return 0;
 }
 
@@ -264,8 +259,8 @@ void load_module (void)
         }
     }
     module.physical_patterns++;
-    console_print_formatted (&console_structure, "\nPhysical patterns: %x",
-                             module.physical_patterns);
+    console.print_formatted ("\nPhysical patterns: %x",
+                              module.physical_patterns);
 
     /* Allocate memory for the pattern data and fill it. */
 
@@ -405,8 +400,8 @@ void do_note (note_type *work_note, channel_type *work_channel)
 
         case 0xC:
         {
-            console_cursor_move (&console_structure, 0, 24);
-            console_print_formatted (&console_structure, "Effect C: Parameter = %x  ",
+            console.cursor_move (0, 24);
+            console.print_formatted ("Effect C: Parameter = %x  ",
                                      work_note->effect_parameter);
       
             work_channel->volume = work_note->effect_parameter;
@@ -434,20 +429,18 @@ void do_note (note_type *work_note, channel_type *work_channel)
 
         case 0xF:
         {
-            console_cursor_move (&console_structure, 0, 25);
-            console_print_formatted (&console_structure, "Effect F: Parameter = %x  ",
+            console.cursor_move (0, 25);
+            console.print_formatted ("Effect F: Parameter = %x  ",
                                      work_note->effect_parameter);
 
             if (work_note->effect_parameter < 0x20)
             {
                 /* Speed. */
-
                 speed = work_note->effect_parameter;
             }
             else
             {
                 /* BPM. */
-
                 bpm = work_note->effect_parameter;
             }
 
