@@ -1,4 +1,4 @@
-# $chaos: makefile,v 1.1 2002/06/16 21:08:00 per Exp $
+# $chaos: makefile,v 1.2 2002/06/17 22:50:37 per Exp $
 
 # Abstract: Keyboard module makefile.
 # Authors: Per Lundberg <per@chaosdev.org>
@@ -15,6 +15,7 @@ clean::
 
 install: all
 	$(INSTALL) $(BINARY) $(INSTALL_PATH)/system/modules
+	strip $(INSTALL_PATH)/system/modules/$(BINARY)
 	gzip -9f $(INSTALL_PATH)/system/modules/$(BINARY)
 
 main.o:
