@@ -1,4 +1,4 @@
-/* $chaos: console.c,v 1.1 2002/06/24 21:36:43 per Exp $ */
+/* $chaos: console.c,v 1.2 2002/07/04 21:25:52 per Exp $ */
 /* Abstract: Console library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -23,6 +23,8 @@ return_t console_init (console_service_t *console)
         return CONSOLE_RETURN_SERVICE_UNAVAILABLE;
     }
     service[0].service_info (console);
+
+    // FIXME: Free the memory allocated by service_resolve.
 
     return CONSOLE_RETURN_SUCCESS;
 }

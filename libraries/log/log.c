@@ -1,4 +1,4 @@
-/* $chaos: log.c,v 1.2 2002/06/24 21:36:56 per Exp $ */
+/* $chaos: log.c,v 1.3 2002/07/04 21:25:44 per Exp $ */
 /* Abstract: Log library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -21,6 +21,8 @@ return_t log_init (log_service_t *log)
     }
 
     service[0].service_info (log);
+
+    // FIXME: Free the memory allocated by service_resolve.
 
     return LOG_RETURN_SUCCESS;
 }
