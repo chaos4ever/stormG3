@@ -1,4 +1,4 @@
-/* $chaos: service.h,v 1.12 2002/10/28 07:44:33 per Exp $ */
+/* $chaos: service.h,v 1.13 2002/10/29 20:48:01 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -13,6 +13,23 @@
 #define __STORM_IA32_SERVICE_H__
 
 #include <storm/storm.h>
+
+/**
+ * @brief               Connect to the given service provider.
+ * @param service_id    ID of the service provider to connect to.
+ * @param connection_id Pointer to where the connection ID will be stored.
+ * @return              STORM_RETURN_SUCCESS if successful.
+ */
+extern return_t service_connect (service_id_t service_id,
+                                 service_connection_id_t *connection_id);
+
+/**
+ * @brief               Close a connection that has been made to a service
+ *                      provider.
+ * @param connection_id The ID of the connection.
+ * @return              STORM_RETURN_SUCCESS if successful.
+ */
+extern return_t service_close (service_connection_id_t connection_id);
 
 /**
  * @brief               Information about a service provider. 

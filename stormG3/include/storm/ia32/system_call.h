@@ -1,4 +1,4 @@
-/* $chaos: system_call.h,v 1.5 2002/10/28 22:24:59 per Exp $ */
+/* $chaos: system_call.h,v 1.6 2002/10/29 20:47:37 per Exp $ */
 /* Abstract: System call prototypes etc. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -65,7 +65,7 @@ extern return_t system_call (uint32_t *stack);
 #if (! defined __STORM_KERNEL__ ) && (! defined __STORM_KERNEL_MODULE__)
 
 /* Lookup a service by name, vendor, model and ID. */
-static inline unsigned int system_call_service_lookup (service_lookup_t *service_lookup, size_t *services, service_t **out_service)
+static inline unsigned int system_call_service_lookup (service_lookup_t *service_lookup, size_t *services, service_t *out_service)
 {
     unsigned int return_value;
 
