@@ -1,4 +1,4 @@
-/* $chaos: thread.h,v 1.3 2002/10/08 20:16:14 per Exp $ */
+/* $chaos: thread.h,v 1.4 2002/10/10 21:39:38 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -12,6 +12,7 @@
 #ifndef __STORM_IA32_THREAD_H__
 #define __STORM_IA32_THREAD_H__
 
+#include <storm/ia32/spinlock.h>
 #include <storm/ia32/tss.h>
 
 /**
@@ -34,6 +35,11 @@ typedef struct
      * @brief           The thread ID.
      */
     thread_id_t thread_id;
+
+    /**
+     * @brief           The parent process to which this thread belongs.
+     */
+    struct process_t *parent;
 
     /**
      * @brief           A lock, to make sure the integrity of the data is
