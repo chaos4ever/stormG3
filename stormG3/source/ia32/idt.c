@@ -1,22 +1,23 @@
-/* $chaos: idt.c,v 1.1 2002/06/12 20:41:03 per Exp $ */
+/* $chaos: idt.c,v 1.2 2002/06/14 12:34:28 per Exp $ */
 /* Abstract: IDT management. */
 /* Authors: Per Lundberg <plundis@chaosdev.org>
             Henrik Hallin <hal@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 
+#include <storm/ia32/debug.h>
 #include <storm/ia32/defines.h>
 #include <storm/ia32/descriptor.h>
 #include <storm/ia32/idt.h>
 #include <storm/ia32/memory.h>
 
-descriptor_t *idt = (descriptor_t *) IDT_BASE;
+descriptor_t idt[IDT_ENTRIES] __attribute__ ((section (".idt")));
 
 /* Create a trap gate. Make sure to have interrupts disabled while
    running this one; a task switch in the middle could case very bad
    effects. */
 void idt_setup_trap_gate (unsigned int number, unsigned int selector, 
-                               void *address, unsigned int privilege_level)
+                          void *address, unsigned int privilege_level)
 {
     gate_descriptor_t *gate_descriptor = (gate_descriptor_t *) &idt[number];
     
