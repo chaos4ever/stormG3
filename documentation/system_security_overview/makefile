@@ -1,4 +1,4 @@
-# $chaos: makefile,v 1.5 2002/06/04 18:34:32 per Exp $
+# $chaos: makefile,v 1.1 2002/10/21 21:34:46 per Exp $
 
 # Abstract: System Security Overview makefile
 # Author: Per Lundberg <per@chaosdev.org>
@@ -7,8 +7,11 @@
 
 DOC = system_security_overview
 MAIN = $(DOC).xml
-SECTIONS = introduction.xml systems.xml problem.xml solution.xml
-SRC = $(MAIN) $(SECTIONS)
+STYLESHEET = custom.dsl
+SECTIONS = implementation.xml introduction.xml problem.xml solution.xml \
+           systems.xml
+CSS = system_security_overview.css
+SRC = $(MAIN) $(CSS) $(STYLESHEET) $(SECTIONS)
 PNGS =
 WEBROOT = /var/webroot/web.chaosdev.org
 
@@ -32,8 +35,9 @@ $(DOC).rtf: $(SRC)
 
 $(DOC): $(SRC)
 	-rm -rf $@
-	jw -b html -o $(@) $(MAIN)
+	jw -d $(STYLESHEET) -b html -o $(@) $(MAIN)
 #	cp $(PNGS) $(@)
+	cp $(CSS) $(@)
 
 clean:
 	-$(RM) *.log *.dvi *.aux *.tex *.sed *.out *-t
