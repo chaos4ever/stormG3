@@ -1,4 +1,4 @@
-/* $chaos: module.c,v 1.11 2002/06/20 22:40:57 per Exp $ */
+/* $chaos: module.c,v 1.12 2002/06/22 19:22:49 per Exp $ */
 /* Abstract: Module support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -81,12 +81,12 @@ static return_t module_link (elf_header_t *elf_header)
     }
 
     /* Call the module entry point. */
-    module_function ();
+    return_value = module_function ();
 
     // FIXME Deallocate memory used by the ELF image. A simple for
     // loop really.
 
-    return STORM_RETURN_SUCCESS;
+    return return_value;
 }
 
 /* Initialize module support. */
