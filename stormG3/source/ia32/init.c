@@ -1,4 +1,4 @@
-/* $chaos: init.c,v 1.4 2002/06/08 15:13:09 per Exp $ */
+/* $chaos: init.c,v 1.5 2002/06/15 14:34:39 per Exp $ */
 /* Abstract: storm initialization. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -103,7 +103,7 @@ void _start (void)
          :
          :
          "g" ((uint32_t) &multiboot_info),
-         "g" (sizeof (multiboot_info_type) / 4));
+         "g" (sizeof (multiboot_info_t) / 4));
   
     /* Move the GDT to the right location in memory. */
     asm ("cld\n"
