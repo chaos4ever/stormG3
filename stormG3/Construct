@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.5 2002/06/23 13:08:49 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.6 2002/08/06 19:38:44 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for stormG3
 # Author: Per Lundberg <per@chaosdev.org>
@@ -45,7 +45,7 @@ $cons = new cons (
 		  CC => ($ENV{'CC'} || 'gcc'),
 		  CPPPATH => $include,
 		  CFLAGS => $warnings .
-		  '-O3 -g -pipe -fno-builtin -funsigned-char ' .
+		  '-O3 -ggdb -pipe -fno-builtin -funsigned-char ' .
 		  '-fomit-frame-pointer -ffreestanding -std=gnu99 ' .
 		  $defs,
 		  LDFLAGS => '-nostdlib -Wl,-T,source/ia32/kernel.ld'
@@ -66,5 +66,7 @@ color=openbsd			Use OpenBSD colors for debug text (default).
 root=/somewhere			The installation root you are using (defaults
                                 to /tftpboot).
 gdb=[0-3],[115200|57600|38400|19200|9600|4800|2400|1200|600|300
-                                Enable remote GDB debugging on port x with speed y.
+                                Enable remote GDB debugging. The first
+                                parameter specifies the port and the second
+                                the speed.
        );
