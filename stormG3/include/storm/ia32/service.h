@@ -1,4 +1,4 @@
-/* $chaos: service.h,v 1.18 2002/11/15 19:50:47 per Exp $ */
+/* $chaos: service.h,v 1.19 2002/11/20 20:14:16 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -62,14 +62,19 @@ typedef struct
     unsigned int        reference_count;
 
     /**
-     * @brief           The service name. 
+     * @brief           The protocol name. 
      */
-    char                name[SERVICE_NAME_LENGTH];
+    char                protocol_name[SERVICE_PROTOCOL_NAME_LENGTH];
 
     /**
-     * @brief           The vendor name. 
+     * @brief           The device vendor name. 
+xz     */
+    char                device_vendor[SERVICE_VENDOR_LENGTH];
+
+    /**
+     * @brief           The service vendor name.
      */
-    char                vendor[SERVICE_VENDOR_LENGTH];
+    char                service_vendor[SERVICE_DEVICE_VENDOR_LENGTH];
 
     /**
      * @brief           The model name. 
