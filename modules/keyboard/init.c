@@ -1,4 +1,4 @@
-/* $chaos: init.c,v 1.3 2002/06/18 22:18:17 per Exp $ */
+/* $chaos: init.c,v 1.4 2002/06/19 07:57:52 per Exp $ */
 /* Abstract: Keyboard initialization code. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -16,6 +16,15 @@
 bool init (void)
 {
     const char *message;
+    function_t handler;
+
+    /* Find the log service. */
+    if (service_resolve ("log", 1, &handler) != STORM_RETURN_SUCCESS)
+    {
+        debug_print ("he gick int");
+        return FALSE;
+    }
+    handler ();
 
     /* Try to allocate the keyboard controller's ports. */
     if (port_range_register (CONTROLLER_PORT_BASE,
@@ -52,7 +61,7 @@ return_t module_start (void)
     {
         //    log_print (&log_structure, LOG_URGENCY_EMERGENCY,
         //               "Failed initialisation.");
-        return 0;
+        return STORM_RETURN_NOT_FOUND; // FIXME: Use another return value.;
     }
 
     //  log_print (&log_structure, LOG_URGENCY_INFORMATIVE,
