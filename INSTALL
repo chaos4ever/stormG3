@@ -1,6 +1,6 @@
 INSTALL ($Id$)
 =======
 
-To build chaos just type ./build in this directory after having unpacked the snapshot or checked the source out from CVS. Once you have ran ./build, you can thereafter run 'make' to rebuild chaos. The built kernels, libraries, servers and programs will be created in a chaos filesystem located under ./root. To change this (build directly to a mounted chaos partition or alike), edit the build script and change the line CHAOS_INSTALL_PATH=... Then run ./build again.
+To build chaos just type ./build in this directory after having unpacked the snapshot or checked the source out from CVS. The built kernels, libraries, servers and programs will be created in a chaos filesystem located under ./root. To change this (build directly to a mounted chaos partition or alike), edit the build script and change the line CHAOS_INSTALL_PATH=... Then run ./build again.
 
 Questions, bug reports and general feedback go to staff@chaosdev.org or the appropriate mailing list. Please check out http://www.chaosdev.org/ if you feel unsure about anything.
