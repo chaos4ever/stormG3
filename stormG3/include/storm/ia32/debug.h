@@ -1,4 +1,4 @@
-/* $chaos: debug.h,v 1.6 2002/06/17 18:51:22 per Exp $ */
+/* $chaos: debug.h,v 1.7 2002/06/22 20:21:26 per Exp $ */
 /* Abstract: Debug declarations. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -12,6 +12,7 @@
 #include <storm/defines.h>
 #include <storm/storm.h>
 #include <storm/types.h>
+#include <storm/ia32/gdb.h>
 
 /* OpenBSD rules. */
 #ifdef NETBSD_COLORS
