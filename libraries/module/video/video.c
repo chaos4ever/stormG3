@@ -1,4 +1,4 @@
-/* $chaos: video.c,v 1.7 2002/12/03 14:46:16 johannes Exp $ */
+/* $chaos: video.c,v 1.8 2002/12/04 21:45:28 per Exp $ */
 /* Abstract: Video library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 

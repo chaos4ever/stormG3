@@ -1,4 +1,4 @@
-/* $chaos: functions.h,v 1.2 2002/08/09 05:59:42 per Exp $ */
+/* $chaos: functions.h,v 1.4 2002/11/20 19:51:08 per Exp $ */
 /* Abstract: Video library functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
