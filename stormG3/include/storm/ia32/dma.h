@@ -1,4 +1,4 @@
-/* $chaos: dma.h,v 1.1 2002/06/12 12:20:37 per Exp $ */
+/* $chaos: dma.h,v 1.2 2002/06/19 07:29:42 per Exp $ */
 /* Abstract: DMA support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -9,6 +9,12 @@
 #define __STORM_IA32_DMA_H__
 
 #include <storm/storm.h>
+
+/* Defines. */
+#define NUMBER_OF_CONTROLLERS              2
+#define NUMBER_OF_CHANNELS_PER_CONTROLLER  4
+#define NUMBER_OF_CHANNELS                 (NUMBER_OF_CONTROLLERS * \
+                                           NUMBER_OF_CHANNELS_PER_CONTROLLER)
 
 /* Initialize DMA support. */
 extern void dma_init (void);
