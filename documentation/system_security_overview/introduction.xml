@@ -1,10 +1,8 @@
 <?xml version='1.0' ?> <!-- -*- xml -*- -->
-<!-- $chaos: license.xml,v 1.2 2002/05/27 09:48:51 per Exp $ -->
+<!-- $chaos: introduction.xml,v 1.1 2002/10/21 21:34:45 per Exp $ -->
 
-<chapter id="introduction">
-  <?dbhtml filename="introduction.html"?>
-  <title>Introduction</title>
-  <section>
+  <chapter id="introduction">
+    <?dbhtml filename="introduction.html"?>
     <title>Introduction</title>
     <para>
       This document introduces you to the Security System of the chaos
@@ -13,70 +11,83 @@
       operating systems and practices, but one does certainly not need
       to be a security expert to understand this file.
     </para>
-  
-  <section>
-    <title>Miscellaneous (stuff from Henrik)</title>
+    
+    <section>
+      <title>Miscellaneous (stuff from Henrik)</title>
       <para>
+        What we have that need security:
+      
+        <literal>
+          Services
+          Syscalls
+          Files, Ports etc..
+        </literal>
+      </para>
+      
+      <para>
+        If we make syscalls into a service, we can have a generic security
+        system for services covering syscalls as well.
+      </para>
         
-What we have that need security:
----
+      <para>Exported syscalls</para>
+      
+      <programlisting>
+        service_lookup
+        service_connect
+        service_close
+        service_invoke
+      </programlisting>
 
-Services
-Syscalls
-Files, Ports etc..
+      <para>
+        Steps taken by an application to invoke an operating system
+        service:
+      </para>
+      
+      <para>
+        First, look up the service required. After this, the
+        application tries to connect to the service. This might fail
+        if the service has gone away between the lookup and the
+        connect. This requires service IDs that are unique in time. If
+        a connection attempt to a service succeeds, a connection
+        handle will be returned and the service will be guaranteed to
+        stay resident until either service_close is called on the
+        handle or the application dies. To use the service, the
+        application calls service_invoke on the handle with the name
+        (or ID) of the function requested passing in relevant
+        arguments. All services MUST implement a service base API
+        consisting of some fundamental funtions: open, close, read,
+        write, info. These are not operating on the service, but
+        rather on what the service provides. This could be files,
+        ports or similar resources.  </para>
+  
+      <para>
+        service_invoke is responsible for performing basic security
+        checks based on the service requested and who is attempting to
+        invoke functions on it as well as argument
+        checking. service_invoke then converts the request to an
+        internal kernel-space call to the correct function of the
+        relevant module, or converts the request to a message to be
+        sent to a server if the module is in user space.
+      </para>
 
-If we make syscalls into a service, we can have a generic security
-system for services covering syscalls as well.
+      <para>
+        As we see, service_invoke can only perform basic security checks. File
+        system level security checks need to be implemented internally in the
+        file system drivers. This is also true for other things such as
+        network stacks.
+      </para>
 
-
-Exported syscalls:
----
-
-service_lookup
-service_connect
-service_close
-service_invoke
-
-
-Steps taken by an application to invoke an operating system service:
----
-
-First, look up the service required. After this, the application tries
-to connect to the service. This might fail if the service has gone
-away between the lookup and the connect. This requires service IDs
-that are unique in time. If a connection attempt to a service
-succeeds, a connection handle will be returned and the service will be
-guaranteed to stay resident until either service_close is called on
-the handle or the application dies. To use the service, the
-application calls service_invoke on the handle with the name (or ID)
-of the function requested passing in relevant arguments. All services
-MUST implement a service base API consisting of some fundamental
-funtions: open, close, read, write, info. These are not operating on
-the service, but rather on what the service provides. This could be
-files, ports or similar resources.
-
-service_invoke is responsible for performing basic security checks
-based on the service requested and who is attempting to invoke
-functions on it as well as argument checking. service_invoke then
-converts the request to an internal kernel-space call to the correct
-function of the relevant module, or converts the request to a message
-to be sent to a server if the module is in user space.
-
-As we see, service_invoke can only perform basic security checks. File
-system level security checks need to be implemented internally in the
-file system drivers. This is also true for other things such as
-network stacks.
-
-To centralize security I propose a security module, which other
-modules can turn to for access authentication. This module needs to
-keep a database of users and their access rights. The security module
-also needs to be able to authenticate a user based on a user ID and a
-password. If this security module requires data to be read from disk,
-all file system modules need to allow file operations coming from
-kernel space on all files. This must be true for all other modules
-too, including block and network related drivers.
+      <para>
+        To centralize security I propose a security module, which
+        other modules can turn to for access authentication. This
+        module needs to keep a database of users and their access
+        rights. The security module also needs to be able to
+        authenticate a user based on a user ID and a password. If this
+        security module requires data to be read from disk, all file
+        system modules need to allow file operations coming from
+        kernel space on all files. This must be true for all other
+        modules too, including block and network related drivers.
       </para>
     </section>
-  </section>
-  
+    
   </chapter>
