@@ -1,4 +1,4 @@
-/* $chaos: console.c,v 1.9 2002/12/03 14:15:01 johannes Exp $ */
+/* $chaos: console.c,v 1.10 2002/12/04 21:55:05 per Exp $ */
 /* Abstract: Console library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 

@@ -1,4 +1,4 @@
-/* $chaos: functions.h,v 1.2 2002/08/09 05:59:39 per Exp $ */
+/* $chaos: functions.h,v 1.4 2002/11/20 20:03:29 per Exp $ */
 /* Abstract: Function definitions for the console library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 

@@ -1,4 +1,4 @@
-/* $chaos: defines.h,v 1.5 2002/10/28 07:58:00 per Exp $ */
+/* $chaos: defines.h,v 1.6 2002/12/03 14:48:17 johannes Exp $ */
 /* Abstract: Defines used by the console library. */
 /* Author: Per Lundberg <plundis@chaosdev.org> */
 
