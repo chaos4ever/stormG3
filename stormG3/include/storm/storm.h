@@ -1,4 +1,4 @@
-/* $chaos: storm.h,v 1.15 2002/10/09 09:18:27 per Exp $ */
+/* $chaos: storm.h,v 1.16 2002/10/11 07:45:18 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -38,6 +38,15 @@ typedef void (irq_handler_t)(unsigned int irq_level);
 /* Function prototypes. */
 /* Print a debug message. */
 extern void debug_print (const char *format_string, ...);
+
+/**
+ * @brief               Dump the contents of a memory region.
+ * @param memory        The address of the memory to dump.
+ * @param length        The number of uint32s to dump.
+ *
+ * The memory is dumped in hexadecimal format.
+ */
+extern void debug_memory_dump (uint32_t *memory, unsigned int length);
 
 /* Register the given DMA channel. */
 extern return_t dma_register (unsigned int dma_channel, void **dma_buffer);
