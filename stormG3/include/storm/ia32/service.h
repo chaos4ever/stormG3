@@ -1,4 +1,4 @@
-/* $chaos: service.h,v 1.8 2002/10/09 12:50:50 per Exp $ */
+/* $chaos: service.h,v 1.9 2002/10/09 13:07:24 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -14,16 +14,29 @@
 
 #include <storm/ia32/types.h>
 
-/* Definitions. */
-#define SERVICE_MAX_NAME_LENGTH         32
-#define SERVICE_MAX_VENDOR_LENGTH       32
-#define SERVICE_MAX_MODEL_LENGTH        32
-#define SERVICE_MAX_ID_LENGTH           16
+/**
+ * @brief The length of a service name.
+ */
+#define SERVICE_NAME_LENGTH             32
 
-/* Type definitions. */
+/**
+ * @brief The length of a vendor name.
+ */
+#define SERVICE_VENDOR_LENGTH           32
+
+/**
+ * @brief The length of a model name.
+ */
+#define SERVICE_MODEL_LENGTH            32
+
+/**
+ * @brief The length of a unique service ID.
+ */
+#define SERVICE_ID_LENGTH               16
+
 /**
  * @brief A function that provides info about this service
- * provider. The data returned is protocol specific. 
+ * provider. The data returned is protocol specific.
  */
 typedef return_t (*service_info_t)(void *);
 
@@ -35,24 +48,24 @@ typedef struct
     /**
      * @brief The service name. 
      */
-    char name[SERVICE_MAX_NAME_LENGTH];
+    char name[SERVICE_NAME_LENGTH];
 
     /**
      * @brief The vendor name. 
      */
-    char vendor[SERVICE_MAX_VENDOR_LENGTH];
+    char vendor[SERVICE_VENDOR_LENGTH];
 
     /**
      * @brief The model name. 
      */
-    char model[SERVICE_MAX_MODEL_LENGTH];
+    char model[SERVICE_MODEL_LENGTH];
 
     /**
      * @brief A unique ID for this device. (MAC address, serial
      * number, etc) Used to distinguish between different devices with
      * the same model. 
      */
-    char id[SERVICE_MAX_ID_LENGTH];
+    char id[SERVICE_ID_LENGTH];
 
     /**
      * @brief The version of the service provided. 
@@ -79,24 +92,24 @@ typedef struct
     /**
      * @brief The service name. 
      */
-    char name[SERVICE_MAX_NAME_LENGTH];
+    char name[SERVICE_NAME_LENGTH];
 
     /**
      * @brief The vendor name. 
      */
-    char vendor[SERVICE_MAX_VENDOR_LENGTH];
+    char vendor[SERVICE_VENDOR_LENGTH];
 
     /**
      * @brief The model name. 
      */
-    char model[SERVICE_MAX_MODEL_LENGTH];
+    char model[SERVICE_MODEL_LENGTH];
 
     /**
      * @brief unique ID for this device. (MAC address, serial number,
      * etc) Used to distinguish between different devices with the
      * same model. 
      */
-    char id[SERVICE_MAX_ID_LENGTH];
+    char id[SERVICE_ID_LENGTH];
 
     /**
      * @brief The version of the service provided. 
