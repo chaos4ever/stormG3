@@ -1,4 +1,4 @@
-/* $chaos: cpu.h,v 1.9 2002/06/14 22:47:42 per Exp $ */
+/* $chaos: cpu.h,v 1.10 2002/06/15 10:23:08 per Exp $ */
 /* Abstract: CPU defines and functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -13,6 +13,14 @@
 #include <storm/ia32/defines.h>
 
 /* Inline functions. */
+static inline void cpu_rdtsc (u32 *low, u32 *high)
+{
+  asm volatile 
+  (\
+   "rdtsc" 
+   : "=a" (*low), "=d" (*high));
+}
+
 static inline void cpu_set_tr (uint16_t new_tr)
 {
   asm volatile ("ltr %0"
