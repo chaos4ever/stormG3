@@ -1,24 +1,136 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: exception.c,v 1.2 2002/06/11 21:26:50 per Exp $ */
 /* Abstract: Exception handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file COPYING. */
 
+#include <storm/ia32/cpu.h>
+#include <storm/ia32/debug.h>
+#include <storm/ia32/defines.h>
 #include <storm/ia32/exception.h>
+#include <storm/ia32/gdt.h>
+#include <storm/ia32/idt.h>
 
-#if FALSE
-/* Initialise exceptions. */
-static void setup_handler (u32 number, void *exception_handler)
+/* One function for each exception. */
+static void exception_divide_error_fault (void)
 {
-    /* Add it to the IDT. */
-    //    idt_setup_call_gate (number, GDT (GDT_BASE_EXCEPTIONS + number, 0), 0);
+    debug_print ("Divide error fault.\n");
+    while (TRUE);
 }
-#endif
 
+static void exception_debug_trap (void)
+{
+    debug_print ("Debug trap.\n");
+    while (TRUE);
+}
+
+static void exception_nmi (void)
+{
+    debug_print ("NMI.\n");
+    while (TRUE);
+}
+
+static void exception_breakpoint_trap (void)
+{
+    debug_print ("Breakpoint trap.\n");
+    while (TRUE);
+}
+
+static void exception_overflow_trap (void)
+{
+    debug_print ("Overflow trap.\n");
+    while (TRUE);
+}
+
+static void exception_bound_range_exceeded_fault (void)
+{
+    debug_print ("Bound range exceeded fault.\n");
+    while (TRUE);
+}
+
+static void exception_invalid_opcode_fault (void)
+{
+    debug_print ("Invalid opcode fault.\n");
+    while (TRUE);
+}
+
+static void exception_device_not_available_fault (void)
+{
+    debug_print ("Device not available fault.\n");
+    while (TRUE);
+}
+
+static void exception_double_fault (void)
+{
+    debug_print ("Double fault.\n");
+    while (TRUE);
+}
+
+static void exception_coprocessor_segment_overrun_abort (void)
+{
+    debug_print ("Coprocessor segment overrun abort.\n");
+    while (TRUE);
+}
+
+static void exception_invalid_tss_fault (void)
+{
+    debug_print ("Invalid TSS fault.\n");
+    while (TRUE);
+}
+
+static void exception_segment_not_present_fault (void)
+{
+    debug_print ("Segment not present fault.\n");
+    while (TRUE);
+}
+
+static void exception_stack_fault (void)
+{
+    debug_print ("Stack fault.\n");
+    while (TRUE);
+}
+
+static void exception_general_protection_fault (void)
+{
+    debug_print ("General protection fault.\n");
+    while (TRUE);
+}
+
+static void exception_page_fault (void)
+{
+    debug_print ("Page fault at %x.\n", cpu_get_cr2());
+    while (TRUE);
+}  
+
+static void exception_floating_point_error_fault (void)
+{
+    debug_print ("Floating point error fault.\n");
+    while (TRUE);
+}
+
+static void exception_alignment_check_fault (void)
+{
+    debug_print ("Exception alignment check fault.\n");
+    while (TRUE);
+}
+
+static void exception_machine_check_abort (void)
+{
+    debug_print ("Machine check abort.\n");
+    while (TRUE);
+}
+
+/* Add an exception handler to the IDT. */
+static void setup_handler (int number, void *exception_handler)
+{
+    idt_setup_trap_gate (number, KERNEL_CODE_SELECTOR,
+                         exception_handler, 0);
+}
+
+/* Initialize exceptions. */
 void exception_init () 
 {
-#if FALSE
     /* Setup exception handlers for all exceptions. */
     setup_handler (0, exception_divide_error_fault);
     setup_handler (1, exception_debug_trap);
@@ -35,9 +147,7 @@ void exception_init ()
     setup_handler (12, exception_stack_fault);
     setup_handler (13, exception_general_protection_fault);
     setup_handler (14, exception_page_fault);
-    setup_handler (15, exception_klotis_fault);
     setup_handler (16, exception_floating_point_error_fault);
     setup_handler (17, exception_alignment_check_fault);
     setup_handler (18, exception_machine_check_abort);
-#endif
 }
