@@ -1,4 +1,4 @@
-README ($chaos: README,v 1.7 2002/10/27 14:49:54 johannes Exp $)
+README ($chaos: README,v 1.8 2002/10/27 22:43:11 per Exp $)
 ======
 
 This is chaos, a free (licensed under the BSD license, without
@@ -32,5 +32,4 @@ If you successfully compile/run it on another platform, with or
 without patches, please tell us! Any experiences are welcome. Don't
 forget to check out http://web.chaosdev.org/
 
--- Per Lundberg <per@chaosdev.org>  Sun, 28 Jul 2002 21:03:26 +0200
-
+-- Per Lundberg <per@chaosdev.org>  Sun, 27 Oct 2002 23:43:54 +0100
