@@ -1,4 +1,4 @@
-/* $chaos: dotfile.emacs,v 1.37 2002/10/14 16:03:33 per Exp $ */
+/* $chaos: system_call.c,v 1.1 2002/10/24 21:31:35 per Exp $ */
 /* Abstract: */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -6,6 +6,7 @@
 /* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/storm.h>
+#include <storm/ia32/cpu.h>
 #include <storm/ia32/dispatch.h>
 #include <storm/ia32/gdt.h>
 #include <storm/ia32/idt.h>
@@ -19,7 +20,7 @@ void system_call_init (void)
 }
 
 /* The high-level system call handler, called from the low-level function. */
-void system_call (void)
+void system_call (uint32_t *stack)
 {
     bool result;
     return_t return_value = capability_has (0, current_process, "kernel",
@@ -28,7 +29,10 @@ void system_call (void)
     if (return_value == STORM_RETURN_SUCCESS &&
         result)
     {
-        debug_print ("We have a system call!");
+        //        address_t esp = cpu_get_esp ();
+        //        debug_memory_dump ((uint32_t *) esp, 17);
+        debug_print ("We have a system call! %x %x", cpu_get_esp(), *stack);
+        debug_print ("This is the string: %s\n", *stack);
     }
     else
     {
