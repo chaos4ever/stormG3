@@ -1,9 +1,7 @@
 /* Abstract: Module player. */
 /* Author: Erik Moren <nemo@chaosdev.org> */
 
-/* Copyright 1999-2000 chaos development
-   Copyright 2002 chaos development */
-
+/* Copyright 1999-2000, 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/storm.h>
@@ -13,61 +11,7 @@
 #include <sound/sound.h>
 
 #include "modfile.h"
-
-#define BUFFER_SIZE     2000
-#define FREQUENCY       22000
-#define CHANNELS        4
-#define ROWS            64
-#define BYTES_PER_PATTERN \
-                        ROWS*CHANNELS*4
-//#define PAL 3546894
-#define PAL             0x361F0E00     /* 3546894 << 2 */
-
-/* Erik: Please put these in a header file, will you? /Hal */
-
-typedef struct
-{
-    uint8_t name[20];
-    uint8_t song_length;
-    uint8_t play_sequence[128];
-    uint8_t id[4];
-    unsigned int physical_patterns;
-} module_type;
-
-module_type module;
-
-typedef struct
-{
-    uint8_t name[22];
-    uint16_t length;
-    uint8_t finetune;
-    uint8_t volume;
-    uint16_t repeat_point;
-    uint16_t repeat_length;
-    uint8_t *data;
-} sample_type;
-
-typedef struct
-{
-    unsigned int sample_number;
-    uint16_t length;
-    uint8_t finetune;
-    uint8_t volume;
-    uint16_t repeat_point;
-    uint16_t repeat_length;
-    uint32_t scaling_factor;
-    uint8_t *sample_data;
-    uint16_t period_frequency;
-    uint32_t ticks;
-} channel_type;
-
-typedef struct
-{
-    uint8_t sample_number : 8;
-    uint16_t period_frequency : 12;
-    uint8_t effect_number : 4;
-    uint8_t effect_parameter : 8;
-} note_type PACKED;
+#include "modplay.h"
 
 channel_type channel[CHANNELS];
 
@@ -83,29 +27,49 @@ unsigned int current_pattern;
 unsigned int tick_length;
 int current_row;
 
-void fill_buffer (uint8_t *buffer);
-void load_module (void);
-void do_note (note_type *work_note, channel_type *work_channel);
-
+/* Services. */
 log_service_t log;
+kernel_service_t kernel;
 console_service_t console;
 sound_service_t sound;
 
 int main (void)
 {
+    /*
+     * Get a connection with the log service.
+     */
     if (log_init (&log) != LOG_RETURN_SUCCESS)
     {
         return -1;
     }
 
-    system_call_process_name_set (PACKAGE_NAME);
-    system_call_thread_name_set ("Playing module...");
+    /*
+     * Get a connection with the kernel service.
+     */
+    if (kernel_init (&kernel) != KERNEL_RETURN_SUCCESS)
+    {
+        log.print (LOG_URGENCY_EMERGENCY,
+                    "Failed connecting to kernel service");
+        return -1;
+    }
 
+    /*
+     * Set the process and thread name.
+     */
+    kernel->set_process_name (PROGRAM_NAME);
+    kernel->set_thread_name ("Playing module...");
+
+    /*
+     * Get a connection with the console service.
+     */
     if (console_init (&console) != CONSOLE_RETURN_SUCCESS)
     {
         return -1;
     }
 
+    /*
+     * Open a virtual console.
+     */
     console.open (80, 50, 4, VIDEO_MODE_TYPE_TEXT);
     console.use_keyboard (TRUE, CONSOLE_KEYBOARD_NORMAL);
     console.clear ();
