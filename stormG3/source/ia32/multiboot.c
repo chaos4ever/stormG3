@@ -1,4 +1,4 @@
-/* $chaos: multiboot.c,v 1.4 2002/06/15 14:36:12 per Exp $ */
+/* $chaos: multiboot.c,v 1.5 2002/06/15 15:38:55 per Exp $ */
 /* Abstract: Parse multiboot header. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -21,6 +21,8 @@ static char command_line[COMMAND_LINE_SIZE];
 
 /* Copy off some of the Multiboot data we need, so it won't be
    overwritten. */
+/* FIXME: This function fails for some really weird reason if the
+   machine has less than 32 megabyte of RAM. */
 void multiboot_init (void)
 {
     char *target = (char *) &module_name;
@@ -54,15 +56,14 @@ void multiboot_init (void)
             target += string_length (target) + 1;
         }
     }
-    
+
     /* Now, save the memory map. */
     memory_copy ((void *) &multiboot_memory_map,
                  (void *) multiboot_info.memory_map_address, 
                  multiboot_info.memory_map_length);
-    
+
     /* Save the kernel arguments so that we can parse them later
        on. FIXME: Implement this parsing. */
     string_copy_max (command_line, (void *) multiboot_info.command_line, 
                      COMMAND_LINE_SIZE - 1);
-
 }
