@@ -1,4 +1,4 @@
-/* $chaos: debug.c,v 1.7 2002/08/08 23:15:44 hal Exp $ */
+/* $chaos: debug.c,v 1.8 2002/08/09 06:08:21 per Exp $ */
 /* Abstract: Code used for debugging the kernel. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -21,7 +21,7 @@ debug_screen_type *screen = (debug_screen_type *) BASE_SCREEN;
 void debug_init (void)
 {
     /* Clear the screen. */
-    memory_set_uint16 ((uint16_t *) screen, (background_attribute * 256) | ' ',
+    memory_set_uint16 ((uint16_t *) screen, (background_attribute << 8) | ' ',
                        DEBUG_SCREEN_WIDTH * DEBUG_SCREEN_HEIGHT *
                        sizeof (debug_screen_type));
 }
@@ -67,7 +67,7 @@ static int print_simple (const char *string)
                 memory_copy ((void *) screen, (void *) &screen[DEBUG_SCREEN_WIDTH],
                              (DEBUG_SCREEN_WIDTH * (DEBUG_SCREEN_HEIGHT - 1)) * 2);
                 memory_set_uint16 ((void *) &screen[DEBUG_SCREEN_WIDTH * (DEBUG_SCREEN_HEIGHT - 1)],
-                                   (background_attribute * 256) | ' ', DEBUG_SCREEN_WIDTH);
+                                   (background_attribute << 8) | ' ', DEBUG_SCREEN_WIDTH);
             }
         }
     }
@@ -128,9 +128,13 @@ void debug_memory_dump (uint32_t *memory, unsigned int length)
     
     for (index = 0; index < length; index++)
     {
-        if ((index % 8) == 0 && index > 0)
+        if ((index % 8) == 0)
         {
-            debug_print ("\n");
+            if (index > 0)
+            {
+                debug_print ("\n");
+            }
+            debug_print ("%p: ", &memory[index]);
         }
 
         debug_print ("%x ", memory[index]);
@@ -301,7 +305,7 @@ void debug_print (const char *format_string, ...)
             memory_copy ((void *) screen, (void *) &screen[DEBUG_SCREEN_WIDTH],
                          (DEBUG_SCREEN_WIDTH * (DEBUG_SCREEN_HEIGHT - 1)) * 2);
             memory_set_uint16 ((void *) &screen[DEBUG_SCREEN_WIDTH * (DEBUG_SCREEN_HEIGHT - 1)],
-                               (background_attribute * 256) | ' ', 
+                               (background_attribute << 8) | ' ', 
                                DEBUG_SCREEN_WIDTH);
         }
         
