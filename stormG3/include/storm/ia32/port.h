@@ -1,4 +1,4 @@
-/* $chaos: port.h,v 1.1 2002/06/14 12:41:03 per Exp $ */
+/* $chaos: port.h,v 1.2 2002/06/18 19:36:57 per Exp $ */
 /* Abstract: Port in/output. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -52,6 +52,70 @@ static inline unsigned char port_uint8_in (unsigned short port)
 
     return data;
 };
+
+/* 'Pausing' version of the above. */
+static inline void port_uint8_out_pause (uint16_t port, uint8_t data)
+{
+    asm ("outb %1, %0\n"
+         "jmp 1f\n"
+         "1: jmp 2f\n"
+         "2:"
+         :
+         :
+         "Nd" (port),
+         "a" (data));
+}
+
+static inline void port_uint16_out_pause (uint16_t port, uint16_t data)
+{
+    asm ("outw %1, %0\n"
+         "jmp 1f\n"
+         "1: jmp 2f\n"
+         "2:"
+         :
+         : 
+         "Nd" (port),
+         "a" (data));
+}
+
+static inline void port_uint32_out_pause (uint16_t port, uint32_t data)
+{
+    asm ("outl %1, %0\n"
+         "jmp 1f\n"
+         "1: jmp 2f\n"
+         "2:"
+         :
+         :
+         "Nd" (port),
+         "a" (data));
+}
+
+/* String operations. */
+static inline void port_uint8_out_string (uint16_t port, uint8_t *data,
+                                          size_t length)
+{
+    asm volatile ("cld\n"
+                  "rep\n"
+                  "outsb"
+                  :
+                  :
+                  "c" (length),
+                  "S" (data),
+                  "d" (port));
+}
+
+static inline void port_uint32_out_string (uint16_t port, uint32_t *data,
+                                           size_t length)
+{
+    asm volatile ("cld\n"
+                  "rep\n"
+                  "outsl"
+                  :
+                  :
+                  "c" (length),
+                  "S" (data),
+                  "d" (port));
+}
 
 /* Register a port range. */
 extern return_t port_range_register (unsigned int base, unsigned int ports,
