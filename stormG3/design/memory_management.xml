@@ -1,122 +1,282 @@
 <?xml version='1.0' ?> <!-- -*- xml -*- -->
-<chapter id="memory_management">
-  <title>The Memory Management Subsystem</title>
-  <para>
-    The memory management subsystem is probably one of the most
-    important systems in the kernel, if not <emphasis>the</emphasis>
-    most important. Practically everything is dependent upon it. If it
-    is bad, the operating system will never be very good. But if it is
-    well-though out and well-implemented, it can be a very good base
-    for a solid and robust system that can serve the users for many
-    days, months and even years, without a hassle.
-  </para>
-  
-  <section>
-    <title>Virtual memory map</title>
-    <para>
-      <inlinemediaobject>
-	<imageobject>
-	  <imagedata fileref="memory_map.png" format="PNG" align="center" />
-	</imageobject>
-      </inlinemediaobject>
-    </para>
-
-    <para>
-      We believe this design will be highly effective. In the previous
-      storm generation, we did not map all of the physical memory in a
-      shared region. This has some advantages; the biggest one being
-      the fact that it gives each process more virtual memory
-      space. However, the disadvantages of this algorithm are so big
-      and since it makes writing the kernel much more complex, we have
-      decided to change to the layout seen above.
-    </para>
-    <para>
-      The first page is not mapped. This is of course to trap NULL
-      pointer refernces. We could map this page somewhere else, but we
-      have decided that wasting it is easier since it gives you a pure
-      1-to-1 mapping between the physical address and the virtual
-      address.
-    </para>
-    <para>
-      You see also that we have only one fourth of the memory area
-      available for the process code &amp; data, that is: one full
-      gigabyte. If your application needs more than this, you should
-      probably not be using 32-bit architecture anyway, but rather try
-      a 64-bit platform such as the Alpha, PowerPC, UltraSparc or
-      IA64.
-    </para>
-    <para>
-      We also have all the stacks for the given process mapped right
-      at the end of the memory. One could argue that you should skip
-      this and instead have only the current thread stack mapped. This
-      would give a little less than a gigabyte more memory available
-      for user processes. However, this would make inter-thread
-      communication harder, since local variables are allocated on the
-      stack. When one thread would be sending data to another thread
-      in the same process, you would have to copy the stack variables
-      to a memory area dynamically allocated. This would give a slight
-      speed decrease, and we have set one of the design goals for
-      storm G3 to be speed. Therefore, we will do it this way.      
-    </para>
-  </section>
-
-  <section>
-    <title>Memory allocation</title>
+  <chapter id="memory_management">
+    <title>The Memory Management Subsystem</title>
     <section>
-      <title>Physical memory allocation</title>
+      <title>Overall design</title>
       <para>
-	Blah.
+	The memory management subsystem is probably one of the most
+	important systems in the kernel, if not
+	<emphasis>the</emphasis> most important. Practically
+	everything is dependent upon it. If it is bad, the operating
+	system will never be very good. But if it is well-though out
+	and well-implemented, it can be a very good base for a solid
+	and robust system that can serve the users for many days,
+	months and even years, without a hassle.
+      </para>
+      <para>
+	Thus, choosing the right algorithms and methods are absolutely
+	crucial. We have decided to use the SLAB algorithm for
+	physical and global memory allocation, and the AVL algorithm
+	(with some modifications). These algorithms are in widespread
+	use already and their reliability and strength are proven by
+	experience.
       </para>
     </section>
-    <section>
-      <title>Global memory allocation</title>
-      <para>
-      </para>
-    </section>
-    <section>
-      <title>Virtual memory allocation</title>
-      <para>
-      </para>
-    </section>
-  </section>
-  
-  <section>
-    <title>Limitations</title>
     
-    <para>
-      Limitations of this design:
+    <section>
+      <title>Virtual memory map</title>
+      <para>
+	<inlinemediaobject>
+	  <imageobject>
+	    <imagedata fileref="memory_map.png" format="PNG" align="center" />
+	  </imageobject>
+	</inlinemediaobject>
+      </para>
+      
+      <para>
+	We believe this design will be highly effective. In the
+	previous storm generation, we did not map all of the physical
+	memory in a shared region. This has some advantages; the
+	biggest one being the fact that it gives each process more
+	virtual memory space. However, the disadvantages of this
+	algorithm are so big and since it makes writing the kernel
+	much more complex, we have decided to change to the layout
+	seen above.
+      </para>
+      <para>
+	The first page is not mapped. This is of course to trap NULL
+	pointer refernces. We could map this page somewhere else, but
+	we have decided that wasting it is easier since it gives you a
+	pure 1-to-1 mapping between the physical address and the
+	virtual address.
+      </para>
+      <para>
+	You see also that we have only one fourth of the memory area
+	available for the process code &amp; data, that is: one full
+	gigabyte. If your application needs more than this, you should
+	probably not be using 32-bit architecture anyway, but rather
+	try a 64-bit platform such as the Alpha, PowerPC, UltraSparc
+	or IA64.
+      </para>
+      <para>
+	We also have all the stacks for the given process mapped right
+	at the end of the memory. One could argue that you should skip
+	this and instead have only the current thread stack
+	mapped. This would give a little less than a gigabyte more
+	memory available for user processes. However, this would make
+	inter-thread communication harder, since local variables are
+	allocated on the stack. When one thread would be sending data
+	to another thread in the same process, you would have to copy
+	the stack variables to a memory area dynamically
+	allocated. This would give a slight speed decrease, and we
+	have set one of the design goals for storm G3 to be
+	speed. Therefore, we will do it this way.
+      </para>
+    </section>
+    
+    <section>
+      <title>Memory allocation</title>
+      <section>
+	<title>The SLAB structure</title>
+	<para>
+	  The SLAB algorithm is a popular algorithm, since it is
+	  highly efficient (It stores its structure in the free blocks
+	  itself, and makes allocation and deallocation both
+	  O(1)). This is how the SLAB header looks. It is stored in
+	  the beginning of every free block.
+	  <programlisting id="slab_t">
+typedef struct
+{
+    /* The magic cookie is unique for this type of data structure
+    uint32_t magic_cookie;
 
-      <itemizedlist>    
-	<listitem>
-	  <para>
-	    Maximum of 2 gigabyte physical memory (more can be
-	    available, but will not be used by the system). See the
-	    section on the memory management for the technical reasons
-	    for this.
-	  </para>
-	</listitem>
-	
-	<listitem>
-	  <para>
-	    Maximum of 1 gigabyte memory per process for code and data.
-	  </para>
-	</listitem>
-	
-	<listitem>
-	  <para>
-	    Maximum of 512 threads per process.
-	  </para>
-	</listitem>
-	
-	<listitem>
-	  <para>
-	    Maximum of 2 megabyte stack memory per thread.
-	  </para>
-	</listitem>
-      </itemizedlist>
+    /* The next free block. */
+    slab_t *next_free;
+} slab_t;
+	  </programlisting>
+	</para>
+      </section>
+      
+      <section>
+	<title>The AVL structure</title>
+	<para>
+	  <programlisting id="avl_header_t">
+typedef struct
+{
+} avl_header_t;
+	  </programlisting>
+	</para>
+      </section>
+    
+      <section>
+	<title>The memory allocation header</title>
+	<para>
+	  The memory allocation system has a global structure that looks
+	  like this:
+	  <programlisting id="memory_allocation_t">
+typedef struct
+{
+    /* The first free SLAB block in the physical memory. */
+    <link linkend="slab_t">slab_t</link> *free_physical;
 
-      We find all of these limitations to be reasonable for our
-      requirements.
-    </para>
-  </section>
-</chapter>
+    /* The first free 8-byte SLAB block in the global memory, and so
+       on. */
+    <link linkend="slab_t">slab_t</link> *free_global_8;
+    <link linkend="slab_t">slab_t</link> *free_global_16;
+    <link linkend="slab_t">slab_t</link> *free_global_32;
+    <link linkend="slab_t">slab_t</link> *free_global_64;
+    <link linkend="slab_t">slab_t</link> *free_global_128;
+    <link linkend="slab_t">slab_t</link> *free_global_256;
+    <link linkend="slab_t">slab_t</link> *free_global_512;
+    <link linkend="slab_t">slab_t</link> *free_global_1024;
+    <link linkend="slab_t">slab_t</link> *free_global_2048;
+
+    /* The AVL header for the virtual memory. */
+    <link linkend="avl_header_t">avl_header_t</link> *virtual_header;
+} memory_allocation_t;
+	  </programlisting>
+	</para>
+      </section>
+      
+      <section>
+	<title>Physical memory allocation</title>
+	<para>
+	  The physical memory allocator can only allocate one block at
+	  a time. This is a design limitation that we believe is not a
+	  big problem, since you can allocate 10 pages that have very
+	  differing physical locations and map them to be linear in
+	  the virtual memory. However, some peripheral units need to
+	  have blocks that are physically continous. There are two
+	  ways to handle this:
+	  <orderedlist>
+	    <listitem>
+	      <para>
+		Pass variables to the kernel on bootup to register an
+		arbitrarily number of arbitrarily-sized physical
+		memory buffers.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Perform a O(n)-scan of the free pages, and set up a
+		bitmap, marking the free pages. Then, perform an O(n)
+		scan in this bitmap to find all areas that area big
+		enough. Then, perform a third O(n) scan in these areas
+		and take the smallest one. This is absolutely
+		necessary to get rid of memory fragmentation.
+	      </para>
+	    </listitem>
+	  </orderedlist>
+	  As one can clearly see, allocation of multiple pages that
+	  have not been reserved will be much slower than getting one
+	  free page, so please do not use it unless absolutely
+	  neccessary.
+	</para>
+      </section>
+      
+      <section>
+	<title>Global memory allocation</title>
+	<para>
+	  The global memory allocator is all-dependent on the physical
+	  memory allocator. The algorithm used looks like this:
+	  <orderedlist>
+	    <listitem>
+	      <para>
+		Take the size that we want and fiind the closest
+		bigger power of 2.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Take a look in the memory_allocation header to see
+		whether the correct free_global pointer is not
+		NULL. If true, skip to step four.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Allocate a new page for this size of blocks, from the
+		physical memory. Set up the <link
+		linkend="global_page_t">global_page_t</link> header in
+		this page. Split the page into our block size, and
+		create the SLAB linked list of the blocks. Update the
+		correct free_global_pointer to point at our first
+		block.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		We have a free block. Update the free_global_pointer
+		to point at our_block-&gt;next_free.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Return our block.
+	      </para>
+	    </listitem>
+	  </orderedlist>
+	  Each page allocated by the global memory allocator has a
+	  short header that looks like this:
+	  <programlisting id="global_page_t">
+typedef struct
+{
+    /* The magic cookie is unique for this type of data structure
+    uint32_t magic_cookie;
+
+    /* This variable is set to 0 when the page is allocated. When it
+       becomes 0 again (in memory_global_free(), we free the page. */
+    int blocks_used;
+} global_page_t;	    
+	  </programlisting>
+	</para>
+      </section>
+      <section>
+	<title>Virtual memory allocation</title>
+	<para>
+	  TODO
+	</para>
+      </section>
+    </section>
+    
+    <section>
+      <title>Limitations</title>
+      
+      <para>
+	Limitations of this design:
+	
+	<itemizedlist>    
+	  <listitem>
+	    <para>
+	      Maximum of 2 gigabyte physical memory (more can be
+	      available, but will not be used by the system). See the
+	      section on the memory management for the technical
+	      reasons for this.
+	    </para>
+	  </listitem>
+	  
+	  <listitem>
+	    <para>
+	      Maximum of 1 gigabyte memory per process for code and
+	      data.
+	    </para>
+	  </listitem>
+	  
+	  <listitem>
+	    <para>
+	      Maximum of 512 threads per process.
+	    </para>
+	  </listitem>
+	
+	  <listitem>
+	    <para>
+	      Maximum of 2 megabyte stack memory per thread.
+	    </para>
+	  </listitem>
+	</itemizedlist>
+
+	We find all of these limitations to be reasonable for our
+	requirements.
+      </para>
+    </section>
+  </chapter>
