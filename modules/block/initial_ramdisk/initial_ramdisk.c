@@ -1,4 +1,4 @@
-/* $chaos: initial_ramdisk.c,v 1.4 2002/07/21 12:32:09 per Exp $ */
+/* $chaos: initial_ramdisk.c,v 1.5 2002/07/24 08:28:24 per Exp $ */
 /* Abstract: Initial ramdisk server. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
             Per Lundberg <per@chaosdev.org> */
@@ -59,7 +59,7 @@ static return_t service_info (void *block_void)
 /* Main function. */
 return_t module_start (void)
 {
-    if (log_init (&log) != LOG_RETURN_SUCCESS)
+    if (log_lookup (&log) != LOG_RETURN_SUCCESS)
     {
         return STORM_RETURN_NOT_FOUND;
     }

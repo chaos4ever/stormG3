@@ -1,4 +1,4 @@
-/* $chaos: console.c,v 1.9 2002/08/03 11:19:32 per Exp $ */
+/* $chaos: console.c,v 1.10 2002/08/03 12:04:37 per Exp $ */
 /* Abstract: Console module. Will eventually be 100% ANSI escape
              sequence compatible. */
 /* Authors: Henrik Hallin <hal@chaosdev.org>
@@ -361,7 +361,7 @@ static return_t service_info (void *console_void)
 
 return_t module_start (void)
 {
-    return_t return_value = video_init (&video);
+    return_t return_value = video_lookup (&video);
     if (return_value != STORM_RETURN_SUCCESS)
     {
         return return_value;

@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: mount.c,v 1.1 2002/08/04 09:27:18 per Exp $ */
 /* Abstract: vfs_mount () implementation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -21,7 +21,7 @@ return_t vfs_mount (char *path, block_service_t *block)
 
     /* Probe the available file system service providers to see if
        this volume is a valid file system. */
-    return_value = filesystem_resolve (&filesystem);
+    return_value = filesystem_lookup (&filesystem);
     if (return_value != STORM_RETURN_SUCCESS)
     {
         return return_value;

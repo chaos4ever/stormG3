@@ -1,4 +1,4 @@
-/* $chaos: boot.c,v 1.4 2002/07/28 19:35:30 per Exp $ */
+/* $chaos: boot.c,v 1.5 2002/08/04 09:27:19 per Exp $ */
 /* Abstract: Boot module. The boot module takes care of setting up the
    system (opening virtual consoles, launching programs, etc). */
 /* Author: Per Lundberg <per@chaosdev.org> */
@@ -38,27 +38,27 @@ return_t module_start (void)
     vfs_file_handle_t handle;
 
     /* Make sure we have a log service provider. */
-    if (log_init (&log) != LOG_RETURN_SUCCESS)
+    if (log_lookup (&log) != LOG_RETURN_SUCCESS)
     {
         return STORM_RETURN_NOT_FOUND;
     }
 
     /* Make sure we have a console service provider. */
-    if (console_init (&console) != CONSOLE_RETURN_SUCCESS)
+    if (console_lookup (&console) != CONSOLE_RETURN_SUCCESS)
     {
         log.print (LOG_URGENCY_EMERGENCY, "No console service found. Aborting.");
         return STORM_RETURN_NOT_FOUND;
     }
 
     /* Make sure we have a block service provider. */
-    if (block_resolve (&block) != BLOCK_RETURN_SUCCESS)
+    if (block_lookup (&block) != BLOCK_RETURN_SUCCESS)
     {
         log.print (LOG_URGENCY_EMERGENCY, "No block service found. Aborting.");
         return STORM_RETURN_NOT_FOUND;
     }
 
     /* Make sure we have a virtual filesystem provider. */
-    if (vfs_resolve (&vfs) != VFS_RETURN_SUCCESS)
+    if (vfs_lookup (&vfs) != VFS_RETURN_SUCCESS)
     {
         log.print (LOG_URGENCY_EMERGENCY, "No virtual filesystem service found. Aborting.");
         return STORM_RETURN_NOT_FOUND;

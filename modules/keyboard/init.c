@@ -1,4 +1,4 @@
-/* $chaos: init.c,v 1.7 2002/06/23 20:37:43 per Exp $ */
+/* $chaos: init.c,v 1.8 2002/06/25 20:19:03 per Exp $ */
 /* Abstract: Keyboard initialization code. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -56,7 +56,7 @@ return_t module_start (void)
 {
     volatile return_t return_value;
 
-    if (log_init (&log) != LOG_RETURN_SUCCESS)
+    if (log_lookup (&log) != LOG_RETURN_SUCCESS)
     {
         return -1; // FIXME
     }
@@ -95,7 +95,7 @@ return_t module_start (void)
 
     /* Everything else worked out alright. Register us with the
        console server. */
-    return_value = console_init (&console);
+    return_value = console_lookup (&console);
     if (return_value != STORM_RETURN_SUCCESS)
     {
         return return_value;

@@ -1,4 +1,4 @@
-/* $chaos: soundblaster.c,v 1.2 2002/06/19 07:57:40 per Exp $ */
+/* $chaos: soundblaster.c,v 1.3 2002/06/23 20:40:08 per Exp $ */
 /* Abstract: Sound Blaster server */
 
 /* Authors: Per Lundberg <per@chaosdev.org> 
@@ -110,7 +110,7 @@ static bool detect_sb (void)
 /* Main function. */
 return_t module_start (void)
 {
-    if (log_init (&log) != LOG_RETURN_SUCCESS)
+    if (log_lookup (&log) != LOG_RETURN_SUCCESS)
     {
         return -1;
     }

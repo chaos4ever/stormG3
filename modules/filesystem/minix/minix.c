@@ -1,4 +1,4 @@
-/* $chaos: minix.c,v 1.4 2002/07/28 19:34:23 per Exp $ */
+/* $chaos: minix.c,v 1.5 2002/08/04 09:27:17 per Exp $ */
 /* Abstract: Implementation of the Minix file system. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -297,7 +297,7 @@ int module_start (void)
     //    minix2_inode_t *inode2;
 
     /* Contact the log service provider. */
-    if (log_init (&log) != LOG_RETURN_SUCCESS)
+    if (log_lookup (&log) != LOG_RETURN_SUCCESS)
     {
         return STORM_RETURN_NOT_FOUND;
     }
