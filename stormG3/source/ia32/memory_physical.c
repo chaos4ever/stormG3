@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.15 2002/08/07 12:31:33 per Exp $ */
+/* $chaos: memory_physical.c,v 1.16 2002/08/08 19:57:52 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -14,7 +14,7 @@
 #include <storm/ia32/types.h>
 
 /* To make all operations O(1). */
-static unsigned int free_pages = 0;
+unsigned int free_pages = 0;
 
 /* For allocation & deallocation. */
 static memory_physical_slab_t *first_free = NULL;
@@ -236,6 +236,7 @@ return_t memory_physical_allocate (void **pointer, unsigned int pages)
                         slab = (memory_physical_slab_t *) slab->next;
                     }
 
+                    free_pages -= pages;
                     *pointer = (void *) (free_page * PAGE_SIZE);
                     return STORM_RETURN_SUCCESS;
                 }
@@ -251,6 +252,7 @@ return_t memory_physical_allocate (void **pointer, unsigned int pages)
     else
     {
         *pointer = first_free;
+        free_pages--;
         first_free = (memory_physical_slab_t *) first_free->next;
     }
 
@@ -266,5 +268,6 @@ return_t memory_physical_deallocate (void *pointer)
     void *next = first_free;
     first_free = pointer;
     first_free->next = next;
+    free_pages++;
     return STORM_RETURN_SUCCESS;
 }
