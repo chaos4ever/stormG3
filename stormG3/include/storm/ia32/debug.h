@@ -1,4 +1,4 @@
-/* $chaos: debug.h,v 1.4 2002/06/12 19:28:21 per Exp $ */
+/* $chaos: debug.h,v 1.5 2002/06/13 19:41:25 per Exp $ */
 /* Abstract: Debug declarations. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -10,6 +10,7 @@
 #define __STORM_IA32_DEBUG_H__
 
 #include <storm/defines.h>
+#include <storm/storm.h>
 #include <storm/types.h>
 
 /* OpenBSD rules. */
@@ -29,9 +30,6 @@ typedef struct
 
 /* Initialize debugging code. */
 extern void debug_init (void);
-
-/* Print a debug message. */
-extern void debug_print (const char *format_string, ...);
 
 /* Dump memory. */
 extern void debug_memory_dump (uint32_t *memory, unsigned int length);

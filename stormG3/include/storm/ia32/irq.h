@@ -1,4 +1,4 @@
-/* $chaos: irq.h,v 1.2 2002/06/15 11:29:52 per Exp $ */
+/* $chaos: irq.h,v 1.3 2002/06/17 07:26:46 per Exp $ */
 /* Abstract: IRQ handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -8,6 +8,7 @@
 #ifndef __STORM_IA32_IRQ_H__
 #define __STORM_IA32_IRQ_H__
 
+#include <storm/storm.h>
 #include <storm/types.h>
 #include <storm/ia32/process.h>
 #include <storm/ia32/thread.h>
@@ -24,9 +25,6 @@
 /* The IRQ:s are mapped to interrupt 0x20 and upward. */
 #define BASE_IRQ                        0x20
 #define IDT_ENTRY(a)                    (BASE_IRQ + a)
-
-/* Type definitions. */
-typedef void (irq_handler_t)(unsigned int irq_level);
 
 typedef struct
 {
@@ -48,10 +46,6 @@ typedef struct
 
 /* Initialize interrupt handling, and enable interrupts. */
 extern void irq_init (void);
-
-/* Register an IRQ for use by a module. */
-extern return_t irq_register (unsigned int irq_number, char *description,
-                              irq_handler_t *function);
 
 /* Low-level interrupt handlers. */
 extern void irq1_handler (void);
