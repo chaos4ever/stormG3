@@ -1,0 +1,11 @@
+# $chaos$
+
+# Abstract: storm G3 makefile
+# Authors: Henrik Hallin <hal@chaosdev.org>
+#          Per Lundberg <per@chaosdev.org>
+
+# Copyright 2002 chaos development.
+
+# INSERT CODE HERE.
+
+include $(BUILDROOT)/storm.make
