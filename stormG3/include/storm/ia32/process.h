@@ -1,4 +1,4 @@
-/* $chaos: process.h,v 1.6 2002/10/10 21:40:47 per Exp $ */
+/* $chaos: process.h,v 1.7 2002/10/10 21:47:10 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -12,6 +12,7 @@
 #ifndef __STORM_IA32_PROCESS_H__
 #define __STORM_IA32_PROCESS_H__
 
+#include <storm/ia32/capability.h>
 #include <storm/ia32/defines.h>
 #include <storm/ia32/memory_virtual.h>
 #include <storm/ia32/spinlock.h>
@@ -21,17 +22,19 @@
 /**
  * @brief               The process ID of the kernel process (idle thread). 
  */
-#define PROCESS_ID_KERNEL               0
+#define PROCESS_ID_KERNEL \
+                        0
 
 /**
  * @brief               The length of a process name.
  */
-#define PROCESS_NAME_LENGTH             32
+#define PROCESS_NAME_LENGTH \
+                        32
 
 /**
  * @brief               A unique process ID.
  */
-typedef unsigned int process_id_t;
+typedef unsigned int    process_id_t;
 
 /**
  * @brief               A structure with information about process.
@@ -41,46 +44,71 @@ typedef struct
     /**
      * @brief           The process ID.
      */
-    process_id_t id;
+    process_id_t        id;
 
     /**
      * @brief           The name of the process.
      */
-    char name[PROCESS_NAME_LENGTH];
+    char                name[PROCESS_NAME_LENGTH];
+
+    /**
+     * @brief           The owner user of this process.
+     */
+    user_id_t           user_id;
+
+    /**
+     * @brief           The active group ID for this process.
+     */
+    group_id_t          active_group_id;
+
+    /**
+     * @brief           A linked list of capbilities.
+     */
+    capability_t        *capability_list;
 
     /**
      * @brief           A lock for this structure.
      */
-    spinlock_t lock;
+    spinlock_t          lock;
 
     /**
      * @brief           Is the process active? (as opposed to suspended 
      *                  for some reason)
      */
-    bool active;
+    bool                active;
 
     /**
      * @brief           The address to the first page directory in this
      *                  process; used for communication between
      *                  process_precreate and process_create.
      */
-    address_t first_page_directory;
+    address_t           first_page_directory;
 
     /**
      * @brief           A list of threads belonging to this process.
      */
-    thread_t *thread_list;
+    thread_t            *thread_list;
 
     /**
      * @brief           Pointer to the previous process.
      */
-    struct process_t *previous;
+    struct process_t    *previous;
 
     /**
      * @brief           Pointer to the next process.
      */
-    struct process_t *next;
+    struct process_t    *next;
 } process_t;
+
+/**
+ * @brief               A list of the processes in the system.
+ */
+extern process_t        *process_list;
+
+/**
+ * @brief               Set up the process support. 
+ */
+extern void process_init (void);
 
 /**
  * @brief               Pre-create a process.
