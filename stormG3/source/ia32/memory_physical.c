@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.20 2002/10/04 19:01:21 per Exp $ */
+/* $chaos: memory_physical.c,v 1.21 2002/10/06 09:12:30 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -81,7 +81,7 @@ static void check_and_add_page (unsigned int page)
     
     
     /* Finally, make sure this memory doesn't overlap with a kernel
-       module. */
+       module. (The memory for these are freed later) */
     for (unsigned int counter = 0; counter < multiboot_info.number_of_modules; 
          counter++) 
     {
