@@ -1,4 +1,4 @@
-# $chaos: modules.make,v 1.2 2002/06/17 18:57:20 per Exp $
+# $chaos: modules.make,v 1.3 2002/06/17 22:53:10 per Exp $
 
 # Abstract: Modules makefile
 # Authors: Per Lundberg <per@chaosdev.org>
@@ -8,7 +8,7 @@
 # Settings.
 # CC = i686-storm-chaos-gcc
 INCLUDES = -I$(INSTALL_PATH)/data/programming/c/headers
-EXTRA_CFLAGS = -fPIC # Position-independant code.
+EXTRA_CFLAGS = # -fPIC # Position-independant code.
 CFLAGS = -Wall -W -Wshadow -Wpointer-arith -Waggregate-return \
 -Wstrict-prototypes -Wredundant-decls -Winline -Wmissing-prototypes \
 -Werror -Wcast-align -Wbad-function-cast -Wsign-compare \
