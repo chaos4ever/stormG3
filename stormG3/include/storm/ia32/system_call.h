@@ -1,4 +1,4 @@
-/* $chaos: system_call.h,v 1.2 2002/10/24 22:13:08 per Exp $ */
+/* $chaos: system_call.h,v 1.3 2002/10/28 22:08:16 per Exp $ */
 /* Abstract: System call prototypes etc. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -55,7 +55,7 @@ static inline unsigned int system_call_service_lookup (service_lookup_t *service
 
                   "pushl        %4\n"   /* number of arguments. */
                   "pushl        %5\n"   /* system call number. */
-                  "int          %9"
+                  "int          %6"
                   : 
                   "=a" (return_value)
                   :
