@@ -1,10 +1,12 @@
-/* $chaos: debug.h,v 1.10 2002/08/11 14:29:31 per Exp $ */
-/* Abstract: Debug declarations. */
+/* $chaos: debug.h,v 1.11 2002/10/04 19:01:20 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
+
+/** @file debug.h
+    @brief Functions used for debugging. */
 
 #ifndef __STORM_IA32_DEBUG_H__
 #define __STORM_IA32_DEBUG_H__
@@ -14,7 +16,7 @@
 #include <storm/types.h>
 #include <storm/ia32/gdb.h>
 
-/* OpenBSD rules. */
+/* BSD rules. :-) */
 #ifdef NETBSD_COLORS
 #  define DEBUG_ATTRIBUTE_TEXT           0x02
 #  define DEBUG_ATTRIBUTE_BACKGROUND     0x07
@@ -33,16 +35,17 @@
 #define BASE_SCREEN                     (0xB8000)
 
 /* Typedefs. */
+/** @brief Easy EGA screen access. */
 typedef struct
 { 
   char character;
   uint8_t attribute;
-} __attribute__ ((packed)) debug_screen_type;
+} debug_screen_type __attribute__ ((packed));
 
-/* Initialize debugging code. */
+/** @brief Initialize debugging code. */
 extern void debug_init (void);
 
-/* Dump memory. */
+/** @brief Dump memory. */
 extern void debug_memory_dump (uint32_t *memory, unsigned int length);
 
 /* Macros. */

@@ -1,9 +1,13 @@
-/* $chaos: module.h,v 1.3 2002/07/12 09:43:36 per Exp $ */
-/* Abstract: Functions and variables defined by a module. */
+/* $chaos: module.h,v 1.4 2002/10/04 19:01:19 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
+
+/**
+ * @file storm/module.h
+ * @brief Functions and variables defined by a module. 
+ */
 
 #ifndef __STORM_MODULE_H__
 #define __STORM_MODULE_H__
@@ -14,21 +18,30 @@
 #define MODULE_NAME_LENGTH              48
 #define MODULE_VERSION_LENGTH           16
 
-/* A module information structure. */
+/** 
+ * @brief A module information structure. 
+ */
 typedef struct
 {
-    /* The module name.*/
+    /** 
+     * @brief The module name.
+     */
     char name[MODULE_NAME_LENGTH];
     
-    /* The module version. */
+    /**
+     * @brief The module version. 
+     */
     char version[MODULE_VERSION_LENGTH];
 } module_info_t;
 
 #ifndef STORM /* Only when included by a module. */
 
+/** 
+ * @brief The module entry point. 
+ */
 extern return_t module_start (void);
-extern return_t module_info (module_info_t *module_info);
-extern char module_name[];
+//extern return_t module_info (module_info_t *module_info);
+//extern char module_name[];
 
 #endif /* !STORM */
 
