@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.5 2002/06/11 20:57:31 per Exp $ */
+/* $chaos: memory_physical.c,v 1.6 2002/06/13 06:15:29 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -30,9 +30,7 @@ void memory_physical_init ()
     uint32_t page;
 
     /* Map the low pages we have into our slab structure. */
-    for (page = KERNEL_FIXED_END / PAGE_SIZE; 
-         page < DMA_BASE / PAGE_SIZE;
-         page++) 
+    for (page = 1; page < DMA_BASE / PAGE_SIZE; page++) 
     {
         memory_physical_slab_t *next = (memory_physical_slab_t *) (page * PAGE_SIZE);
         next->next = (struct memory_physical_slab_t *) first_free;

@@ -1,4 +1,4 @@
-/* $chaos: init.c,v 1.3 2002/06/05 19:56:26 per Exp $ */
+/* $chaos: init.c,v 1.4 2002/06/08 15:13:09 per Exp $ */
 /* Abstract: storm initialization. */
 /* Author: Per Lundberg <per@chaosdev.org> 
            Henrik Hallin <hal@chaosdev.org> */
@@ -10,9 +10,17 @@
 #include <storm/types.h>
 #include <storm/ia32/defines.h>
 #include <storm/ia32/gdt.h>
+#include <storm/ia32/idt.h>
 #include <storm/ia32/main.h>
 #include <storm/ia32/multiboot.h>
 
+/* FIXME: Move to another file. */
+descriptor_t gdt[GDT_ENTRIES] __attribute__ ((section (".idt")));
+
+/* The kernel stack. */
+uint8_t kernel_stack[KERNEL_STACK_SIZE];
+
+/* A temporary GDT that we copy into the real one. */
 static uint16_t temporary_gdt[] = 
 {
     /* Null descriptor. Generates GPF on access. */
@@ -46,25 +54,20 @@ static uint16_t temporary_gdt[] =
     0x00CF
 };
 
-/* The GDT ant IDT fits into the first physical page. */
 static uint16_t idtr[] UNUSED = 
 {
-    /* IDT limit, 256 IDT entries. */
-    0x7FF,
-
-    /* IDT base. */
-    LOW_16 (IDT_BASE),
-    HIGH_16 (IDT_BASE)
+    /* IDT limit. */
+    IDT_SIZE - 1,
+    0x0000,
+    0x0000
 };
 
 static uint16_t gdtr[] UNUSED =
 { 
-    /* GDT limit, 256 GDT entries. */
-    0x7FF,
-
-    /* GDT base. */
-    LOW_16 (GDT_BASE),
-    HIGH_16 (GDT_BASE)
+    /* GDT limit. */
+    GDT_SIZE - 1,
+    0x0000,
+    0x0000
 };
 
 /* This is the first code of the kernel that gets executed. (well,
@@ -102,7 +105,7 @@ void _start (void)
          "g" ((uint32_t) &multiboot_info),
          "g" (sizeof (multiboot_info_type) / 4));
   
-  /* Move the GDT to the right location in memory. */
+    /* Move the GDT to the right location in memory. */
     asm ("cld\n"
          "movl    %0, %%edi\n"
          "movl    %1, %%esi\n"
@@ -113,10 +116,10 @@ void _start (void)
          "rep     stosl"
          :
          : 
-         "g" ((uint32_t) GDT_BASE),
+         "g" ((uint32_t) &gdt),
          "g" ((uint32_t) &temporary_gdt),
-         "n" (sizeof (temporary_gdt) / 4),
-         "n" ((0x800 - sizeof (temporary_gdt)) / 4));
+         "g" (sizeof (temporary_gdt) / 4),
+         "g" ((GDT_SIZE - sizeof (temporary_gdt)) / 4));
 
     /* Clear the IDT. */
     asm ("movl    %0, %%edi\n"
@@ -125,9 +128,18 @@ void _start (void)
          "rep     stosl"
          :
          : 
-         "n" (IDT_BASE),
-         "n" (IDT_SIZE / 4));
+         "g" (idt),
+         "g" (IDT_SIZE / 4));
     
+    /* IDT base. Couldn't do this in the declaration above since the
+       compiler claimed it could not compute the address of idt. */
+    idtr[1] = LOW_16 ((uint32_t) &idt);
+    idtr[2] = HIGH_16 ((uint32_t) &idt);
+
+        /* GDT base. */
+    gdtr[1] = LOW_16 ((uint32_t) &gdt);
+    gdtr[2] = HIGH_16 ((uint32_t) &gdt);
+
     /* Set up the GDTR and IDTR. */
     asm ("lgdt    gdtr\n"
          "lidt    idtr");
@@ -143,8 +155,8 @@ void _start (void)
          "movw    %%ax, %%ds"
          :
          :
-         "n" (KERNEL_DATA_SELECTOR),
-         "n" (KERNEL_STACK_BASE + KERNEL_STACK_SIZE));
+         "g" (KERNEL_DATA_SELECTOR),
+         "g" (&kernel_stack + KERNEL_STACK_SIZE));
 
     /* Pass control to the kernel. */
     asm ("ljmp   %0, %1"
