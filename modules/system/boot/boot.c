@@ -1,4 +1,4 @@
-/* $chaos: boot.c,v 1.1 2002/08/13 19:02:52 per Exp $ */
+/* $chaos: boot.c,v 1.2 2002/08/21 10:56:55 per Exp $ */
 /* Abstract: Boot module. The boot module takes care of setting up the
    system (opening virtual consoles, launching programs, etc). */
 /* Author: Per Lundberg <per@chaosdev.org> */
@@ -8,6 +8,7 @@
 
 #include <storm/storm.h>
 #include <block/block.h>
+#include <checksum/checksum.h>
 #include <console/console.h>
 #include <log/log.h>
 #include <vfs/vfs.h>
@@ -101,7 +102,7 @@ return_t module_start (void)
    
     debug_print ("File size: %u\n", file_info.size);
 
-    /* Read the first 16 bytes from the file. */
+    /* Read the file. */
     uint32_t *buffer;
     return_value = memory_global_allocate ((void **) &buffer, file_info.size);
     memory_set_uint8 ((uint8_t *) buffer, 0, file_info.size);
@@ -111,17 +112,33 @@ return_t module_start (void)
         log.print (LOG_URGENCY_EMERGENCY, "Reading from file failed.");
         return return_value;
     }
+
+#if FALSE
     for (int c = 0; c < file_info.size / 4; c++)
     {
         debug_print ("%x ", buffer[c]);
-        if (c != 0 &&
-            c % 8 == 0)
+        if (c % 8 == 0 && c != 0)
         {
-            debug_print ("\n");
+            debug_print("\n");
         }
     }
+    debug_print("\n");
+
+#endif
+
+#if TRUE || FALSE
+    checksum_md5_digest_type digest;
+    memory_set_uint8 ((uint8_t *) &digest, 0, 16);
+    return_value = checksum_md5 (buffer, file_info.size,
+                                 &digest);
+
+    for (int c = 0; c < CHECKSUM_MD5_DIGEST_LENGTH; c++)
+    {
+        debug_print ("%x ", digest[c]);
+    }
     debug_print ("\n");
-    
+#endif    
+
     /* Close the file. */
     return_value = vfs.close (handle);
     if (return_value != STORM_RETURN_SUCCESS)

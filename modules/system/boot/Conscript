@@ -1,4 +1,4 @@
-# $chaos: Conscript,v 1.2 2002/08/13 19:12:02 per Exp $ -*- Perl -*-
+# $chaos: Conscript,v 1.3 2002/08/13 22:04:07 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the boot module.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -10,8 +10,9 @@ $module_binary = 'boot.so';
 $module_path = 'system/boot';
 
 Import qw( cons module_directory library_directory install );
-$cons = $cons->clone(LIBS => '-llog -lconsole -lblock -lvfs');
+$cons = $cons->clone(LIBS => '-llog -lchecksum -lconsole -lblock -lvfs');
 Depends $cons $module_binary, "$library_directory/liblog.a",
+  "$library_directory/libchecksum.a",
   "$library_directory/libconsole.a",
   "$library_directory/libblock.a",
   "$library_directory/libvfs.a";
