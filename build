@@ -2,6 +2,6 @@
 
 # Ok, this is maybe not the nicest way of doing it, but how the h*ll am I supposed to do it right?
 
-export CHAOS_INSTALL_PATH=$PWD/root
+export CHAOS_INSTALL_PATH=/mnt/chaos
 make build
 unset CHAOS_INSTALL_PATH
