@@ -1,4 +1,4 @@
-/* $chaos: memory_physical.c,v 1.8 2002/06/15 14:37:40 per Exp $ */
+/* $chaos: memory_physical.c,v 1.9 2002/06/15 15:38:16 per Exp $ */
 /* Abstract: Physical memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -8,8 +8,10 @@
 #include <storm/return_value.h>
 #include <storm/ia32/defines.h>
 #include <storm/ia32/debug.h>
+#include <storm/ia32/memory.h>
 #include <storm/ia32/memory_physical.h>
 #include <storm/ia32/multiboot.h>
+#include <storm/ia32/types.h>
 
 /* To make all operations O(1). */
 static unsigned int free_pages = 0;
@@ -19,6 +21,16 @@ static memory_physical_slab_t *first_free = NULL;
 
 /* Used to find the end of the kernel. */
 extern int _end;
+
+/* A bitmap of all the free pages. (Don't worry, this is not used on
+   ordinary memory allocation...) 
+   
+   FIXME: Only use the memory needed! Right now, it is always 64 KiB,
+   which is what a 2 GiB system will need. */
+static uint32_t physical_page_bitmap[MAX_MEMORY / PAGE_SIZE / 32];
+
+/* The number of physical pages in the system. */
+static page_number_t physical_pages;
 
 /* Add the given page to the SLAB, if it is not used by a kernel
    module, DMA buffers or something like that. */
@@ -47,6 +59,12 @@ static void check_and_add_page (unsigned int page)
     {
         return;
     }
+    /* More than we support. */
+    else if (page * PAGE_SIZE > MAX_MEMORY)
+    {
+        return;
+    }
+    
     
     /* Finally, make sure this memory doesn't overlap with a kernel
        module. */
@@ -71,6 +89,9 @@ void memory_physical_init ()
 {
     uint32_t start_end;
    
+    /* Store the number of physical pages (used later). */
+    physical_pages = (1024 + multiboot_info.memory_upper) / 4;
+
     /* If we have a Multiboot memory map, we can use it to avoid using
        any registered memory areas (used for hardware devices etc). */
     if (multiboot_info.has_memory_map == 1)
@@ -124,20 +145,105 @@ void memory_physical_init ()
 /* Allocate a number of pages. */
 return_t memory_physical_allocate (void **pointer, unsigned int pages) 
 {
-    if (pages != 1) 
-    {
-        /* FIXME: Implement, by means of reserved buffers or
-           sweep-n-scan. */
-        return STORM_RETURN_NOT_IMPLEMENTED;
-    }
-
-    *pointer = first_free;
     if (first_free == NULL) 
     {
+        /* This is good, so we trap code that forgets to check the
+           return value. */
+        *pointer = NULL;
         return STORM_RETURN_OUT_OF_MEMORY;
     }
-    else 
+
+    if (pages != 1) 
     {
+        /* The algorithm for allocating multiple pages is not very
+           fast, and uses quite a lot of memory. This, however, should
+           not really be a problem since linear physical pages is
+           really only needed in a couple of cases.
+
+             1) When loading kernel modules and allocating memory for
+             the different sections
+             
+             2) When allocating DMA and busmastering buffers.
+
+           Both of these cases are very special and occur rarely, so
+           even if it takes 100, 1000 or even 10000 times longer to
+           allocate two pages than to allocate one, that should not
+           affect the system performance. */
+
+        memory_physical_slab_t *slab;
+        page_number_t free_page = 0;
+        unsigned int has_free = 0;
+
+        /* Build up the bitmap. */
+        memory_set_uint32 (physical_page_bitmap, 0, 
+                           physical_pages / 32);
+        slab  = first_free;
+        while (slab != NULL)
+        {
+            page_number_t page_number = ((address_t) slab) / PAGE_SIZE;
+            BIT_SET (physical_page_bitmap[page_number / 32],
+                    page_number % 32);
+            slab = (memory_physical_slab_t *) slab->next;
+        }
+
+        debug_memory_dump (physical_page_bitmap, 70);
+
+        /* Now, iterate through this bitmap to see whether we have a
+           contigous block of the right size. */
+        for (page_number_t page_number = 0; page_number < 
+                 physical_pages; page_number++)
+        {
+            if (BIT_GET (physical_page_bitmap[page_number / 32],
+                         page_number % 32) == 1)
+            {
+                if (has_free == 0)
+                {
+                    free_page = page_number;
+                }
+
+                has_free++;
+
+                /* Do we have an area? If so, free these pages from
+                   the slab structure and pass them on! */
+                if (has_free == pages)
+                {
+                    slab  = first_free;
+                    while (slab != NULL)
+                    {
+                        address_t next = (address_t) slab->next;
+                        if (next >= (free_page * PAGE_SIZE) &&
+                            next <= (free_page + pages - 1) * PAGE_SIZE)
+                        {
+                            /* Unlink this SLAB. */
+                            memory_physical_slab_t *block = (memory_physical_slab_t *) slab->next;
+                            while (((address_t) block->next) >= (free_page * PAGE_SIZE) &&
+                                   ((address_t) block->next) <= (free_page + pages - 1) * PAGE_SIZE)
+                            {
+                                block = (memory_physical_slab_t *) block->next;
+                            }
+                            
+                            slab->next = block->next;
+                            debug_print ("unlink ");
+                        }
+
+                        slab = (memory_physical_slab_t *) slab->next;
+                    }
+
+                    *pointer = (void *) (free_page * PAGE_SIZE);
+                    return STORM_RETURN_SUCCESS;
+                }
+            }
+            else
+            {
+                has_free = 0;
+            }
+        }
+
+        return STORM_RETURN_NOT_IMPLEMENTED;
+    }
+    else
+    {
+        *pointer = first_free;
         first_free = (memory_physical_slab_t *) first_free->next;
     }
 
