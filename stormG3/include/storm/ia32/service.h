@@ -1,4 +1,4 @@
-/* $chaos: service.h,v 1.16 2002/11/03 22:26:47 per Exp $ */
+/* $chaos: service.h,v 1.18 2002/11/15 19:50:47 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -45,6 +45,7 @@ extern return_t         service_invoke (service_connection_id_t connection_id,
                                         unsigned int function_number,
                                         void *data);
 
+// FIXME: Let this be a doubly-linked list.
 /**
  * @brief               Information about a service provider. 
  */
@@ -173,7 +174,7 @@ typedef struct
     /**
      * @brief           The method handler.
      */
-    function_t          method;
+    service_function_t  method;
 } service_method_data_t;
 
 #endif /* !__STORM_IA32_SERVICE_H__ */
