@@ -1,4 +1,4 @@
-/* $chaos: service.c,v 1.4 2002/06/24 08:32:24 per Exp $ */
+/* $chaos: service.c,v 1.5 2002/06/24 21:10:02 per Exp $ */
 /* Abstract: Service support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -21,7 +21,7 @@ lock_t service_lock = LOCK_UNLOCKED;
 /* Register a service provider. */
 return_t service_register (char *name, char *vendor, char *model, char *id,
                            unsigned int version,
-                           function_t handler)
+                           service_info_t service_info)
 {
     service_data_t *service;
 
@@ -45,7 +45,7 @@ return_t service_register (char *name, char *vendor, char *model, char *id,
     string_copy (service->model, model);
     string_copy (service->id, id);
     service->version = version;
-    service->handler = handler;
+    service->service_info = service_info;
 
     lock (&service_lock);
     service->next = (struct service_data_t *) first_service;
@@ -124,7 +124,7 @@ return_t service_resolve (char *name, char *vendor, char *model, char *id,
             string_copy ((*out_service)[counter].model, service->model);
             string_copy ((*out_service)[counter].id, service->id);
             (*out_service)[counter].version = service->version;
-            (*out_service)[counter].handler = service->handler;
+            (*out_service)[counter].service_info = service->service_info;
             counter++;
         }
 

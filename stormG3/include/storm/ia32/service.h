@@ -1,4 +1,4 @@
-/* $chaos: service.h,v 1.2 2002/06/24 08:32:23 per Exp $ */
+/* $chaos: service.h,v 1.3 2002/06/24 21:10:00 per Exp $ */
 /* Abstract: Service support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -17,6 +17,10 @@
 #define SERVICE_MAX_ID_LENGTH           16
 
 /* Type definitions. */
+/* A function that provides info about this service provider. The data
+   returned is protocol specific. */
+typedef return_t (*service_info_t)(void *);
+
 /* This one is used internally in the kernel. */
 typedef struct
 {
@@ -39,7 +43,7 @@ typedef struct
 
     /* A function that the caller use to get information about this
        service provider. */
-    function_t handler;
+    service_info_t service_info;
 
     /* A pointer to the next service. */
     struct service_data_t *next;
@@ -68,13 +72,13 @@ typedef struct
 
     /* A function that the caller use to get information about this
        service provider. */
-    function_t handler;
+    service_info_t service_info;
 } service_t;
 
 /* Register a service provider. */
 extern return_t service_register (char *name, char *vendor, char *model, 
                                   char *id, unsigned int version,
-                                  function_t handler);
+                                  service_info_t service_info);
 
 /* Unregister a service provider. */
 extern return_t service_unregister (char *service, function_t handler);
