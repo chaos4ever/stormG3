@@ -1,4 +1,4 @@
-/* $chaos: memory_global.c,v 1.6 2002/08/09 06:16:18 per Exp $ */
+/* $chaos: memory_global.c,v 1.7 2002/10/04 19:01:21 per Exp $ */
 /* Abstract: Global memory allocation. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -21,8 +21,10 @@ static memory_global_slab_t *global_256byte = NULL;
 static memory_global_slab_t *global_512byte = NULL;
 static memory_global_slab_t *global_1024byte = NULL;
 
+// FIXME: Add spinlocks.
+
 /* Initialize global memory allocation. */
-void memory_global_init ()
+void memory_global_init (void)
 {
 }
 
