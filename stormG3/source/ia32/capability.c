@@ -1,4 +1,4 @@
-/* $chaos: capability.c,v 1.1 2002/10/17 21:29:22 per Exp $ */
+/* $chaos: capability.c,v 1.2 2002/10/23 21:05:08 per Exp $ */
 /* Abstract: Capabilities support. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -39,6 +39,10 @@ return_t capability_has (process_id_t process_id,
                          const char *capability_name, bool *result)
 {
     process_t *process = process_find (process_id);
+
+    /* For bad code that doesn't check the return value, we start by
+       making it FALSE. */
+    *result = FALSE
 
     if (process == NULL)
     {
