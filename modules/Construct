@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.7 2002/07/10 20:16:31 johannes Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.8 2002/07/21 11:16:35 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the modules.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -47,12 +47,10 @@ $cons = new cons (
 Default qw(.);
 Export qw( cons header_directory module_directory build_directory
 	   library_directory include install );
-Build qw( boot/Conscript
-	  block/Conscript
-	  console/Conscript
+Build qw( block/Conscript
 	  filesystem/Conscript
-	  log/Conscript
-	  keyboard/Conscript
+	  graphics/Conscript
+	  system/Conscript
 	  soundblaster/Conscript
 	  vga/Conscript
           ethernet/Conscript );
