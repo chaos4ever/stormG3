@@ -1,4 +1,4 @@
-/* $chaos: xemacs-script,v 1.5 2002/05/23 11:22:14 per Exp $ */
+/* $chaos: elf.c,v 1.1 2002/06/16 21:44:08 per Exp $ */
 /* Abstract: ELF functions. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -150,11 +150,23 @@ return_t elf_relocate (elf_parsed_t *elf_parsed)
             return return_value;
         }
 
+        debug_print ("%x %u %u\n",
+                     relocation[index].offset, relocation[index].symbol_type,
+                     relocation[index].symbol_index);
+
         /* Perform this relocation. */
         relocation_address = (address_t *) (((address_t) elf_parsed->elf_header) + relocation[index].offset);
-
-        /* Are you confused yet? :-) */
-        *relocation_address = (address_t) (symbol_address - (address_t) relocation_address + *relocation_address);
+        
+        if (relocation[index].symbol_type == 2)
+        {
+          
+            /* Are you confused yet? :-) */
+            *relocation_address = (address_t) (symbol_address - (address_t) relocation_address + *relocation_address);
+        }
+        else if (relocation[index].symbol_type == 8)
+        {
+            *relocation_address = *relocation_address + (address_t) elf_header;
+        }
     }
 
     return STORM_RETURN_SUCCESS;
