@@ -1,4 +1,4 @@
-# $chaos: Construct,v 1.13 2002/12/02 20:38:14 per Exp $ -*- Perl -*-
+# $chaos: Construct,v 1.14 2002/12/08 19:59:48 per Exp $ -*- Perl -*-
 
 # Abstract: CONS script for the libraries.
 # Author: Per Lundberg <per@chaosdev.org>
@@ -18,53 +18,19 @@ $header_directory = "$root/data/programming/c/headers";
 $module_directory = "$root/system/modules";
 $library_static_directory = "$root/data/programming/libraries/static";
 
-$include = "$build_directory:$build_directory/module:$build_directory/..:$header_directory";
-$hostname = `hostname`;
-chop($hostname);
+# Standard warnings for all libraries.
 $warnings = '-Wall -W -Wshadow -Wpointer-arith -Waggregate-return ' .
   '-Wstrict-prototypes -Wredundant-decls -Winline -Wmissing-prototypes ' .
   '-Werror -Wcast-align -Wbad-function-cast -Wsign-compare ' .
   '-Wmissing-declarations -Wnested-externs ';
 
-# FIXME: We need to split the libraries into three subdirectories; one
-# that can be used in modules (static), one that can be used in
-# programs (dynamic) and one for stuff that can be used in both
-# (mostly inline functions)
-$defs = '-D__STORM_KERNEL_MODULE__ ';
-
-$install = <<EOF;
-return qq(
-mkdir -p \$library_static_directory
-install \$library_directory/\$library_binary \$library_static_directory
-touch %0:a
-	 );
-EOF
-
-
 $cons = new cons (
-		  CC => ($ENV{'CC'} || 'gcc'),
-		  CPPPATH => $include,
-		  CFLAGS => $warnings .
-                  $defs .
-		  '-O3 -g -pipe -fno-builtin -funsigned-char ' .
-		  '-fomit-frame-pointer -ffreestanding -std=gnu99 ',
-		  LDFLAGS => '-nostdlib'
-		);	
+                   CC => ($ENV{'CC'} || 'gcc'),
+                 );	
 
 Default qw(.);
 Export qw( cons header_directory library_static_directory build_directory
-	   install );
-# FIXME: Move to the module directory
-Build qw( block/Conscript
-	  checksum/Conscript
-	  filesystem/Conscript
-	  console/Conscript
-          exec/Conscript
-	  log/Conscript
-	  unicode/Conscript
-	  vfs/Conscript
-	  video/Conscript
+	   warnings );
 
-          module/kernel/Conscript
-          module/sound/Conscript
-	);
+Build qw ( module/Conscript
+           program/Conscript );
