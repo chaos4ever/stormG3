@@ -1,4 +1,4 @@
-/* $chaos: elf.h,v 1.1 2002/10/04 21:26:50 per Exp $ */
+/* $chaos: elf.h,v 1.2 2002/10/09 08:29:56 per Exp $ */
 /* Abstract: ELF module header. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -105,8 +105,8 @@ enum
     ELF_SECTION_TYPE_NULL,
 
     /* This section is used for something defined by the program
-       itself. */
-    ELF_SECTION_TYPE_UNDEFINED,
+       itself. (PROGBITS) */
+    ELF_SECTION_TYPE_PROGRAM,
 
     /* This section holds the symbol table. May only exist once in the
        file. */
@@ -246,7 +246,7 @@ typedef struct
     /* The section header table index of the section name string
        table. */
     uint16_t section_string_index;
-} __attribute__ ((packed)) elf_header_t;
+} elf_header_t PACKED;
 
 /* A section header entry. */
 typedef struct
