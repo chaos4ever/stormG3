@@ -1,4 +1,4 @@
-/* $chaos: log.c,v 1.3 2002/07/04 21:25:44 per Exp $ */
+/* $chaos: block.c,v 1.1 2002/07/06 08:29:07 per Exp $ */
 /* Abstract: Block library. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -14,7 +14,7 @@ return_t block_resolve (block_service_t *block)
     size_t services;
     service_t *service;
 
-    /* Find the log service. */
+    /* Find the block service. */
     if (service_resolve ("block", NULL, NULL, NULL, 1, &services, &service) != STORM_RETURN_SUCCESS)
     {
         debug_print ("Failed to resolve block service provider.\n");
