@@ -1,4 +1,4 @@
-/* $chaos: irq.h,v 1.1 2002/06/15 10:57:14 per Exp $ */
+/* $chaos: irq.h,v 1.2 2002/06/15 11:29:52 per Exp $ */
 /* Abstract: IRQ handling. */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
@@ -26,12 +26,14 @@
 #define IDT_ENTRY(a)                    (BASE_IRQ + a)
 
 /* Type definitions. */
+typedef void (irq_handler_t)(unsigned int irq_level);
+
 typedef struct
 {
     bool allocated;
     
     /* A function pointer to the handler. */
-    void (*handler)(unsigned int irq_level);
+    irq_handler_t *handler;
     
     /* A short description of the IRQ. */
     char *description;
@@ -46,6 +48,10 @@ typedef struct
 
 /* Initialize interrupt handling, and enable interrupts. */
 extern void irq_init (void);
+
+/* Register an IRQ for use by a module. */
+extern return_t irq_register (unsigned int irq_number, char *description,
+                              irq_handler_t *function);
 
 /* Low-level interrupt handlers. */
 extern void irq1_handler (void);
