@@ -1,4 +1,4 @@
-/* $chaos: types.h,v 1.6 2002/10/15 18:06:30 per Exp $ */
+/* $chaos: types.h,v 1.7 2002/10/17 21:07:32 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
 /* Copyright 2002 chaos development. */
@@ -28,5 +28,10 @@ typedef                 uint32_t user_id_t;
  * @brief               A group ID.
  */
 typedef                 uint32_t group_id_t;
+
+/**
+ * @brief               A page number. 
+ */
+typedef                 uint32_t page_number_t;
 
 #endif /* !__STORM_IA32_TYPES_H__ */
