@@ -1,4 +1,4 @@
-/* $chaos: types.h,v 1.13 2002/10/24 21:36:22 per Exp $ */
+/* $chaos: types.h,v 1.14 2002/10/28 07:51:37 per Exp $ */
 /* Author: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
 
@@ -17,18 +17,19 @@
 /**
  * @brief               A size. 
  */
-typedef int size_t;
+typedef int             size_t;
 
 /**
  * @brief               A return value (STORM_RETURN_*) 
  */
-typedef int return_t;
+typedef int             return_t;
 
 /**
  * @brief               A function pointer. 
  */
-typedef return_t (*function_t)(void);   /* Can be used even if the
-                                           function uses arguments. */
+typedef return_t        (*function_t)(void);   /* Can be used even if
+                                                  the function uses
+                                                  arguments. */
 
 /**
  * @brief               An IRQ handler.
@@ -48,14 +49,14 @@ typedef unsigned int    thread_id_t;
 /**
  * @brief               A boolean value.
  */
-typedef int bool;                       /* no _t, since this should
-                                           really have been a built-in
-                                           type in C. */
+typedef int             bool;        /* no _t, since this should
+                                        really have been a built-in
+                                        type in C. */
 
 /**
- * @brief                               A function that provides info about
- *                                      this service provider. The data
- *                                      returned is protocol specific.
+ * @brief               A function that provides info about
+ *                      this service provider. The data
+ *                      returned is protocol specific.
  */
 typedef return_t (*service_info_t)(void *);
 
