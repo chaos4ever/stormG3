@@ -1,4 +1,4 @@
-# $chaos: makefile,v 1.3 2002/06/19 07:58:01 per Exp $
+# $chaos: makefile,v 1.4 2002/06/20 19:54:19 per Exp $
 
 # Abstract: Modules makefile
 # Authors: Per Lundberg <per@chaosdev.org>
@@ -12,18 +12,18 @@ SUBDIRS = log keyboard soundblaster
 
 all:
 	for e in $(SUBDIRS) ; do \
-	make -C $$e ; \
+	make -C $$e || exit ; \
         done
 
 clean::
 	for e in $(SUBDIRS) ; do \
-	make -C $$e clean ; \
+	make -C $$e clean || exit ; \
         done
 
 install:
 	install -d $(INSTALL_PATH)/system/modules
 	for e in $(SUBDIRS) ; do \
-	make -C $$e install ; \
+	make -C $$e install || exit ; \
         done
 
 include $(BUILD_ROOT)/modules.make
