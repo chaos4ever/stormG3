@@ -1,0 +1,62 @@
+<?xml version='1.0' ?> <!-- -*- xml -*- -->
+<!-- $chaos: process.xml,v 1.4 2002/05/27 21:29:58 per Exp $ -->
+
+<preface id="goals">
+  <?dbhtml filename="goals.html"?>
+  <title>Design Goals</title>
+  <para>
+    Each and every successful project needs a vision, a clear
+    understanding of what is to be achieved. Here are some of the
+    goals that we aim for in storm G3.
+
+    <itemizedlist>
+      <listitem>
+	<para>
+	  <emphasis>Not Yet Another Kernel.</emphasis> There are very
+	  many kernels available on the "market". Now, being different
+	  is not a goal in itself, even though many people live as if
+	  it were so. However, if storm G3 will be exactly like an
+	  already existing kernel, writing it would not fit a purpose
+	  (other than the general education of its
+	  developers). Therefore, storm G3 ought to be different than
+	  i.e. Linux or the FreeBSD kernel.
+ 	</para>
+      </listitem>
+      
+      <listitem>
+	<para>
+	  <emphasis>Modules Are Everything.</emphasis> We have come to
+	  realize that the success of a kernel will be a result of how
+	  well-modularized it is. How easy will it be to modify one
+	  part of the system, without having to restart the computer
+	  every time? With the old chaos design, we had all hardware
+	  device drivers running as separate processes. This forced us
+	  to be very modular in our thinking, and this thinking should
+	  persist in storm G3.
+	</para>
+      </listitem>
+
+      <listitem>
+	<para>
+	  <emphasis>Clean And Fast.</emphasis> In previous generations
+	  of the kernel, we made it clean. However, a system that is
+	  only clean will not succeed. It needs to have the
+	  performance neccessary to run high-capacity applications,
+	  like modern games, 3D rendering programs, space ship
+	  simulations, et cetera. With our old design, sending a
+	  packet to the network, for example, was a very heavy
+	  operation that included at least two task switches: one to
+	  the IPv4 server and one to the ethernet card server. Task
+	  switches, especially between tasks with different address
+	  spaces, will always be a fairly time-consuming operation and
+	  will therefore be avoided for system tasks. This is one of
+	  the reasons we have decided to move away from the
+	  server-based design to a modular macro-kernel design
+	  instead. But the biggest reason is that it makes everything
+	  so easy - the kernel design will be much cleaner. We believe
+	  this is a Good Thing.
+	</para>
+      </listitem>
+    </itemizedlist>
+  </para>
+</preface>
