@@ -1,4 +1,4 @@
-/* $chaos: keyboard.c,v 1.4 2002/06/17 22:53:47 per Exp $ */
+/* $chaos: keyboard.c,v 1.5 2002/06/18 08:01:11 per Exp $ */
 /* Abstract: Keyboard module for chaos. */
 /* Authors: Per Lundberg <per@chaosdev.org>
            Henrik Hallin <hal@chaosdev.org> */
@@ -8,12 +8,11 @@
 
 /* Parts of this file was inspired by the Linux keyboard support. */
 
+#include <storm/storm.h>
+
 /* FIXME: Set this to a dummy map, and let the boot-server set the
    right key map. Or something. */
 /* A Swedish translation map, for now. */
-
-#include <storm/storm.h>
-
 #include "keyboard_maps/british.h"
 #include "keyboard_maps/swedish.h"
 #include "keyboard_maps/dvorak.h"
@@ -25,7 +24,6 @@
 #include "scan_code.h"
 
 /* The keyboard maps convert keys to standard UTF-8 sequences. */
-
 static const char **keyboard_map = swedish_keyboard_map;
 static const char **keyboard_map_shift = swedish_keyboard_map_shift;
 static const char **keyboard_map_altgr = swedish_keyboard_map_altgr;
@@ -35,13 +33,11 @@ static const char **keyboard_map_altgr = swedish_keyboard_map_altgr;
 static volatile uint8_t keyboard_pressed_keys[16];
 
 /* State of the *lock-keys. */
-
 static volatile uint8_t keyboard_state_scroll = 0x0F;
 static volatile uint8_t keyboard_state_num = 0x0F;
 static volatile uint8_t keyboard_state_caps = 0x0F;
 
 /* The shift state. */
-
 static volatile unsigned int shift_state = 0;
 
 /* Is a keyboard connected? */
