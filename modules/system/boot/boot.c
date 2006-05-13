@@ -76,7 +76,7 @@ return_t module_start (void)
         log.print (LOG_URGENCY_EMERGENCY, "No exec service found. Aborting.");
         return STORM_RETURN_NOT_FOUND;
     }
-    
+
     /* Mount the root file system. */
     return_value = vfs.mount ("//", &block);
     if (return_value != STORM_RETURN_SUCCESS)
@@ -92,6 +92,8 @@ return_t module_start (void)
         log.print (LOG_URGENCY_EMERGENCY, "Assigning file system failed.");
         return return_value;
     }
+
+    while (TRUE);
 
     /* Run system initialization (start daemons etc). We do this
        through a program called boot. */
