@@ -3,7 +3,8 @@
 
 # The source root.
 ROOT=$(pwd)
-INSTALL_PREFIX=/tftpboot
+INSTALL_PREFIX=/tftpboot/chaos
+STORM_OPTIONS="root=$INSTALL_PREFIX"
 
 # Set up the link so we will know which architecture is the
 # current. FIXME: Add an architecture check perhaps?? :-)
@@ -26,10 +27,10 @@ cd - || exit
 
 # Build the rest (order is important).
 cd $ROOT/libraries
-cons || exit
+cons root=$INSTALL_PREFIX || exit
 cd $ROOT/programs
-cons || exit
+cons root=$INSTALL_PREFIX || exit
 ./install.sh
 cd $ROOT/modules
-cons || exit
+cons root=$INSTALL_PREFIX || exit
 cd $ROOT
