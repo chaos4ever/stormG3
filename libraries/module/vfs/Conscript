@@ -7,7 +7,7 @@
 # Use freely under the terms listed in the file LICENSE.
 
 $library_binary = 'libvfs.a';
-$library_directory = 'vfs';
+$library_directory = 'module/vfs';
 
 Import qw( cons library_static_directory install );
 Library $cons $library_binary, 'vfs.c';

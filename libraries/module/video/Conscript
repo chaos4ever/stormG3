@@ -7,7 +7,7 @@
 # Use freely under the terms listed in the file LICENSE.
 
 $library_binary = 'libvideo.a';
-$library_directory = 'video';
+$library_directory = 'module/video';
 
 Import qw( cons library_static_directory install );
 Library $cons $library_binary, 'video.c';
