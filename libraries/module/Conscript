@@ -33,4 +33,6 @@ Build qw( block/Conscript
           filesystem/Conscript
           kernel/Conscript
           log/Conscript
-          sound/Conscript );
+          sound/Conscript
+          vfs/Conscript
+          video/Conscript );
