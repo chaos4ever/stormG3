@@ -27,7 +27,7 @@ $hostname = `hostname`;
 chop($hostname);
 $warnings = '-Wall -W -Wshadow -Wpointer-arith -Waggregate-return ' .
   '-Wstrict-prototypes -Wredundant-decls -Winline -Wmissing-prototypes ' .
-  '-Werror -Wcast-align -Wbad-function-cast -Wsign-compare ' .
+  '-Wcast-align -Wbad-function-cast -Wsign-compare ' .
   '-Wmissing-declarations -Wnested-externs '; # -Wwrite-strings
 $defs = '-D__STORM_KERNEL_MODULE__ ';
 $install = <<EOF;
