@@ -46,7 +46,7 @@ return_t unicode_ucs2_to_utf8 (uint8_t *utf8_char, ucs2_t ucs2_char)
         utf8_char[0] = (uint8_t) ((ucs2_char >> 6) | B11000000);
         utf8_char[1] = (uint8_t) ((ucs2_char & B00111111) | B10000000);
     }
-    else if (ucs2_char <= 0x0000FFFF)
+    else /* if (ucs2_char <= 0x0000FFFF) */ /* had to remove this because gcc barfed about it, always true because of int16 */
     {
         /* 1110xxxx 10xxxxxx 10xxxxxx */
         utf8_bytes = 3;
@@ -54,10 +54,10 @@ return_t unicode_ucs2_to_utf8 (uint8_t *utf8_char, ucs2_t ucs2_char)
         utf8_char[1] = (uint8_t) (((ucs2_char >> 6) & B00111111) | B10000000);
         utf8_char[2] = (uint8_t) ((ucs2_char & B00111111) | B10000000);
     }
-    else
+    /* else
     {
         return UNICODE_RETURN_UCS2_INVALID;
-    }
+    } */
 
     utf8_char[utf8_bytes] = '\0';
 
