@@ -9,7 +9,7 @@
 #define __KEYBOARD_H__
 
 #include <console/console.h>
-#include <keyboard/keyboard.h>
+//#include <keyboard/keyboard.h>
 #include <log/log.h>
 
 /* Version of the service. */
