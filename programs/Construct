@@ -50,6 +50,6 @@ Default qw(.);
 Export qw( cons header_directory module_directory build_directory
 	   library_directory include install program_install_directory );
 Build qw( boot/Conscript
-          modplay/Conscript );
+          ); #modplay/Conscript );
 
 
