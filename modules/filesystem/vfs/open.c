@@ -32,11 +32,13 @@ return_t vfs_open (char *filename, vfs_file_mode_t mode,
         return return_value;
     }
 
-    return_value = memory_global_allocate ((void **) &new_file, sizeof (file_t));
+    void *p;
+    return_value = memory_global_allocate ((void **) &p, sizeof (file_t));
     if (return_value != STORM_RETURN_SUCCESS)
     {
         return return_value;
     }
+    new_file = p;
 
     /* Add this file to our data structure. */
     // FIXME: Locking from here...

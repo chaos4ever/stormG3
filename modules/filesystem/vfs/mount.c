@@ -31,11 +31,13 @@ return_t vfs_mount (char *path, block_service_t *block)
     // one that we get and try it.
     filesystem.mount (block);
 
-    return_value = memory_global_allocate ((void **) &new_mount, sizeof (mount_t));
+    void *p;
+    return_value = memory_global_allocate ((void **) &p, sizeof (mount_t));
     if (return_value != STORM_RETURN_SUCCESS)
     {
         return return_value;
     }
+    new_mount = p;
 
     // FIXME: Locking from here...
     new_mount->next = (struct mount_t *) first_mount;
