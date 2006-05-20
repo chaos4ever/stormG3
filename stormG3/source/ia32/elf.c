@@ -271,12 +271,22 @@ return_t elf_load (elf_parsed_t *elf_parsed)
     for (int index = 0; index < elf_header->section_header_entries; index++)
     {
         elf_section_header_t *section_header = (elf_section_header_t *) (((uint32_t) elf_header) + elf_header->section_header_offset + (index * elf_header->section_header_entry_size));
-        if (section_header->flags & ELF_SECTION_FLAG_ALLOCATE)
+        if (section_header->flags & ELF_SECTION_FLAG_ALLOCATE &&
+            section_header->type & ELF_SECTION_TYPE_UNDEFINED)
         {
             memory_copy ((void *) (((address_t) image) + section_header->address),
                          (void *) (((address_t) elf_header) + section_header->offset),
                          section_header->size);
         }
+        else if (section_header->flags & ELF_SECTION_FLAG_ALLOCATE &&
+                 section_header->type & ELF_SECTION_TYPE_NO_SPACE) {
+            /* .bss sections, are presumed to be zeroed out by the gcc
+               output. (can probably be tweaked in the ld script but
+               why?} */
+            memory_set_uint32((void *) (((address_t) image) + section_header->address),
+                              0,
+                              section_header->size / 4);
+        }       
     }
 
     elf_parsed->image = image;

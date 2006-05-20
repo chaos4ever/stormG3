@@ -40,12 +40,6 @@ static return_t service_info (void *vfs_void)
 
 int module_start (void)
 {
-    // Something is severely broken in the ELF loader. This is set to
-    // NULL above. It is put into the .data section. Still, it aint 0
-    // when we first start...
-    debug_print("first: %x\n", first_assign);
-    first_assign = NULL;
-
     service_register_t service_register_info;
     service_register_info.service_vendor = "chaos development";
     service_register_info.model = "VFS module";

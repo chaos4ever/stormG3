@@ -108,6 +108,8 @@ static inline void memory_set_uint16 (uint16_t *address, uint16_t value,
  * @param address       The address of the memory to set.
  * @param value         The value to set.
  * @param count         The number of uint32s to set. 
+ * @todo                We should have a zeroing function because that
+ *                      can be done with more optimized instructions.
  */
 static inline void memory_set_uint32 (uint32_t *address, uint32_t value,
                                       unsigned int count)
