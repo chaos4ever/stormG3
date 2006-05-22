@@ -4,8 +4,12 @@
 # Abstract: Install our programs onto the ramdisk.
 # Author: Per Lundberg <per@chaosdev.org>
 
+# FIXME: The ROOT and RAMDISK_ROOT should be taken as commandline parameters instead so
+# everything can be customized from one single place (the compile.sh script in the parent
+# directory).
+
 export PROGRAMS=boot
-export ROOT=/tftpboot
+export ROOT=/tftpboot/chaos
 export RAMDISK_ROOT=/mnt/chaos-ramdisk
 
 # The mount/umount is neccessary because otherwise the filesystem will
