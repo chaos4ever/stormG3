@@ -146,7 +146,8 @@ static void console_flip (console_t *console)
 /* Handle keyboard events. */
 static return_t console_handle_key_event (keyboard_packet_t *keyboard_packet)
 {
-    /* Console switching? For now, ALT + TAB is used. This should be
+    /* Console switching? For now, ALT + TAB is used (CTRL + TAB works
+       as well for compatibility with Bochs). This should be
        customizable. */
     if (current_console != NULL)
     {
@@ -154,7 +155,9 @@ static return_t console_handle_key_event (keyboard_packet_t *keyboard_packet)
             keyboard_packet->has_special_key &&
             keyboard_packet->special_key == KEYBOARD_SPECIAL_KEY_TAB &&
             (keyboard_packet->left_alt_down ||
-             keyboard_packet->right_alt_down))
+             keyboard_packet->right_alt_down ||
+             keyboard_packet->left_control_down ||
+             keyboard_packet->right_control_down))
         {
             /* Next console. */
             console_t *new_console = (console_t *) current_console->next;
@@ -263,7 +266,10 @@ static return_t console_open (console_id_t *console_id, size_t width,
         return STORM_RETURN_OUT_OF_MEMORY;
     }
 
-    return_value = memory_global_allocate ((void **) &our_console, sizeof (console_t));
+    void *p;
+    return_value = memory_global_allocate ((void **) &p,
+                                           sizeof (console_t));
+    our_console = p;
     if (return_value != STORM_RETURN_SUCCESS)
     {
         return return_value;
