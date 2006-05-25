@@ -17,7 +17,7 @@ $root = ($ARG{'root'} || '/tftpboot');
 $header_directory = "$root/data/programming/c/headers";
 $program_install_directory = "$root/system/programs";
 # FIXME: Replace with the path under $root
-$library_include_directory = "$build_directory/../libraries/program";
+$library_include_directory = "$build_directory/../libraries/program:$build_directory/../libraries/common";
 $library_directory = "$root/data/programming/libraries/static";
 
 $include = "$build_directory/..:$header_directory:$library_include_directory";
