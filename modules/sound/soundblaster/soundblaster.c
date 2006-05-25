@@ -60,11 +60,13 @@ static uint8_t dsp_read (void)
     return port_uint8_in (DSP_DATA_READ);
 }
 
+#if FALSE
 static uint8_t dsp_mixer_read (uint8_t which_register)
 {
     port_uint8_out (DSP_MIXER_REGISTER, which_register);
     return port_uint8_in (DSP_MIXER_DATA);
 }
+#endif
 
 static void dsp_mixer_write (uint8_t which_register, uint8_t data)
 {
@@ -197,16 +199,20 @@ return_t module_start (void)
     soundblaster_device.supports_16bit_output = FALSE;
     soundblaster_device.supports_autoinit_dma = TRUE;
     soundblaster_device.device_name = "Sound Blaster 2.0";
- 
+
+    void *p;
+
     /* Register the DMA channel. */
     if (dma_register (soundblaster_device.dma_channel,
-                      (void **) &dma_buffer) != STORM_RETURN_SUCCESS)
+                      (void **) &p) != STORM_RETURN_SUCCESS)
     {
         log.print_formatted (LOG_URGENCY_INFORMATIVE,
                              "Failed to register DMA channel %u.",
                              soundblaster_device.dma_channel);
         return -1;
     }
+
+    dma_buffer = p;
 
     dsp_write (DSP_SPEAKER_ON);
   

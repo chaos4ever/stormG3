@@ -37,7 +37,7 @@ return_t vfs_assign (char *virtual, char *logical)
     // we just presume that both the virtual and logical parts are in
     // their roots.
 
-    void *p; // needed because of strict aliasing.
+    void *p = NULL; // needed because of strict aliasing.
     return_t return_value = memory_global_allocate ((void **) &p, sizeof (assign_t));
     if (return_value != STORM_RETURN_SUCCESS)
     {
