@@ -15,6 +15,9 @@
 #include <memory/memory.h>
 #include <vfs/vfs.h>
 
+#define DEBUG_INFO() \
+  debug_print ("Passed %s:%u (%s)\n", __FILE__, __LINE__, __FUNCTION__);
+
 /* The number of consoles that we are opening. */
 #define CONSOLES        2
 
@@ -93,8 +96,6 @@ return_t module_start (void)
         return return_value;
     }
 
-    while (TRUE);
-
     /* Run system initialization (start daemons etc). We do this
        through a program called boot. */
     // FIXME: Change the name of this to /system/programs/boot or
@@ -104,7 +105,7 @@ return_t module_start (void)
                              &handle);
     if (return_value != STORM_RETURN_SUCCESS)
     {
-        log.print (LOG_URGENCY_EMERGENCY, "Opening file failed.");
+        log.print (LOG_URGENCY_EMERGENCY, "Opening /boot failed.");
         return return_value;
     }
 
@@ -113,13 +114,15 @@ return_t module_start (void)
 
     if (return_value != STORM_RETURN_SUCCESS)
     {
-        log.print (LOG_URGENCY_EMERGENCY, "Getting information about file failed.");
+        log.print (LOG_URGENCY_EMERGENCY, "Getting information about /boot failed.");
         return return_value;
     }
-   
+
     /* Read the file. */
     uint32_t *buffer;
-    return_value = memory_global_allocate ((void **) &buffer, file_info.size);
+    void *p;
+    return_value = memory_global_allocate ((void **) &p, file_info.size);
+    buffer = p;
     memory_set_uint8 ((uint8_t *) buffer, 0, file_info.size);
     return_value = vfs.read (handle, buffer, file_info.size);
     if (return_value != STORM_RETURN_SUCCESS)
@@ -174,13 +177,12 @@ return_t module_start (void)
     /* Open virtual consoles. FIXME: Read a list from somewhere to
        know what consoles to open. If that list cannot be found, use
        some reasonable default. */
-#if FALSE
     console.open (&console_id[0], 0, 0, 0, CONSOLE_MODE_TEXT);
     console.output (console_id[0], "\e[1;37;44mSystem startup complete. åäö is working!\e[K\n");
     console.open (&console_id[1], 0, 0, 0, CONSOLE_MODE_TEXT);
     console.output (console_id[1], "Second console");
-#endif
 
-    /* Launch the programs assigned to each console. */
+    // TODO: Launch the programs assigned to each console, or perhaps
+    // this is better done from the boot program?
     return STORM_RETURN_SUCCESS;
 }
