@@ -1,0 +1,4969 @@
+2006-07-11 14:52  Per Lundberg <perlun@gmail.com>
+
+	* libraries/common/memory/memory.h: Added file
+
+2006-05-25 21:08  Per Lundberg <perlun@gmail.com>
+
+	* programs/Construct: Added library path
+
+2006-05-25 21:06  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/boot/boot.c: Made the code go through and fixed a
+	  construct in regard to strict aliasing, added a comment
+
+2006-05-25 21:04  Per Lundberg <perlun@gmail.com>
+
+	* modules/Construct: Turned on -Werror again
+
+2006-05-25 21:03  Per Lundberg <perlun@gmail.com>
+
+	* modules/: sound/soundblaster/soundblaster.c,
+	  filesystem/vfs/assign.c: Valid code with strict aliasing
+
+2006-05-25 21:02  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/console/console.c: Added Ctrl-Tab switching as
+	  well (good for Bochs)
+
+2006-05-22 16:26  Per Lundberg <perlun@gmail.com>
+
+	* programs/install.sh: Added FIXME
+
+2006-05-20 23:39  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/vfs/vfs.c,
+	  stormG3/include/storm/ia32/memory.h, stormG3/source/ia32/elf.c:
+	  The problem was because of .bss sections being more or less
+	  unimplemented which is now solved... :)
+
+2006-05-18 23:27  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/vfs/vfs.c: Localized the problem with the boot
+	  module not being able to come through properly. It seems that the
+	  ELF loading of modules is not properly functioning when it comes
+	  to the .data section; I will look more into this at some other
+	  time. But default values of variables are therefore not always
+	  working 100% right now which could cause any kind of weird
+	  bugs...
+
+2006-05-13 22:24  Per Lundberg <perlun@gmail.com>
+
+	* compile.sh: Fixed the code to be able to use the INSTALL_PREFIX
+	  properly.
+
+2006-05-13 22:23  Per Lundberg <perlun@gmail.com>
+
+	* libraries/common/unicode/unicode.c: Commented out code because of
+	  gcc warnings
+
+2006-05-13 22:22  Per Lundberg <perlun@gmail.com>
+
+	* programs/Construct: Commented out modplay because it doesn't
+	  compile right now
+
+2006-05-13 22:21  Per Lundberg <perlun@gmail.com>
+
+	* modules/Construct: Disabled -Werror because of the strict
+	  aliasing stuff
+
+2006-05-13 22:21  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/boot/boot.c: Tried to localize the reason for a
+	  segfault in the init process. Haven't located it yet though, it
+	  is after the while (TRUE) I've added at least
+
+2006-05-13 22:20  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/keyboard/: keyboard.c, keyboard.h: Fix to make it
+	  compile
+
+2006-05-13 22:17  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/vfs/: assign.c, mount.c, open.c: Some
+	  workarounds to the strict aliasing rule
+
+2006-05-13 22:05  Per Lundberg <perlun@gmail.com>
+
+	* libraries/module/Conscript: Added vfs and video since they now
+	  compile
+
+2006-05-13 22:05  Per Lundberg <perlun@gmail.com>
+
+	* libraries/module/: vfs/Conscript, video/Conscript: Fixes to get
+	  it compiling
+
+2002-12-20 21:51  Per Lundberg <perlun@gmail.com>
+
+	* libraries/module/log/return_values.h,
+	  libraries/module/video/defines.h,
+	  libraries/program/console/console.h,
+	  libraries/program/console/functions.h,
+	  libraries/program/console/return_values.h,
+	  libraries/program/console/types.h,
+	  libraries/program/kernel/functions.h,
+	  libraries/program/kernel/return_values.h,
+	  libraries/program/kernel/types.h,
+	  libraries/program/log/return_values.h,
+	  libraries/program/memory/defines.h,
+	  libraries/program/memory/functions.h,
+	  libraries/program/memory/inlines.h,
+	  libraries/program/memory/memory.h,
+	  libraries/program/memory/return_values.h,
+	  libraries/program/memory/types.h,
+	  libraries/program/sound/return_values.h, modules/Construct,
+	  programs/boot/boot.c, programs/modplay/modplay.c: Last checkin
+	  from me this year, so to all of you: happy new year! (This is
+	  just a big checkin to get the repository in touch with my working
+	  version; no big changes have been made. If someone wants to fix
+	  the mod player, be my guest)
+
+2002-12-20 21:49  Per Lundberg <perlun@gmail.com>
+
+	* protocol/video.h: Last checkin this year: happy new year!
+
+2002-12-17 23:05  Per Lundberg <perlun@gmail.com>
+
+	* programs/modplay/modplay.c: Added chaos header.
+
+2002-12-17 23:03  Per Lundberg <perlun@gmail.com>
+
+	* programs/modplay/modplay.h: New file.
+
+2002-12-17 23:03  Per Lundberg <perlun@gmail.com>
+
+	* programs/Construct: Change the include path properly.  Build
+	  modplay.
+
+2002-12-17 23:02  Per Lundberg <perlun@gmail.com>
+
+	* programs/modplay/modplay.c: Some minor patches.
+
+2002-12-17 22:54  Per Lundberg <perlun@gmail.com>
+
+	* libraries/program/: console/console.h, console/defines.h,
+	  console/functions.h, console/return_values.h, console/types.h,
+	  kernel/functions.h, kernel/return_values.h, kernel/types.h,
+	  sound/functions.h, sound/return_values.h, sound/types.h: New
+	  files.
+
+2002-12-17 22:54  Per Lundberg <perlun@gmail.com>
+
+	* libraries/program/log/return_values.h: Added a missing semicolon.
+
+2002-12-17 22:48  Per Lundberg <perlun@gmail.com>
+
+	* libraries/program/log/functions.h: New file.
+
+2002-12-17 22:48  Per Lundberg <perlun@gmail.com>
+
+	* libraries/program/log/: log.c, log.h, return_values.h, types.h:
+	  New files.
+
+2002-12-16 22:58  Per Lundberg <perlun@gmail.com>
+
+	* libraries/Construct: Added common/Conscript to the list of
+	  sub-scripts.
+
+2002-12-16 22:57  Per Lundberg <perlun@gmail.com>
+
+	* libraries/common/Conscript: Removed string/Conscript
+	  (non-existent).
+
+2002-12-16 22:57  Per Lundberg <perlun@gmail.com>
+
+	* libraries/common/unicode/Conscript: Updated to comply with new
+	  location (bug #55).
+
+2002-12-16 22:56  Per Lundberg <perlun@gmail.com>
+
+	* libraries/common/Conscript: New file.
+
+2002-12-16 22:36  Per Lundberg <perlun@gmail.com>
+
+	* libraries/module/video/: Conscript, defines.h, functions.h,
+	  return_values.h, types.h, video.c, video.h: Moved the video
+	  library to module/video.
+
+2002-12-14 12:22  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* modules/Construct: Added $build_directory/../libraries/common to
+	  the include-path.
+
+2002-12-14 08:25  Per Lundberg <perlun@gmail.com>
+
+	* libraries/common/unicode/: Conscript, functions.h,
+	  return_values.h, types.h, unicode.c, unicode.h: Moved the unicode
+	  library to common/unicode (bug #55).
+
+2002-12-14 08:23  Per Lundberg <perlun@gmail.com>
+
+	* libraries/common/string/: functions.h, inlines.h,
+	  return_values.h, string.h: Moved the string library to
+	  common/string (bug #55).
+
+2002-12-14 08:21  Per Lundberg <perlun@gmail.com>
+
+	* libraries/module/skeleton/: defines.h, functions.h,
+	  return_values.h, skeleton.c, skeleton.h, types.h: Moved the
+	  skeleton library to module/skeleton (bug #55).
+
+2002-12-12 23:10  Per Lundberg <perlun@gmail.com>
+
+	* programs/modplay/modplay.c: Started working on making the mod
+	  player work in the new architecture; quite a bit of work remains
+	  (it's not compiling yet).
+
+2002-12-12 23:10  Per Lundberg <perlun@gmail.com>
+
+	* modules/sound/soundblaster/Conscript: Link with -llog and
+	  -lsound.
+
+2002-12-12 23:09  Per Lundberg <perlun@gmail.com>
+
+	* modules/sound/soundblaster/soundblaster.c: Register a sound
+	  service.
+
+2002-12-12 23:08  Per Lundberg <perlun@gmail.com>
+
+	* protocol/keyboard.h: Moved from the libraries, since it's
+	  actually a protocol definition that will be used both from
+	  modules and from programs like cluido.
+
+2002-12-12 23:08  Per Lundberg <perlun@gmail.com>
+
+	* libraries/program/: kernel/kernel.h, sound/sound.h: New headers,
+	  used by the non-existing program libraries.
+
+2002-12-12 23:06  Per Lundberg <perlun@gmail.com>
+
+	* libraries/module/: Conscript, block/Conscript,
+	  checksum/Conscript, console/Conscript, console/console.h,
+	  exec/Conscript, filesystem/Conscript, log/Conscript: Changed the
+	  conscripts to work at the new location of the libraries.
+
+2002-12-12 23:06  Per Lundberg <perlun@gmail.com>
+
+	* libraries/module/sound/: functions.h, return_values.h, sound.c,
+	  sound.h, types.h: New files.
+
+2002-12-12 23:05  Per Lundberg <perlun@gmail.com>
+
+	* libraries/module/sound/Conscript: New file, used for compiling
+	  the sound library.
+
+2002-12-12 23:05  Per Lundberg <perlun@gmail.com>
+
+	* libraries/module/vfs/: Conscript, defines.h, functions.h,
+	  return_values.h, types.h, vfs.c, vfs.h: Moved from vfs to
+	  module/vfs (bug #55).
+
+2002-12-12 23:03  Per Lundberg <perlun@gmail.com>
+
+	* libraries/module/memory/memory.h: Moved from memory to
+	  module/memory (bug #55).
+
+2002-12-12 22:59  Per Lundberg <perlun@gmail.com>
+
+	* libraries/module/log/: Conscript, defines.h, functions.h, log.c,
+	  log.h, return_values.h, types.h: Moved the log library to
+	  module/log (bug #55).
+
+2002-12-12 22:57  Per Lundberg <perlun@gmail.com>
+
+	* libraries/module/filesystem/: Conscript, defines.h, filesystem.c,
+	  filesystem.h, functions.h, return_values.h, types.h: Moved the
+	  filesystem library to the module subdirectory (bug #55).
+
+2002-12-12 22:53  Per Lundberg <perlun@gmail.com>
+
+	* libraries/module/exec/: Conscript, exec.c, exec.h, functions.h,
+	  return_values.h, types.h: Moved the exec library to module/exec
+	  (bug #55).
+
+2002-12-12 22:52  Per Lundberg <perlun@gmail.com>
+
+	* libraries/module/console/: Conscript, console.c, console.h,
+	  defines.h, functions.h, return_values.h, types.h: Moved the
+	  console library to module/console (bug #55).
+
+2002-12-12 22:51  Per Lundberg <perlun@gmail.com>
+
+	* libraries/module/checksum/: Conscript, checksum.h, crc32.c,
+	  defines.h, functions.h, md5.c, types.h: Moved the checksum
+	  library to module/checksum (bug #55).
+
+2002-12-12 22:49  Per Lundberg <perlun@gmail.com>
+
+	* libraries/module/block/: Conscript, block.c, block.h,
+	  functions.h, return_values.h, types.h: Moved the block library to
+	  module/block (bug #55).
+
+2002-12-12 22:48  Per Lundberg <perlun@gmail.com>
+
+	* libraries/module/ethernet/: defines.h, ethernet.h, functions.h,
+	  return_values.h, types.h: Moved ethernet to module/ethernet (bug
+	  #55).
+
+2002-12-08 22:54  Per Lundberg <perlun@gmail.com>
+
+	* libraries/Construct: Made it compile with the sound and kernel
+	  library (everything else still needs to be moved though).
+
+2002-12-08 22:26  Per Lundberg <perlun@gmail.com>
+
+	* libraries/: module/Conscript, program/Conscript: New file
+
+2002-12-08 22:18  Per Lundberg <perlun@gmail.com>
+
+	* libraries/program/README: README
+
+2002-12-08 21:09  Per Lundberg <perlun@gmail.com>
+
+	* libraries/module/kernel/: Conscript, functions.h, kernel.c,
+	  kernel.h, return_values.h, types.h: Moved from libraries/kernel.
+
+2002-12-08 21:04  Per Lundberg <perlun@gmail.com>
+
+	* protocol/sound.h: New file.
+
+2002-12-08 21:04  Per Lundberg <perlun@gmail.com>
+
+	* modules/Construct: Add libraries/module to the include path.
+
+2002-12-08 20:59  Per Lundberg <perlun@gmail.com>
+
+	* libraries/Construct: Added module to the include path.
+
+2002-12-08 20:39  Per Lundberg <perlun@gmail.com>
+
+	* libraries/module/README: New file
+
+2002-12-05 00:23  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* clean.sh: A clean-script so you can force a rebuild of
+	  everything.
+
+2002-12-04 22:51  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/log/log.c: Set the device vendor to N/A.
+
+2002-12-04 22:47  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/console/console.c: Set the device_vendor to N/A
+	  (not a device).
+
+2002-12-03 22:54  Per Lundberg <perlun@gmail.com>
+
+	* modules/sound/soundblaster/soundblaster.c: Started preparing for
+	  the sound_register () function in the not-yet-existing sound
+	  library.
+
+2002-12-03 22:49  Per Lundberg <perlun@gmail.com>
+
+	* protocol/exec.h: Moved from libraries/exec/defines.h
+
+2002-12-03 19:15  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* programs/boot/boot.c: Added one missing component when filling up
+	  a service_lookup_t structure.
+
+2002-12-03 19:10  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* protocol/log.h: Changed LOG_MAGIC_COOKIE -> LOG_COOKIE
+
+2002-12-03 19:08  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* modules/system/: elf/elf.c, kernel/kernel.c, log/log.c: Changed
+	  vendor -> service_vendor
+
+2002-12-03 19:07  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* protocol/console.h: Changed CONSOLE_MAGIC_COOKIE ->
+	  CONSOLE_COOKIE
+
+2002-12-03 19:05  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* modules/: filesystem/vfs/vfs.c, graphics/vga/vga.c,
+	  system/console/console.c: Changed vendor -> service_vendor
+
+2002-12-03 19:03  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* protocol/vfs.h: Changed VFS_MAGIC_COOKIE -> VFS_COOKIE
+
+2002-12-03 19:02  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* protocol/filesystem.h: Changed FILESYSTEM_MAGIC_COOKIE ->
+	  FILESYSTEM_COOKIE
+
+2002-12-03 19:00  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* modules/: block/initial_ramdisk/initial_ramdisk.c,
+	  filesystem/minix/minix.c: Changed vendor -> service_vendor
+
+2002-12-03 15:45  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* protocol/video.h: Moved from libraries/video/defines.h.
+
+2002-12-03 15:38  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* protocol/vfs.h: Moved from libraries/vfs/defines.h.
+
+2002-12-03 15:32  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* protocol/log.h: Moved from libraries/log/defines.h (more or less)
+
+2002-12-03 15:25  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* protocol/filesystem.h: Moved from libraries/filesystem/defines.h
+
+2002-12-03 15:19  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* protocol/console.h: Ehm, missed one thing when I copy'n'pasted.
+	  :)
+
+2002-12-03 15:11  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* protocol/console.h: Definition of the console protocol, moved
+	  party from libraries/console/defines.h.
+
+2002-12-03 15:04  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* protocol/block.h: Changed the Abstract
+
+2002-12-03 14:46  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* protocol/block.h: Added @file in the top
+
+2002-12-03 12:51  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* compile.sh: compile.sh now creates relative symlinks for
+	  current-arch.
+
+2002-12-02 23:07  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/defines.h: Changed SERVICE_NAME_LENGTH to
+	  SERVICE_PROTOCOL_NAME_LENGTH.  New define:
+	  SERVICE_DEVICE_VENDOR_LENGTH.
+
+2002-12-02 23:05  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/interface.h: Changed the service_lookup ()
+	  prototype.
+
+2002-12-02 23:04  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/types.h: Two vendor names.
+
+2002-12-02 23:04  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/service.h: Changed to have two vendor
+	  names.
+
+2002-12-02 23:03  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/system_call.c: Use new service_lookup ()
+	  prototype.
+
+2002-12-02 22:56  Per Lundberg <perlun@gmail.com>
+
+	* protocol/block.h: Moved from libraries/block.
+
+2002-12-02 22:51  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/service.c: Fixed service_lookup to not take
+	  so many parameters.  Also, implemented support for two vendors:
+	  one for the actual hardware (if the service implements support
+	  for some hardware), and one for the service.	This was highly
+	  needed; it will break all existing services but they are really
+	  trivial to fix...
+
+2002-12-02 22:22  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/boot/boot.c: CVS confusion, somehow...
+
+2002-12-02 21:53  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/kernel/kernel.c: Remove a debug print.
+
+2002-12-02 21:53  Per Lundberg <perlun@gmail.com>
+
+	* programs/boot/boot.c: Use KERNEL_PROTOCOL_* instead of
+	  KERNEL_SERVICE_* (new nomenclature).
+
+2002-12-02 21:49  Per Lundberg <perlun@gmail.com>
+
+	* protocol/kernel.h: Added Doxygen header.
+
+2002-12-02 21:47  Per Lundberg <perlun@gmail.com>
+
+	* protocol/kernel.h: Moved from protocols and changed to comply
+	  with the new way of doing things.
+
+2002-12-02 21:41  Per Lundberg <perlun@gmail.com>
+
+	* protocol/README: Moved from protocols and updated the information
+	  to fit with the new nomenclature.
+
+2002-12-02 21:38  Per Lundberg <perlun@gmail.com>
+
+	* programs/boot/boot.c: Improved indentation. :)
+
+2002-12-02 21:38  Per Lundberg <perlun@gmail.com>
+
+	* libraries/Construct, modules/Construct, programs/Construct: Added
+	  $build_directory/.. to the include path, to ease in the move of
+	  protocol definitions to ../protocols.
+
+2002-12-02 00:01  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/Construct: Added compile={debug,release} options.
+
+2002-12-02 00:00  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/dispatch.c: Initialize
+	  dispatch_current_thread () properly.
+
+2002-12-02 00:00  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/gdb.c: Set remote_debug to 0.
+
+2002-12-02 00:00  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/irq_handlers.S: Do a CLI in the beginning of
+	  the interrupt handler.
+
+2002-12-01 23:59  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_virtual.c: Changed some symbol names.
+
+2002-12-01 23:58  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/process.c: Removed some debugging code.
+
+2002-12-01 23:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/service.c: Use dispatch_* variables.
+
+2002-12-01 23:55  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_physical.c: Closes bug #58. Silly,
+	  silly, silly.
+
+2002-11-30 17:30  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/Construct: Remove -O3 (it doesn't work so well with
+	  debugging).  We should really set up a "release" command line
+	  switch to add -O3 and -fomit-frame-pointer, it would be very
+	  good.
+
+2002-11-30 13:16  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/system_call.c: Use the dispatch_* symbols.
+
+2002-11-30 13:13  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/init.c: Changed BREAKPOINT to
+	  DEBUG_BREAKPOINT.
+
+2002-11-30 13:07  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/TEMPLATE: Added boilerplate header that can be added
+	  easily into new files.
+
+2002-11-30 13:03  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/: debug.h, gdb.h: Moved BREAKPOINT to
+	  debug.h and renamed it to GDB_BREAKPOINT.
+
+2002-11-30 12:56  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/process.c: Use dispatch_* variables.
+
+2002-11-30 12:53  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory_virtual.h: Improved
+	  indentation.
+
+2002-11-30 12:49  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/dispatch.h: Export
+	  dispatch_current_tss.
+
+2002-11-30 12:46  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/timer.c: Use dispatch_ticks instead of ticks.
+
+2002-11-30 12:44  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/exception.c: Use the new dispatch_* names.
+
+2002-11-30 12:43  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/ia32/dispatch.h, source/ia32/dispatch.c:
+	  Changed the exported variables to be dispatch_*, per convention.
+
+2002-11-30 12:23  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/exception.h: Changed the page fault
+	  handler prototype.
+
+2002-11-30 12:23  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/exception.c: Handle page faults even if GDB
+	  is enabled.  Also, add a return value in the PF handler to be
+	  able to differentiate between valid and invalid page faults.
+
+2002-11-30 12:21  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/exception_lowlevel.S: Added code for hooking
+	  into the GDB code if enabled and the page fault generated is an
+	  actual error.
+
+2002-11-30 12:20  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/gdb.c: Don't hook page fault; rather let the
+	  ordinary exception handler redirect to us if the page fault is
+	  actually caused by an error. Neccessary to make lazy allocation
+	  of the stack work.
+
+2002-11-28 21:46  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/cpu.h: Improved the indentation.
+
+2002-11-28 21:42  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/: exception.c, process.c: Weird... the chaos
+	  line was wrong.
+
+2002-11-28 21:40  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/Construct: Don't use -fomit-frame-pointer; it makes
+	  backtraces impossible with GDB.  (Thanks to the people on
+	  chaos-misc who pointed this out)
+
+2002-11-26 22:11  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/debug.sh: Added debugging script.
+
+2002-11-26 22:10  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/Construct: Added a space so we can pass kernel define
+	  options (neccessary for doing GDB debugging for example).
+
+2002-11-26 22:10  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/README: Improved the README a wee bit.
+
+2002-11-26 08:09  Per Lundberg <perlun@gmail.com>
+
+	* README: Added binutils link.
+
+2002-11-23 12:43  Per Lundberg <perlun@gmail.com>
+
+	* README.Linux: Added Mandrake to the list of successful
+	  compilations.
+
+2002-11-21 22:48  Per Lundberg <perlun@gmail.com>
+
+	* modules/block/initial_ramdisk/: Conscript, initial_ramdisk.c: Use
+	  block_register () in -lblock.
+
+2002-11-21 22:48  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/minix/: Conscript, minix.c: Link with
+	  -lfilesystem and use filesystem_register () to register our
+	  service.
+
+2002-11-21 22:48  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/vfs/: Conscript, vfs.c: Use -lvfs and
+	  vfs_register ().
+
+2002-11-21 22:47  Per Lundberg <perlun@gmail.com>
+
+	* modules/graphics/vga/: Conscript, vga.c: Use video_register ()
+	  and link with -lvideo.
+
+2002-11-21 22:47  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/console/: Conscript, console.c: Use
+	  console_register () and link with the -lconsole library.
+
+2002-11-21 22:46  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/elf/elf.c: Use exec_register (), and link with the
+	  exec library accordingly.
+
+2002-11-21 22:46  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/kernel/kernel.c: Use new kernel_register ().
+	  Fixed kernel_log () to work.
+
+2002-11-21 22:45  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/log/Conscript: Link with the -llog library.
+
+2002-11-21 22:43  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/log/log.c: Use new log_register () function.
+
+2002-11-21 22:42  Per Lundberg <perlun@gmail.com>
+
+	* programs/boot/boot.c: Test the service_* system calls.
+
+2002-11-21 22:27  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/dist.sh: Added some stuff for creating a distribution
+	  archive.
+
+2002-11-21 22:11  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/Construct: Added a commented dist target.
+
+2002-11-21 21:50  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/service.c: Working service_invoke ()! Praise
+	  the Lord.
+
+2002-11-20 21:14  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/types.h: Use service_function_t instead of
+	  function_t in service_method_t.
+
+2002-11-20 21:14  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/service.h: Replace function_t with
+	  service_function_t.
+
+2002-11-15 20:52  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/types.h: New type: service_method_id_t New
+	  structure: service_register_t New structure: service_method_t
+
+2002-11-15 20:51  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/interface.h: Modified the prototype to
+	  service_register.
+
+2002-11-15 20:50  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/service.h: New fields in
+	  service_connection_t.  New structure: service_method_data_t.
+
+2002-11-15 20:36  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/service.c: Started adding support for service
+	  methods (to provide services to user level processes).
+
+2002-11-15 19:51  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/header.html: Added Doxygen header.
+
+2002-11-14 13:26  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/main.c: Changed STORM_VERSION to
+	  STORM_VERSION_STRING.
+
+2002-11-14 13:26  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/config.h: Renamed STORM_VERSION to
+	  STORM_VERSION_STRING.
+
+2002-11-14 13:24  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/config.h, Construct: Moved the version
+	  string into the Construct, so that we can start making a 'dist'
+	  target.
+
+2002-11-13 22:20  Per Lundberg <perlun@gmail.com>
+
+	* 00-INDEX: Added a blank line in the beginning of the file.
+
+2002-11-13 22:17  Per Lundberg <perlun@gmail.com>
+
+	* 00-INDEX: Fixed the format of 00-INDEX to be something compatible
+	  with LXR...
+
+2002-11-13 22:14  Per Lundberg <perlun@gmail.com>
+
+	* 00-INDEX: Added a neat little index file for use by LXR.
+
+2002-11-13 21:17  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/README: Added README file.
+
+2002-11-13 21:13  Per Lundberg <perlun@gmail.com>
+
+	* programs/install.sh, programs/README, libraries/README: Change Id
+	  to chaos.
+
+2002-11-13 21:13  Per Lundberg <perlun@gmail.com>
+
+	* compile.sh: Added some comments.
+
+2002-11-13 21:04  Per Lundberg <perlun@gmail.com>
+
+	* compile.sh: The chaos tag should work now, as well as the mailing
+	  list.
+
+2002-11-13 20:50  Per Lundberg <perlun@gmail.com>
+
+	* compile.sh: Changed Id to chaos.
+
+2002-11-13 17:38  Per Lundberg <perlun@gmail.com>
+
+	* programs/modplay/: BREATH.MOD, Conscript, modfile.h, modplay.c:
+	  Added the mod player.
+
+2002-11-03 23:29  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/service.h: Fixed a typo.
+
+2002-11-03 23:29  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/service.c: Added the service_invoke function
+	  (even though it's not implemented yet).
+
+2002-11-03 23:26  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/service.h: Added service_invoke ()
+	  prototype.
+
+2002-11-03 23:26  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/system_call.h: Implemented
+	  service_invoke.
+
+2002-11-03 23:25  Per Lundberg <perlun@gmail.com>
+
+	* programs/boot/boot.c: Use service_invoke.
+
+2002-11-03 23:22  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/system_call.c: Implemented service_invoke.
+
+2002-11-03 23:22  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/debug.c: Added (broken) support for printing
+	  64-bit numbers.
+
+2002-10-30 23:43  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/service.c: Added locking.
+
+2002-10-30 23:40  Per Lundberg <perlun@gmail.com>
+
+	* programs/boot/boot.c: Test the new syscalls.
+
+2002-10-30 23:40  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/service.c: Fixed service_connect () and
+	  service_close (). Seems to work but we need service_invoke () to
+	  be able to test them. :) Wait until Sunday for that.
+
+2002-10-30 23:38  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/service.h: New member:
+	  service_data_t::reference count New member:
+	  service_connection_t::id
+
+2002-10-30 23:13  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/types.h: service_connection_id_t needs to
+	  be 64 bit.
+
+2002-10-29 23:46  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/service.c: OUT_OF_MEMORY is a better return
+	  value I believe.
+
+2002-10-29 23:37  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/ia32/service.h,
+	  include/storm/ia32/system_call.h, source/ia32/system_call.c:
+	  Started working on the service_connect () and service_close ()
+	  syscalls.
+
+2002-10-29 23:36  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/return_value.h: New return value:
+	  STORM_RETURN_ACCESS_DENIED
+
+2002-10-29 23:36  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: source/ia32/service.c, include/storm/interface.h:
+	  Changed service_lookup to not allocate memory for the caller.
+	  This is an intentional cleanup that will cause a lot of breakage
+	  for the moment, until we've fixed all the modules to allocate
+	  memory themselves.
+
+2002-10-29 21:49  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/types.h: New type: service_id_t New type:
+	  service_connection_id_t New member: service_t::id Renamed member:
+	  service_t::id->device_id Renamed member:
+	  service_lookup_t::id->device_id Doxygented the service_lookup_t
+	  structure.
+
+2002-10-29 21:48  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/service.h: Added numeric id to the
+	  structure.
+
+2002-10-29 21:47  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/system_call.h: New inline function:
+	  system_call_connect () New inline function: system_call_close ()
+
+2002-10-29 21:47  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/Conscript: New module: kernel
+
+2002-10-29 21:45  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/service.c: Added support for numeric service
+	  IDs (unique).
+
+2002-10-29 21:44  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/system_call.c: id was renamed to device_id
+
+2002-10-28 23:29  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/kernel/: Conscript, kernel.c: New module.
+
+2002-10-28 23:28  Per Lundberg <perlun@gmail.com>
+
+	* libraries/Construct: Added kernel service library.
+
+2002-10-28 23:27  Per Lundberg <perlun@gmail.com>
+
+	* programs/boot/boot.c: Updated the testing a bit.
+
+2002-10-28 23:26  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/system_call.c: Implemented the
+	  SYSTEM_CALL_SERVICE_LOOKUP.
+
+2002-10-28 23:24  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/system_call.h: Added some helper
+	  functions to read the caller stack.
+
+2002-10-28 23:09  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/system_call.h: %6 instead of %9 (typo)
+
+2002-10-28 23:08  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/system_call.h: system_call returns
+	  return_t New inline function: system_call_service_lookup()
+
+2002-10-28 23:07  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/types.h: New type: service_lookup_t (FIXME:
+	  Document this).
+
+2002-10-28 22:50  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/storm.h: Include system_call.h
+
+2002-10-28 22:50  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/Conscript: Install system_call.h
+
+2002-10-28 22:50  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/types.h: Better spacing.
+
+2002-10-28 22:49  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/defines.h: Defined our 4 system calls.
+
+2002-10-28 22:45  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/interface.h, source/ia32/service.c: Use
+	  const char * for strings.
+
+2002-10-28 21:05  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Export port_range_unregister, since
+	  it was implemented.
+
+2002-10-28 09:15  Per Lundberg <perlun@gmail.com>
+
+	* modules/: filesystem/minix/minix.c, filesystem/vfs/vfs.c,
+	  graphics/vga/vga.c, system/console/console.c, system/log/log.c:
+	  Use major/minor versions.
+
+2002-10-28 09:13  Per Lundberg <perlun@gmail.com>
+
+	* modules/block/initial_ramdisk/initial_ramdisk.c: Use major/minor
+	  service versions.
+
+2002-10-28 08:52  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/interface.h: Modified the service_
+	  functions to take major/minor versions.
+
+2002-10-28 08:52  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/service.c: Added support for major/minor
+	  versioning of services.
+
+2002-10-28 08:51  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/types.h: Change to major/minor versioning.
+
+2002-10-28 08:46  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/config.h: Bumped the version number, since
+	  we now have rudimentary process support.
+
+2002-10-28 08:44  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/service.h: Added major & minor
+	  version.
+
+2002-10-27 23:45  Per Lundberg <perlun@gmail.com>
+
+	* README: Oops, the formatting was completely whacked.
+
+2002-10-27 23:44  Per Lundberg <perlun@gmail.com>
+
+	* README: Update the nice footer as well.
+
+2002-10-27 23:43  Per Lundberg <perlun@gmail.com>
+
+	* README: We are not using the "old" UCB BSD license. Fixed
+	  reference.
+
+2002-10-27 21:31  Per Lundberg <perlun@gmail.com>
+
+	* documentation/filesystem_hierarchy.xml: Fixed a typo.
+
+2002-10-27 21:30  Per Lundberg <perlun@gmail.com>
+
+	* programs/boot/boot.c, stormG3/source/ia32/system_call.c: Added a
+	  parameter to the system call; the number of arguments (for easy
+	  parameter-passing).
+
+2002-10-27 17:53  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* documentation/filesystem_hierarchy.xml: Introduction. More to
+	  come.
+
+2002-10-27 15:49  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* README: Changed "the BSD without advertisement clause" to the
+	  "BSD license" in README, and http://www.chaosdev.org to
+	  http://web.chaosdev.org. Some other minor changes too.
+
+2002-10-25 10:09  Per Lundberg <perlun@gmail.com>
+
+	* libraries/libraries.make: Removed a file that's not used.
+
+2002-10-25 00:16  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/elf/elf.c: Support sections that are put into the
+	  same virtual page.
+
+2002-10-25 00:15  Per Lundberg <perlun@gmail.com>
+
+	* programs/boot/boot.c: Just a stupid program right now, that tests
+	  the kernel.
+
+2002-10-25 00:14  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/capability.c: Removed an extra blank (...)
+
+2002-10-25 00:14  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/system_call_lowlevel.S: Push the address of
+	  the caller's stack as a function argument to the system call so
+	  we can read the parameters that was passed.
+
+2002-10-25 00:13  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/system_call.c: Just a phony system call for
+	  now. It takes the first parameter passed as a string pointer and
+	  prints the contents of the string.
+
+2002-10-25 00:13  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/system_call.h: Change the prototype of
+	  system_call() to take a parameter.
+
+2002-10-24 23:52  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: source/ia32/capability.c,
+	  include/storm/ia32/capability.h: New function: capability_clone()
+
+2002-10-24 23:52  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/process.c: Added cloning of the capabilities.
+
+2002-10-24 23:51  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/system_call_lowlevel.S: Fixed a critical bug
+	  regarding the pops.
+
+2002-10-24 23:38  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/storm.h: Include storm/ia32/spinlock.h
+
+2002-10-24 23:37  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/spinlock.h: Wrapped the code in
+	  __STORM_KERNEL__ || __STORM_KERNEL_MODULE__ ifdefs.
+
+2002-10-24 23:37  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/idt.h: Reformatted the file.
+
+2002-10-24 23:37  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/capability.h: Removed much code that's
+	  now in storm/ia32/defines.h or storm/ia32/types.h
+
+2002-10-24 23:37  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/Conscript: Install spinlock.h
+
+2002-10-24 23:36  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/types.h: New type: thread_id_t()
+
+2002-10-24 23:36  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/interface.h: Improved capability_add and
+	  capability_has
+
+2002-10-24 23:35  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/defines.h: Added lots of defines that's
+	  needed by include/storm/ia32/types.h
+
+2002-10-24 23:35  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/Conscript: Use qq()
+
+2002-10-24 23:33  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/: process.h, thread.h, tss.h, types.h:
+	  Moved lots of stuff to types.h that needs to be accessible from
+	  "module space".
+
+2002-10-24 23:31  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/main.c: Run system_call_init()
+
+2002-10-24 23:31  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/ia32/system_call.h,
+	  source/ia32/system_call.c: New file; used for system calls.
+
+2002-10-24 23:31  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/: Conscript, system_call_lowlevel.S: Added
+	  lowlevel system call file.
+
+2002-10-24 23:28  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/process.c: Use new capability_add syntax.
+
+2002-10-24 23:14  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/capability.c: New parameter, used when we
+	  already know the process_t * (much more efficient than looking
+	  through a list that may be quite long).
+
+2002-10-24 22:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: source/ia32/irq.c, include/storm/ia32/irq.h: Don't use
+	  IDT_ENTRY, it's unclear what it is.
+
+2002-10-24 22:50  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/capability.c: I don't like typos...
+
+2002-10-24 22:48  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/capability.c: Added some code to take care of
+	  bad code that doesn't check the return value properly.
+
+2002-10-24 22:41  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: source/ia32/module.c, source/ia32/memory_virtual.c,
+	  include/storm/interface.h: New function: memory_virtual_find()
+
+2002-10-24 22:29  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/return_value.h: Fixed an indentation
+	  problem.
+
+2002-10-23 23:50  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/cpu.c: Don't print, we've not initialized
+	  debugging yet.
+
+2002-10-23 23:37  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/cpu.h: Removed the name of a union,
+	  since we can have very nifty nameless unions in gcc.
+
+2002-10-23 23:37  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/cpu.c: Added FPU initialization.
+
+2002-10-23 23:24  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/exception.c: Got rid of a debug_print() line.
+
+2002-10-23 23:20  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/process.c: Removed a debug message.
+
+2002-10-23 23:09  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/irq.c: Don't print; it's not an error. :)
+
+2002-10-23 23:07  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/process.c: Add the capability
+	  kernel::super_user for the kernel process.
+
+2002-10-23 23:06  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/process.h: Added prototype for
+	  process_find()
+
+2002-10-23 23:06  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/debug.h: New macro: DEBUG_INFO()
+
+2002-10-23 23:05  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/ia32/capability.h,
+	  source/ia32/capability.c: Working capabilities support (closes
+	  bug #11)
+
+2002-10-23 23:03  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/interface.h: New prototype: capability_add
+	  New prototype: capability_has
+
+2002-10-23 23:02  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/spinlock.h: The Saga Goes On.
+
+2002-10-23 22:45  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/spinlock.h: Stupid typos... :)
+
+2002-10-23 22:32  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/spinlock.h: It's better to have
+	  SPIN_UNLOCKED be == 0, so that uninitialized spinlocks doesn't
+	  lock forever...
+
+2002-10-23 09:30  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/elf/elf.c: Got rid of references to
+	  page_directory_t (it is not exported to kernel modules any more)
+
+2002-10-23 09:29  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/vfs/vfs.h: Include <memory/memroy.h>
+
+2002-10-23 09:29  Per Lundberg <perlun@gmail.com>
+
+	* modules/: block/initial_ramdisk/initial_ramdisk.c,
+	  filesystem/minix/minix.c, graphics/vga/vga.c, system/boot/boot.c,
+	  system/console/console.c, system/console/console_output.c,
+	  system/keyboard/keyboard.c: Include <memory/memory.h>
+
+2002-10-23 09:28  Per Lundberg <perlun@gmail.com>
+
+	* modules/Construct: Define -D__STORM_KERNEL_MODULE__
+
+2002-10-23 09:28  Per Lundberg <perlun@gmail.com>
+
+	* libraries/Construct: Add -D__STORM_KERNEL_MODULE__
+
+2002-10-23 09:27  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/halt.h: Removed a file that was no
+	  longer needed.
+
+2002-10-23 09:27  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/port.h: Got rid of many #includes that
+	  broke the file when used from modules.
+
+2002-10-23 09:26  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory_virtual.h: Shrinked a lot
+	  because of functions and flags moved to defines.h and
+	  storm/interface.h
+
+2002-10-23 09:26  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory_physical.h: Moved
+	  memory_physical_deallocate() to storm/interface.h
+
+2002-10-23 09:26  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/defines.h: Added page directory/table
+	  flags (PAGE_*)
+
+2002-10-23 09:25  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/: storm.h, ia32/bit.h: Improved doxygen
+	  comments.
+
+2002-10-23 09:25  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/interface.h: New prototype: halt() New
+	  prototype: memory_physical_deallocate() New prototype:
+	  memory_virtual_map() New prototype: process_precreate() New
+	  prototype: process_create()
+
+2002-10-23 09:24  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/defines.h: Added HALT enums.
+
+2002-10-23 09:23  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/process.h: Moved process_create and
+	  process_precreate to storm/interface.h
+
+2002-10-23 09:22  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/types.h: New type: page_number_t
+
+2002-10-23 09:22  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/halt.c: Don't include halt.h since it doesn't
+	  exist any more.
+
+2002-10-23 09:21  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_virtual.c: Use void * instead of
+	  page_directory_t * in the prototype.
+
+2002-10-23 09:21  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Include a lot less files.
+
+2002-10-23 09:20  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/process.c: Use void * instead of
+	  page_directory_t *, so we don't have to export the IA32 page
+	  directory type to userspace.
+
+2002-10-23 09:20  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/doxygen: Exclude symlinks from the documentation.
+
+2002-10-22 23:14  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/: Conscript, storm.h: Install bit.h as
+	  well.
+
+2002-10-22 23:11  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/port.c: Include string.h
+
+2002-10-22 23:10  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/: Conscript, port.h: Install port.h;
+	  it's good to have this exported by the kernel since it's
+	  architecture-specific.
+
+2002-10-22 23:05  Per Lundberg <perlun@gmail.com>
+
+	* compile.sh: Set up current-arch symlinks.
+
+2002-10-22 23:03  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/interface.h: Fixed a typo.
+
+2002-10-22 23:02  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/module.h: Moved module_start() prototype to
+	  interface.h where it belongs.
+
+2002-10-22 23:00  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/doxygen: Predefine __STORM_KERNEL__ instead of STORM.
+
+2002-10-22 23:00  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/defines.h: New define: SERVICE_NAME_LENGTH
+	  New define: SERVICE_VENDOR_LENGTH New define:
+	  SERVICE_MODEL_LENGTH New define: SERVICE_ID_LENGTH
+
+2002-10-22 22:59  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/interface.h: New file; here we put all the
+	  functions that are exported by the kernel.
+
+2002-10-22 22:58  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/storm.h: Removed all the prototypes and
+	  data types; all this file does now is to include other files.
+
+2002-10-22 22:58  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/types.h: New type: irq_handler_t New type:
+	  process_id_t New type: service_info_t New type: service_t
+
+2002-10-22 22:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/storm.h: New file; used for getting
+	  all the architecture-specific includes (since they might differ
+	  between architectures).
+
+2002-10-22 22:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/Conscript: Install defines.h
+
+2002-10-22 22:56  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/defines.h: Wrap the code inside
+	  __STORM_KERNEL__ || __STORM_KERNEL_MODULE__ defines.
+
+2002-10-22 22:56  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/service.h: Moved lots of the code to
+	  storm/interface.h so that it can be properly exported in the
+	  kernel ABI.
+
+2002-10-22 22:45  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/: Conscript, ia32/Conscript: Decreased the
+	  number of header files that get installed heavily. All functions
+	  that get exported is now in interface.h
+
+2002-10-22 22:44  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/Construct: Changed -DSTORM to -D__STORM_KERNEL__ to avoid
+	  namespace collisions.
+
+2002-10-22 22:41  Per Lundberg <perlun@gmail.com>
+
+	* documentation/system_security_overview/systems.xml: Added some
+	  more text.
+
+2002-10-22 22:41  Per Lundberg <perlun@gmail.com>
+
+	*
+	  documentation/system_security_overview/system_security_overview.xml:
+	  Added implementation.xml
+
+2002-10-22 22:40  Per Lundberg <perlun@gmail.com>
+
+	* documentation/system_security_overview/: problem.xml,
+	  solution.xml: Reformatted.
+
+2002-10-22 22:40  Per Lundberg <perlun@gmail.com>
+
+	* documentation/system_security_overview/introduction.xml:
+	  Reformatted the text from Henrik a bit.
+
+2002-10-22 22:39  Per Lundberg <perlun@gmail.com>
+
+	* documentation/system_security_overview/implementation.xml: New
+	  file with implementation details.
+
+2002-10-22 21:42  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/types.h: Improved the spacing a bit.
+
+2002-10-22 21:42  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory_physical.h: Moved
+	  memory_physical_allocate to storm/interface.h Got rid of
+	  memory_physical_allocate_for_process.
+
+2002-10-22 21:41  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/process.h: Got rid of process_id_t
+	  (relax, it's in storm/interface.h :)
+
+2002-10-22 21:41  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/dispatch.c: Include storm/ia32/port.h
+
+2002-10-22 21:40  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/: exception.c, dma.c: Include
+	  storm/return_value.h
+
+2002-10-22 21:40  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/port.c: Changed unsigned int to size_t
+
+2002-10-22 21:37  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/port.h: Moved port_range_register and
+	  _unregister to storm/interface.h
+
+2002-10-22 21:34  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory_global.h: Moved
+	  memory_global_allocate() and memory_global_deallocate() to the
+	  newly created storm/interface.h
+
+2002-10-22 20:37  Per Lundberg <perlun@gmail.com>
+
+	* documentation/system_security_overview/: custom.dsl, makefile:
+	  Use a custom DSSSL stylesheet.
+
+2002-10-22 20:37  Per Lundberg <perlun@gmail.com>
+
+	*
+	  documentation/system_security_overview/system_security_overview.css:
+	  Added CSS file that we now use.
+
+2002-10-21 23:49  Per Lundberg <perlun@gmail.com>
+
+	* documentation/system_security_overview/problem.xml: Added some
+	  more on the problem.
+
+2002-10-21 23:47  Per Lundberg <perlun@gmail.com>
+
+	* documentation/system_security_overview/solution.xml: Added some
+	  text of the nice, good chaos solution.
+
+2002-10-21 23:41  Per Lundberg <perlun@gmail.com>
+
+	*
+	  documentation/system_security_overview/system_security_overview.xml:
+	  We need to include the solution as well. :)
+
+2002-10-21 23:34  Per Lundberg <perlun@gmail.com>
+
+	* documentation/system_security_overview/: introduction.xml,
+	  license.xml, makefile, problem.xml, solution.xml,
+	  system_security_overview.xml, systems.xml: First version of the
+	  System Security Overview.
+
+2002-10-21 23:21  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/license.xml: We are not "THE REGENTS". :-)
+
+2002-10-21 22:53  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory_virtual.h: New define:
+	  PAGE_USER (for pages allocated for a user process).
+
+2002-10-21 22:33  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/exception.c: Working stack support (for 1
+	  thread at least. :)
+
+2002-10-21 22:27  Per Lundberg <perlun@gmail.com>
+
+	* documentation/System Security Overview: Removed the file; it is
+	  now in a separate subdirectory in Docbook XML form instead.
+
+2002-10-21 21:31  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Export memory_physical_allocate and
+	  deallocate
+
+2002-10-21 18:46  Per Lundberg <perlun@gmail.com>
+
+	* documentation/System Security Overview: First version; soon to be
+	  rewritten as Docbook/XML
+
+2002-10-21 11:21  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/exception.c: Added dynamic stack allocation
+	  (doesn't seem to work 100% yet though, and will probably need
+	  some modifications when we start doing multiple threads).
+
+2002-10-21 11:20  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/elf/elf.c: Use new memory_physical_allocate
+
+2002-10-20 21:32  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory_physical.h: New field:
+	  page_process_t::pages Got rid of _for_process functions; merged
+	  them with the main functions instead.
+
+2002-10-20 21:31  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/elf.c: Use new memory_physical
+
+2002-10-20 21:31  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/: memory_global.c, dma.c: Use new
+	  memory_physical_allocate
+
+2002-10-20 21:30  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_physical.c: Removed the _for_process
+	  stuff and moved it into the ordinary functions.
+
+2002-10-20 21:30  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_virtual.c: Use new
+	  memory_physical_allocate.
+
+2002-10-20 21:29  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Remove the _for_process functions
+	  (they are now redundant).
+
+2002-10-20 21:26  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/process.c: Use new memory_physical_allocate
+	  (with process_id).
+
+2002-10-20 18:48  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/process.h: New define: PROCESS_ID_NONE
+
+2002-10-20 18:36  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_physical.c: Set *pointer to NULL if it
+	  fails.
+
+2002-10-17 23:29  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/exception.c: Added stack growth support.
+
+2002-10-17 23:28  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/: dispatch.c, process.c: Improved the
+	  dispatcher a bit.
+
+2002-10-17 23:28  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/main.c: Added call to process_init ()
+
+2002-10-17 23:28  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/ia32/capability.h,
+	  source/ia32/capability.c: New file.
+
+2002-10-17 23:28  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/Conscript: Changed 2000 to 20002.-
+
+2002-10-17 23:27  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/process.h: New field:
+	  process_t::user_id New field: process_t::active_group_id New
+	  field: process_t::capability_list New extern: process_list New
+	  extern: process_init ()
+
+2002-10-17 23:27  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/dispatch.h: Removed dispatch_t::tss
+	  Added dispatch_t::thread New extern: current_thread.	New extern:
+	  current_process.  New extern: kernel_tss.
+
+2002-10-17 23:25  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/defines.h: Changed KIB to 1024U Changed MIB
+	  to 1024U Changed GIB to 1024U Define STACK_BASE
+
+2002-10-17 23:07  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/thread.h: Renamed thread_t::thread_id
+	  to id New field: thread_t::name
+
+2002-10-17 23:07  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/types.h: New type: user_id_t New type:
+	  group_id_t
+
+2002-10-17 23:06  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/: ia32/Conscript, Conscript: Only copy the
+	  header files if they have been changed.
+
+2002-10-17 22:52  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/Construct: Changed 2000 to 2002.
+
+2002-10-17 21:24  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/config.h: Bumped the version number to
+	  0.0.3 since we have process support now (not fully working yet
+	  though).
+
+2002-10-16 22:37  Per Lundberg <perlun@gmail.com>
+
+	* programs/install.sh: Use install -s instead of cp so that it
+	  strips the debug sections.
+
+2002-10-16 22:34  Per Lundberg <perlun@gmail.com>
+
+	* programs/Construct: Added 'touch' to make it only recompile if
+	  neccessary.
+
+2002-10-16 22:34  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/elf/elf.h: Changed ELF_SECTION_TYPE_UNDEFINED to
+	  ELF_SECTION_TYPE_PROGRAM since it's PROGBITS in GNU BFD.
+
+2002-10-16 22:34  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/elf/elf.c: Fixed the ELF loader to work a bit
+	  better. :)
+
+2002-10-16 22:33  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/console/console.c: Added a Mini text editor.
+
+2002-10-16 08:38  Per Lundberg <perlun@gmail.com>
+
+	* compile.sh: Improved the compilation script.
+
+2002-10-15 23:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/storm.h: Added debug_memory_dump prototype.
+
+2002-10-15 23:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/debug.h: Moved debug_memory_dump to a
+	  better place.
+
+2002-10-15 23:56  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/defines.h: Made PAGE_SIZE be unsigned.
+
+2002-10-15 23:56  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/exception.c: More debug info in the page
+	  fault handler.
+
+2002-10-15 23:56  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Added debug_memory_dump to the list
+	  of exported functions.
+
+2002-10-15 23:56  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/process.c: Made the process code work.
+
+2002-10-15 23:55  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/dispatch.c: Working dispatcher (closes bug
+	  #46).
+
+2002-10-15 22:58  Per Lundberg <perlun@gmail.com>
+
+	* compile.sh: Improved the compile script a bit.
+
+2002-10-15 22:52  Per Lundberg <perlun@gmail.com>
+
+	* libraries/Construct: Improved the install directive to not do
+	  things that's not neccessary.
+
+2002-10-15 21:22  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_virtual.c: Added a DEBUG define that
+	  you can use if you want some debug printouts.
+
+2002-10-15 21:15  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/defines.h: New macros: MIN and MAX (guess
+	  what they do. :)
+
+2002-10-15 20:57  Per Lundberg <perlun@gmail.com>
+
+	* modules/Construct: Added touch so that the install doesn't run
+	  over and over and over...
+
+2002-10-15 20:38  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/Conscript, include/storm/ia32/Conscript,
+	  source/ia32/Conscript: Improved the scripts greatly; now
+	  installation is only performed if any of the files have been
+	  changed... :)
+
+2002-10-15 20:15  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_physical.c: Added a FIXME.
+
+2002-10-15 20:14  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/irq.c: Type cast to make it compile now when
+	  the description is a const char *.
+
+2002-10-15 20:14  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/gdb.c: Changed char * to const char * for the
+	  parm.
+
+2002-10-15 20:14  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/dma.c: Better prototype for dma_init.
+
+2002-10-15 20:13  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/dispatch.c: Implemented the dispatcher, more
+	  or less.
+
+2002-10-15 20:06  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/types.h: Added more spaces in the
+	  documentation.
+
+2002-10-15 20:04  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/tss.h: Use CPU_FLAG instead of FLAG_
+	  and don't use flags.h... Sorry about that, it was a mistake on my
+	  behalf.
+
+2002-10-15 20:04  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/thread.h: New filed: thread_t::parent
+	  (referring to the parent process of this thread).
+
+2002-10-15 20:03  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/multiboot.h: Use PACKED.
+
+2002-10-15 20:03  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/dispatch.h: New structure: dispatch_t
+	  New function: dispatch_idle.	New function: dispatch_block.  New
+	  function: dispatch_unblock.
+
+2002-10-15 20:02  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/main.c: Added call to dispatch_init.
+
+2002-10-15 20:02  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_global.c: Added a FIXME and a better
+	  prototype.
+
+2002-10-15 20:01  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/cpu.h: Added more Doxygentation.
+
+2002-10-15 19:51  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/Conscript: Don't install flags.h but
+	  install cpu.h instead.
+
+2002-10-15 18:25  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/flags.h: The flags are already in
+	  cpu.h
+
+2002-10-15 18:11  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/elf.h: Use PACKED.
+
+2002-10-15 18:11  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/debug.h: Use PACKED instead of
+	  attribute packed.
+
+2002-10-15 12:04  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/ia32/elf.h, source/ia32/elf.c,
+	  include/storm/ia32/module.h: Use const char * instead of char *
+	  for strings.
+
+2002-10-15 12:03  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/defines.h: New macro: DEPRECATED (put it on
+	  deprecated functions and you'll force people to not use them. :)
+
+2002-10-15 12:03  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/Construct: Added more warnings.
+
+2002-10-15 11:55  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/port.c: Got rid of a warning (added with
+	  -Wwrite-strings)
+
+2002-10-14 23:40  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/Conscript: Add gdt.c to the compilation.
+
+2002-10-14 23:40  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/gdt.c: New file.
+
+2002-10-14 23:40  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/gdt.h: New prototype:
+	  gdt_setup_tss_descriptor.
+
+2002-10-14 23:32  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/defines.h: Brown paperbag commit: a
+	  page is 0x1000 byte, not 1024. :-)
+
+2002-10-14 23:29  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/descriptor.h: Doxymentation.
+
+2002-10-14 23:29  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/cpu.h: New function: cpu_get_cr3 ().
+
+2002-10-14 23:29  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/init.c: Added a bit of a warning. :-)
+
+2002-10-14 10:31  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/exception.c: Added printing of CPU error code
+	  in the GP handler to be able to debug the problems I'm having
+	  with task switching (code not in CVS yet since it's
+	  non-functional).
+
+2002-10-13 16:26  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/irq.h: Added more Doxygen
+	  documentation.
+
+2002-10-13 15:55  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/cpu.h: Added Doxygen documentation.
+
+2002-10-13 15:55  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/dispatch.h: Added Doxygen
+	  documentation.  New prototype: dispatch_init
+
+2002-10-13 15:53  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/gdt.h: New macro: GDT_ENTRY
+
+2002-10-11 09:45  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/elf/elf.c: Finished elf_load (mostly).
+
+2002-10-11 09:45  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/storm.h: Include
+	  <storm/ia32/memory_physical.h> as well.
+
+2002-10-11 09:44  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/Conscript: Added flags.h,
+	  memory_physilcal.h, thread.h and tss.h
+
+2002-10-11 09:44  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/defines.h: New macro: PAGE_NUMBER (for
+	  getting the page number of an address).
+
+2002-10-11 09:44  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory_virtual.h: Changed the
+	  prototype to return a return_t
+
+2002-10-11 09:43  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_virtual.c: Made memory_virtual_map
+	  return a return_t (for coherency with all other exported kernel
+	  functions)
+
+2002-10-11 09:43  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Added memory_physical_ and
+	  memory_virtual_ functions
+
+2002-10-11 09:42  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/irq.h: Added more doxygentation.
+
+2002-10-11 00:04  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_physical.c: Limit the number of pages
+	  to MAX_MEMORY / PAGE_SIZE, so we won't break if the system has
+	  more than 2 GiB's of memory. Instead, we limit the amount of
+	  available memory to 2 GiB which is a bit better for this poor old
+	  fellow who happens to have so much memory in his machine. :)
+
+2002-10-11 00:03  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_virtual.c: Use memory_clear_page
+	  instead of some kind of hack.
+
+2002-10-11 00:03  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/process.c: Lock in process_find.	Map the
+	  physical memory in process_create ().  Fixed a bug where
+	  processes where never added if the process list was empty --
+	  which kind of kept it empty. ;-)
+
+2002-10-10 23:47  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/process.h: Improved doxygentation.
+
+2002-10-10 23:44  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/: flags.h, tss.h: New files (used by
+	  the process/thread support).
+
+2002-10-10 23:44  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/defines.h: Much better indentation of the
+	  doxygentation.  New macro: PACKED (use this instead of the
+	  __attribute__ ((packed)) ugly- looking kludge. Please file bugs
+	  about this, someone)
+
+2002-10-10 23:43  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/defines.h: Properly indented
+	  doxygentation.
+
+2002-10-10 23:42  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/descriptor.h: Made the doxygentation a
+	  bit better.
+
+2002-10-10 23:40  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/process.h: New member: process_t::lock
+	  New member: process_t::first_page_directory New member:
+	  process_t::thread_list
+
+2002-10-10 23:39  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/thread.h: New structure: thread_t
+
+2002-10-10 23:39  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/process.c: New file (although not working
+	  100% yet, but we're getting there).
+
+2002-10-10 23:38  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/Conscript: Added process.c
+
+2002-10-10 23:38  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Added process_create and
+	  process_precreate to the list of exported kernel functions.
+
+2002-10-10 22:48  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_physical.c: Removed a debug printout
+
+2002-10-10 22:44  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_physical.c: New method:
+	  memory_physical_done (for deallocating stuff only used in the
+	  startup).
+
+2002-10-10 22:37  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/Conscript: Install defines.h
+
+2002-10-10 22:37  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/halt.h: Improved the Doxygentation.
+
+2002-10-10 22:36  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/idt.h: Improved the Doxygen
+	  documentation.
+
+2002-10-10 22:36  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/: memory_physical.h, irq.h: Added good
+	  Doxygen documentation.
+
+2002-10-10 22:35  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory_virtual.h: Added Doxygen
+	  documentation.  Added page_number_t from types.h
+
+2002-10-10 22:35  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/spinlock.h: Merged with lock.h
+
+2002-10-10 22:35  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/types.h: Removed page_number_t (it's
+	  now in memory_virtual.h)
+
+2002-10-10 22:34  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/main.c: Added call to memory_physical_done
+
+2002-10-10 22:34  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_physical.c: Added a tiny comment
+
+2002-10-10 22:34  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_virtual.c: Use page_number_t for page
+	  numbers, please.
+
+2002-10-10 22:33  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/service.c: Change to use spinlock.h instead
+	  of lock.h
+
+2002-10-10 21:01  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/lock.h: Closes bug #38
+
+2002-10-10 17:29  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: doxygen, footer.html: Add our own footer.
+
+2002-10-10 17:26  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/return_value.h: Added enum documentation,
+	  since Doxygen did in fact support it.. Yippee!
+
+2002-10-10 16:36  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/gdt.h: Added Doxygen comments.
+
+2002-10-10 16:15  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/gdb.h: Added some information about
+	  remote debugging that'll go into the Doxygen docs.
+
+2002-10-10 16:10  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/makefile.template: Removed.
+
+2002-10-10 16:09  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/gdb.h: Added Doxygen comments.
+
+2002-10-10 16:09  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/init.c: Added a comment.
+
+2002-10-10 15:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/elf.h: Cleaned up Doxygen
+	  documentation.
+
+2002-10-10 15:43  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/dma.h: Fixed a typo.
+
+2002-10-10 15:03  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/defines.h: Added Doxygen
+	  documentation.
+
+2002-10-10 14:20  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/dma.h: Added Doxygen comments.
+
+2002-10-10 14:17  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/defines.h: Better Doxygen comments; also
+	  fixed NULL to actually be a *pointer*.
+
+2002-10-10 14:12  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/debug.h: Better Doxygen documentation.
+
+2002-10-10 11:49  Per Lundberg <perlun@gmail.com>
+
+	* documentation/README: Fixed a typo
+
+2002-10-10 11:42  Per Lundberg <perlun@gmail.com>
+
+	* documentation/README: New file
+
+2002-10-09 23:27  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory.h: Added a better comment at
+	  the top.
+
+2002-10-09 23:26  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_virtual.c: Use memory_clear_page ()
+
+2002-10-09 23:25  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/process.h: New structure: process_t
+
+2002-10-09 23:25  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/doxygen: Set EXTRACT_STATIC to YES.
+
+2002-10-09 23:24  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/string.h: Fixed som bad grammar.
+
+2002-10-09 23:20  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/string.h: Documented the file.
+
+2002-10-09 21:16  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory.h: Made the file
+	  well-documented.
+
+2002-10-09 21:03  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/doxygen: Define -DSTORM so we get everything.
+
+2002-10-09 21:03  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/service.h: Removed _MAX from the
+	  names.
+
+2002-10-09 21:03  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/service.c: Removed _MAX from a bunch of
+	  defines
+
+2002-10-09 21:02  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory_global.h: Improved Doxygen
+	  documentation.
+
+2002-10-09 20:52  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/config.h: Added Doxygen comment.
+
+2002-10-09 20:28  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/bit.h: Improved the documentation.
+
+2002-10-09 20:22  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/bit.h: New macros: LOW_32 and HIGH_32.
+
+2002-10-09 15:07  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/: service.h, multiboot.h: Better
+	  indentation.
+
+2002-10-09 15:07  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/bit.h: Improved the comments a bit.
+
+2002-10-09 14:54  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/: exception.h, multiboot.h: Fixed
+	  comments.
+
+2002-10-09 14:52  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/port.h: Cleaned up the comments.
+
+2002-10-09 14:50  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/service.h: Fixed the comments.
+
+2002-10-09 14:23  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/Construct: Made the Cygwin patch work under Linux as
+	  well.
+
+2002-10-09 14:22  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/Construct: Added Cygwin patch
+
+2002-10-09 14:19  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/Conscript: Cygwin patch
+
+2002-10-09 11:40  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: We already have
+	  memory_global_deallocate, so we might as well use it.
+
+2002-10-09 11:23  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Added many functions to the
+	  function list (commented for now, since they don't exist yet).
+
+2002-10-09 11:21  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/main.c: Put back a comment. :-)
+
+2002-10-09 11:20  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/process.h: New functions:
+	  process_precreate and process_create
+
+2002-10-09 11:19  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory_virtual.h: Cleaned up the
+	  comments slightly.
+
+2002-10-09 11:19  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/Conscript: Install memory_virtual.h
+
+2002-10-09 11:18  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/storm.h: Include ia32/memory_virtual.h and
+	  ia32/process.h
+
+2002-10-09 10:31  Per Lundberg <perlun@gmail.com>
+
+	* modules/Construct: Fixed a typo.
+
+2002-10-09 10:31  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/elf/elf.c: Use ELF_TYPE_EXECUTABLE instead of
+	  ELF_TYPE_DYNAMIC (we support programs, not shared libraries, with
+	  this function).  New function: elf_load Added more code to
+	  elf_run (it should basically work when we finish elf_load).
+
+2002-10-09 10:29  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/elf/elf.h: Added more stuff from the kernel elf.h
+
+2002-10-09 10:11  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/doc.sh: Log and print errors.
+
+2002-10-09 10:11  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/Conscript: Install process.h.
+
+2002-10-09 10:09  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/: queue.c, avltree.c: Removed a comment.
+
+2002-10-09 10:09  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/doxygen: Changed Id to chaos.
+
+2002-10-09 10:08  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/remote.gdb: Changed Id to chaos
+
+2002-10-08 22:17  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/cpu.c: Removed Abstract.
+
+2002-10-08 22:17  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/main.c: Well, we can still have a short
+	  comment anyway...
+
+2002-10-08 22:16  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/main.c: Removed comments (they are now to be
+	  put into the header file).
+
+2002-10-08 22:16  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/: config.h, return_value.h, storm.h,
+	  types.h, ia32/bit.h, ia32/cpu.h, ia32/defines.h,
+	  ia32/descriptor.h, ia32/dispatch.h, ia32/dma.h, ia32/elf.h,
+	  ia32/exception.h, ia32/gdb.h, ia32/gdt.h, ia32/halt.h,
+	  ia32/idt.h, ia32/irq.h, ia32/lock.h, ia32/memory.h,
+	  ia32/memory_global.h, ia32/memory_physical.h,
+	  ia32/memory_virtual.h, ia32/module.h, ia32/multiboot.h,
+	  ia32/port.h, ia32/process.h, ia32/service.h, ia32/spinlock.h,
+	  ia32/string.h, ia32/thread.h, ia32/timer.h: Added Doxygen
+	  documentation (ugly but better than nothing).
+
+2002-10-08 22:14  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/: module.h, queue.h: Added Doxygen
+	  documentation.
+
+2002-10-08 22:11  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/: ia32/main.h, ia32/types.h, avltree.h,
+	  ia32/debug.h, defines.h, magic_cookies.h: Added Doxygen
+	  documentation.
+
+2002-10-08 21:03  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/doc.sh: Added script for generating API documentation.
+
+2002-10-06 11:53  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/doxygen: Adde doxygen script (for generating very good
+	  documentation in HTML format).
+
+2002-10-06 11:43  Per Lundberg <perlun@gmail.com>
+
+	* programs/: Construct, install.sh: New files.
+
+2002-10-06 11:43  Per Lundberg <perlun@gmail.com>
+
+	* programs/boot/: Conscript, boot.c: Added boot program (the first
+	  program that's being launched after all the kernel modules have
+	  been properly initialized).
+
+2002-10-06 11:13  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory_physical.h: New structure:
+	  memory_physical_process_page_t New prototypes:
+	  memory_physical_allocate_for_process,
+	  memory_physical_deallocate_for_process,
+	  memory_physical_free_process.
+
+2002-10-06 11:12  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_physical.c: New variable: process_page
+	  New function: memory_physical_allocate_for_process New
+	  unimplemented functions: memory_physical_deallocate_for_process,
+	  memory_physical_free_process.
+
+2002-10-04 23:27  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/elf.h: Added a comment.
+
+2002-10-04 23:26  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/elf/elf.h: New file (most of the stuff copied from
+	  stormG3/include/storm/ia32/elf.h)
+
+2002-10-04 23:26  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/elf/elf.c: New function: elf_identify New
+	  function: elf_run New function: exec_info Added registration of
+	  an exec service provider in module_start
+
+2002-10-04 23:24  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/: boot/Conscript, elf/Conscript: Added linking
+	  with the exec library.
+
+2002-10-04 23:22  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/boot/boot.c: Added executing /boot.
+
+2002-10-04 23:21  Per Lundberg <perlun@gmail.com>
+
+	* programs/README: Added README file.
+
+2002-10-04 22:53  Per Lundberg <perlun@gmail.com>
+
+	* libraries/Construct: Forgot to add $library_directory, so none of
+	  the libraries would compile...
+
+2002-10-04 22:23  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/boot/boot.c: Removed the exec stuff for now (we
+	  need to work out the exec library first).
+
+2002-10-04 21:06  Per Lundberg <perlun@gmail.com>
+
+	* compile.sh: Added small script to compile all of the system.
+
+2002-10-04 21:01  Per Lundberg <perlun@gmail.com>
+
+	* COPYING: This file is no longer neccessary; it was a GPL remnant.
+
+2002-10-04 21:00  Per Lundberg <perlun@gmail.com>
+
+	* libraries/Construct, libraries/libraries.make,
+	  libraries/makefile, misc/xemacs-script, modules/Construct,
+	  modules/block/Conscript, modules/block/initial_ramdisk/Conscript,
+	  modules/block/initial_ramdisk/initial_ramdisk.c,
+	  modules/block/initial_ramdisk/ramdisk.S,
+	  modules/block/initial_ramdisk/ramdisk.h,
+	  modules/block/initial_ramdisk/ramdisk.image,
+	  modules/ethernet/Conscript, modules/ethernet/skeleton.c,
+	  modules/ethernet/3c509/3c509.c, modules/ethernet/3c509/3c509.h,
+	  modules/ethernet/3c509/Conscript, modules/filesystem/Conscript,
+	  modules/filesystem/minix/Conscript,
+	  modules/filesystem/minix/minix.c,
+	  modules/filesystem/minix/minix.h,
+	  modules/filesystem/vfs/Conscript,
+	  modules/filesystem/vfs/assign.c, modules/filesystem/vfs/close.c,
+	  modules/filesystem/vfs/common.c,
+	  modules/filesystem/vfs/defines.h,
+	  modules/filesystem/vfs/functions.h,
+	  modules/filesystem/vfs/info.c, modules/filesystem/vfs/mount.c,
+	  modules/filesystem/vfs/open.c, modules/filesystem/vfs/read.c,
+	  modules/filesystem/vfs/types.h, modules/filesystem/vfs/vfs.c,
+	  modules/filesystem/vfs/vfs.h, modules/graphics/Conscript,
+	  modules/graphics/vga/Conscript, modules/graphics/vga/vga.c,
+	  modules/graphics/vga/vga.h, modules/graphics/vga/vgamode.c,
+	  modules/sound/Conscript, modules/sound/soundblaster/Conscript,
+	  modules/sound/soundblaster/soundblaster.c,
+	  modules/sound/soundblaster/soundblaster.h,
+	  modules/system/Conscript, modules/system/boot/Conscript,
+	  modules/system/boot/boot.c, modules/system/console/Conscript,
+	  modules/system/console/console.c,
+	  modules/system/console/console.h,
+	  modules/system/console/console_output.c,
+	  modules/system/console/unicode_to_cp437.h,
+	  modules/system/elf/Conscript, modules/system/elf/elf.c,
+	  modules/system/keyboard/Conscript,
+	  modules/system/keyboard/controller.c,
+	  modules/system/keyboard/controller.h,
+	  modules/system/keyboard/init.c, modules/system/keyboard/init.h,
+	  modules/system/keyboard/keyboard.c,
+	  modules/system/keyboard/keyboard.h,
+	  modules/system/keyboard/mouse.c, modules/system/keyboard/mouse.h,
+	  modules/system/keyboard/scan_code.h,
+	  modules/system/keyboard/keyboard_maps/british.h,
+	  modules/system/keyboard/keyboard_maps/dvorak.h,
+	  modules/system/keyboard/keyboard_maps/swedish.h,
+	  modules/system/keyboard/keyboard_maps/us.h,
+	  modules/system/log/Conscript, modules/system/log/log.c,
+	  modules/system/time/Conscript, modules/system/time/time.c,
+	  modules/system/time/time.h, stormG3/Construct,
+	  stormG3/include/storm/Conscript, stormG3/include/storm/avltree.h,
+	  stormG3/include/storm/config.h, stormG3/include/storm/defines.h,
+	  stormG3/include/storm/magic_cookies.h,
+	  stormG3/include/storm/module.h, stormG3/include/storm/queue.h,
+	  stormG3/include/storm/return_value.h,
+	  stormG3/include/storm/storm.h, stormG3/include/storm/types.h,
+	  stormG3/include/storm/ia32/Conscript,
+	  stormG3/include/storm/ia32/bit.h,
+	  stormG3/include/storm/ia32/cpu.h,
+	  stormG3/include/storm/ia32/debug.h,
+	  stormG3/include/storm/ia32/defines.h,
+	  stormG3/include/storm/ia32/descriptor.h,
+	  stormG3/include/storm/ia32/dispatch.h,
+	  stormG3/include/storm/ia32/dma.h,
+	  stormG3/include/storm/ia32/elf.h,
+	  stormG3/include/storm/ia32/exception.h,
+	  stormG3/include/storm/ia32/gdb.h,
+	  stormG3/include/storm/ia32/gdt.h,
+	  stormG3/include/storm/ia32/halt.h,
+	  stormG3/include/storm/ia32/idt.h,
+	  stormG3/include/storm/ia32/irq.h,
+	  stormG3/include/storm/ia32/lock.h,
+	  stormG3/include/storm/ia32/main.h,
+	  stormG3/include/storm/ia32/memory.h,
+	  stormG3/include/storm/ia32/memory_global.h,
+	  stormG3/include/storm/ia32/memory_physical.h,
+	  stormG3/include/storm/ia32/memory_virtual.h,
+	  stormG3/include/storm/ia32/module.h,
+	  stormG3/include/storm/ia32/multiboot.h,
+	  stormG3/include/storm/ia32/port.h,
+	  stormG3/include/storm/ia32/process.h,
+	  stormG3/include/storm/ia32/service.h,
+	  stormG3/include/storm/ia32/spinlock.h,
+	  stormG3/include/storm/ia32/string.h,
+	  stormG3/include/storm/ia32/thread.h,
+	  stormG3/include/storm/ia32/timer.h,
+	  stormG3/include/storm/ia32/types.h, stormG3/source/avltree.c,
+	  stormG3/source/queue.c, stormG3/source/ia32/Conscript,
+	  stormG3/source/ia32/cpu.c, stormG3/source/ia32/debug.c,
+	  stormG3/source/ia32/dispatch.c, stormG3/source/ia32/dma.c,
+	  stormG3/source/ia32/elf.c, stormG3/source/ia32/exception.c,
+	  stormG3/source/ia32/exception_lowlevel.S,
+	  stormG3/source/ia32/gdb.c, stormG3/source/ia32/halt.c,
+	  stormG3/source/ia32/init.c, stormG3/source/ia32/irq.c,
+	  stormG3/source/ia32/irq_handlers.S,
+	  stormG3/source/ia32/kernel.ld, stormG3/source/ia32/main.c,
+	  stormG3/source/ia32/memory_global.c,
+	  stormG3/source/ia32/memory_physical.c,
+	  stormG3/source/ia32/memory_virtual.c,
+	  stormG3/source/ia32/module.c, stormG3/source/ia32/multiboot.c,
+	  stormG3/source/ia32/port.c, stormG3/source/ia32/service.c,
+	  stormG3/source/ia32/timer.c: Changed the name of the license from
+	  COPYING to LICENSE (COPYING was only used for GNU "compatibility"
+	  and since we're not using the GNU license it may be a bit evil.
+	  :-)
+
+2002-10-01 21:37  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* modules/ethernet/3c509/3c509.c: Started the real coding.
+
+2002-09-02 17:45  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/keyboard/keyboard_maps/swedish.h: Added the Euro
+	  cent (at AltGr-C).
+
+2002-09-01 23:03  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/minix/minix.c: Removed a lot of debug
+	  printing.
+
+2002-09-01 23:02  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/Conscript: Added the elf module.
+
+2002-09-01 23:02  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/elf/: Conscript, elf.c: Added an embry of an ELF
+	  module, providing the exec service. This is the first step
+	  towards user processes in chaosG2.
+
+2002-08-31 12:04  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/boot/: Conscript, boot.c: Added md5 checking of
+	  the file, to make sure it's been read correctly.
+
+2002-08-31 12:04  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/minix/minix.c: Added support for double
+	  blocks, as well as reading multiple blocks at once.
+
+2002-08-31 11:14  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory.h: The second argument to
+	  memory_copy might as well be const; we are not gonna mess with
+	  it.
+
+2002-08-31 11:01  Per Lundberg <perlun@gmail.com>
+
+	* libraries/Construct: Added the new $install variable (same system
+	  as with the modules) and added the checksum Conscript.
+
+2002-08-27 23:05  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/Construct: A small fix for Windows compilation (bug #1).
+	  It still does not work completely (linking fails because there is
+	  no ELF support in the linker).
+
+2002-08-21 12:56  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/boot/boot.c: Read all of the file (won't work
+	  right now because the Minix filesystem module doesn't support it.
+	  But it should be fixed ASAP so we can start working on process
+	  launching)
+
+2002-08-21 10:01  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/memory_management.xml: Some minor rewordings.
+
+2002-08-21 10:00  Per Lundberg <perlun@gmail.com>
+
+	* changelog: Removed since we are not writing any changelog
+	  entries; use CVS logs instead.
+
+2002-08-20 20:53  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/keyboard/keyboard.c: Removed a debug printout.
+
+2002-08-20 20:22  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/keyboard/keyboard.c: Fixed some bugs in the Num
+	  Lock code.
+
+2002-08-20 13:53  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/keyboard/keyboard.c: Bug: 32
+
+	  Fixed.
+
+2002-08-20 08:36  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/keyboard/: keyboard.c, scan_code.h,
+	  keyboard_maps/swedish.h: Closes bug #31.
+
+2002-08-19 22:39  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/keyboard/keyboard.c: Added support and parsing of
+	  0xE0 -- extended keys.
+
+2002-08-19 22:38  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/keyboard/scan_code.h: Added extended keys.
+
+2002-08-19 22:38  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/keyboard/keyboard_maps/swedish.h: Added a map for
+	  "upper" keys (generated when Caps Lock is turned on)
+
+2002-08-18 22:31  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/time/time.c: Clarified the comment a bit.
+
+2002-08-16 12:26  Per Lundberg <perlun@gmail.com>
+
+	* modules/Construct: Use -ggdb instead of -g to get more debug info
+	  in the binaries.
+
+2002-08-16 12:21  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/time/time.c: Increase the time and uptime
+	  variables on each interrupt.
+
+2002-08-16 11:28  Per Lundberg <perlun@gmail.com>
+
+	* libraries/README: Added some text (I am testing my mail filters.
+	  :)
+
+2002-08-16 00:21  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/time/: time.c, time.h: Added BCD decoding of the
+	  date and time.
+
+2002-08-16 00:10  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/port.h: Changed unsigned char to
+	  uint8_t.
+
+2002-08-15 22:59  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/time/: Conscript, time.c, time.h: Added the time
+	  module; used for reading the system time.
+
+2002-08-15 22:59  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/Conscript: Added the system/time module.
+
+2002-08-15 20:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/: storm.h, ia32/Conscript: Added bit.h to
+	  the list of exported headers.
+
+2002-08-15 13:18  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/time/rtc.txt: Added a document on how to program
+	  the RTC.
+
+2002-08-14 00:04  Per Lundberg <perlun@gmail.com>
+
+	* modules/: Construct, block/Conscript,
+	  block/initial_ramdisk/Conscript, ethernet/Conscript,
+	  ethernet/3c509/Conscript, filesystem/Conscript,
+	  graphics/vga/Conscript, sound/soundblaster/Conscript,
+	  system/boot/Conscript, system/keyboard/Conscript: Changed the
+	  copyright date from 2000 to 2002.
+
+2002-08-13 23:47  Per Lundberg <perlun@gmail.com>
+
+	* modules/Construct: Added sound, removed soundblaster and vga.
+
+2002-08-13 23:45  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/: console/Conscript, log/Conscript: Fixed the
+	  install command.
+
+2002-08-13 23:43  Per Lundberg <perlun@gmail.com>
+
+	* modules/sound/soundblaster/Conscript: Fixed install command.
+
+2002-08-13 23:41  Per Lundberg <perlun@gmail.com>
+
+	* modules/sound/Conscript: New file.
+
+2002-08-13 23:41  Per Lundberg <perlun@gmail.com>
+
+	* modules/graphics/vga/Conscript: Changed vga to graphics/vga
+
+2002-08-13 21:17  Per Lundberg <perlun@gmail.com>
+
+	* modules/sound/soundblaster/: Conscript, sblaster.doc,
+	  soundblaster.c, soundblaster.h: Moved from soundblaster to
+	  sound/soundblaster.
+
+2002-08-13 21:15  Per Lundberg <perlun@gmail.com>
+
+	* modules/graphics/Conscript: New script.
+
+2002-08-13 21:15  Per Lundberg <perlun@gmail.com>
+
+	* modules/Construct: Added graphics/Conscript.
+
+2002-08-13 21:14  Per Lundberg <perlun@gmail.com>
+
+	* modules/graphics/vga/: Conscript, font_8x8.h, vga.c, vga.h,
+	  vgamode.c: Moved from vga to graphics/vga
+
+2002-08-13 21:12  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/: Conscript, boot/Conscript, console/Conscript,
+	  log/Conscript: Added boot, console and log.
+
+2002-08-13 21:02  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/boot/: Conscript, boot.c: Moved from boot to
+	  system/boot
+
+2002-08-13 21:02  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/log/: Conscript, log.c: Moved log to system/log
+
+2002-08-13 20:50  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/console/: Conscript, console.c, console.h,
+	  console_output.c, unicode_to_cp437.h: Moved from console to
+	  system/console, to have a better structure.
+
+2002-08-11 23:13  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/keyboard/: Conscript, controller.c, controller.h,
+	  init.c, init.h, keyboard.c, keyboard.h, keyboard.txt, mouse.c,
+	  mouse.h, scan_code.h, keyboard_maps/british.h,
+	  keyboard_maps/dvorak.h, keyboard_maps/swedish.h,
+	  keyboard_maps/us.h: Moved from keyboard to system/keyboard.
+
+2002-08-11 23:13  Per Lundberg <perlun@gmail.com>
+
+	* modules/system/Conscript: New file.
+
+2002-08-11 20:46  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/Conscript: Added the file halt.h to
+	  the list of installed directories.
+
+2002-08-11 20:41  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory_global.h: Added a comment for
+	  the cookie.
+
+2002-08-11 20:41  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory_physical.h: Added a magic
+	  cookie to memory_physical_slab_t
+
+2002-08-11 20:39  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Added the function halt to the list
+	  of exported functions.
+
+2002-08-11 20:39  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: source/ia32/halt.c, include/storm/ia32/halt.h,
+	  source/ia32/Conscript: New file: halt.c
+
+2002-08-11 20:34  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/vfs/Conscript: Added info.c
+
+2002-08-11 20:34  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/vfs/common.c: Added #ifdef DEBUG around some
+	  debugging code so we can get rid of it.
+
+2002-08-11 20:33  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/vfs/functions.h: Prototype for vfs_info.
+
+2002-08-11 20:33  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/vfs/info.c: New file with implementation of
+	  the function vfs_info().
+
+2002-08-11 20:33  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/vfs/vfs.c: Added support for the vfs_info
+	  function.
+
+2002-08-11 20:32  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/vfs/vfs.h: Changed the name of info to
+	  block_info.
+
+2002-08-11 20:32  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/minix/minix.c: Implemented minix_info.
+
+2002-08-11 19:33  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/storm.h: Added include of storm/ia32/halt.h
+
+2002-08-11 19:16  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/descriptor.h: Removed the name of the
+	  unused field.
+
+2002-08-11 19:15  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/multiboot.h: Removed the name of the
+	  reserved field, so we make it unaccessible.
+
+2002-08-11 16:29  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/debug.h: Fixed a serious bug (patch by
+	  Henrik Hallin <hal@chaosdev.org>)
+
+2002-08-10 13:11  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/debug.h: Fixed the DEBUG_HALT macro
+	  (__LINE__ is an integer and not a string).
+
+2002-08-09 11:16  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* stormG3/source/ia32/debug.c: Changed back to << 8 and fixed
+	  memory_dump to print addresses.
+
+2002-08-09 08:36  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_physical.c: Fixed Henrik's broken
+	  bitmap optimizations.
+
+2002-08-09 08:33  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Added extra debugging messages.
+
+2002-08-09 08:16  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_global.c: No hardcoded page sizes,
+	  please.
+
+2002-08-09 08:08  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/debug.c: Don't use << 8.. * 256 is more
+	  obvious, and the compiler generates exactly the same code
+	  (disassemble and look if you like).
+
+2002-08-09 08:02  Per Lundberg <perlun@gmail.com>
+
+	* modules/: filesystem/minix/minix.c,
+	  block/initial_ramdisk/initial_ramdisk.c, filesystem/vfs/mount.c:
+	  Changed init and resolve to lookup.
+
+2002-08-09 01:18  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* stormG3/source/ia32/memory_global.c: Allow arbitrarily large
+	  blocks to be allocated, as long as memory_physical_allocate can
+	  allocate memory for us. Don't bother with 2048k slabs since only
+	  one block will fit in a slab anyway. (Completely untested)
+
+2002-08-09 01:17  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* stormG3/source/ia32/memory_physical.c: Don't build the physical
+	  page bitmap when trying to allocate multiple pages, but instead
+	  keep it updated when allocating and freeing pages. (Completely
+	  untested)
+
+2002-08-09 01:16  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* stormG3/source/ia32/port.c: Made the port_range_link function a
+	  bit cleaner.
+
+2002-08-09 01:15  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* stormG3/source/ia32/: cpu.c, debug.c, exception.c, main.c:
+	  Various minor changes.
+
+2002-08-09 01:14  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* stormG3/: source/ia32/module.c, include/storm/ia32/service.h,
+	  source/ia32/service.c: Changed service_resolve to service_lookup.
+
+2002-08-08 22:18  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/main.c: Clean up the debug printout a small
+	  bit.
+
+2002-08-08 22:14  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/main.c: Print the number of free pages after
+	  all the modules have been loaded (just out of curiosity).
+
+2002-08-08 22:14  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory_physical.h: Export free_pages.
+
+2002-08-08 22:14  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_physical.c: Start using the free_pages
+	  properly, and export it.
+
+2002-08-08 22:08  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Added module memory deallocation
+	  (fixes a FIXME).
+
+2002-08-08 22:00  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory_physical.h: Export the variable
+	  physical_pages.
+
+2002-08-08 22:00  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/Conscript: Strip the binary before zipping,
+	  to make it use a bit less space.
+
+2002-08-08 21:59  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/exception.c: Fall-through on the debug and
+	  breakpoint traps (they are software generated, used when
+	  debugging)
+
+2002-08-08 21:58  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_global.c: Added a TODO.
+
+2002-08-08 21:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_physical.c: Export physical_pages.
+	  Also, prepare for the new, big-block allocator that will let us
+	  allocate bigger contigous physical blocks.
+
+2002-08-08 21:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_virtual.c: Use physical_pages instead
+	  of calculating it ourselves.
+
+2002-08-08 21:55  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/init.c: Finally fixes the annoying bug that
+	  prevented chaos to work on machines with 16 meg or less RAM. See
+	  the diff for the fix -- the problem was with pointer arithmetic
+	  (not the first time). NEVER DO THIS AGAIN! Always cast pointers
+	  to address_t before doing arithmetic with it. Okay?
+
+2002-08-08 21:12  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/remote.gdb: Added script for running remote debugging.
+
+2002-08-08 12:52  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/gdb.c: Improved coding style a bit.
+
+2002-08-08 12:51  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/exception.c: Add an #ifdef so GDB debugging
+	  works (it provides other exception handlers).
+
+2002-08-07 20:38  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/multiboot.c: multiboot_init was not the
+	  problem... It must be something different.
+
+2002-08-07 20:37  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/debug.h: Include gdb.h (so we can
+	  easily put in breakpoints wherever we like).
+
+2002-08-07 20:24  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/: init.c, main.c: Always compile before
+	  checking in.
+
+2002-08-07 20:21  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/: init.c, main.c: Put the GDB code early so
+	  we can singlestep all of the main_bootup() if we like.
+
+2002-08-07 14:31  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_physical.c: Added new SLAB lists, for
+	  allocation of 8k, 16k, 32k, 64k and 128k blocks (instead of pure
+	  page allocation).
+
+2002-08-07 09:55  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/Construct: Improved the help text slightly.
+
+2002-08-06 21:39  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/: gdb.c, main.c: Fixed the GDB code to use
+	  Conscript configuration.
+
+2002-08-06 21:38  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: Construct, source/ia32/Conscript: Added gdb support.
+
+2002-08-06 20:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/config.h: Removed GDB stuff, and bumped the
+	  version number to 0.0.2
+
+2002-08-04 11:27  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/: minix/minix.c, minix/minix.h, vfs/Conscript,
+	  vfs/assign.c, vfs/close.c, vfs/common.c, vfs/defines.h,
+	  vfs/functions.h, vfs/mount.c, vfs/open.c, vfs/read.c,
+	  vfs/types.h, vfs/vfs.c, vfs/vfs.h: Reading of files works.
+
+2002-08-03 14:05  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/vfs/: vfs.c, vfs.h: Renamed the vfs code to
+	  vfs.c and vfs.h instead of virtual.[ch]
+
+2002-08-03 14:05  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/vfs/: virtual.c, virtual.h: [no log message]
+
+2002-07-31 23:19  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/vfs/Conscript: Changed from virtual.c to vfs.c
+
+2002-07-30 14:57  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/vfs/virtual.c: Changed to use library_vfs
+	  instead of library_virtual_filesystem.
+
+2002-07-28 21:37  Per Lundberg <perlun@gmail.com>
+
+	* modules/block/initial_ramdisk/ramdisk.image: [no log message]
+
+2002-07-28 21:35  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/Conscript: Changed virtual to vfs.
+
+2002-07-28 21:34  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/minix/minix.c: Removed a lot of the debugging
+	  code since we are getting more and more functional now.
+
+2002-07-28 21:25  Per Lundberg <perlun@gmail.com>
+
+	* libraries/Construct: Changed virtual_filesystem to vfs.
+
+2002-07-28 21:23  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/vfs/: Conscript, virtual.c, virtual.h: Renamed
+	  the VFS module from virtual to vfs.
+
+2002-07-28 21:04  Per Lundberg <perlun@gmail.com>
+
+	* INSTALL: Removed this file -- its contents is no longer valid.
+
+2002-07-28 21:04  Per Lundberg <perlun@gmail.com>
+
+	* README: Updated the information.
+
+2002-07-28 21:02  Per Lundberg <perlun@gmail.com>
+
+	* README.Linux: Updated the list.
+
+2002-07-28 13:21  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* modules/ethernet/3c509/3c509.h: Work in process.
+
+2002-07-24 10:28  Per Lundberg <perlun@gmail.com>
+
+	* modules/block/initial_ramdisk/initial_ramdisk.c: Fixed a problem
+	  that prevented compilation with gcc 3.0
+
+2002-07-24 09:45  Per Lundberg <perlun@gmail.com>
+
+	* configure: No longer usable.
+
+2002-07-24 09:44  Per Lundberg <perlun@gmail.com>
+
+	* makefile, build: No longer working.
+
+2002-07-21 15:03  Per Lundberg <perlun@gmail.com>
+
+	* modules/ethernet/Conscript: Even better commenting out.
+
+2002-07-21 15:02  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/minix/minix.h: New define:
+	  MINIX_FILE_NAME_LENGTH New define:
+	  MINIX_EXTENDED_FILE_NAME_LENGTH
+
+2002-07-21 15:02  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/minix/minix.c: Renamed find_inode2 to
+	  minix2_find_inode New function: minix_init New function:
+	  minix2_find_file New function: service_info Added registration of
+	  a filesystem service.
+
+2002-07-21 14:59  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/minix/Conscript: Added the new, smart way of
+	  doing things.
+
+2002-07-21 14:57  Per Lundberg <perlun@gmail.com>
+
+	* libraries/Construct: Added the virtual filesystem library.
+
+2002-07-21 14:40  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/Conscript: Added importation of the install
+	  variable.
+
+2002-07-21 14:40  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/Conscript: Added the virtual filesystem
+	  module.
+
+2002-07-21 14:38  Per Lundberg <perlun@gmail.com>
+
+	* libraries/Construct: Added the filesystem library.
+
+2002-07-21 14:32  Per Lundberg <perlun@gmail.com>
+
+	* modules/block/initial_ramdisk/: initial_ramdisk.c, ramdisk.h:
+	  Removed the define BLOCK_VERSION and instead started using the
+	  define BLOCK_SERVICE_VERSION.
+
+2002-07-21 13:16  Per Lundberg <perlun@gmail.com>
+
+	* modules/Construct: Added a new way of doing the installation, so
+	  we won't have to duplicate that code in all the Conscripts. What
+	  remains to do is to change all the Conscripts that we already
+	  have to use this new system.
+
+2002-07-21 12:25  Per Lundberg <perlun@gmail.com>
+
+	* modules/ethernet/Conscript: Commented out 3c509, since the code
+	  in cVS does not currently compile.
+
+2002-07-21 12:21  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Changed the printing when starting
+	  a module slightly (requested by Johannes Lundberg)
+
+2002-07-21 11:58  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/dispatch.c: Change the dispatcher a bit; now
+	  we toggle the 0x10 bit in the attribute byte (resulting in a
+	  flip-flop between blue background and black)
+
+2002-07-21 11:56  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/: irq.c, irq_handlers.S: Use irq0_handler for
+	  the IRQ 0 handler (a lowlevel function that calls the
+	  dispatcher).
+
+2002-07-21 11:55  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/irq.h: New prototype: irq0_handler
+
+2002-07-12 12:13  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* modules/ethernet/: skeleton.c, 3c509/3c509.c: Some minor
+	  changes.. Changed the skeleton a bit, and moved
+	  ETHERNET_SERVICE_VERSION to the library header files.
+
+2002-07-12 11:43  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/module.h: New structure: module_info_t New
+	  function: module_info
+
+2002-07-12 11:39  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Changed the variable
+	  module_function to module_start since we are soon going to call
+	  other module functions (like module_info).
+
+2002-07-12 11:19  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* modules/ethernet/3c509/3c509.c: Ehm.. Forget one row after the
+	  merge. :)
+
+2002-07-12 11:19  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* modules/ethernet/3c509/3c509.c: Some minor modifications
+
+2002-07-12 11:15  Per Lundberg <perlun@gmail.com>
+
+	* modules/ethernet/3c509/Conscript: Added stripping of the module.
+
+2002-07-11 23:43  Per Lundberg <perlun@gmail.com>
+
+	* libraries/Construct: Added the video library.
+
+2002-07-11 23:13  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory_global.h: Wrapped some code
+	  into #ifdef; it can't be included from the kernel modules.
+
+2002-07-11 22:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: source/ia32/module.c, include/storm/storm.h,
+	  include/storm/ia32/Conscript: Added memory_global to the exported
+	  kernel functions.
+
+2002-07-10 23:55  Per Lundberg <perlun@gmail.com>
+
+	* modules/block/initial_ramdisk/initial_ramdisk.c: Removed a blank
+	  line.
+
+2002-07-10 23:31  Per Lundberg <perlun@gmail.com>
+
+	* modules/ethernet/3c509/3c509.c: Changed $chaos to $chaos$
+
+2002-07-10 23:23  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/minix/: Conscript, minix.c, minix.h: Fixed the
+	  Minix module; now it compiles and runs under chaos, without
+	  problems.
+
+2002-07-10 23:22  Per Lundberg <perlun@gmail.com>
+
+	* modules/block/initial_ramdisk/initial_ramdisk.c: Removed a debug
+	  printing.
+
+2002-07-10 22:16  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* modules/: Construct, ethernet/Conscript, ethernet/skeleton.c,
+	  ethernet/3c509/3c509.c, ethernet/3c509/Conscript: The base of the
+	  3c509 ethernet module, and modified Conscript-files
+
+2002-07-09 14:43  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/Conscript: lock.h needs to be
+	  available to kernel modules, so they can lock their non-reentrant
+	  data.
+
+2002-07-09 12:07  Per Lundberg <perlun@gmail.com>
+
+	* modules/block/initial_ramdisk/ramdisk.S: New file.
+
+2002-07-09 12:07  Per Lundberg <perlun@gmail.com>
+
+	* modules/block/initial_ramdisk/initial_ramdisk.c: Forgot to add
+	  this file in the move.
+
+2002-07-09 10:38  Per Lundberg <perlun@gmail.com>
+
+	* modules/block/initial_ramdisk/ramdisk.image: [no log message]
+
+2002-07-09 10:38  Per Lundberg <perlun@gmail.com>
+
+	* modules/Construct: New paths: block and filesystem.
+
+2002-07-09 10:37  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/Conscript: New script.
+
+2002-07-09 10:37  Per Lundberg <perlun@gmail.com>
+
+	* modules/filesystem/minix/: Conscript, minix.c, minix.h: First
+	  version in CVS. Currently reads from a file and runs under Linux,
+	  but things are getting in order very quickly.
+
+2002-07-09 10:06  Per Lundberg <perlun@gmail.com>
+
+	* README.Linux: Changed to be up-to-date.
+
+2002-07-09 10:04  Per Lundberg <perlun@gmail.com>
+
+	* README.FreeBSD: Removed the file; it is terribly outdated.
+
+2002-07-06 11:09  Per Lundberg <perlun@gmail.com>
+
+	* modules/block/: Conscript, initial_ramdisk/Conscript,
+	  initial_ramdisk/ramdisk.h, initial_ramdisk/ramdisk.image: Moved
+	  the initial_ramdisk to a new subdirectory, where we will put all
+	  block service providers (floppy disk, IDE, SCSI, etc)
+
+2002-07-06 09:58  Per Lundberg <perlun@gmail.com>
+
+	* libraries/Construct: Added the block library.
+
+2002-07-04 23:26  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/elf.c: Made match volatile to fix a weird
+	  bug.
+
+2002-07-04 23:26  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/service.c: More error handling (with debug
+	  printouts).
+
+2002-06-26 08:40  Per Lundberg <perlun@gmail.com>
+
+	* modules/Construct: Added initial_ramdisk to the new modules tree.
+
+2002-06-25 22:07  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Removed unneccessary debug code.
+
+2002-06-25 22:06  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/: memory_physical.c, module.c: Added some
+	  volatiles, to fix the bug which prevented us from running in
+	  Bochs and vmware. I don't really know why this is needed, could
+	  it be a bug in gcc?
+
+2002-06-25 15:45  Per Lundberg <perlun@gmail.com>
+
+	* LICENSE: Changed THE REGENTS to CHAOS DEVELOPMENT.
+
+2002-06-24 23:35  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/ia32/service.h, source/ia32/service.c:
+	  New data type for the function pointer: service_info_t (to avoid
+	  having to cast it, and to make sure that we have a function that
+	  takes the right amount of arguments)
+
+2002-06-24 23:13  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/Conscript: Added types.h
+
+2002-06-24 23:11  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/Conscript: Added service.h
+
+2002-06-24 23:10  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/storm.h: Moved the service functions to
+	  service.h
+
+2002-06-24 23:10  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/ia32/service.h, source/ia32/service.c:
+	  Added support for multiple service providers.
+
+2002-06-24 22:00  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/lock.h: New file, implementing
+	  locking.
+
+2002-06-24 10:32  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/storm.h, include/storm/ia32/service.h,
+	  source/ia32/service.c: Improved the service support to include
+	  vendor, model and id.
+
+2002-06-24 10:13  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* stormG3/source/ia32/service.c: Don't leak the service data block
+	  if the second allocation fails in service_register. Added FIXME
+	  comment.
+
+2002-06-23 22:35  Per Lundberg <perlun@gmail.com>
+
+	* modules/Construct: Improved the CONS script a bit.
+
+2002-06-23 22:35  Per Lundberg <perlun@gmail.com>
+
+	* libraries/Construct: Added CONS script.
+
+2002-06-23 22:08  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/ia32/dma.h, source/ia32/dma.c: Some more
+	  DMA code (it is far yet from finished)
+
+2002-06-23 19:30  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: source/ia32/memory_physical.c,
+	  include/storm/ia32/defines.h: Discard the DMA buffers; we use
+	  memory_physical_allocate instead.
+
+2002-06-23 17:29  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/types.h: Fixed the return value in
+	  function_t
+
+2002-06-23 17:27  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Use the return value from
+	  module_start to something useful.
+
+2002-06-23 15:42  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/port.h: New inline functions:
+	  port_uint*_out_pause, port_uint*_out_string
+
+2002-06-23 15:30  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/debug.c: Removed a line that must have been
+	  put there by mistake.
+
+2002-06-23 15:08  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/Construct: Added a help screen.
+
+2002-06-23 14:19  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/types.h: New type: size_t
+
+2002-06-23 14:09  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/: idt.c, irq_handlers.S: Changed
+	  plundis@chaosdev.org to per@chaosdev.org
+
+2002-06-23 13:59  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/Construct, modules/Construct: Added support for the
+	  root=whatever argument, if someone has a different installation
+	  root.
+
+2002-06-23 00:55  Per Lundberg <perlun@gmail.com>
+
+	* modules/Construct: Added the console module.
+
+2002-06-22 22:21  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: Construct, include/storm/ia32/debug.h: Added support
+	  for FreeBSD and NetBSD colors. :-)
+
+2002-06-22 22:13  Per Lundberg <perlun@gmail.com>
+
+	* README: Added text about CONS.
+
+2002-06-22 22:11  Per Lundberg <perlun@gmail.com>
+
+	* modules/: makefile, modules.make: Changed to CONS.
+
+2002-06-22 22:01  Per Lundberg <perlun@gmail.com>
+
+	* modules/Construct: Added CONS files.
+
+2002-06-22 21:28  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: Construct, include/storm/Conscript,
+	  include/storm/ia32/Conscript: Improved dependencies. (headers
+	  should only be installed if kernel build succeeds)
+
+2002-06-22 21:22  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: Construct, makefile, storm.make, include/makefile,
+	  include/storm/Conscript, include/storm/makefile,
+	  include/storm/ia32/Conscript, include/storm/ia32/makefile,
+	  source/makefile, source/ia32/Conscript, source/ia32/debug.c,
+	  source/ia32/elf.c, source/ia32/makefile, source/ia32/module.c:
+	  Replaced make with GNU CONS.
+
+2002-06-22 15:34  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/storm.make: Removed a comment.
+
+2002-06-21 10:01  Per Lundberg <perlun@gmail.com>
+
+	* libraries/: README, libraries.make, makefile: Added makefiles
+
+2002-06-21 09:24  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/service.c: Improved the service resolve to
+	  actually work; made service_register copy off the string since we
+	  can't trust pointers given from modules to persist.
+
+2002-06-21 00:41  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/storm.h: Added dma_register,
+	  service_register, service_unregister and service_resolve to the
+	  file.
+
+2002-06-21 00:41  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/makefile: Added service.o
+
+2002-06-21 00:40  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: source/ia32/module.c, source/ia32/service.c,
+	  include/storm/ia32/service.h: Added very primitive service
+	  support.
+
+2002-06-20 23:25  Per Lundberg <perlun@gmail.com>
+
+	* modules/makefile: Fixed a bug; errors didn't stop the build, it
+	  just went on.
+
+2002-06-20 23:12  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/return_value.h: New return value:
+	  STORM_RETURN_NOT_FOUND
+
+2002-06-20 22:40  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: source/ia32/elf.c, include/storm/ia32/elf.h: Be a bit
+	  smarter.
+
+2002-06-20 22:32  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/ia32/elf.h, source/ia32/elf.c:
+	  ELF_RELOCATION_RELATIVE added.
+
+2002-06-20 21:54  Per Lundberg <perlun@gmail.com>
+
+	* modules/makefile: Added the log module.
+
+2002-06-20 00:41  Per Lundberg <perlun@gmail.com>
+
+	* AUTHORS: Changed e-mail address.
+
+2002-06-20 00:41  Per Lundberg <perlun@gmail.com>
+
+	* MILESTONES: Moved this information to the Wiki-web.
+
+2002-06-20 00:16  Per Lundberg <perlun@gmail.com>
+
+	* TODO: Removed the file; this information is now on the web.
+
+2002-06-20 00:10  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/TODO: Removed the file since it is now on the web.
+
+2002-06-19 22:59  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/TODO: Updated the TODO list.. but we'd better move this
+	  to the Wiki anyway.
+
+2002-06-19 12:00  Per Lundberg <perlun@gmail.com>
+
+	* LICENSE: Added a year to the LICENSE.
+
+2002-06-19 09:58  Per Lundberg <perlun@gmail.com>
+
+	* modules/makefile: Added the soundblaster module.
+
+2002-06-19 09:37  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_physical.c: Removed a debug message.
+
+2002-06-19 09:36  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Added some more debug printing.
+
+2002-06-19 09:29  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/dma.h: Include <storm/storm.h>
+
+2002-06-19 09:29  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/storm.h, source/ia32/dma.c: New function:
+	  dma_register (dummy for now).
+
+2002-06-19 09:29  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: New exported function: dma_register
+
+2002-06-19 09:28  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/elf.c: Removed some debug information.
+
+2002-06-19 00:19  Per Lundberg <perlun@gmail.com>
+
+	* modules/: makefile, modules.make: Added the notice about the file
+	  COPYING.
+
+2002-06-19 00:16  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/timer.h: New file with prototypes for
+	  the timer code.
+
+2002-06-19 00:16  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/timer.c: Initialize PIT channel 2. (but we
+	  need to set the right mode) New function: timer_sleep_milli
+
+2002-06-19 00:15  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Added timer_sleep_milli to the list
+	  of exported functions.
+
+2002-06-19 00:15  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/irq.c: Changed to using trap gates, so we can
+	  handle multiple interrupts at the same time.	New function:
+	  ack_interrupt Added interrupt queuing (doesn't seem to work
+	  perfectly yet)
+
+2002-06-19 00:13  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/dispatch.c: Added a tick counter.
+
+2002-06-18 23:58  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/irq.h: Made interrupts_pending
+	  volatile since it can be updated from different places.
+
+2002-06-18 23:44  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/storm.h: New function: timer_sleep_milli
+
+2002-06-18 23:44  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/dispatch.h: Added the ticks variable.
+
+2002-06-18 22:52  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/cpu.h: uint32_t instead of u32.
+
+2002-06-18 21:58  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/cpu.h: Well, it's good if it actually
+	  compiles as well, isn't it?
+
+2002-06-18 21:53  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/cpu.h: New macro: cpu_rdtsc, for using
+	  the Pentium-only RDTSC instruction.
+
+2002-06-18 21:42  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/timer.c: New file; used for reprogramming the
+	  PIT.
+
+2002-06-18 21:41  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/main.c: Forgot to include timer.h
+
+2002-06-18 21:40  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/port.c: New file; used for registering port
+	  ranges.
+
+2002-06-18 21:40  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Added port_range_register and
+	  port_range_unregister to the list of exported symbols.
+
+2002-06-18 21:40  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/makefile: Added port.o and timer.o to the
+	  list of objects.
+
+2002-06-18 21:37  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/main.c: Added call to port_init and
+	  timer_init
+
+2002-06-18 21:36  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/port.h: New type: port_range_t New
+	  functions: port_range_register, port_range_unregister, port_init
+
+2002-06-18 21:32  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/bit.h: [no log message]
+
+2002-06-18 21:29  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/bit.h: New macro: LOW_8 New macro:
+	  HIGH_8
+
+2002-06-18 11:01  Per Lundberg <perlun@gmail.com>
+
+	* MILESTONES: Updated M1 because of the recent development.
+
+2002-06-18 10:00  Per Lundberg <perlun@gmail.com>
+
+	* modules/modules.make: Removed -fPIC, we won't need it.
+
+2002-06-18 09:59  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/elf.c: Improved the symbol relocation.
+
+2002-06-18 09:59  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Removed some debug printing.
+
+2002-06-18 09:35  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: [no log message]
+
+2002-06-18 00:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/makefile: New file.
+
+2002-06-18 00:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Started to use elf_load
+
+2002-06-18 00:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/elf.c: New function: elf_load Also patched
+	  elf_relocate a bit. It is still not finished (need to add PLT
+	  support)
+
+2002-06-18 00:56  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/elf.h: New field in elf_parsed_t:
+	  image New function: elf_load
+
+2002-06-18 00:56  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/storm.h: New includes: storm/defines.h,
+	  storm/return_value.h, storm/ia32/memory.h, storm/ia32/port.h
+
+2002-06-18 00:55  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/module.h: New function: module_start.
+	  (Defined by all kernel modules)
+
+2002-06-18 00:55  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/makefile: Added defines.h
+
+2002-06-18 00:55  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/defines.h: New FIXME.
+
+2002-06-18 00:53  Per Lundberg <perlun@gmail.com>
+
+	* modules/modules.make: Added -fPIC to the flags; we are definitely
+	  doing position-independent code.
+
+2002-06-17 23:23  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_physical.c: Removed a memory dump.
+
+2002-06-17 22:58  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/types.h: New type: page_number_t
+
+2002-06-17 22:58  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/storm.h: Added #include <storm/module.h>
+
+2002-06-17 22:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/defines.h: New define: MAX_MEMORY.
+
+2002-06-17 22:56  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_physical.c: Support for allocating
+	  multiple pages.
+
+2002-06-17 20:57  Per Lundberg <perlun@gmail.com>
+
+	* modules/modules.make: Removed -DSTORM, since this is not the
+	  kernel.
+
+2002-06-17 20:55  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/: module.h, makefile: Added the module.h
+	  file with things that the module define.
+
+2002-06-17 20:51  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/: ia32/debug.h, ia32/irq.h, storm.h: Moved
+	  some publicly accessible functions to the storm.h header file.
+
+2002-06-17 11:26  Per Lundberg <perlun@gmail.com>
+
+	* MILESTONES: Updated M1.
+
+2002-06-17 11:24  Per Lundberg <perlun@gmail.com>
+
+	* MILESTONES: Rearranged the milestones slightly.
+
+2002-06-17 09:27  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/irq.c: New function: irq_register
+
+2002-06-17 09:26  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/irq.h: New type: irq_handler_t New
+	  function: irq_register
+
+2002-06-17 09:26  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Added irq_register to the list of
+	  exported kernel functions.
+
+2002-06-17 09:23  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/elf.c: Improved relocation to support another
+	  type of relocation that is common.
+
+2002-06-17 08:44  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/return_value.h: New return values:
+	  STORM_RETURN_BUSY, STORM_RETURN_INVALID_ARGUMENT.
+
+2002-06-17 00:04  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/irq_handlers.S: Fixed to compile with new
+	  gcc.
+
+2002-06-17 00:01  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/irq_handlers.S: Changed to the new (BSD)
+	  license.
+
+2002-06-16 23:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/elf.h: Oops, this file should not be here.
+
+2002-06-16 23:56  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/elf.h:
+	  New file.
+
+2002-06-16 23:49  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/elf.h: Fixed bugs in elf_relocation_t.
+	  New data type: elf_parsed_t New functions: elf_identify,
+	  elf_parse, elf_resolve, elf_relocate, elf_symbol_find_by_index,
+	  elf_symbol_find_by_name.
+
+2002-06-16 23:48  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/module.h: New data type:
+	  module_function_t.  New functions: module_init, module_register.
+
+2002-06-16 23:48  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/init.c: Made the idle thread more effective.
+
+2002-06-16 23:47  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/makefile: New object: module.o
+
+2002-06-16 23:47  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Improved module_link heavily. It
+	  seems to basically work, but BSS:es (uninitialized data) in
+	  modules will break the system. This is easily fixed but I am too
+	  tired for that tonight.  New function: module_register, to be
+	  called by the module.
+
+2002-06-16 23:44  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/elf.c: New file with functions to decode an
+	  ELF.
+
+2002-06-16 23:18  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/types.h: New file.
+
+2002-06-16 23:07  Per Lundberg <perlun@gmail.com>
+
+	* modules/: makefile, modules.make: New files.
+
+2002-06-16 21:19  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/multiboot.c: Added a FIXME for later
+	  investigation
+
+2002-06-16 20:32  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/multiboot.h: Added
+	  MULTIBOOT_GET_MEMORY to the flags we use.
+
+2002-06-16 18:37  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/types.h: New type: function_t
+
+2002-06-16 01:07  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/elf.h: New type: elf_relocation_t, the
+	  definition of the .rel section.
+
+2002-06-16 00:43  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/i386-stub.c: Removed the file.
+
+2002-06-16 00:43  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/module.h: New file.
+
+2002-06-16 00:43  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/elf.h: Many more structures and
+	  defines.
+
+2002-06-16 00:40  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/irq.c: Added a default-disable of all IRQ:s
+	  in the hardware.
+
+2002-06-16 00:40  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/main.c: gdb_ names and added call to
+	  module_init.
+
+2002-06-16 00:39  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/module.c: Very, very, VERY early module
+	  support.
+
+2002-06-16 00:39  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/makefile: Added module.c and fixed a bug
+	  regarding main.c compilation.
+
+2002-06-16 00:39  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/return_value.h: New return value:
+	  STORM_RETURN_MODULE_INVALID.
+
+2002-06-15 18:21  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/elf.h: Cleaned up some comments
+
+2002-06-15 18:20  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/elf.h: New file: The ELF format
+	  description.
+
+2002-06-15 17:39  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/multiboot.h: Changed some _type to _t,
+	  made the memory map accessible from without multiboot.c
+
+2002-06-15 17:38  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/multiboot.c: Changed the type on the memory
+	  map and added copying of the kernel command line to a safe
+	  buffer.
+
+2002-06-15 17:38  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_physical.c: Heavily improved
+	  initialization code; uses Multiboot memory map and does things in
+	  the Right Way.
+
+2002-06-15 17:32  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/defines.h: New define: KERNEL_BASE
+
+2002-06-15 17:11  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/init.c: Renamed multiboot_info_type to
+	  multiboot_info_t
+
+2002-06-15 16:38  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/gdt.h: New defines: GDT_ENTRIES,
+	  GDT_SIZE.  New external variable: gdt.
+
+2002-06-15 16:37  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_physical.c: Added a FIXME.
+
+2002-06-15 16:36  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/multiboot.h: New defines:
+	  MODULE_NAME_SIZE and MEMORY_MAP_SIZE.
+
+2002-06-15 16:36  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/multiboot.c: Removed fixed-address data, more
+	  error checking.
+
+2002-06-15 16:35  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/kernel.ld: Place the GDT and IDT in a good
+	  place. (Really not neccessary, but I thought it would be nice to
+	  have them on a page-aligned address)
+
+2002-06-15 16:35  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/ia32/idt.h, source/ia32/idt.c: IDT on
+	  non-fixed location.
+
+2002-06-15 16:34  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: source/ia32/memory_physical.c, source/ia32/init.c,
+	  include/storm/ia32/defines.h: Removed the fixed-address areas in
+	  the beginning of memory, since we can let gcc find some areas for
+	  us instead.
+
+2002-06-15 15:51  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/: process.h, thread.h: New files
+	  (pretty empty yet)
+
+2002-06-15 15:50  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/storm.make: Added the gnu99 flag. From now on, stormG3
+	  can only be compiled with gcc 3.0 or above
+
+2002-06-15 15:48  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/dispatch.h: New file, used by
+	  dispatcher.
+
+2002-06-15 14:18  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/exception.c: Changed to the (much better) C99
+	  syntax
+
+2002-06-15 14:09  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/multiboot.c: Added a check to make sure we
+	  don't overwrite memory.
+
+2002-06-15 13:42  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/ia32/gdb.h, source/ia32/gdb.c,
+	  source/ia32/makefile: Renamed i386-stub.c to gdb.c and cleaned up
+	  the external function names.
+
+2002-06-15 13:29  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/ia32/irq.h, source/ia32/irq.c: Added a
+	  function pointer in the irq data structure.
+
+2002-06-15 13:00  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/defines.h: Moved the kernel stack down
+	  to be able to trap stack overflows.
+
+2002-06-15 13:00  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/main.c: Added call to irq_init.
+
+2002-06-15 12:59  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/makefile: Added dispatch.c, irq.c and
+	  irq_handlers.S
+
+2002-06-15 12:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/irq_handlers.S: New file: low-level interrupt
+	  handlers.
+
+2002-06-15 12:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: source/ia32/irq.c, include/storm/ia32/irq.h: First
+	  version of IRQ support. Interrupts get enabled, the dispatcher is
+	  called upon IRQ 0 and so forth. Seems to work rather well.
+
+2002-06-15 12:56  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/makefile: Modified the make install target to include the
+	  include subdirectory.
+
+2002-06-15 12:55  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/: makefile, storm/makefile: New makefiles, used
+	  for installing the header files.
+
+2002-06-15 12:47  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/dispatch.c: New file; this is where the
+	  dispatcher will be put.
+
+2002-06-15 12:24  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/exception.c: Use interrupt gate instead of
+	  trap gate so we can't get interrupted in the middle of an
+	  exception handler.
+
+2002-06-15 12:23  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/cpu.h: New functions: cpu_set_tr,
+	  cpu_interrupts_disable, cpu_interrupts_enable.
+
+2002-06-15 12:19  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/types.h: New type: bool
+
+2002-06-15 09:32  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/spinlock.h: New file, with functions
+	  for locking kernel code from simultaneous access.
+
+2002-06-15 01:06  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/TODO: Updated to match the current status
+
+2002-06-15 00:52  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/exception.c: oops, page_fault should not
+	  return yet...
+
+2002-06-15 00:47  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/cpu.h: More stuff in cpu_register_t.
+
+2002-06-15 00:47  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: source/ia32/exception.c,
+	  source/ia32/exception_lowlevel.S, include/storm/ia32/exception.h:
+	  Better exception handling. Returning now works and all exception
+	  handlers should dump the registers etc.
+
+2002-06-14 23:53  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/gdt.h: Renamed DATA_SELECTOR to
+	  PROCESS_DATA_SELECTOR
+
+2002-06-14 15:17  Per Lundberg <perlun@gmail.com>
+
+	* MILESTONES: Changed M5 to M??
+
+2002-06-14 14:41  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/port.h: New file; used for I/O port
+	  access.
+
+2002-06-14 14:40  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/config.h: Added stuff used by the GDB
+	  stubs.
+
+2002-06-14 14:40  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/main.c: Added GDB hooks.
+
+2002-06-14 14:34  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/makefile: Added i386-stub.o
+
+2002-06-14 14:34  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/ia32/idt.h, source/ia32/idt.c: New
+	  function: idd_add_interrupt_gate.
+
+2002-06-14 14:34  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/i386-stub.c: Made it compile.
+
+2002-06-14 11:04  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/i386-stub.c: Added remote debugging support,
+	  from Andrey Karpov <nd-chaos@narod.ru>
+
+2002-06-14 00:11  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/cpu.h: Modified cpu_register_t to
+	  include all registers.
+
+2002-06-14 00:11  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/exception.h: More parameters to
+	  exception_page_fault.
+
+2002-06-14 00:10  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/: exception.c, exception_lowlevel.S: Better
+	  exception handling -- seems to work fine.
+
+2002-06-13 22:07  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/main.c: Added CPU identification.
+
+2002-06-13 22:07  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/cpu.h: Many modifications.
+
+2002-06-13 22:07  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/: cpu.c, makefile: Added CPU detection code.
+
+2002-06-13 21:41  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/debug.h: Fix to compile w/ gcc 3.1
+
+2002-06-13 21:10  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/cpu.h: New prototype: cpu_init
+
+2002-06-13 10:28  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/exception_lowlevel.S: Hacked around a bit
+	  more -- the page fault handler is now called.
+
+2002-06-13 09:02  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/exception.h: New type:
+	  exception_handler_t as well as many new prototypes.
+
+2002-06-13 09:02  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/cpu.h: New structure: cpu_register_t
+
+2002-06-13 09:01  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/storm.make: New rule for compiling .S files.
+
+2002-06-13 09:01  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/exception.c: Started using low-level
+	  exception handlers.
+
+2002-06-13 09:01  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/makefile: New file: exception_lowlevel.S
+
+2002-06-13 09:01  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/exception_lowlevel.S: Started writing
+	  low-level (assembly language) exception handlers.
+
+2002-06-13 08:15  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: source/ia32/memory_physical.c,
+	  include/storm/ia32/defines.h: Leave room for DMA buffers.
+
+2002-06-12 23:02  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/exception.c: Started writing code for saving
+	  and dumping registers.
+
+2002-06-12 22:41  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/ia32/descriptor.h,
+	  include/storm/ia32/idt.h, source/ia32/idt.c: New files.
+
+2002-06-12 22:40  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/main.c: Cause a page fault to test the
+	  exception handling.
+
+2002-06-12 22:40  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/makefile: Added exception.o to the objects.
+
+2002-06-12 22:40  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/exception.c: Created skeleton exception
+	  handlers.
+
+2002-06-12 22:26  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/cpu.h: New function: cpu_get_cr2
+
+2002-06-12 22:10  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/debug.c: Improved debug_memory_dump to also
+	  print the address that we are dumping.
+
+2002-06-12 21:29  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/cpu.h: Fixed typo: uint32_t instead of
+	  u32
+
+2002-06-12 21:28  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: source/ia32/debug.c, include/storm/ia32/debug.h: New
+	  function: debug_memory_dump.
+
+2002-06-12 21:21  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/cpu.h: New function: cpu_get_esp
+
+2002-06-12 14:20  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: source/ia32/dma.c, source/ia32/main.c,
+	  source/ia32/makefile, include/storm/ia32/dma.h: Set up a
+	  framework for the DMA code.
+
+2002-06-12 14:04  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/defines.h: New define: DMA_BASE
+
+2002-06-12 08:56  Per Lundberg <perlun@gmail.com>
+
+	* MILESTONES: Updated M1
+
+2002-06-12 08:54  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/defines.h: Fixed a typo.
+
+2002-06-12 08:53  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory_global.h: New field in
+	  memory_global_page_t: slab_header.
+
+2002-06-12 08:53  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/main.c: Added tests of memory_global.c
+
+2002-06-12 08:52  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_global.c: Implemented fully working
+	  deallocation.
+
+2002-06-12 08:48  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory.h: Fixed a typo
+
+2002-06-12 08:48  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory.h: Fixed a FIXME
+
+2002-06-12 08:27  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/defines.h: New macro: PAGE_ADDRESS
+
+2002-06-12 08:24  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/TODO: New file
+
+2002-06-11 23:29  Per Lundberg <perlun@gmail.com>
+
+	* MILESTONES: Updated M1. We are almost there.
+
+2002-06-11 23:27  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/return_value.h: New return value:
+	  STORM_RETURN_INTERNAL_DATA_ERROR
+
+2002-06-11 23:27  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/defines.h: Fixed some very serious
+	  typos.
+
+2002-06-11 23:26  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/exception.c: Started writing the exception
+	  code.
+
+2002-06-11 23:26  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/makefile: Added the exception.o object.
+
+2002-06-11 23:25  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: source/ia32/main.c, source/ia32/memory_global.c,
+	  include/storm/ia32/memory_global.h: Fully working global memory
+	  allocation. Deallocation still to be done.
+
+2002-06-11 23:11  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/gdt.h: New define: GDT_BASE_EXCEPTIONS
+
+2002-06-11 23:06  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/exception.c: New file: Exception handling.
+
+2002-06-11 23:05  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/exception.h: New file: Exception
+	  handling
+
+2002-06-11 22:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: source/ia32/memory_physical.c,
+	  include/storm/ia32/memory_physical.h: Changed return_type to
+	  return_t.
+
+2002-06-11 22:56  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/types.h: Fixed a bug: return_t instead of
+	  return_type
+
+2002-06-11 22:26  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/magic_cookies.h: New cookie
+
+2002-06-11 18:48  Per Lundberg <perlun@gmail.com>
+
+	* MILESTONES: Wrote more about the close milestones
+
+2002-06-11 17:53  Per Lundberg <perlun@gmail.com>
+
+	* MILESTONES: New milestone: Finish memory allocation
+
+2002-06-11 16:02  Per Lundberg <perlun@gmail.com>
+
+	* MILESTONES: New milestone: mod playing
+
+2002-06-09 17:15  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_physical.c: More memory summary
+
+2002-06-09 17:10  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/memory_physical.c: Added free memory summary
+
+2002-06-09 17:05  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/cpu.h: CPU-related functions
+
+2002-06-09 17:04  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/ia32/debug.h,
+	  include/storm/ia32/memory.h, include/storm/ia32/memory_virtual.h,
+	  source/ia32/main.c, source/ia32/memory_virtual.c: Implemented
+	  working paging
+
+2002-06-08 17:13  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/init.c: Changed to use LOW_16 and HIGH_16
+
+2002-06-08 17:12  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/bit.h: Moved the LOW_U16 and HIGH_U16
+	  macros here and renamed them to LOW_16 and HIGH_16.
+
+2002-06-08 17:11  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/defines.h: Removed the BIT_VALUE
+	  macro.
+
+2002-06-08 17:10  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/defines.h: Added the BIT_VALUE macro.
+
+2002-06-08 16:59  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory_physical.h: Added #include
+	  storm/types.h
+
+2002-06-08 16:55  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/makefile: Added memory_virtual.o
+
+2002-06-08 16:53  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/memory_physical.h: Fixed a bad bracket
+
+2002-06-08 16:36  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/makefile: Added gzip of kernel and made
+	  main.o always-recompile.
+
+2002-06-05 21:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/types.h: New type: return_type.
+
+2002-06-05 21:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/ia32/defines.h: New define:
+	  KERNEL_FIXED_END.
+
+2002-06-05 21:56  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/init.c: Removed unneccessary comments.
+
+2002-06-05 21:56  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/main.c: Added physical memory initialization.
+
+2002-06-05 21:55  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/return_value.h: New file.
+
+2002-06-05 21:55  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/ia32/memory_physical.h,
+	  source/ia32/memory_physical.c: Working physical memory allocation
+	  (only 1 page for now, but it will suffice for quite some time).
+
+2002-06-05 20:27  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/makefile: Added memory_physical.o
+
+2002-06-05 20:17  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: source/ia32/debug.c, source/ia32/init.c,
+	  source/ia32/kernel.ld, source/ia32/multiboot.c,
+	  include/storm/config.h, include/storm/defines.h,
+	  include/storm/types.h, include/storm/ia32/bit.h,
+	  include/storm/ia32/debug.h, include/storm/ia32/defines.h,
+	  include/storm/ia32/gdt.h, include/storm/ia32/main.h,
+	  include/storm/ia32/memory.h, include/storm/ia32/multiboot.h,
+	  include/storm/ia32/string.h: Changed my E-mail address.
+
+2002-06-05 20:05  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/module.xml: Wrote about the service system.
+
+2002-06-05 19:49  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/makefile: Changed the name of the binary to
+	  stormG3
+
+2002-06-05 19:02  Per Lundberg <perlun@gmail.com>
+
+	* MILESTONES: New file
+
+2002-06-05 00:27  Per Lundberg <perlun@gmail.com>
+
+	* makefile: Added a soft link in the stormG2 directory.
+
+2002-06-05 00:24  Per Lundberg <perlun@gmail.com>
+
+	* misc/xemacs-script: Changed the tab level to 4 spaces.
+
+2002-06-04 20:34  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/makefile: Added RTF and TXT output.
+
+2002-06-04 19:32  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/README: Fixed a typo
+
+2002-05-28 11:52  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/module.xml: Enclosed the literals in a
+	  <para>graph.
+
+2002-05-28 09:03  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/makefile: Added goals.xml
+
+2002-05-28 09:03  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/memory_management.xml: More spacing.
+
+2002-05-28 09:02  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/module.xml: More information.
+
+2002-05-28 09:02  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/process.xml: Fixed the title of the Process
+	  section.
+
+2002-05-28 09:02  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/stormG3.xml: Added a reference to goals.xml
+
+2002-05-28 09:01  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/goals.xml: Added some design goals.
+
+2002-05-28 08:01  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/data_types.xml: Changed mid_t to module_id_t.
+
+2002-05-27 23:30  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/data_types.xml: Added a new file with the basic
+	  data types we use.
+
+2002-05-27 23:29  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/process.xml: Changed tid to thread_id etc.
+
+2002-05-27 23:29  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/stormG3.xml: Added data_types.xml
+
+2002-05-27 23:29  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/module.xml: Added two function prototypes.
+
+2002-05-27 21:08  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: source/avltree.c, source/makefile, source/queue.c,
+	  source/ia32/makefile, include/storm/avltree.h,
+	  include/storm/queue.h: Made the AVL code compile.
+
+2002-05-27 21:07  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/defines.h: Added dummy-malloc and
+	  dummy-free, just to make the AVL code compile.
+
+2002-05-27 13:48  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/include/storm/avltree.h: Moved the header file here, from
+	  the storm source directory.
+
+2002-05-27 13:48  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/: avltree.c, avltree.h, queue.c: Correct headers,
+	  and moved the header file.
+
+2002-05-27 13:13  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/: avltree.c, avltree.h, queue.c: Added AVL library
+	  from http://purists.org/avltree/
+
+2002-05-27 12:19  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/makefile: Added module.xml
+
+2002-05-27 12:16  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/module.xml: Started defining the module_t
+	  structure.
+
+2002-05-27 12:09  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/module.xml: Added <?dbhtml?>.
+
+2002-05-27 12:07  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/memory_management.xml: Lots of <?dbhtml?>.
+
+2002-05-27 12:07  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/process.xml: More <?dbhtml?> stuff.
+
+2002-05-27 11:50  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/stdint.xml: New file, containing stdint.h (needed
+	  for compiling chaos, provided by ISO C99 compilers)
+
+2002-05-27 11:49  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/process.xml: Added process_t and thread_t.
+
+2002-05-27 11:49  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/stormG3.xml: Added the stdint.xml file.
+
+2002-05-27 11:48  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/license.xml: Added the dbhtml tag to change the
+	  name of the output filename.
+
+2002-05-27 11:44  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/makefile: Added more sections
+
+2002-05-27 09:52  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/: memory_management.xml, module.xml, process.xml,
+	  stormG3.xml: Added two new files; module.xml and process.xml.
+
+2002-05-27 09:31  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/memory_management.xml: Wrote some more.
+
+2002-05-27 08:22  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/source/ia32/main.c: Changed E-mail addresses
+
+2002-05-26 23:17  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/memory_management.xml: Some minor additions.
+
+2002-05-26 22:08  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/storm.make: Removed -lgcc, we don't need it now.
+
+2002-05-26 21:57  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/design/: README, license.xml, makefile,
+	  memory_management.xml, memory_map.dia, memory_map.png,
+	  stormG3.xml: First version of the storm G3 design.
+
+2002-05-26 18:01  Per Lundberg <perlun@gmail.com>
+
+	* LICENSE: Changed a reference to the university to chaos
+	  development.
+
+2002-05-26 18:00  Per Lundberg <perlun@gmail.com>
+
+	* COPYING: Changed factual fault (should be BSD, not MIT).
+
+2002-05-26 12:59  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* stormG3/: storm.make, source/ia32/main.c: Define CREATOR and
+	  print it in the splash message when storm starts up.
+
+2002-05-26 12:57  Per Lundberg <perlun@gmail.com>
+
+	* misc/chaos-background.png: Just a small, but pretty nice,
+	  background logo... :)
+
+2002-05-26 12:56  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* stormG3/source/ia32/main.c: Fixed broken code.
+
+2002-05-26 09:34  Per Lundberg <perlun@gmail.com>
+
+	* changelog: AUTHORS updated
+
+2002-05-26 09:30  Per Lundberg <perlun@gmail.com>
+
+	* AUTHORS: Added timestamp.
+
+2002-05-26 09:27  Per Lundberg <perlun@gmail.com>
+
+	* AUTHORS: Added some names since the web is not functional right
+	  now.
+
+2002-05-26 00:41  Per Lundberg <perlun@gmail.com>
+
+	* TODO: Removed things that are no longer true.
+
+2002-05-26 00:10  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* stormG3/source/ia32/main.c: Changed startup message.
+
+2002-05-26 00:02  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* stormG3/source/ia32/: memory_global.c, memory_physical.c,
+	  memory_virtual.c: Added memory management files.
+
+2002-05-26 00:00  Per Lundberg <perlun@gmail.com>
+
+	* TODO: Slight fix.
+
+2002-05-26 00:00  Per Lundberg <perlun@gmail.com>
+
+	* TODO: Added talk about storm G3.
+
+2002-05-25 22:10  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: makefile, source/makefile, source/ia32/kernel.ld: More
+	  files.
+
+2002-05-25 22:09  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: include/storm/config.h, include/storm/defines.h,
+	  include/storm/types.h, include/storm/ia32/bit.h,
+	  include/storm/ia32/debug.h, include/storm/ia32/defines.h,
+	  include/storm/ia32/gdt.h, include/storm/ia32/main.h,
+	  include/storm/ia32/memory.h, include/storm/ia32/multiboot.h,
+	  include/storm/ia32/string.h, source/ia32/debug.c,
+	  source/ia32/init.c, source/ia32/main.c, source/ia32/makefile,
+	  source/ia32/multiboot.c: More files in G3.
+
+2002-05-25 22:08  Per Lundberg <perlun@gmail.com>
+
+	* stormG3/: makefile.template, storm.make, include/storm/storm.h:
+	  First commit of G3.
+
+2002-05-25 19:33  Per Lundberg <perlun@gmail.com>
+
+	* LICENSE: Changed to ordinary BSD license, without advertisment
+	  clause.
+
+2002-05-24 21:30  Per Lundberg <perlun@gmail.com>
+
+	* LICENSE: Added line.
+
+2002-05-24 19:34  Per Lundberg <perlun@gmail.com>
+
+	* misc/xemacs-script: Changed to the new license...
+
+2002-05-24 19:08  Per Lundberg <perlun@gmail.com>
+
+	* COPYING: Removed a blank line.
+
+2002-05-24 19:07  Per Lundberg <perlun@gmail.com>
+
+	* COPYING: Changed the license.
+
+2002-05-24 19:06  Per Lundberg <perlun@gmail.com>
+
+	* CPL: Removed this license.
+
+2002-05-24 19:06  Per Lundberg <perlun@gmail.com>
+
+	* LICENSE: New file.
+
+2002-05-24 07:14  Per Lundberg <perlun@gmail.com>
+
+	* pdf/DynamicStorageAllocationSurvey.pdf: Added this document.
+
+2002-05-23 13:22  Per Lundberg <perlun@gmail.com>
+
+	* misc/xemacs-script: Improved the script a lot.
+
+2002-05-23 13:16  Per Lundberg <perlun@gmail.com>
+
+	* misc/xemacs-script: Improved the script slightly.
+
+2002-05-23 13:13  Per Lundberg <perlun@gmail.com>
+
+	* AUTHORS, README.FreeBSD, TODO, configure, makefile,
+	  misc/xemacs-script: Changed $Id$ to $chaos$
+
+2002-05-23 13:04  Per Lundberg <perlun@gmail.com>
+
+	* CPL: Minor layout issued.
+
+2002-05-23 12:56  Per Lundberg <perlun@gmail.com>
+
+	* INSTALL, README.Linux: Changed to $chaos$
+
+2002-05-23 12:56  Per Lundberg <perlun@gmail.com>
+
+	* COPYING: Changed to the $chaos$ tag.
+
+2002-05-23 12:52  Per Lundberg <perlun@gmail.com>
+
+	* build: Removed the config.install-path altogether.
+
+2002-05-23 12:51  Per Lundberg <perlun@gmail.com>
+
+	* build: Slightly more sofisticated.
+
+2002-05-21 15:24  Per Lundberg <perlun@gmail.com>
+
+	* README: Well...
+
+2002-05-21 15:23  Per Lundberg <perlun@gmail.com>
+
+	* README: Test of CVS.
+
+2002-05-21 14:03  Per Lundberg <perlun@gmail.com>
+
+	* CPL: Changed British spelling into American.
+
+2002-05-21 14:02  Per Lundberg <perlun@gmail.com>
+
+	* CPL: New file.
+
+2002-05-21 12:35  Per Lundberg <perlun@gmail.com>
+
+	* makefile: Fixed a typo.
+
+2002-05-20 18:16  Per Lundberg <perlun@gmail.com>
+
+	* changelog: Changelogs.
+
+2002-05-20 17:51  Per Lundberg <perlun@gmail.com>
+
+	* COPYING: Removed some blank rows.
+
+2002-05-20 17:42  Per Lundberg <perlun@gmail.com>
+
+	* COPYING: Changed license.
+
+2001-03-25 00:55  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* makefile: ""
+
+2001-03-24 21:12  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* build: ""
+
+2001-03-24 20:37  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* configure: ""
+
+2001-03-24 20:23  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* build: [no log message]
+
+2001-03-24 19:16  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* INSTALL: ""
+
+2001-03-24 02:05  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* INSTALL: Svamp-klegg.
+
+2001-03-24 02:02  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* build: Added angry comment. :-)
+
+2001-03-24 01:59  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* makefile: Fixed some stuff.
+
+2001-03-24 01:55  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* INSTALL, build, makefile: Added a build script for building
+	  chaos. Also updated the documentation.
+
+2001-03-24 01:23  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* INSTALL, TODO: Updated various files...
+
+2001-03-24 01:12  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* makefile: Modified the building system so that the default
+	  install directory is in the source directory. This is so you
+	  don't have to be root or something...
+
+2001-03-10 12:42  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* makefile: The source in the CVS _should_ now compile
+	  'out-of-the-box'
+
+2001-03-10 12:08  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* makefile: Fixed an error.
+
+2001-03-07 21:52  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* makefile: [no log message]
+
+2001-02-18 17:19  Henrik Hallin <henrik.hallin@magasin1.se>
+
+	* makefile:
+	  Removed makefiles.
+
+2001-02-11 16:08  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* makefile: Now supports empty root directories better.
+
+2001-02-10 22:22  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* AUTHORS, COPYING, INSTALL, README, README.FreeBSD, README.Linux,
+	  TODO, changelog, makefile, misc/xemacs-script: Added the latest
+	  snapshot source.
+
+2001-02-10 18:10  Johannes Lundberg <johannes.lundberg@gmail.com>
+
+	* AUTHORS: [no log message]
+
+2001-02-07 23:42  John Hennessy <johnhenn@gofree.indigo.ie>
+
+	* AUTHORS, COPYING, INSTALL, README, README.FreeBSD, README.Linux,
+	  TODO, changelog, makefile, misc/floppy.image.bz2,
+	  misc/xemacs-script: Imported from abraham
+
+2001-02-07 23:42  John Hennessy <johnhenn@gofree.indigo.ie>
+
+	* AUTHORS, COPYING, INSTALL, README, README.FreeBSD, README.Linux,
+	  TODO, changelog, makefile, misc/floppy.image.bz2,
+	  misc/xemacs-script: Initial revision
+
