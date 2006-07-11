@@ -2,28 +2,29 @@
 /* Abstract: Boot program (somewhat like init in Unix systems). */
 /* Author: Per Lundberg <per@chaosdev.org> */
 
-/* Copyright 2002 chaos development. */
+/* Copyright 2002, 2006 chaos development. */
 /* Use freely under the terms listed in the file LICENSE. */
 
 #include <storm/storm.h>
-//#include <kernel/kernel.h>
+#include <kernel/kernel.h>
 
 void _start (void) NORETURN;
 int main (int argc UNUSED, char **argv UNUSED);
 
-char *test = "spam spam spam!";
+char *test = "spam spam spam! ";
 
 void _start (void)
 {
-    main (0, NULL);
-    // syscall_exit (0);
+    int return_value = main (0, NULL);
+    // FIXME: Implement that system call.. :-)
+    //system_call_exit (return_value);
+    // The rest of the code is never reached.
     while (TRUE);
 }
 
 /* Main function. */
 int main (int argc UNUSED, char **argv UNUSED)
 {
-#if FALSE
     size_t services = 1;
     service_t service_list;
     service_lookup_t service_lookup = 
@@ -49,12 +50,11 @@ int main (int argc UNUSED, char **argv UNUSED)
     {
         return -1;
     }
-
+    
     if (system_call_service_close (connection_id))
     {
         return -1;
     }
-#endif
 
     /* All hail king Jesus. */
     return 0;
