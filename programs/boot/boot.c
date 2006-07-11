@@ -16,6 +16,7 @@ char *test = "spam spam spam! ";
 void _start (void)
 {
     int return_value = main (0, NULL);
+    return_value = 0;
     // FIXME: Implement that system call.. :-)
     //system_call_exit (return_value);
     // The rest of the code is never reached.
