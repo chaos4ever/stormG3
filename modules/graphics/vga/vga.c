@@ -54,6 +54,7 @@ uint8_t *graphic_video_memory = (uint8_t *) NULL;
 #define VIDEO_MODES (sizeof (mode) / sizeof (vga_mode_type))
 
 /* Set the VGA palette. */
+#if FALSE
 static void vga_palette_set (vga_palette_entry_type *palette)
 {
     port_uint8_out (VGA_PALETTE_WRITE, 0);
@@ -138,6 +139,8 @@ static void vga_font_set (uint8_t *font_data, unsigned int length)
     port_uint8_out_pause (VGA_GRAPHIC_REGISTER, 0x06);
     port_uint8_out_pause (VGA_GRAPHIC_DATA, 0x0E);
 }
+
+#endif
 
 /* Place the text mode cursor. When in graphics mode, this function
    does nothing. */
