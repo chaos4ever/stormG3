@@ -14,6 +14,9 @@
 
 #include "minix.h"
 
+#define DEBUG_INFO() \
+  debug_print ("Passed %s:%u (%s)\n", __FILE__, __LINE__, __FUNCTION__);
+
 /* The log service provider that we are using. */
 log_service_t log;
 
@@ -270,6 +273,11 @@ static return_t minix_open (char *filename, vfs_file_mode_t mode,
         return STORM_RETURN_NOT_IMPLEMENTED;
     }
 
+    /* Check if the file was found or not. */
+    if (inode2 == NULL) {
+        return STORM_RETURN_NOT_FOUND;
+    }
+
     if (mode == VFS_FILE_MODE_READ)
     {
         // FIXME: Check for read permissions.
@@ -381,7 +389,12 @@ static return_t minix_info (char *filename UNUSED, vfs_file_info_t *info)
     else
     {
         // FIXME: Implement.
+        DEBUG_INFO();
         return STORM_RETURN_NOT_IMPLEMENTED;
+    }
+
+    if (inode2 == NULL) {
+        return STORM_RETURN_NOT_FOUND;
     }
 
     // FIXME: Take the other fields as well. atime, mtime, ctime,
