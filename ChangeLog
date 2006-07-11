@@ -1,3 +1,23 @@
+2006-07-11 22:19  Per Lundberg <perlun@gmail.com>
+
+	* README: Updated a little
+
+2006-07-11 22:14  Per Lundberg <perlun@gmail.com>
+
+	* programs/boot/boot.c: Stupid non-compiling commit, fixed. :-)
+
+2006-07-11 22:12  Per Lundberg <perlun@gmail.com>
+
+	* programs/boot/boot.c: [no log message]
+
+2006-07-11 22:02  Per Lundberg <perlun@gmail.com>
+
+	* snapshot.sh: Added script for creating snapshots
+
+2006-07-11 15:10  Per Lundberg <perlun@gmail.com>
+
+	* ChangeLog, usermap: 2 new files
+
 2006-07-11 14:52  Per Lundberg <perlun@gmail.com>
 
 	* libraries/common/memory/memory.h: Added file
