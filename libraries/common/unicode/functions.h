@@ -18,6 +18,6 @@ extern return_t unicode_utf8_to_ucs2 (ucs2_t *ucs2, uint8_t *utf8, size_t *lengt
 extern return_t unicode_utf8_to_ucs4 (ucs4_t *ucs4, uint8_t *utf8, size_t *length);
 extern size_t unicode_utf8_previous_character_length (char *utf8_string, unsigned int string_position);
 extern size_t unicode_utf8_next_character_length (char *utf8_string, unsigned int string_position);
-extern size_t unicode_utf8_string_characters (uint8_t *utf8_string);
+extern size_t unicode_utf8_string_characters (char *utf8_string);
 
 #endif /* !__LIBRARY_UNICODE_FUNCTIONS_H__ */

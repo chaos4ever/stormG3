@@ -61,13 +61,13 @@ typedef struct
     uint32_t ticks;
 } channel_type;
 
-typedef struct
+typedef struct PACKED
 {
     uint8_t sample_number : 8;
     uint16_t period_frequency : 12;
     uint8_t effect_number : 4;
     uint8_t effect_parameter : 8;
-} note_type PACKED;
+} note_type;
 
 /* Functions. */
 void fill_buffer (uint8_t *buffer);

@@ -49,7 +49,7 @@ typedef unsigned int spinlock_t;
  * System Programming Guide for more information about what TSS:s are
  * used for.
  */
-typedef struct
+typedef struct PACKED
 {
     /**
      * @brief           CPU data. 
@@ -198,7 +198,7 @@ typedef struct
      *                  location. 
      */
     uint16_t            iomap_base;
-} tss_t PACKED;
+} tss_t;
 
 /**
  * @brief               A capability.

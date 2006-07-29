@@ -249,7 +249,7 @@ enum
 /**
  * @brief An ELF (Executable and linkable format) header. 
  */
-typedef struct 
+typedef struct PACKED
 {
     /**
      * @brief Must be 0x7F, 'E, 'L', 'F' in this order. 
@@ -346,7 +346,7 @@ typedef struct
      * string table. 
      */
     uint16_t section_string_index;
-} elf_header_t PACKED;
+} elf_header_t;
 
 /**
  * @brief       An ELF section header entry. 
@@ -434,7 +434,7 @@ typedef struct
 /** 
  * @brief A symbol table entry. 
  */
-typedef struct
+typedef struct PACKED
 {
     /**
      * @brief An index into the symbol string table, containing the
@@ -468,7 +468,7 @@ typedef struct
      * defined in relation to. 
      */
     uint16_t section_header;
-} elf_symbol_t PACKED;
+} elf_symbol_t;
 
 /** 
  * @brief A relocation table entry.

@@ -47,7 +47,7 @@ enum descriptor_type
 /** 
  * @brief               A descriptor. 
  */
-typedef struct
+typedef struct PACKED
 {
     /**
      * @brief           Low 16 bits of segment limit. 
@@ -111,12 +111,12 @@ typedef struct
      * @brief           Bits 24-31 of base address. 
      */
     uint8_t base_hi2;
-} descriptor_t PACKED;
+} descriptor_t;
 
 /**
  * @brief               A gate descriptor. 
  */
-typedef struct
+typedef struct PACKED
 {
     /**
      * @brief           Low 16 bits of offset. 
@@ -149,6 +149,6 @@ typedef struct
      * @brief           High 16 bits of offset. 
      */
     uint16_t offset_hi;
-} gate_descriptor_t PACKED;
+} gate_descriptor_t;
 
 #endif /* !__STORM_IA32_DESCRIPTOR_H__ */

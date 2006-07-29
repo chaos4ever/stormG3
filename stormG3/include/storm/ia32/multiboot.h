@@ -53,7 +53,7 @@ enum
  * @brief A structure with information about what were provided by the
  * Multiboot loader. 
  */
-typedef struct
+typedef struct PACKED
 {
     /* The following flags tells if the rest of the fields are
        available. */
@@ -110,29 +110,29 @@ typedef struct
     uint32_t depth;
     uint32_t frame_buffer_address;
 #endif
-} multiboot_info_t PACKED;
+} multiboot_info_t;
 
 /**
  * @brief Information about a Multiboot module. 
  */
-typedef struct
+typedef struct PACKED
 {
     uint32_t start;
     uint32_t end;
     char *name;
     uint32_t reserved;
-} multiboot_module_info_t PACKED;
+} multiboot_module_info_t;
 
 /**
  * @brief Information about the memory in the system. 
  */
-typedef struct
+typedef struct PACKED
 {
     uint32_t size;
     uint64_t base_address;
     uint64_t length;
     uint32_t type;
-} multiboot_memory_map_t PACKED;
+} multiboot_memory_map_t;
 
 /* External variables. */
 extern multiboot_info_t multiboot_info;

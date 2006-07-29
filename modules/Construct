@@ -47,7 +47,8 @@ $cons = new cons (
 		  CFLAGS => $warnings .
                   $defs .
 		  '-O3 -ggdb -pipe -fno-builtin -funsigned-char ' .
-		  '-fomit-frame-pointer -ffreestanding -std=gnu99 ',
+		  '-fomit-frame-pointer -ffreestanding -std=gnu99 ' .
+                  '-fno-strict-aliasing ',
 		  LDFLAGS => "-nostdlib --shared -L$library_directory"
                  );	
 

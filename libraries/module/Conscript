@@ -23,7 +23,8 @@ $cons = $cons->clone( CPPPATH => $include,
                       CFLAGS => $warnings .
                       $defs .
                       '-O3 -g -pipe -fno-builtin -funsigned-char ' .
-                      '-fomit-frame-pointer -ffreestanding -std=gnu99 ',
+                      '-fomit-frame-pointer -ffreestanding -std=gnu99 ' .
+                      '-fno-strict-aliasing ',
                       LDFLAGS => '-nostdlib' );
 Export qw( cons install library_static_directory );
 Build qw( block/Conscript

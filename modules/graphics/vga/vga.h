@@ -32,10 +32,10 @@ typedef struct
     unsigned int type;
 } vga_mode_type;
 
-typedef struct
+typedef struct PACKED
 {
     uint8_t red, green, blue;
-} __attribute__ ((packed)) vga_palette_entry_type;
+} vga_palette_entry_type;
 
 /* Function protoypes. */
 extern void vga_set_mode (uint32_t mode);

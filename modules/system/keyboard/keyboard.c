@@ -571,7 +571,7 @@ void keyboard_handle_event (uint8_t scancode)
             else
             {
                 keyboard_packet.has_character_code = 1;
-                string_copy (keyboard_packet.character_code, translated_key);
+                string_copy ((char *) keyboard_packet.character_code, translated_key);
             }
         }
         else
@@ -592,7 +592,7 @@ void keyboard_handle_event (uint8_t scancode)
             else
             {
                 keyboard_packet.has_character_code = 1;
-                string_copy (keyboard_packet.character_code, translated_key);
+                string_copy ((char *) keyboard_packet.character_code, translated_key);
             }
         }
         

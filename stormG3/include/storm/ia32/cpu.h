@@ -131,7 +131,7 @@ extern void cpu_init (void);
 /**
  * @brief               Flags that we get out of CPUID. 
  */
-typedef struct
+typedef struct PACKED
 {
     /**
      * @brief           Feature flags. 
@@ -160,12 +160,12 @@ typedef struct
     uint32_t sse:       1;
     uint32_t ff_res2:   5;
     uint32_t amd_3dnow: 1;
-} cpuid_flags_t PACKED;
+} cpuid_flags_t;
 
 /**
  * @brief               Information about a CPU. 
  */
-typedef struct
+typedef struct PACKED
 {
     uint32_t cpuid;
 
@@ -201,7 +201,7 @@ typedef struct
      * @brief           CPU configuration. 
      */
   uint32_t configuration;
-} cpu_info_t PACKED;
+} cpu_info_t;
 
 /**
  * @brief               The IA32 registers. In convenient order. 

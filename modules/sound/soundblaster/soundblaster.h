@@ -42,7 +42,7 @@ typedef struct
     bool supports_8bit_output;
     bool supports_16bit_output;
     bool supports_autoinit_dma;
-    unsigned char *device_name;
+    char *device_name;
 } soundblaster_device_t;
 
 typedef struct

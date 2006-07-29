@@ -75,7 +75,7 @@ $cons = new cons (
 		  CFLAGS => $warnings .
 		  '-pipe -fno-builtin -funsigned-char ' .
 		  '-ffreestanding -fno-leading-underscore ' .
-                  '-std=gnu99 ' .
+                  '-std=gnu99 -fno-strict-aliasing ' .
                   $cflags . $defs,
 		  LDFLAGS => $LDFLAGS,
                   SUFEXE => ''

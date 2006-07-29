@@ -354,7 +354,7 @@ return_t console_output (console_id_t console_id, const char *string)
                         /* FIXME: inverse, underline etc... Support all features
                            (except maybe blink) if in graphic mode. */
                         int buffer_index;
-                        unsigned int length;
+                        size_t length;
                         ucs2_t ucs2;
 
                         /* If this is an UTF-8 character, convert it to UCS-2. */

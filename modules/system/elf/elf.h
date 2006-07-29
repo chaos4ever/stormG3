@@ -189,7 +189,7 @@ enum
 
 /* Type definitions. */
 /* An ELF (Executable and linkable format) header. */
-typedef struct 
+typedef struct PACKED
 {
     /* Must be 0x7F, 'E, 'L', 'F' in this order. */
     uint8_t identification[4]; 
@@ -246,7 +246,7 @@ typedef struct
     /* The section header table index of the section name string
        table. */
     uint16_t section_string_index;
-} elf_header_t PACKED;
+} elf_header_t;
 
 /* A section header entry. */
 typedef struct

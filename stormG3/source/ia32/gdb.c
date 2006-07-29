@@ -523,7 +523,7 @@ static char remcomOutBuffer[BUFMAX];
 /* scan for the sequence $<data>#<checksum>     */
 static unsigned char *getpacket (void)
 {
-    unsigned char *buffer = &remcomInBuffer[0];
+    unsigned char *buffer = (unsigned char *) &remcomInBuffer[0];
     unsigned char checksum;
     unsigned char xmitcsum;
     int count;
@@ -836,14 +836,14 @@ void handle_exception (int exceptionVector)
 
     *ptr = '\0';
 
-    putpacket (remcomOutBuffer);
+    putpacket ((unsigned char *) remcomOutBuffer);
 
     stepping = 0;
 
     while (1 == 1)
     {
         remcomOutBuffer[0] = 0;
-        ptr = getpacket ();
+        ptr = (char *) getpacket ();
 
         switch (*ptr++)
 	{
@@ -955,7 +955,7 @@ void handle_exception (int exceptionVector)
 	}			/* switch */
 
         /* reply to the request */
-        putpacket (remcomOutBuffer);
+        putpacket ((unsigned char *) remcomOutBuffer);
     }
 }
 

@@ -50,7 +50,7 @@
 /**
  * @brief               Easy EGA screen access. 
  */
-typedef struct
+typedef struct PACKED
 { 
     /**
      * @brief           The character of this location.
@@ -61,7 +61,7 @@ typedef struct
      * @brief           The attribute of this character.
      */
     uint8_t attribute;
-} debug_screen_type PACKED;
+} debug_screen_type;
 
 /**
  * @brief               Initialize debugging code. 

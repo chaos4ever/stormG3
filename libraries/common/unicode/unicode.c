@@ -330,14 +330,14 @@ return_t unicode_ucs2_to_utf8_string (uint8_t *utf8_string,
         ucs2_index++;
         ucs2_char = ucs2_string[ucs2_index];
 
-        if (utf8_index + string_length (utf8_char) >= max_utf8_bytes)
+        if (utf8_index + string_length ((char *) utf8_char) >= max_utf8_bytes)
         {
             return UNICODE_RETURN_BUFFER_TOO_SHORT;
         }
         else
         {
-            string_copy (utf8_string + utf8_index, utf8_char);
-            utf8_index += string_length (utf8_char);
+	    string_copy ((char *) utf8_string + utf8_index, (char *) utf8_char);
+	    utf8_index += string_length ((char *) utf8_char);
         }
     }
 
@@ -365,14 +365,14 @@ return_t unicode_ucs4_to_utf8_string (uint8_t *utf8_string,
 
         ucs4_index++;
 
-        if (utf8_index + string_length (utf8_char) >= max_utf8_bytes)
+        if (utf8_index + string_length ((char *) utf8_char) >= max_utf8_bytes)
         {
             return UNICODE_RETURN_BUFFER_TOO_SHORT;
         }
         else
         {
-            string_copy (utf8_string + utf8_index, utf8_char);
-            utf8_index += string_length (utf8_char);
+	  string_copy ((char *) utf8_string + utf8_index, (char *) utf8_char);
+	    utf8_index += string_length ((char *) utf8_char);
         }
     }
     return UNICODE_RETURN_SUCCESS;
@@ -385,7 +385,7 @@ return_t unicode_utf8_to_ucs2_string (ucs2_t *ucs2_string,
 {
     size_t input_index = 0;
     size_t output_index = 0;
-    unsigned int length;
+    size_t length;
 
     while (utf8_string[input_index] != '\0' &&
            output_index < max_ucs2_characters)
@@ -413,7 +413,7 @@ return_t unicode_utf8_to_ucs4_string (ucs4_t *ucs4_string,
 {
     size_t input_index = 0;
     size_t output_index = 0;
-    unsigned int length;
+    size_t length;
 
     while (utf8_string[input_index] != '\0' &&
            output_index < max_ucs4_characters)
@@ -493,11 +493,11 @@ size_t unicode_utf8_next_character_length (char *utf8_string, unsigned int strin
 /* Return the number of characters in a UTF-8 encoded string. */
 // FIXME: Add error handling. What if we find broken UTF-8 sequences
 // for example?
-size_t unicode_utf8_string_characters (uint8_t *utf8_string)
+size_t unicode_utf8_string_characters (char *utf8_string)
 {
-    unsigned int input_index = 0;
-    unsigned int string_characters = 0;
-    unsigned int length;
+    size_t input_index = 0;
+    size_t string_characters = 0;
+    size_t length;
 
     while (utf8_string[input_index] != '\0')
     {
