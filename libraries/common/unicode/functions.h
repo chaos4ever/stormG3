@@ -12,12 +12,12 @@ extern return_t unicode_ucs2_to_utf8_string (uint8_t *utf8_string, ucs2_t *ucs2_
 extern return_t unicode_ucs4_to_utf8_string (uint8_t *utf8_string, ucs4_t *ucs4_string, size_t max_utf8_bytes);
 extern return_t unicode_utf8_to_ucs2_string (ucs2_t *ucs2_string, uint8_t *utf8_string, size_t max_ucs2_characters);
 extern return_t unicode_utf8_to_ucs4_string (ucs4_t *ucs4_string, uint8_t *utf8_string, size_t max_ucs4_characters);
-extern return_t unicode_ucs2_to_utf8 (uint8_t *utf8, ucs2_t ucs2);
-extern return_t unicode_ucs4_to_utf8 (uint8_t *utf8, ucs4_t ucs4);
-extern return_t unicode_utf8_to_ucs2 (ucs2_t *ucs2, uint8_t *utf8, size_t *length);
-extern return_t unicode_utf8_to_ucs4 (ucs4_t *ucs4, uint8_t *utf8, size_t *length);
-extern size_t unicode_utf8_previous_character_length (char *utf8_string, unsigned int string_position);
-extern size_t unicode_utf8_next_character_length (char *utf8_string, unsigned int string_position);
-extern size_t unicode_utf8_string_characters (char *utf8_string);
+extern return_t unicode_ucs2_to_utf8 (uint8_t *utf8_character, ucs2_t ucs2_character);
+extern return_t unicode_ucs4_to_utf8 (uint8_t *utf8_character, ucs4_t ucs4_character);
+extern return_t unicode_utf8_to_ucs2 (ucs2_t *ucs2_character, uint8_t *utf8_character, size_t *length);
+extern return_t unicode_utf8_to_ucs4 (ucs4_t *ucs4_character, uint8_t *utf8_character, size_t *length);
+extern size_t unicode_utf8_previous_character_length (uint8_t *utf8_string, unsigned int string_position);
+extern size_t unicode_utf8_next_character_length (uint8_t *utf8_string, unsigned int string_position);
+extern size_t unicode_utf8_string_characters (uint8_t *utf8_string);
 
 #endif /* !__LIBRARY_UNICODE_FUNCTIONS_H__ */

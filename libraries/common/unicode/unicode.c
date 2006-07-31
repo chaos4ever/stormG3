@@ -29,109 +29,109 @@
 #define B00000001 0x01
 
 /* Convert a UCS-2 character to UTF-8. */
-return_t unicode_ucs2_to_utf8 (uint8_t *utf8_char, ucs2_t ucs2_char)
+return_t unicode_ucs2_to_utf8 (uint8_t *utf8_character, ucs2_t ucs2_character)
 {
     int utf8_bytes;
 
-    if (ucs2_char <= 0x0000007F)
+    if (ucs2_character <= 0x0000007F)
     {
         /* 0xxxxxxx */
         utf8_bytes = 1;
-        utf8_char[0] = (uint8_t) ucs2_char;
+        utf8_character[0] = (uint8_t) ucs2_character;
     }
-    else if (ucs2_char <= 0x000007FF)
+    else if (ucs2_character <= 0x000007FF)
     {
         /* 110xxxxx 10xxxxxx */
         utf8_bytes = 2;
-        utf8_char[0] = (uint8_t) ((ucs2_char >> 6) | B11000000);
-        utf8_char[1] = (uint8_t) ((ucs2_char & B00111111) | B10000000);
+        utf8_character[0] = (uint8_t) ((ucs2_character >> 6) | B11000000);
+        utf8_character[1] = (uint8_t) ((ucs2_character & B00111111) | B10000000);
     }
-    else /* if (ucs2_char <= 0x0000FFFF) */ /* had to remove this because gcc barfed about it, always true because of int16 */
+    else /* if (ucs2_character <= 0x0000FFFF) */ /* had to remove this because gcc barfed about it, always true because of int16 */
     {
         /* 1110xxxx 10xxxxxx 10xxxxxx */
         utf8_bytes = 3;
-        utf8_char[0] = (uint8_t) ((ucs2_char >> 12) | B11100000);
-        utf8_char[1] = (uint8_t) (((ucs2_char >> 6) & B00111111) | B10000000);
-        utf8_char[2] = (uint8_t) ((ucs2_char & B00111111) | B10000000);
+        utf8_character[0] = (uint8_t) ((ucs2_character >> 12) | B11100000);
+        utf8_character[1] = (uint8_t) (((ucs2_character >> 6) & B00111111) | B10000000);
+        utf8_character[2] = (uint8_t) ((ucs2_character & B00111111) | B10000000);
     }
     /* else
     {
         return UNICODE_RETURN_UCS2_INVALID;
     } */
 
-    utf8_char[utf8_bytes] = '\0';
+    utf8_character[utf8_bytes] = '\0';
 
     return UNICODE_RETURN_SUCCESS;
 }
 
 /* Convert a UCS-4 character to UTF-8. */
-return_t unicode_ucs4_to_utf8 (uint8_t *utf8_char, ucs4_t ucs4_char)
+return_t unicode_ucs4_to_utf8 (uint8_t *utf8_character, ucs4_t ucs4_character)
 {
     int utf8_bytes;
 
-    if (ucs4_char <= 0x0000007F)
+    if (ucs4_character <= 0x0000007F)
     {
         /* 0xxxxxxx */
         utf8_bytes = 1;
-        utf8_char[0] = (uint8_t) ucs4_char;
+        utf8_character[0] = (uint8_t) ucs4_character;
     }
-    else if (ucs4_char <= 0x000007FF)
+    else if (ucs4_character <= 0x000007FF)
     {
         /* 110xxxxx 10xxxxxx */
         utf8_bytes = 2;
-        utf8_char[0] = (uint8_t) ((ucs4_char >> 6) | B11000000);
-        utf8_char[1] = (uint8_t) ((ucs4_char & B00111111) | B10000000);
+        utf8_character[0] = (uint8_t) ((ucs4_character >> 6) | B11000000);
+        utf8_character[1] = (uint8_t) ((ucs4_character & B00111111) | B10000000);
     }
-    else if (ucs4_char <= 0x0000FFFF)
+    else if (ucs4_character <= 0x0000FFFF)
     {
         /* 1110xxxx 10xxxxxx 10xxxxxx */
         utf8_bytes = 3;
-        utf8_char[0] = (uint8_t) ((ucs4_char >> 12) | B11100000);
-        utf8_char[1] = (uint8_t) (((ucs4_char >> 6) & B00111111) | B10000000);
-        utf8_char[2] = (uint8_t) ((ucs4_char & B00111111) | B10000000);
+        utf8_character[0] = (uint8_t) ((ucs4_character >> 12) | B11100000);
+        utf8_character[1] = (uint8_t) (((ucs4_character >> 6) & B00111111) | B10000000);
+        utf8_character[2] = (uint8_t) ((ucs4_character & B00111111) | B10000000);
     }
-    else if (ucs4_char <= 0x001FFFFF)
+    else if (ucs4_character <= 0x001FFFFF)
     {
         /* 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx */
         utf8_bytes = 4;
-        utf8_char[0] = (uint8_t) ((ucs4_char >> 18) | B11110000);
-        utf8_char[1] = (uint8_t) (((ucs4_char >> 12) & B00111111) | B10000000);
-        utf8_char[2] = (uint8_t) (((ucs4_char >> 6) & B00111111) | B10000000);
-        utf8_char[3] = (uint8_t) ((ucs4_char & B00111111) | B10000000);
+        utf8_character[0] = (uint8_t) ((ucs4_character >> 18) | B11110000);
+        utf8_character[1] = (uint8_t) (((ucs4_character >> 12) & B00111111) | B10000000);
+        utf8_character[2] = (uint8_t) (((ucs4_character >> 6) & B00111111) | B10000000);
+        utf8_character[3] = (uint8_t) ((ucs4_character & B00111111) | B10000000);
     }
-    else if (ucs4_char <= 0x03FFFFFF)
+    else if (ucs4_character <= 0x03FFFFFF)
     {
         /* 111110xx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx */
         utf8_bytes = 5;
-        utf8_char[0] = (uint8_t) ((ucs4_char >> 24) | B11111000);
-        utf8_char[1] = (uint8_t) (((ucs4_char >> 18) & B00111111) | B10000000);
-        utf8_char[2] = (uint8_t) (((ucs4_char >> 12) & B00111111) | B10000000);
-        utf8_char[3] = (uint8_t) (((ucs4_char >> 6) & B00111111) | B10000000);
-        utf8_char[4] = (uint8_t) ((ucs4_char & B00111111) | B10000000);
+        utf8_character[0] = (uint8_t) ((ucs4_character >> 24) | B11111000);
+        utf8_character[1] = (uint8_t) (((ucs4_character >> 18) & B00111111) | B10000000);
+        utf8_character[2] = (uint8_t) (((ucs4_character >> 12) & B00111111) | B10000000);
+        utf8_character[3] = (uint8_t) (((ucs4_character >> 6) & B00111111) | B10000000);
+        utf8_character[4] = (uint8_t) ((ucs4_character & B00111111) | B10000000);
     }
-    else if (ucs4_char <= 0x7FFFFFFF)
+    else if (ucs4_character <= 0x7FFFFFFF)
     {
         /* 1111110x 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx */
         utf8_bytes = 6;
-        utf8_char[0] = (uint8_t) ((ucs4_char >> 30) | B11111100);
-        utf8_char[1] = (uint8_t) (((ucs4_char >> 24) & B00111111) | B10000000);
-        utf8_char[2] = (uint8_t) (((ucs4_char >> 18) & B00111111) | B10000000);
-        utf8_char[3] = (uint8_t) (((ucs4_char >> 12) & B00111111) | B10000000);
-        utf8_char[4] = (uint8_t) (((ucs4_char >> 6) & B00111111) | B10000000);
-        utf8_char[5] = (uint8_t) ((ucs4_char & B00111111) | B10000000);
+        utf8_character[0] = (uint8_t) ((ucs4_character >> 30) | B11111100);
+        utf8_character[1] = (uint8_t) (((ucs4_character >> 24) & B00111111) | B10000000);
+        utf8_character[2] = (uint8_t) (((ucs4_character >> 18) & B00111111) | B10000000);
+        utf8_character[3] = (uint8_t) (((ucs4_character >> 12) & B00111111) | B10000000);
+        utf8_character[4] = (uint8_t) (((ucs4_character >> 6) & B00111111) | B10000000);
+        utf8_character[5] = (uint8_t) ((ucs4_character & B00111111) | B10000000);
     }
     else
     {
         return UNICODE_RETURN_UCS4_INVALID;
     }
 
-    utf8_char[utf8_bytes] = '\0';
+    utf8_character[utf8_bytes] = '\0';
 
     return UNICODE_RETURN_SUCCESS;
 }
 
 /* Convert a UTF-8 encoded character to UCS-2. */
-return_t unicode_utf8_to_ucs2 (ucs2_t *ucs2, uint8_t *utf8_string,
+return_t unicode_utf8_to_ucs2 (ucs2_t *ucs2_character, uint8_t *utf8_string,
                                size_t *length)
 {
     uint8_t utf8_character = utf8_string[0];
@@ -140,7 +140,7 @@ return_t unicode_utf8_to_ucs2 (ucs2_t *ucs2, uint8_t *utf8_string,
        output. */
     if (utf8_character <= 0x7F)
     {
-        *ucs2 = utf8_character;
+        *ucs2_character = utf8_character;
         *length = 1;
     }
     else if ((utf8_character & B11100000) == B11000000)
@@ -152,7 +152,7 @@ return_t unicode_utf8_to_ucs2 (ucs2_t *ucs2, uint8_t *utf8_string,
             return UNICODE_RETURN_UTF8_INVALID;
         }
     
-        *ucs2 =
+        *ucs2_character =
             ((utf8_string[1] & B00111111) << 0) +
             ((utf8_character & B00011111) << 6);
         *length = 2;
@@ -169,7 +169,7 @@ return_t unicode_utf8_to_ucs2 (ucs2_t *ucs2, uint8_t *utf8_string,
             return UNICODE_RETURN_UTF8_INVALID;
         }
     
-        *ucs2 = 
+        *ucs2_character = 
             ((utf8_string[2] & B00111111) << 0) +
             ((utf8_string[1] & B00111111) << 6) +
             ((utf8_character & B00001111) << 12);
@@ -184,7 +184,7 @@ return_t unicode_utf8_to_ucs2 (ucs2_t *ucs2, uint8_t *utf8_string,
 }
 
 /* Convert a UTF-8 encoded character to UCS-4. */
-return_t unicode_utf8_to_ucs4 (ucs4_t *ucs4, uint8_t *utf8_string, 
+return_t unicode_utf8_to_ucs4 (ucs4_t *ucs4_character, uint8_t *utf8_string, 
                                size_t *length)
 {
     uint8_t utf8_character = utf8_string[0];
@@ -193,7 +193,7 @@ return_t unicode_utf8_to_ucs4 (ucs4_t *ucs4, uint8_t *utf8_string,
        output. */
     if (utf8_character <= 0x7F)
     {
-        *ucs4 = utf8_character;
+        *ucs4_character = utf8_character;
         *length = 1;
     }
     else if ((utf8_character & B11100000) == B11000000)
@@ -205,7 +205,7 @@ return_t unicode_utf8_to_ucs4 (ucs4_t *ucs4, uint8_t *utf8_string,
             return UNICODE_RETURN_UTF8_INVALID;
         }
     
-        *ucs4 =
+        *ucs4_character =
             ((utf8_string[1] & B00111111) << 0) +
             ((utf8_character & B00011111) << 6);
         *length = 2;
@@ -222,7 +222,7 @@ return_t unicode_utf8_to_ucs4 (ucs4_t *ucs4, uint8_t *utf8_string,
             return UNICODE_RETURN_UTF8_INVALID;
         }
     
-        *ucs4 = 
+        *ucs4_character = 
             ((utf8_string[2] & B00111111) << 0) +
             ((utf8_string[1] & B00111111) << 6) +
             ((utf8_character & B00001111) << 12);
@@ -242,7 +242,7 @@ return_t unicode_utf8_to_ucs4 (ucs4_t *ucs4, uint8_t *utf8_string,
             return UNICODE_RETURN_UTF8_INVALID;
         }
     
-        *ucs4 = 
+        *ucs4_character = 
             ((utf8_string[3] & B00111111) << 0) +
             ((utf8_string[2] & B00111111) << 6) +
             ((utf8_string[1] & B00111111) << 12) +
@@ -265,7 +265,7 @@ return_t unicode_utf8_to_ucs4 (ucs4_t *ucs4, uint8_t *utf8_string,
             return UNICODE_RETURN_UTF8_INVALID;
         }
     
-        *ucs4 = 
+        *ucs4_character = 
             ((utf8_string[4] & B00111111) << 0) +
             ((utf8_string[3] & B00111111) << 6) +
             ((utf8_string[2] & B00111111) << 12) +
@@ -291,7 +291,7 @@ return_t unicode_utf8_to_ucs4 (ucs4_t *ucs4, uint8_t *utf8_string,
             return UNICODE_RETURN_UTF8_INVALID;
         }
     
-        *ucs4 = 
+        *ucs4_character = 
             ((utf8_string[5] & B00111111) << 0) +
             ((utf8_string[4] & B00111111) << 6) +
             ((utf8_string[3] & B00111111) << 12) +
@@ -315,29 +315,29 @@ return_t unicode_ucs2_to_utf8_string (uint8_t *utf8_string,
 {
     size_t ucs2_index = 0;
     size_t utf8_index = 0;
-    ucs2_t ucs2_char;
-    uint8_t utf8_char[6];
+    ucs2_t ucs2_character;
+    uint8_t utf8_character[6];
 
-    ucs2_char = ucs2_string[ucs2_index];
+    ucs2_character = ucs2_string[ucs2_index];
 
-    while (ucs2_char != 0)
+    while (ucs2_character != 0)
     {
-        if (unicode_ucs2_to_utf8 (utf8_char, ucs2_char) != UNICODE_RETURN_SUCCESS)
+        if (unicode_ucs2_to_utf8 (utf8_character, ucs2_character) != UNICODE_RETURN_SUCCESS)
         {
             return UNICODE_RETURN_UCS2_INVALID;
         }
 
         ucs2_index++;
-        ucs2_char = ucs2_string[ucs2_index];
+        ucs2_character = ucs2_string[ucs2_index];
 
-        if (utf8_index + string_length ((char *) utf8_char) >= max_utf8_bytes)
+        if (utf8_index + string_length ((char *) utf8_character) >= max_utf8_bytes)
         {
             return UNICODE_RETURN_BUFFER_TOO_SHORT;
         }
         else
         {
-	    string_copy ((char *) utf8_string + utf8_index, (char *) utf8_char);
-	    utf8_index += string_length ((char *) utf8_char);
+            string_copy ((char *) utf8_string + utf8_index, (char *) utf8_character);
+            utf8_index += string_length ((char *) utf8_character);
         }
     }
 
@@ -351,28 +351,28 @@ return_t unicode_ucs4_to_utf8_string (uint8_t *utf8_string,
 {
     int ucs4_index = 0;
     int utf8_index = 0;
-    ucs4_t ucs4_char;
-    uint8_t utf8_char[6];
+    ucs4_t ucs4_character;
+    uint8_t utf8_character[6];
 
     while (ucs4_string[ucs4_index] != 0)
     {
-        ucs4_char = ucs4_string[ucs4_index];
+        ucs4_character = ucs4_string[ucs4_index];
 
-        if (unicode_ucs4_to_utf8 (utf8_char, ucs4_char) != UNICODE_RETURN_SUCCESS)
+        if (unicode_ucs4_to_utf8 (utf8_character, ucs4_character) != UNICODE_RETURN_SUCCESS)
         {
             return UNICODE_RETURN_UCS4_INVALID;
         }
 
         ucs4_index++;
 
-        if (utf8_index + string_length ((char *) utf8_char) >= max_utf8_bytes)
+        if (utf8_index + string_length ((char *) utf8_character) >= max_utf8_bytes)
         {
             return UNICODE_RETURN_BUFFER_TOO_SHORT;
         }
         else
         {
-	  string_copy ((char *) utf8_string + utf8_index, (char *) utf8_char);
-	    utf8_index += string_length ((char *) utf8_char);
+            string_copy ((char *) utf8_string + utf8_index, (char *) utf8_character);
+            utf8_index += string_length ((char *) utf8_character);
         }
     }
     return UNICODE_RETURN_SUCCESS;
@@ -438,7 +438,7 @@ return_t unicode_utf8_to_ucs4_string (ucs4_t *ucs4_string,
 
 /* Return the character prior to the character at the given position's
    length. */
-size_t unicode_utf8_previous_character_length (char *utf8_string, unsigned int string_position)
+size_t unicode_utf8_previous_character_length (uint8_t *utf8_string, unsigned int string_position)
 {
     unsigned int character_length = 0;
 
@@ -467,7 +467,7 @@ size_t unicode_utf8_previous_character_length (char *utf8_string, unsigned int s
 
 /* Return the character after the character at the given position's
    length. */
-size_t unicode_utf8_next_character_length (char *utf8_string, unsigned int string_position)
+size_t unicode_utf8_next_character_length (uint8_t *utf8_string, unsigned int string_position)
 {
     unsigned int character_length;
 
@@ -493,7 +493,7 @@ size_t unicode_utf8_next_character_length (char *utf8_string, unsigned int strin
 /* Return the number of characters in a UTF-8 encoded string. */
 // FIXME: Add error handling. What if we find broken UTF-8 sequences
 // for example?
-size_t unicode_utf8_string_characters (char *utf8_string)
+size_t unicode_utf8_string_characters (uint8_t *utf8_string)
 {
     size_t input_index = 0;
     size_t string_characters = 0;

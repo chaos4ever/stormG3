@@ -355,10 +355,10 @@ return_t console_output (console_id_t console_id, const char *string)
                            (except maybe blink) if in graphic mode. */
                         int buffer_index;
                         size_t length;
-                        ucs2_t ucs2;
+                        ucs2_t ucs2_character;
 
                         /* If this is an UTF-8 character, convert it to UCS-2. */
-                        if (unicode_utf8_to_ucs2 (&ucs2, (uint8_t *) &string[string_index],
+                        if (unicode_utf8_to_ucs2 (&ucs2_character, (uint8_t *) &string[string_index],
                                                   &length) !=
                             UNICODE_RETURN_SUCCESS)
                         {
@@ -373,13 +373,13 @@ return_t console_output (console_id_t console_id, const char *string)
                             console->modified_attribute;
 
                         /* The ASCII characters are always the same. */
-                        if (ucs2 >= 0x80)
+                        if (ucs2_character >= 0x80)
                         {
-                            console->output[buffer_index].character = translation[ucs2];
+                            console->output[buffer_index].character = translation[ucs2_character];
                         }
                         else
                         {
-                            console->output[buffer_index].character = ucs2;
+                            console->output[buffer_index].character = ucs2_character;
                         }
                         console->cursor_x++;
             
