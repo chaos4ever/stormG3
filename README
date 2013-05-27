@@ -1,5 +1,7 @@
-README ($chaos: README,v 1.10 2002/10/27 22:45:43 per Exp $)
+README
 ======
+
+(Note: The information below is quite old and kept for reference only. stormG3 was never finished, and any new work - if any - is performed in the main chaos repo instead: http://github.com/chaos4ever/chaos)
 
 This is chaos, a free (licensed under the BSD license, without
 advertisment clause) operating system. It implements advanced features
@@ -7,9 +9,7 @@ such as virtual memory, interrupt/exception management, memory
 protection, I/O protection, preemptive multitasking, ELF support, and
 much, much more. It is a work in progress, and thus many parts are
 yet unfinished. If you are a programmer and would like to help us,
-please contact us and we can see what you can help us with. Our
-contact information can be found on the web page --
-http://chaos.lundcom.se/
+please contact us and we can see what you can help us with.
 
 The following programs are required to compile:
 
